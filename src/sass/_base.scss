@@ -1,0 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body {
+  background-color: $primary-color;
+}
+
+#app {
+  max-width: 1200px;
+  margin: 5rem auto;
+  display: grid;
+}

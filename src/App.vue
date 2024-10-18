@@ -1,16 +1,7 @@
-<template>
-  <div>
-mairo
-  </div>
-</template>
+<template></template>
 
 <script lang="ts">
-  export default {
-    
-  }
+export default {};
 </script>
 
-<style lang="sass" scoped>
-
-</style>
-<!-- EYsnHG0gSKLbaIBe -->
+<style lang="scss" scoped></style>
