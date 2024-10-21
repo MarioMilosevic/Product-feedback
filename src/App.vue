@@ -1,14 +1,19 @@
 <script lang="ts">
-import Sidebar from './components/Sidebar.vue';
+import Sidebar from "./components/Sidebar.vue";
+import { fetchFeedbacks } from "./api/FeedbacksApi";
 export default {
-    components: {
-        Sidebar
-    }
+    name: "App",
+    created() {
+      fetchFeedbacks()
+    },
+  components: {
+    Sidebar,
+  },
 };
 </script>
 
 <template>
-    <Sidebar/>
+  <Sidebar />
 </template>
 
 <style lang="scss" scoped></style>
