@@ -2,10 +2,15 @@
 import Sidebar from "./components/Sidebar.vue";
 import { fetchFeedbacks } from "./api/FeedbacksApi";
 export default {
-    name: "App",
-    created() {
-      fetchFeedbacks()
-    },
+  name: "App",
+  data() {
+    return {
+      feedbacks: [],
+    };
+  },
+  async created() {
+    this.feedbacks = await fetchFeedbacks();
+  },
   components: {
     Sidebar,
   },
