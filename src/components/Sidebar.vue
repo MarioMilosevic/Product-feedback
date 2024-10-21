@@ -1,19 +1,25 @@
 <script>
-export default {};
+import ImageSection from "./ImageSection.vue";
+export default {
+  components: {
+    ImageSection,
+  },
+};
 </script>
 
 <template>
-  <aside class="sidebar">Mario</aside>
+  <aside class="sidebar">
+    <ImageSection />
+  </aside>
 </template>
 
 <style lang="scss" scoped>
 .sidebar {
   border: 1px solid black;
-  width: 100px;
+  /* width: 100px; */
   height: 50px;
+  grid-column: 10%;
 }
 </style>
 
-<!-- background: #00F260;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #0575E6, #00F260);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #0575E6, #00F260); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ -->
+

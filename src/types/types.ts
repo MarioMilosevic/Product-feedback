@@ -1,4 +1,4 @@
-export type Feedback = {
+export type FeedbackType = {
     category: string;
     created_at: string;
     description: string;
@@ -6,10 +6,10 @@ export type Feedback = {
     likes: number;
     status: string;
     title: string;
-    Comments: Comment[]
+    Comments: CommentType[]
 }
 
-export type Comment = {
+export type CommentType = {
     content: string;
     created_at: string;
     feedbackId: number;

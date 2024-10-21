@@ -16,4 +16,7 @@ body {
   max-width: 1200px;
   margin: 5rem auto;
   display: grid;
+  grid-template-columns: 25% 1fr;
+  border: 1px solid black;
+  gap: 2rem;
 }

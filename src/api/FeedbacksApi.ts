@@ -1,17 +1,18 @@
 import supabase from "../config/supabaseClient";
+import { FeedbackType } from "../types/types";
 
-export const fetchFeedbacks = async () => {
+export const fetchFeedbacks = async (): Promise<FeedbackType[]> => {
   try {
     const { data, error } = await supabase
       .from("Feedbacks")
       .select(`*, Comments (*)`);
     if (error) {
       console.log(error);
-      return;
-    } else {
-      console.log(data);
+      return [];
     }
+    return (data as FeedbackType[]);
   } catch (error) {
     console.log(error);
+    return [];
   }
 };
