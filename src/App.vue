@@ -15,21 +15,20 @@ export default {
   },
   components: {
     Sidebar,
-    Main
+    Main,
   },
 };
 </script>
 
 <template>
   <Sidebar />
-  <Main :feedbacks="feedbacks"/>
+  <Main :feedbacks="feedbacks" />
 </template>
 
 <style lang="scss">
-:root {
-  $primary-color: #f0f9ff;
-  $main-font: "Courier New", Courier, monospace;
+@import "./scss/variables";
 
+:root {
   * {
     margin: 0;
     padding: 0;
