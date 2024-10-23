@@ -1,17 +1,25 @@
-<script>
+<script lang="ts">
+import {  PropType } from "vue";
+import { FeedbackType } from "../types/types";
 import Feedback from "./Feedback.vue";
 
 export default {
   name: "Main",
-  props: ["feedbacks"],
   components: {
     Feedback,
   },
+  props: {
+    feedbacks: {
+      type: Array as PropType<FeedbackType[]>,
+      required: true,
+    },
+  },
 };
 </script>
+
 <template>
   <main>
-    <Feedback v-for="feedback in feedbacks" :key="feedback" />
+    <Feedback v-for="feedback in feedbacks" :key="feedback.id" :feedback="feedback" />
   </main>
 </template>
 

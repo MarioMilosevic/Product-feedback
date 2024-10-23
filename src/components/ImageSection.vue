@@ -12,7 +12,7 @@ export default {};
 .section {
   width: 100%;
   height: 200px;
-  border-radius: 16px;
+  border-radius: 15px;
   background: #00f260;
   background: linear-gradient(to right, #0575e6, #00f260);
   display: flex;
