@@ -1,7 +1,7 @@
 <script lang="ts">
 import { PropType } from "vue";
 import { FeedbackType } from "../types/types";
-
+import Category from "./Category.vue";
 
 export default {
   name: "Feedback",
@@ -11,27 +11,33 @@ export default {
       required: true,
     },
   },
-  mounted() {
-    console.log(this.feedback);
+  components: {
+    Category,
   },
 };
 </script>
 
 <template>
   <div class="feedback">
-    <div class="feedback__likes">
-      <span class="feedback__likes-caret">^</span>
-      <span class="feedback__likes-number">
-        {{ feedback.likes }}
-      </span>
-    </div>
     <div class="feedback__content">
-      <h3>{{ feedback.title }}</h3>
-      <p class="feedback__content-description">{{ feedback.description }}</p>
-      <button class="feedback__content-category">
-        {{ feedback.category }}
-      </button>
+      <div class="feedback__content__likes">
+        <span class="feedback__content__likes-caret">^</span>
+        <span class="feedback__content__likes-number">
+          {{ feedback.likes }}
+        </span>
+      </div>
+      <div class="feedback__content__info">
+        <h3>{{ feedback.title }}</h3>
+        <p class="feedback__content__info-description">
+          {{ feedback.description }}
+        </p>
+        <Category :category="feedback.category" />
+        <!-- <button class="feedback__content__info-category">
+          {{ feedback.category }}
+        </button> -->
+      </div>
     </div>
+
     <div class="feedback__comments">
       <span>{{ feedback.Comments.length }}</span>
     </div>
@@ -48,29 +54,68 @@ export default {
   padding: 1rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   cursor: pointer;
-  :hover {
-    background-color: $primary-color-hover;
-  }
+  align-items: center;
 
-  &__likes {
+  &__content {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    background-color: $primary-color;
-    padding: 5px 10px;
-    border-radius: $border-radius-medium;
+    gap: 2rem;
 
-    &-caret {
-      color: blue;
-      font-size: 1rem;
-    }
+    &__likes {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: $primary-color;
+      border-radius: $border-radius-medium;
+      padding: 5px 10px;
 
-    &-number {
+      &:hover {
+        background-color: $primary-color-hover;
+      }
+
+      &-caret {
+        color: blue;
+      }
+
+      &-number {
         font-weight: 600;
         font-size: 0.9rem;
+      }
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.7rem;
+
+      &-description {
+        font-size: 0.8rem;
+      }
+
+      &-category {
+        padding: 5px 10px;
+        border: none;
+        cursor: pointer;
+        background-color: $primary-color;
+        color: blue;
+      }
     }
   }
+
+  /* &__likes {
+
+  &__content {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+
+    &-description {
+      font-size: 0.8rem;
+    }
+  } */
 }
 </style>
