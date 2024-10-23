@@ -1,7 +1,10 @@
 <script lang="ts">
 import { PropType } from "vue";
 import { FeedbackType } from "../types/types";
+import { IoChatbubbleOutline } from "oh-vue-icons/icons";
+import { OhVueIcon, addIcons } from "oh-vue-icons";
 import Category from "./Category.vue";
+addIcons(IoChatbubbleOutline)
 
 export default {
   name: "Feedback",
@@ -13,6 +16,7 @@ export default {
   },
   components: {
     Category,
+    "v-icon": OhVueIcon,
   },
 };
 </script>
@@ -32,13 +36,11 @@ export default {
           {{ feedback.description }}
         </p>
         <Category :category="feedback.category" />
-        <!-- <button class="feedback__content__info-category">
-          {{ feedback.category }}
-        </button> -->
       </div>
     </div>
 
     <div class="feedback__comments">
+      <v-icon name="io-chatbubble-outline" class="icon"/>
       <span>{{ feedback.Comments.length }}</span>
     </div>
   </div>
