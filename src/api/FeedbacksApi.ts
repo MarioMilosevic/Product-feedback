@@ -5,7 +5,7 @@ export const fetchFeedbacks = async (): Promise<FeedbackType[]> => {
   try {
     const { data, error } = await supabase
       .from("Feedbacks")
-      .select(`*, Comments (*)`);
+      .select(`*, Comments (*, Users(*))`);
     if (error) {
       console.log(error);
       return [];

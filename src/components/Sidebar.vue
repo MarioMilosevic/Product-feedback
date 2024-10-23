@@ -1,6 +1,7 @@
 <script>
 import ImageSection from "./ImageSection.vue";
 export default {
+  name:"Sidebar",
   components: {
     ImageSection,
   },
@@ -9,16 +10,15 @@ export default {
 
 <template>
   <aside class="sidebar">
-    <ImageSection />
+    <!-- <ImageSection /> -->
   </aside>
 </template>
 
 <style lang="scss" scoped>
 .sidebar {
   border: 1px solid black;
-  /* width: 100px; */
   height: 50px;
-  grid-column: 10%;
+  width: 25%;
 }
 </style>
 
