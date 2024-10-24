@@ -15,7 +15,8 @@
     "@supabase/supabase-js": "^2.45.5",
     "material-icons": "^1.13.12",
     "oh-vue-icons": "^1.0.0-rc3",
-    "vue": "^3.5.10"
+    "vue": "^3.5.10",
+    "vue-router": "^4.4.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.4",

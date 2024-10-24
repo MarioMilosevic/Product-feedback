@@ -3,8 +3,13 @@ import Sidebar from "./components/Sidebar.vue";
 import { fetchFeedbacks } from "./api/FeedbacksApi";
 import { FeedbackType } from "./types/types";
 import Main from "./components/Main.vue";
+
 export default {
   name: "App",
+  components: {
+    Sidebar,
+    Main,
+  },
   data() {
     return {
       feedbacks: [] as FeedbackType[],
@@ -12,10 +17,6 @@ export default {
   },
   async created() {
     this.feedbacks = await fetchFeedbacks();
-  },
-  components: {
-    Sidebar,
-    Main,
   },
 };
 </script>

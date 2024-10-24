@@ -4,7 +4,8 @@ import { FeedbackType } from "../types/types";
 import { IoChatbubbleOutline } from "oh-vue-icons/icons";
 import { OhVueIcon, addIcons } from "oh-vue-icons";
 import Category from "./Category.vue";
-addIcons(IoChatbubbleOutline)
+
+addIcons(IoChatbubbleOutline);
 
 export default {
   name: "Feedback",
@@ -40,8 +41,10 @@ export default {
     </div>
 
     <div class="feedback__comments">
-      <v-icon name="io-chatbubble-outline" class="icon"/>
-      <span>{{ feedback.Comments.length }}</span>
+      <v-icon name="io-chatbubble-outline" />
+      <span class="feedback__comments-length">{{
+        feedback.Comments.length
+      }}</span>
     </div>
   </div>
 </template>
@@ -53,7 +56,7 @@ export default {
   width: 100%;
   background-color: $secondary-color;
   border-radius: $border-radius-big;
-  padding: 1rem;
+  padding: 2rem;
   display: flex;
   justify-content: space-between;
   cursor: pointer;
@@ -71,7 +74,7 @@ export default {
       justify-content: center;
       background-color: $primary-color;
       border-radius: $border-radius-medium;
-      padding: 5px 10px;
+      padding: 10px;
 
       &:hover {
         background-color: $primary-color-hover;
@@ -91,7 +94,7 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 0.7rem;
+      gap: 1rem;
 
       &-description {
         font-size: 0.8rem;
@@ -106,18 +109,15 @@ export default {
       }
     }
   }
-
-  /* &__likes {
-
-  &__content {
-    border: 1px solid black;
+  &__comments {
     display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
+    gap: 1rem;
+    align-items: center;
 
-    &-description {
-      font-size: 0.8rem;
+    &-length {
+      font-weight: 600;
+      font-size: 1rem;
     }
-  } */
+  }
 }
 </style>

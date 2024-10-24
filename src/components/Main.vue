@@ -29,6 +29,5 @@ main {
   flex-grow: 1;
   flex-direction: column;
   gap: 1rem;
-  border: 1px solid black;
 }
 </style>
