@@ -36,7 +36,7 @@ export default {
           </span>
         </div>
         <div class="feedback__content__info">
-          <h3>{{ feedback.title }}</h3>
+          <h4>{{ feedback.title }}</h4>
           <p class="feedback__content__info-description">
             {{ feedback.description }}
           </p>

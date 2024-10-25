@@ -8,8 +8,9 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     };
   },
   getters: {
-    getFeedback: (state) => (id: number) => {
-      return state.feedbacks.find((feedback) => feedback.id === id);
+    getFeedback: (state) => {
+      return (feedbackId: number) =>
+        state.feedbacks.find((feedback) => feedback.id === feedbackId);
     },
   },
   actions: {
