@@ -23,34 +23,44 @@ export default {
 </script>
 
 <template>
-  <div class="feedback">
-    <div class="feedback__content">
-      <div class="feedback__content__likes">
-        <span class="feedback__content__likes-caret">^</span>
-        <span class="feedback__content__likes-number">
-          {{ feedback.likes }}
-        </span>
+  <router-link
+    class="link"
+    :to="{ name: 'FeedbackDetails', params: { id: feedback.id } }"
+  >
+    <div class="feedback">
+      <div class="feedback__content">
+        <div class="feedback__content__likes">
+          <span class="feedback__content__likes-caret">^</span>
+          <span class="feedback__content__likes-number">
+            {{ feedback.likes }}
+          </span>
+        </div>
+        <div class="feedback__content__info">
+          <h3>{{ feedback.title }}</h3>
+          <p class="feedback__content__info-description">
+            {{ feedback.description }}
+          </p>
+          <Category :category="feedback.category" />
+        </div>
       </div>
-      <div class="feedback__content__info">
-        <h3>{{ feedback.title }}</h3>
-        <p class="feedback__content__info-description">
-          {{ feedback.description }}
-        </p>
-        <Category :category="feedback.category" />
-      </div>
-    </div>
 
-    <div class="feedback__comments">
-      <v-icon name="io-chatbubble-outline" />
-      <span class="feedback__comments-length">{{
-        feedback.Comments.length
-      }}</span>
+      <div class="feedback__comments">
+        <v-icon name="io-chatbubble-outline" />
+        <span class="feedback__comments-length">{{
+          feedback.Comments.length
+        }}</span>
+      </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <style lang="scss" scoped>
 @import "../scss/variables";
+
+.link {
+  text-decoration: none;
+  color: inherit;
+}
 
 .feedback {
   width: 100%;
