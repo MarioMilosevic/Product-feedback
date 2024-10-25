@@ -1,12 +1,12 @@
 <template>
   <Sidebar />
-  <Main :feedbacks="feedbacks" />
+  <Main :feedbacks="feedbackStore.feedbacks" />
 </template>
 
 <script lang="ts">
 import Sidebar from "../components/Sidebar.vue";
 import { fetchFeedbacks } from "../api/FeedbacksApi";
-import { FeedbackType } from "../types/types";
+import { useFeedbackStore } from "../stores/FeedbackStore";
 import Main from "../components/Main.vue";
 
 export default {
@@ -14,13 +14,17 @@ export default {
     Sidebar,
     Main,
   },
+  setup() {
+    const feedbackStore = useFeedbackStore();
+    return { feedbackStore };
+  },
+
   data() {
-    return {
-      feedbacks: [] as FeedbackType[],
-    };
+    return {};
   },
   async created() {
-    this.feedbacks = await fetchFeedbacks();
+    const fetchResults = await fetchFeedbacks();
+    this.feedbackStore.setFeedbacks(fetchResults);
   },
 };
 </script>
