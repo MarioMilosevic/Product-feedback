@@ -16,7 +16,11 @@
       </button>
     </div>
     <Feedback :feedback="currentFeedback" />
+    <div class="wrapper__comments">
+      <h3>{{ commentsLength }} <span>Comments</span></h3>
+    </div>
   </div>
+  <!--  -->
   <h1 v-else>Unexpected error occured</h1>
 </template>
 <script lang="ts">
@@ -39,9 +43,14 @@ export default {
     return {};
   },
   computed: {
+    feedbackId() {
+      return Number(this.id);
+    },
     currentFeedback() {
-      const feedbackId = Number(this.id);
-      return this.feedbackStore.getFeedback(feedbackId);
+      return this.feedbackStore.getFeedback(this.feedbackId);
+    },
+    commentsLength() {
+      return this.feedbackStore.getFeedbackCommentsLength(this.feedbackId);
     },
   },
 };
