@@ -27,7 +27,13 @@ export default {
     <div class="feedback">
       <div class="feedback__content">
         <div class="feedback__content__likes">
-          <span class="feedback__content__likes-caret">^</span>
+          <Icon class="feedback__content__likes-caret">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m4.5 15.75 7.5-7.5 7.5 7.5"
+            />
+          </Icon>
           <span class="feedback__content__likes-number">
             {{ feedback.likes }}
           </span>
@@ -42,7 +48,7 @@ export default {
       </div>
 
       <div class="feedback__comments">
-        <Icon class="size-24">
+        <Icon class="size-24" fill="#f0f9ff">
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -86,6 +92,7 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 0.6rem;
       background-color: $primary-color;
       border-radius: $border-radius-medium;
       padding: 10px;
@@ -95,7 +102,7 @@ export default {
       }
 
       &-caret {
-        color: blue;
+        color: $terniary-color;
       }
 
       &-number {
@@ -124,7 +131,6 @@ export default {
     }
   }
   &__comments {
-    border: 1px solid black;
     display: flex;
     gap: 1rem;
     align-items: center;

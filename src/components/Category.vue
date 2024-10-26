@@ -17,10 +17,11 @@ export default {
 @import "../scss/variables";
 
 .category {
-  padding: 5px 10px;
+  padding: 10px 15px;
   border: none;
   cursor: pointer;
   background-color: $primary-color;
   color: $terniary-color;
+  border-radius: $border-radius-medium;
 }
 </style>
