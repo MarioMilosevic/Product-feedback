@@ -16,9 +16,13 @@
       </button>
     </div>
     <Feedback :feedback="currentFeedback" />
+
     <div class="wrapper__comments">
       <h3>{{ commentsLength }} <span>Comments</span></h3>
-      <div class="wrapper__comments-singleComment">
+      <div v-for="comment in currentFeedback.Comments" :key="comment.id">
+        <Comment :comment="comment" />
+      </div>
+      <!-- <div class="wrapper__comments-singleComment">
         <figure class="wrapper__comments-singleComment-figure">
           <img
             :src="currentFeedback.Comments[0].Users.image"
@@ -39,7 +43,7 @@
           </div>
           <p>{{ currentFeedback.Comments[0].content }}</p>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
   <!--  -->
@@ -61,6 +65,7 @@
 <script lang="ts">
 import Feedback from "../components/Feedback.vue";
 import Icon from "../components/Icon.vue";
+import Comment from "../components/Comment.vue";
 import { useFeedbackStore } from "../stores/FeedbackStore";
 export default {
   setup() {
@@ -70,6 +75,7 @@ export default {
   components: {
     Feedback,
     Icon,
+    Comment,
   },
   props: {
     id: { type: String, required: true },
@@ -138,7 +144,7 @@ export default {
     flex-direction: column;
     gap: 1rem;
 
-    &-singleComment {
+    /* &-singleComment {
       display: flex;
       align-items: center;
       gap: 1rem;
@@ -178,7 +184,7 @@ export default {
           }
         }
       }
-    }
+    } */
   }
 }
 
