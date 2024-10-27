@@ -118,7 +118,7 @@ export default {
       gap: 1rem;
 
       &-description {
-        font-size: 0.8rem;
+        /* font-size: 0.8rem; */
       }
 
       &-category {

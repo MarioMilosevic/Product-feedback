@@ -34,7 +34,6 @@ export default {
   },
   mounted() {
     //
-    console.log(this.comment);
   },
   methods: {
     //
@@ -51,6 +50,7 @@ export default {
   gap: 1rem;
   border-bottom: 1px solid black;
   padding-bottom: 1rem;
+  margin-bottom: 1rem;
 
   &-figure {
     width: 50px;

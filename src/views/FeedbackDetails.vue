@@ -19,31 +19,16 @@
 
     <div class="wrapper__comments">
       <h3>{{ commentsLength }} <span>Comments</span></h3>
-      <div v-for="comment in currentFeedback.Comments" :key="comment.id">
-        <Comment :comment="comment" />
-      </div>
-      <!-- <div class="wrapper__comments-singleComment">
-        <figure class="wrapper__comments-singleComment-figure">
-          <img
-            :src="currentFeedback.Comments[0].Users.image"
-            :alt="currentFeedback.Comments[0].Users.image"
-          />
-        </figure>
-        <div class="wrapper__comments-singleComment-information">
-          <div class="wrapper__comments-singleComment-information-div">
-            <div class="wrapper__comments-singleComment-information-div-name">
-              <h4>{{ currentFeedback.Comments[0].Users.fullName }}</h4>
-              <h5>{{ currentFeedback.Comments[0].Users.username }}</h5>
-            </div>
-            <button
-              class="wrapper__comments-singleComment-information-div-button"
-            >
-              Reply
-            </button>
-          </div>
-          <p>{{ currentFeedback.Comments[0].content }}</p>
-        </div>
-      </div> -->
+      <Comment
+        v-for="comment in currentFeedback.Comments"
+        :key="comment.id"
+        :comment="comment"
+      />
+    </div>
+
+    <div class="wrapper__addComment">
+      <h4>Add comment</h4>
+      <textarea name="comment" id="comment"></textarea>
     </div>
   </div>
   <!--  -->
@@ -95,7 +80,7 @@ export default {
     },
   },
   mounted() {
-    console.log(this.currentFeedback);
+    //
   },
 };
 </script>
@@ -109,7 +94,7 @@ export default {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 
   &__header {
     display: flex;
@@ -119,7 +104,7 @@ export default {
 
     &-editButton {
       cursor: pointer;
-      padding: 10px 20px;
+      padding: 1rem 2rem;
       border: none;
       background-color: $terniary-color;
       border-radius: $border-radius-medium;
@@ -143,50 +128,21 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+  }
 
-    /* &-singleComment {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+  &__addComment {
+    border: 1px solid black;
+    background-color: $secondary-color;
+    border-radius: $border-radius-big;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 
-      &-figure {
-        width: 50px;
-        height: 50px;
-        img {
-          width: 100%;
-          height: 100%;
-          border-radius: 9999px;
-          object-fit: cover;
-        }
-      }
-
-      &-information {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        width: 100%;
-
-        &-div {
-          display: flex;
-          justify-content: space-between;
-
-          &-name {
-            display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
-          }
-          &-button {
-            border: none;
-            background-color: $secondary-color;
-            cursor: pointer;
-            color: $terniary-color;
-            font-weight: 600;
-          }
-        }
-      }
-    } */
   }
 }
+
+
 
 .error {
   display: flex;
