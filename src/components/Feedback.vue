@@ -47,7 +47,7 @@ export default {
         </div>
       </div>
 
-      <div class="feedback__comments">
+      <div v-if="feedback.Comments.length > 0" class="feedback__comments">
         <Icon class="size-24" fill="#f0f9ff">
           <path
             stroke-linecap="round"
@@ -57,7 +57,7 @@ export default {
         </Icon>
 
         <span class="feedback__comments-length">{{
-          feedback.comments.length
+          feedback.Comments.length
         }}</span>
       </div>
     </div>

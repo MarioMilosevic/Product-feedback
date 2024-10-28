@@ -1,5 +1,6 @@
 <template>
-  <div v-if="currentFeedback" class="wrapper">
+  <h1>mario</h1>
+  <!-- <div v-if="currentFeedback" class="wrapper">
     <div class="wrapper__header">
       <router-link to="/" class="wrapper__header-backButton">
         <Icon>
@@ -31,7 +32,6 @@
       <textarea name="comment" id="comment"></textarea>
     </div>
   </div>
-  <!--  -->
   <div v-else class="error">
     <h2>Unexpected error occured</h2>
     <router-link to="/" class="wrapper__header-backButton">
@@ -44,19 +44,14 @@
       </Icon>
       <h4>Go Back</h4>
     </router-link>
-  </div>
+  </div> -->
 </template>
 
 <script lang="ts">
 import Feedback from "../components/Feedback.vue";
 import Icon from "../components/Icon.vue";
 import Comment from "../components/Comment.vue";
-import { useFeedbackStore } from "../stores/FeedbackStore";
 export default {
-  setup() {
-    const feedbackStore = useFeedbackStore();
-    return { feedbackStore };
-  },
   components: {
     Feedback,
     Icon,
@@ -72,12 +67,12 @@ export default {
     feedbackId() {
       return Number(this.id);
     },
-    currentFeedback() {
-      return this.feedbackStore.getFeedback(this.feedbackId);
-    },
-    commentsLength() {
-      return this.feedbackStore.getFeedbackCommentsLength(this.feedbackId);
-    },
+    // currentFeedback() {
+    //   return this.feedbackStore.getFeedback(this.feedbackId);
+    // },
+    // commentsLength() {
+    //   return this.feedbackStore.getFeedbackCommentsLength(this.feedbackId);
+    // },
   },
   mounted() {
     //
@@ -138,11 +133,8 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-
   }
 }
-
-
 
 .error {
   display: flex;

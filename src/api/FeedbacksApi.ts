@@ -5,7 +5,8 @@ export const fetchFeedbacks = async (): Promise<FeedbackType[]> => {
   try {
     const { data, error } = await supabase
       .from("Feedbacks")
-      .select(`*, comments:Comments(id)`, { count: "exact" });
+      .select(`*, Comments (
+      feedbackId:id)`)
     
     if (error) {
       console.log(error);
@@ -17,3 +18,6 @@ export const fetchFeedbacks = async (): Promise<FeedbackType[]> => {
     return [];
   }
 };
+
+
+
