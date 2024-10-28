@@ -11,9 +11,9 @@
         </Icon>
         <h4>Go Back</h4>
       </router-link>
-      <button class="wrapper__header-editButton">
+      <ActionButton color="blue">
         <h3>Edit Feedback</h3>
-      </button>
+      </ActionButton>
     </div>
     <Feedback :feedback="singleFeedback" />
 
@@ -28,7 +28,7 @@
 
     <div class="wrapper__addComment">
       <h4>Add comment</h4>
-     <Textarea/>
+      <Textarea />
     </div>
   </div>
 
@@ -55,12 +55,14 @@ import Icon from "src/components/Icon.vue";
 import Textarea from "src/components/Textarea.vue";
 import { emptySingleFeedback } from "src/utils/constants";
 import { fetchSingleFeedback } from "src/api/FeedbacksApi";
+import ActionButton from "src/components/ActionButton.vue";
 export default {
   components: {
     Feedback,
     Icon,
     Comment,
-    Textarea
+    Textarea,
+    ActionButton,
   },
   props: {
     id: { type: String, required: true },

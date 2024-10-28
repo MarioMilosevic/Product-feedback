@@ -1,6 +1,17 @@
 <template>
   <form class="-form">
-    <textarea name="comment" id="comment" class="form__textarea"> </textarea>
+    <textarea
+      name="comment"
+      id="comment"
+      class="form__textarea"
+      v-model="content"
+    >
+    <div>
+      <p>{{ maxCharachters }} characters left</p>
+      
+    </div>
+    </textarea>
+
   </form>
 </template>
 <script>
@@ -8,12 +19,16 @@ export default {
   components: {},
   props: {},
   data() {
-    return {};
+    return {
+      content: "",
+      maxCharachters:225
+    };
   },
   computed: {
     //
   },
   mounted() {
+    console.log(this.content);
     //
   },
   methods: {
