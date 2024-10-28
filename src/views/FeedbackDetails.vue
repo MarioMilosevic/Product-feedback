@@ -28,7 +28,7 @@
 
     <div class="wrapper__addComment">
       <h4>Add comment</h4>
-      <textarea name="comment" id="comment"></textarea>
+     <Textarea/>
     </div>
   </div>
 
@@ -52,6 +52,7 @@ import { SingleFeedbackType } from "src/types/types";
 import Feedback from "src/components/Feedback.vue";
 import Comment from "src/components/Comment.vue";
 import Icon from "src/components/Icon.vue";
+import Textarea from "src/components/Textarea.vue";
 import { emptySingleFeedback } from "src/utils/constants";
 import { fetchSingleFeedback } from "src/api/FeedbacksApi";
 export default {
@@ -59,6 +60,7 @@ export default {
     Feedback,
     Icon,
     Comment,
+    Textarea
   },
   props: {
     id: { type: String, required: true },
@@ -86,7 +88,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../scss/variables";
 
 .wrapper {
@@ -119,6 +121,7 @@ export default {
       padding: 6px 12px;
       cursor: pointer;
       text-decoration: none;
+      color: inherit;
     }
   }
 
@@ -132,7 +135,6 @@ export default {
   }
 
   &__addComment {
-    border: 1px solid black;
     background-color: $secondary-color;
     border-radius: $border-radius-big;
     padding: 2rem;
