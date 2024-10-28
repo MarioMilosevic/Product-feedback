@@ -1,5 +1,4 @@
 <template>
-  <h1>mario</h1>
   <!-- <div v-if="currentFeedback" class="wrapper">
     <div class="wrapper__header">
       <router-link to="/" class="wrapper__header-backButton">
@@ -51,6 +50,7 @@
 import Feedback from "../components/Feedback.vue";
 import Icon from "../components/Icon.vue";
 import Comment from "../components/Comment.vue";
+import { fetchSingleFeedback } from "src/api/FeedbacksApi";
 export default {
   components: {
     Feedback,
@@ -74,7 +74,12 @@ export default {
     //   return this.feedbackStore.getFeedbackCommentsLength(this.feedbackId);
     // },
   },
+  async created() {
+    const data = await fetchSingleFeedback(this.feedbackId);
+    console.log(data);
+  },
   mounted() {
+    console.log(this.id);
     //
   },
 };
