@@ -11,7 +11,7 @@
         </Icon>
         <h4>Go Back</h4>
       </router-link>
-      <ActionButton color="blue">
+      <ActionButton color="blue" @click="editFeedback">
         <h3>Edit Feedback</h3>
       </ActionButton>
     </div>
@@ -32,7 +32,11 @@
     </div>
   </div>
 
-  <div v-else class="error">
+  <Modal v-if="isModalOpen"/>
+
+  
+
+  <!-- <div v-else class="error">
     <h2>Unexpected error occured</h2>
     <router-link to="/" class="wrapper__header-backButton">
       <Icon>
@@ -44,7 +48,7 @@
       </Icon>
       <h4>Go Back</h4>
     </router-link>
-  </div>
+  </div> -->
 </template>
 
 <script lang="ts">
@@ -56,6 +60,7 @@ import Textarea from "src/components/Textarea.vue";
 import { emptySingleFeedback } from "src/utils/constants";
 import { fetchSingleFeedback } from "src/api/FeedbacksApi";
 import ActionButton from "src/components/ActionButton.vue";
+import Modal from "src/components/Modal.vue";
 export default {
   components: {
     Feedback,
@@ -63,6 +68,7 @@ export default {
     Comment,
     Textarea,
     ActionButton,
+    Modal
   },
   props: {
     id: { type: String, required: true },
@@ -70,6 +76,7 @@ export default {
   data() {
     return {
       singleFeedback: emptySingleFeedback as SingleFeedbackType,
+      isModalOpen: true, 
     };
   },
   computed: {
@@ -87,6 +94,11 @@ export default {
       Comments: data.Comments,
     };
   },
+  methods: {
+    editFeedback() {
+      console.log('nesto')
+    }
+  }
 };
 </script>
 
