@@ -1,5 +1,5 @@
 <template>
-  <!-- <div v-if="currentFeedback" class="wrapper">
+  <div v-if="singleFeedback" class="wrapper">
     <div class="wrapper__header">
       <router-link to="/" class="wrapper__header-backButton">
         <Icon>
@@ -15,12 +15,12 @@
         <h3>Edit Feedback</h3>
       </button>
     </div>
-    <Feedback :feedback="currentFeedback" />
+    <Feedback :feedback="singleFeedback" />
 
     <div class="wrapper__comments">
-      <h3>{{ commentsLength }} <span>Comments</span></h3>
+      <h3>{{ commentCount }} <span>Comments</span></h3>
       <Comment
-        v-for="comment in currentFeedback.Comments"
+        v-for="comment in singleFeedback.Comments"
         :key="comment.id"
         :comment="comment"
       />
@@ -31,6 +31,7 @@
       <textarea name="comment" id="comment"></textarea>
     </div>
   </div>
+
   <div v-else class="error">
     <h2>Unexpected error occured</h2>
     <router-link to="/" class="wrapper__header-backButton">
@@ -43,13 +44,15 @@
       </Icon>
       <h4>Go Back</h4>
     </router-link>
-  </div> -->
+  </div>
 </template>
 
 <script lang="ts">
-import Feedback from "../components/Feedback.vue";
-import Icon from "../components/Icon.vue";
-import Comment from "../components/Comment.vue";
+import { SingleFeedbackType } from "src/types/types";
+import Feedback from "src/components/Feedback.vue";
+import Comment from "src/components/Comment.vue";
+import Icon from "src/components/Icon.vue";
+import { emptySingleFeedback } from "src/utils/constants";
 import { fetchSingleFeedback } from "src/api/FeedbacksApi";
 export default {
   components: {
@@ -61,26 +64,24 @@ export default {
     id: { type: String, required: true },
   },
   data() {
-    return {};
+    return {
+      singleFeedback: emptySingleFeedback as SingleFeedbackType,
+    };
   },
   computed: {
     feedbackId() {
       return Number(this.id);
     },
-    // currentFeedback() {
-    //   return this.feedbackStore.getFeedback(this.feedbackId);
-    // },
-    // commentsLength() {
-    //   return this.feedbackStore.getFeedbackCommentsLength(this.feedbackId);
-    // },
+    commentCount() {
+      return this.singleFeedback.Comments.length;
+    },
   },
   async created() {
     const data = await fetchSingleFeedback(this.feedbackId);
-    console.log(data);
-  },
-  mounted() {
-    console.log(this.id);
-    //
+    this.singleFeedback = {
+      ...data,
+      Comments: data.Comments,
+    };
   },
 };
 </script>

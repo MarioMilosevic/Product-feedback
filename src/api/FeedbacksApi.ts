@@ -22,7 +22,7 @@ export const fetchSingleFeedback = async (id: number) => {
   try {
     const { data, error } = await supabase
       .from("Feedbacks")
-      .select(`*, Comments(*)`)
+      .select(`*, Comments(*, Users(*))`)
       .eq("id", id)
       .single();
 

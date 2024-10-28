@@ -24,19 +24,11 @@ export default {
   props: {
     comment: {
       type: Object as PropType<CommentType>,
+      required: true,
     },
   },
   data() {
     return {};
-  },
-  computed: {
-    //
-  },
-  mounted() {
-    //
-  },
-  methods: {
-    //
   },
 };
 </script>
