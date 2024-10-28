@@ -6,7 +6,9 @@ export type FeedbackType = {
   likes: number;
   status: string;
   title: string;
-  Comments: CommentType[];
+  comments: {
+    id: number;
+  }[];
 };
 
 export type CommentType = {

@@ -57,7 +57,7 @@ export default {
         </Icon>
 
         <span class="feedback__comments-length">{{
-          feedback.Comments.length
+          feedback.comments.length
         }}</span>
       </div>
     </div>
@@ -117,9 +117,9 @@ export default {
       align-items: flex-start;
       gap: 1rem;
 
-      &-description {
-        /* font-size: 0.8rem; */
-      }
+      /* &-description {
+        font-size: 0.8rem; 
+      } */
 
       &-category {
         padding: 5px 10px;

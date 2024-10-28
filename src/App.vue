@@ -5,10 +5,9 @@
 
 <script lang="ts">
 import Sidebar from "src/components/Sidebar.vue";
-// import Sidebar from "./components/Sidebar.vue";
 import Main from "src/components/Main.vue";
-import { fetchFeedbacks } from "./api/FeedbacksApi";
-import { useFeedbackStore } from "./stores/FeedbackStore";
+import { fetchFeedbacks } from "src/api/FeedbacksApi";
+import {useFeedbackStore} from 'src/stores/FeedbackStore'
 import { mapActions } from "pinia";
 
 export default {

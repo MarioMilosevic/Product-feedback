@@ -1,5 +1,5 @@
 <script lang="ts">
-import {  PropType } from "vue";
+import { PropType } from "vue";
 import { FeedbackType } from "../types/types";
 import Feedback from "./Feedback.vue";
 
@@ -19,7 +19,11 @@ export default {
 
 <template>
   <main>
-    <Feedback v-for="feedback in feedbacks" :key="feedback.id" :feedback="feedback" />
+    <Feedback
+      v-for="feedback in feedbacks"
+      :key="feedback.id"
+      :feedback="feedback"
+    />
   </main>
 </template>
 

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import ImageSection from "./ImageSection.vue";
 export default {
   name:"Sidebar",
