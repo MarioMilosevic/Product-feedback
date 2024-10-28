@@ -30,11 +30,13 @@
       <h4>Add comment</h4>
       <Textarea />
     </div>
+
+    <Input name="title">
+      Add a short descriptive headline
+    </Input>
   </div>
 
-  <Modal v-if="isModalOpen"/>
-
-  
+  <Modal v-if="isModalOpen" />
 
   <!-- <div v-else class="error">
     <h2>Unexpected error occured</h2>
@@ -61,6 +63,7 @@ import { emptySingleFeedback } from "src/utils/constants";
 import { fetchSingleFeedback } from "src/api/FeedbacksApi";
 import ActionButton from "src/components/ActionButton.vue";
 import Modal from "src/components/Modal.vue";
+import Input from "src/components/Input.vue";
 export default {
   components: {
     Feedback,
@@ -68,7 +71,8 @@ export default {
     Comment,
     Textarea,
     ActionButton,
-    Modal
+    Modal,
+    Input,
   },
   props: {
     id: { type: String, required: true },
@@ -76,7 +80,7 @@ export default {
   data() {
     return {
       singleFeedback: emptySingleFeedback as SingleFeedbackType,
-      isModalOpen: true, 
+      isModalOpen: false,
     };
   },
   computed: {
@@ -96,9 +100,9 @@ export default {
   },
   methods: {
     editFeedback() {
-      console.log('nesto')
-    }
-  }
+      console.log("nesto");
+    },
+  },
 };
 </script>
 
