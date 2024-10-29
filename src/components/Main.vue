@@ -1,12 +1,14 @@
 <script lang="ts">
 import { PropType } from "vue";
-import { FeedbackType } from "../types/types";
-import Feedback from "./Feedback.vue";
+import { FeedbackType } from "src/types/types";
+import Feedback from "src/components/Feedback.vue";
+import FeedbackNav from "src/components/FeedbackNav.vue";
 
 export default {
   name: "Main",
   components: {
     Feedback,
+    FeedbackNav
   },
   props: {
     feedbacks: {
@@ -14,11 +16,20 @@ export default {
       required: true,
     },
   },
+  mounted(){
+    console.log(this.feedbacks)
+  },
+  watch: {
+    feedbacks(newVal) {
+      console.log(newVal)
+    }
+  }
 };
 </script>
 
 <template>
   <main>
+    <FeedbackNav :feedbacks="feedbacks"/>
     <Feedback
       v-for="feedback in feedbacks"
       :key="feedback.id"
