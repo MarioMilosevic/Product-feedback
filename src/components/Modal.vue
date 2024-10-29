@@ -2,15 +2,38 @@
   <div class="overlay">
     <div class="modal">
       <h1>Edit Feedback</h1>
-      <button @click="$emit('empty-cart')">Start New Order</button>
+      <form action="">
+        <h5></h5>
+        <Input type="text" name="title">
+          <template v-slot:title> FeedbackTitle </template>
+          <template v-slot:description>
+            Add a short, descriptive headline
+          </template>
+        </Input>
+        <Input type="text" name="category">
+          <template v-slot:title> Category </template>
+          <template v-slot:description>
+            Add a short, descriptive headline
+          </template>
+        </Input>
+        <Input type="text" name="title">
+          <template v-slot:title> FeedbackTitle </template>
+          <template v-slot:description>
+            Add a short, descriptive headline
+          </template>
+        </Input>
+      </form>
     </div>
   </div>
 </template>
 <script>
+import Input from "src/components/Input.vue";
+
 export default {
   name: "Modal",
-
-  components: {},
+  components: {
+    Input,
+  },
   props: {},
   data() {
     return {};

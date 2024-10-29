@@ -11,7 +11,7 @@
         </Icon>
         <h4>Go Back</h4>
       </router-link>
-      <ActionButton color="blue" @click="editFeedback">
+      <ActionButton color="blue" @click-event="editFeedback">
         Edit Feedback
       </ActionButton>
     </div>
@@ -30,27 +30,9 @@
       <h4>Add comment</h4>
       <Textarea />
     </div>
-
-    <Input name="title">
-      Add a short descriptive headline
-    </Input>
   </div>
 
-  <Modal v-if="isModalOpen" />
-
-  <!-- <div v-else class="error">
-    <h2>Unexpected error occured</h2>
-    <router-link to="/" class="wrapper__header-backButton">
-      <Icon>
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
-        />
-      </Icon>
-      <h4>Go Back</h4>
-    </router-link>
-  </div> -->
+  <Modal v-show="isModalOpen" />
 </template>
 
 <script lang="ts">
@@ -100,7 +82,7 @@ export default {
   },
   methods: {
     editFeedback() {
-      console.log("nesto");
+      this.isModalOpen = true
     },
   },
 };
@@ -168,3 +150,17 @@ export default {
   gap: 3rem;
 }
 </style>
+
+<!-- <div v-else class="error">
+    <h2>Unexpected error occured</h2>
+    <router-link to="/" class="wrapper__header-backButton">
+      <Icon>
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
+        />
+      </Icon>
+      <h4>Go Back</h4>
+    </router-link>
+  </div> -->

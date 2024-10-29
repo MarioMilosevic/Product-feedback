@@ -1,5 +1,5 @@
 <template>
-  <button :class="buttonClass">
+  <button :class="buttonClass" @click="$emit('click-event')">
     <h3>
       <slot />
     </h3>
