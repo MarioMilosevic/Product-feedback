@@ -2,7 +2,12 @@
   <div v-if="isModalOpen" class="overlay">
     <div class="overlay__modal">
       <h1>Edit Feedback</h1>
-      <Icon class="overlay__modal-icon" width="30px" height="30px">
+      <Icon
+        class="overlay__modal-icon"
+        width="30px"
+        height="30px"
+        @click="$emit('close-modal')"
+      >
         <path
           stroke-linecap="round"
           stroke-linejoin="round"
@@ -49,6 +54,7 @@ export default {
       required: true,
     },
   },
+  emits: ["close-modal"],
   data() {
     return {};
   },
@@ -56,7 +62,6 @@ export default {
     //
   },
   mounted() {
-    console.log(this.isModalOpen);
     //
   },
   methods: {

@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <Modal :isModalOpen="isModalOpen" />
+  <Modal :isModalOpen="isModalOpen" @close-modal="closeModal"/>
 </template>
 
 <script lang="ts">
@@ -82,6 +82,9 @@ export default {
     editFeedback() {
       this.isModalOpen = true;
     },
+    closeModal() {
+      this.isModalOpen = false
+    }
   },
 };
 </script>

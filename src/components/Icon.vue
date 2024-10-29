@@ -8,6 +8,7 @@
     :class="class"
     :width="width"
     :height="height"
+    @click="$emit('click')"
   >
     <slot></slot>
   </svg>
@@ -49,6 +50,6 @@ export default {
       default: 20,
     },
   },
+  emits: ["click"],
 };
 </script>
-
