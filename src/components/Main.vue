@@ -8,7 +8,7 @@ export default {
   name: "Main",
   components: {
     Feedback,
-    FeedbackNav
+    FeedbackNav,
   },
   props: {
     feedbacks: {
@@ -16,20 +16,13 @@ export default {
       required: true,
     },
   },
-  mounted(){
-    console.log(this.feedbacks)
-  },
-  watch: {
-    feedbacks(newVal) {
-      console.log(newVal)
-    }
-  }
+  mounted() {},
 };
 </script>
 
 <template>
   <main>
-    <FeedbackNav :feedbacks="feedbacks"/>
+    <FeedbackNav :feedbacks="feedbacks" />
     <Feedback
       v-for="feedback in feedbacks"
       :key="feedback.id"

@@ -11,7 +11,7 @@
     <div class="form__characters">
       <p>{{ remainingCharacters }} characters left</p>
       <ActionButton color="purple">
-        <h4>Post Comment</h4>
+        Post Comment
       </ActionButton>
     </div>
   </form>

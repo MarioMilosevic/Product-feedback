@@ -1,6 +1,8 @@
 <template>
   <button :class="buttonClass">
-    <slot />
+    <h3>
+      <slot />
+    </h3>
   </button>
 </template>
 
@@ -41,7 +43,15 @@ button {
   background-color: $terniary-color;
 }
 
+.button-blue:hover {
+  background-color: $terniary-color-hover;
+}
+
 .button-purple {
   background-color: $forthiary-color;
+}
+
+.button-purple:hover {
+  background-color: $forthiary-color-hover;
 }
 </style>

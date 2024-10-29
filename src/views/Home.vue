@@ -7,7 +7,7 @@
 import Sidebar from "src/components/Sidebar.vue";
 import Main from "src/components/Main.vue";
 import { fetchFeedbacks } from "src/api/FeedbacksApi";
-import {useFeedbackStore} from 'src/stores/FeedbackStore'
+import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapActions } from "pinia";
 
 export default {

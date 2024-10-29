@@ -12,7 +12,7 @@
         <h4>Go Back</h4>
       </router-link>
       <ActionButton color="blue" @click="editFeedback">
-        <h3>Edit Feedback</h3>
+        Edit Feedback
       </ActionButton>
     </div>
     <Feedback :feedback="singleFeedback" />
