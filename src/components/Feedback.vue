@@ -1,28 +1,7 @@
-<script lang="ts">
-import { PropType } from "vue";
-import { FeedbackType } from "../types/types";
-import Icon from "./Icon.vue";
-import Category from "./Category.vue";
-
-export default {
-  name: "Feedback",
-  props: {
-    feedback: {
-      type: Object as PropType<FeedbackType>,
-      required: true,
-    },
-  },
-  components: {
-    Category,
-    Icon,
-  },
-};
-</script>
-
 <template>
   <router-link
     class="link"
-    :to="{ name: 'FeedbackDetails', params: { id: feedback.id } }"
+    :to="{ name: 'FeedbackDetails', params: { id: feedbackId } }"
   >
     <div class="feedback">
       <div class="feedback__content">
@@ -63,6 +42,35 @@ export default {
     </div>
   </router-link>
 </template>
+
+
+<script lang="ts">
+import { PropType } from "vue";
+import { FeedbackType } from "../types/types";
+import Icon from "./Icon.vue";
+import Category from "./Category.vue";
+
+export default {
+  name: "Feedback",
+  props: {
+    feedback: {
+      type: Object as PropType<FeedbackType>,
+      required: true,
+    },
+  },
+  components: {
+    Category,
+    Icon,
+  },
+  computed: {
+    feedbackId() {
+      return this.feedback.id
+    }
+  }
+};
+</script>
+
+
 
 <style lang="scss" scoped>
 @import "../scss/variables";

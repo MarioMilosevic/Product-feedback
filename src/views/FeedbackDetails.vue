@@ -1,5 +1,5 @@
 <template>
-  <div v-if="singleFeedback" class="wrapper">
+  <div v-if="singleFeedback.id" class="wrapper">
     <div class="wrapper__header">
       <router-link to="/" class="wrapper__header-backButton">
         <Icon>
@@ -16,7 +16,6 @@
       </ActionButton>
     </div>
     <Feedback :feedback="singleFeedback" />
-
     <div class="wrapper__comments">
       <h3>{{ commentCount }} <span>Comments</span></h3>
       <Comment
@@ -32,7 +31,7 @@
     </div>
   </div>
 
-  <Modal v-show="isModalOpen" />
+  <Modal :isModalOpen="isModalOpen" />
 </template>
 
 <script lang="ts">
@@ -41,7 +40,6 @@ import Feedback from "src/components/Feedback.vue";
 import Comment from "src/components/Comment.vue";
 import Icon from "src/components/Icon.vue";
 import Textarea from "src/components/Textarea.vue";
-import { emptySingleFeedback } from "src/utils/constants";
 import { fetchSingleFeedback } from "src/api/FeedbacksApi";
 import ActionButton from "src/components/ActionButton.vue";
 import Modal from "src/components/Modal.vue";
@@ -61,7 +59,7 @@ export default {
   },
   data() {
     return {
-      singleFeedback: emptySingleFeedback as SingleFeedbackType,
+      singleFeedback: {} as SingleFeedbackType,
       isModalOpen: false,
     };
   },
@@ -82,7 +80,7 @@ export default {
   },
   methods: {
     editFeedback() {
-      this.isModalOpen = true
+      this.isModalOpen = true;
     },
   },
 };
@@ -150,17 +148,3 @@ export default {
   gap: 3rem;
 }
 </style>
-
-<!-- <div v-else class="error">
-    <h2>Unexpected error occured</h2>
-    <router-link to="/" class="wrapper__header-backButton">
-      <Icon>
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
-        />
-      </Icon>
-      <h4>Go Back</h4>
-    </router-link>
-  </div> -->

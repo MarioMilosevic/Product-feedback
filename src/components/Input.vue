@@ -60,7 +60,7 @@ export default {
   }
 
   &__paragraph {
-    font-size: 14px;
+    font-size: 12px;
   }
 }
 </style>
