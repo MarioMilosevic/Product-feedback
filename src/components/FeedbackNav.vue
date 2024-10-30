@@ -24,14 +24,15 @@
         </select>
       </div>
     </div>
-    <ActionButton color="purple" size="big"> Add Feedback </ActionButton>
+    <ActionButton color="purple" size="big" @click="$emit('open-modal')"> Add Feedback </ActionButton>
   </nav>
 </template>
+
 <script lang="ts">
 import Icon from "src/components/Icon.vue";
 import { FeedbackType } from "src/types/types";
 import { PropType } from "vue";
-import ActionButton from "./ActionButton.vue";
+import ActionButton from "src/components/ActionButton.vue";
 
 export default {
   components: {
@@ -44,6 +45,7 @@ export default {
       required: true,
     },
   },
+  emits:['open-modal'],
   data() {
     return {};
   },
