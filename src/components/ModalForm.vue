@@ -46,7 +46,7 @@
         <Textarea />
         <div class="overlay__modal-form-buttonContainer">
           <ActionButton color="red" size="medium"> Delete </ActionButton>
-          <div>
+          <div class="overlay__modal-form-buttonContainer-div">
             <ActionButton color="grey" size="medium"> Cancel </ActionButton>
             <ActionButton color="purple" size="medium">
               Save Changes
@@ -114,6 +114,8 @@ export default {
     position: fixed;
     top: 50%;
     left: 50%;
+    max-width: 600px;
+    width: 100%;
     transform: translate(-50%, -50%);
     background-color: $secondary-color;
     padding: 2rem;
@@ -133,15 +135,20 @@ export default {
       }
 
       &-buttonContainer {
-        border: 1px solid black;
+        margin-top: 1rem;
         display: flex;
         justify-content: space-between;
+
+        &-div {
+          display: flex;
+          gap: 1rem;
+        }
       }
     }
 
     &-headerIcon {
       position: absolute;
-      top: -5%;
+      top: -3%;
       left: 15%;
       width: 50px;
       height: 50px;
