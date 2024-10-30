@@ -42,7 +42,6 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: $secondary-color;
-  padding: 1rem;
   gap: 1rem;
 
   &__label {

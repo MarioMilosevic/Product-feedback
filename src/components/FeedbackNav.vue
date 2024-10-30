@@ -24,7 +24,7 @@
         </select>
       </div>
     </div>
-    <ActionButton color="purple"> Add Feedback </ActionButton>
+    <ActionButton color="purple" size="big"> Add Feedback </ActionButton>
   </nav>
 </template>
 <script lang="ts">

@@ -1,5 +1,5 @@
 <template>
-  <button :class="buttonClass" @click="$emit('click-event')">
+  <button :class="[buttonColor, buttonSize]" @click="$emit('click-event')">
     <h3>
       <slot />
     </h3>
@@ -13,16 +13,23 @@ export default {
       type: String,
       required: true,
       validator(value) {
-        return ["blue", "purple"].includes(value);
+        return ["blue", "purple", "red", "grey"].includes(value);
+      },
+    },
+    size: {
+      type: String,
+      required: true,
+      validator(value) {
+        return ["small", "medium", "big"].includes(value);
       },
     },
   },
   computed: {
-    buttonClass() {
-      return {
-        "button-blue": this.color === "blue",
-        "button-purple": this.color === "purple",
-      };
+    buttonColor() {
+      return `button-${this.color}`;
+    },
+    buttonSize() {
+      return this.size;
     },
   },
 };
@@ -33,10 +40,21 @@ export default {
 
 button {
   cursor: pointer;
-  padding: 1rem 2rem;
   border: none;
   border-radius: $border-radius-medium;
   color: $secondary-color;
+}
+
+.small {
+  padding: 0.5rem 1rem;
+}
+
+.medium {
+  padding: 0.75rem 1rem;
+}
+
+.big {
+  padding: 1rem 2rem;
 }
 
 .button-blue {
@@ -53,5 +71,21 @@ button {
 
 .button-purple:hover {
   background-color: $forthiary-color-hover;
+}
+
+.button-red {
+  background-color: $error-color;
+}
+
+.button-red:hover {
+  background-color: $error-color-hover;
+}
+
+.button-grey {
+  background-color: $cancel-color;
+}
+
+.button-grey:hover {
+  background-color: $cancel-color-hover;
 }
 </style>

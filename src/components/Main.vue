@@ -1,3 +1,13 @@
+<template>
+  <main>
+    <FeedbackNav :feedbacks="feedbacks" />
+    <Feedback
+      v-for="feedback in feedbacks"
+      :key="feedback.id"
+      :feedback="feedback"
+    />
+  </main>
+</template>
 <script lang="ts">
 import { PropType } from "vue";
 import { FeedbackType } from "src/types/types";
@@ -20,16 +30,6 @@ export default {
 };
 </script>
 
-<template>
-  <main>
-    <FeedbackNav :feedbacks="feedbacks" />
-    <Feedback
-      v-for="feedback in feedbacks"
-      :key="feedback.id"
-      :feedback="feedback"
-    />
-  </main>
-</template>
 
 <style lang="scss" scoped>
 main {

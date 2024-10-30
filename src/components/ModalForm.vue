@@ -21,8 +21,8 @@
           d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
         />
       </Icon>
-      <form action="">
-        <h5></h5>
+
+      <form class="overlay__modal-form">
         <Input type="text" name="title">
           <template v-slot:title> FeedbackTitle </template>
           <template v-slot:description>
@@ -39,6 +39,20 @@
           <template v-slot:title> Update Status </template>
           <template v-slot:description> Change feature state </template>
         </Select>
+        <h4>Feedback Detail</h4>
+        <p class="overlay__modal-form__para">
+          Include any specific comments on what should be improved, added, etc.
+        </p>
+        <Textarea />
+        <div class="overlay__modal-form-buttonContainer">
+          <ActionButton color="red" size="medium"> Delete </ActionButton>
+          <div>
+            <ActionButton color="grey" size="medium"> Cancel </ActionButton>
+            <ActionButton color="purple" size="medium">
+              Save Changes
+            </ActionButton>
+          </div>
+        </div>
       </form>
     </div>
   </div>
@@ -47,6 +61,8 @@
 import Input from "src/components/Input.vue";
 import Select from "src/components/Select.vue";
 import Icon from "src/components/Icon.vue";
+import Textarea from "src/components/Textarea.vue";
+import ActionButton from "src/components/ActionButton.vue";
 
 export default {
   name: "Modal",
@@ -54,6 +70,8 @@ export default {
     Input,
     Select,
     Icon,
+    Textarea,
+    ActionButton,
   },
   props: {
     isModalOpen: {
@@ -97,18 +115,34 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 500px;
-    height: 500px;
     background-color: $secondary-color;
     padding: 2rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
 
+    &-form {
+      background-color: $secondary-color;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      &__para {
+        font-size: 12px;
+      }
+
+      &-buttonContainer {
+        border: 1px solid black;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+
     &-headerIcon {
       position: absolute;
       top: -5%;
-      left:15%;
+      left: 15%;
       width: 50px;
       height: 50px;
     }

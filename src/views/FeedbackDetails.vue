@@ -11,7 +11,7 @@
         </Icon>
         <h4>Go Back</h4>
       </router-link>
-      <ActionButton color="blue" @click-event="editFeedback">
+      <ActionButton color="blue" size="big" @click-event="editFeedback">
         Edit Feedback
       </ActionButton>
     </div>
@@ -30,7 +30,7 @@
       <Textarea :maxCharacters="maxCharacters" :content="textAreaContent" @update-content="handleUpdateContent"/>
       <div class="wrapper__addComment-div">
         <p>{{ remainingCharacters }} characters left</p>
-        <ActionButton color="purple"> Post Comment </ActionButton>
+        <ActionButton color="purple" size="big"> Post Comment </ActionButton>
       </div>
     </div>
   </div>
