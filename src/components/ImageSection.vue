@@ -4,24 +4,26 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
 export default {};
 </script>
 
 <style lang="scss" scoped>
+@import "src/scss/_variables.scss";
+
 .section {
   width: 100%;
-  height: 200px;
+  height: 150px;
   border-radius: 15px;
-  background: #00f260;
-  background: linear-gradient(to right, #0575e6, #00f260);
+  background: #00c6ff;
+  background: -webkit-linear-gradient(to right, #0072ff, #00c6ff);
+  background: linear-gradient(to right, #0072ff, #00c6ff);
   display: flex;
   align-items: center;
   justify-content: center;
 
   h3 {
-    color: #f0f9ff;
-    /* color: $primary-color; */
+    color: $primary-color;
   }
 }
 </style>

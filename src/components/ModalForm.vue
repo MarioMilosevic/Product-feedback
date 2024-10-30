@@ -72,7 +72,13 @@
             Delete
           </ActionButton>
           <div class="overlay__modal-form-buttonContainer-div">
-            <ActionButton color="grey" size="medium"> Cancel </ActionButton>
+            <ActionButton
+              color="grey"
+              size="medium"
+              @click="$emit('close-modal')"
+            >
+              Cancel
+            </ActionButton>
             <ActionButton color="purple" size="medium">
               Save Changes
             </ActionButton>
@@ -123,7 +129,6 @@ export default {
   },
   mounted() {
     //
-    console.log(this.feedback);
   },
   methods: {
     //

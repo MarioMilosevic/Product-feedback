@@ -18,6 +18,8 @@ export default {
   data() {
     return {
       feedbackStore: useFeedbackStore(),
+      // u svakom slucaju da sve fecujem, al da filterujem drugi stejt i taj prikazujem
+      // neki stejt za filterovanje
     };
   },
   async created() {
@@ -26,6 +28,9 @@ export default {
   },
   methods: {
     ...mapActions(useFeedbackStore, ["setFeedbacks"]),
+  },
+  mounted() {
+    //
   },
 };
 </script>

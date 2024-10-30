@@ -14,7 +14,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import "../scss/variables";
+@import "src/scss/variables";
 
 .category {
   padding: 10px 15px;

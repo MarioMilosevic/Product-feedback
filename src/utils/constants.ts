@@ -9,5 +9,5 @@ export const emptyFeedback = {
   Comments: [],
 };
 
-export const categoryOptions = ["Feature", "UI", "UX", "Enhancement", "Bug"];
+export const categoryOptions = ["UI", "UX", "Enhancement", "Bug", "Feature"];
 export const statusOptions = ["Suggestion", "Planned", "In-progress", "Live"];
