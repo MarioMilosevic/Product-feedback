@@ -8,7 +8,7 @@
           d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
         />
       </Icon>
-      <h1>Edit Feedback</h1>
+      <h1>{{ title }}</h1>
       <Icon
         class="overlay__modal-icon"
         width="30px"
@@ -23,27 +23,39 @@
       </Icon>
 
       <form class="overlay__modal-form">
-        <Input type="text" name="title">
+        <Input type="text" name="title" :content="feedback.title">
           <template v-slot:title> FeedbackTitle </template>
           <template v-slot:description>
             Add a short, descriptive headline
           </template>
         </Input>
-        <Select name="category">
+        <Select
+          name="category"
+          :content="feedback.category"
+          @update-select="updateCategory"
+        >
           <template v-slot:title> Category </template>
           <template v-slot:description>
             Choose a category for your feedback
           </template>
         </Select>
-        <Select name="status">
+        <Select
+          v-if="feedback.id"
+          name="status"
+          :content="feedback.status"
+          @update-select="updateStatus"
+        >
           <template v-slot:title> Update Status </template>
           <template v-slot:description> Change feature state </template>
         </Select>
-        <h4>Feedback Detail</h4>
-        <p class="overlay__modal-form__para">
-          Include any specific comments on what should be improved, added, etc.
-        </p>
-        <Textarea />
+        <div class="overlay__modal-form-text">
+          <h4>Feedback Detail</h4>
+          <p>
+            Include any specific comments on what should be improved, added,
+            etc.
+          </p>
+        </div>
+        <Textarea :content="feedback.description" />
         <div class="overlay__modal-form-buttonContainer">
           <ActionButton color="red" size="medium"> Delete </ActionButton>
           <div class="overlay__modal-form-buttonContainer-div">
@@ -57,12 +69,15 @@
     </div>
   </div>
 </template>
-<script>
+
+<script lang="ts">
 import Input from "src/components/Input.vue";
 import Select from "src/components/Select.vue";
 import Icon from "src/components/Icon.vue";
 import Textarea from "src/components/Textarea.vue";
 import ActionButton from "src/components/ActionButton.vue";
+import { FeedbackType } from "src/types/types.ts";
+import { PropType } from "vue";
 
 export default {
   name: "Modal",
@@ -78,19 +93,34 @@ export default {
       type: Boolean,
       required: true,
     },
+    feedback: {
+      type: Object as PropType<FeedbackType>,
+      required: true,
+    },
   },
   emits: ["close-modal"],
   data() {
     return {};
   },
   computed: {
+    title() {
+      return this.feedback.id ? "Edit Feedback" : "Create New Feedback";
+    },
+
     //
   },
   mounted() {
     //
+    console.log(this.feedback);
   },
   methods: {
     //
+    updateCategory(newCategory: string) {
+      this.feedback.category = newCategory;
+    },
+    updateStatus(newStatus: string) {
+      this.feedback.status = newStatus;
+    },
   },
 };
 </script>
@@ -128,10 +158,16 @@ export default {
       padding: 1rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.3rem;
 
-      &__para {
-        font-size: 12px;
+      &-text {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        p {
+          font-size: 12px;
+        }
       }
 
       &-buttonContainer {

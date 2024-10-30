@@ -4,10 +4,16 @@
       <h4><slot name="title" /></h4>
       <p class="inputContainer__paragraph"><slot name="description" /></p>
     </label>
-    <input :type="name" class="inputContainer__input" />
+    <input
+      :type="name"
+      class="inputContainer__input"
+      v-model="localContent"
+      @input="$emit('update-input', localContent)"
+    />
   </div>
 </template>
-<script>
+
+<script lang="ts">
 export default {
   components: {},
   props: {
@@ -19,9 +25,16 @@ export default {
       type: String,
       required: true,
     },
+    content: {
+      type: String,
+      required: true,
+    },
   },
+  emits: ["update-input"],
   data() {
-    return {};
+    return {
+      localContent: this.content,
+    };
   },
   computed: {
     //

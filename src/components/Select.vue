@@ -4,7 +4,13 @@
       <h4><slot name="title" /></h4>
       <p class="selectContainer__paragraph"><slot name="description" /></p>
     </label>
-    <select :name="name" :id="name" class="selectContainer__select">
+    <select
+      :name="name"
+      :id="name"
+      class="selectContainer__select"
+      v-model="localContent"
+      @change="$emit('update-select', localContent)"
+    >
       <option v-for="(option, index) in options" :key="index" :value="option">
         {{ option }}
       </option>
@@ -24,6 +30,15 @@ export default {
         return ["category", "status"].includes(value);
       },
     },
+    content: {
+      type: String,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      localContent: this.content,
+    };
   },
   computed: {
     options() {

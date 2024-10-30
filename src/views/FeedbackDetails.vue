@@ -27,7 +27,11 @@
 
     <div class="wrapper__addComment">
       <h4>Add comment</h4>
-      <Textarea :maxCharacters="maxCharacters" :content="textAreaContent" @update-content="handleUpdateContent"/>
+      <Textarea
+        :maxCharacters="maxCharacters"
+        :content="textAreaContent"
+        @update-textarea="handleUpdateTextarea"
+      />
       <div class="wrapper__addComment-div">
         <p>{{ remainingCharacters }} characters left</p>
         <ActionButton color="purple" size="big"> Post Comment </ActionButton>
@@ -36,6 +40,7 @@
   </div>
 
   <ModalForm
+    :feedback="singleFeedback"
     :isModalOpen="isModalOpen"
     :content="textAreaContent"
     @close-modal="closeModal"
@@ -52,6 +57,8 @@ import { fetchSingleFeedback } from "src/api/FeedbacksApi";
 import ActionButton from "src/components/ActionButton.vue";
 import ModalForm from "src/components/ModalForm.vue";
 import Input from "src/components/Input.vue";
+import { emptyFeedback } from "src/utils/constants";
+
 export default {
   components: {
     Feedback,
@@ -67,7 +74,7 @@ export default {
   },
   data() {
     return {
-      singleFeedback: {} as SingleFeedbackType,
+      singleFeedback: emptyFeedback as SingleFeedbackType,
       isModalOpen: false,
       textAreaContent: "",
       maxCharacters: 225,
@@ -98,9 +105,9 @@ export default {
     closeModal() {
       this.isModalOpen = false;
     },
-    handleUpdateContent(newContent :string) {
-      this.textAreaContent = newContent
-    }
+    handleUpdateTextarea(newContent: string) {
+      this.textAreaContent = newContent;
+    },
   },
 };
 </script>

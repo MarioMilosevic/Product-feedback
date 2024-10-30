@@ -46,7 +46,7 @@
 
 <script lang="ts">
 import { PropType } from "vue";
-import { FeedbackType } from "../types/types";
+import { FeedbackType } from "src/types/types";
 import Icon from "./Icon.vue";
 import Category from "./Category.vue";
 

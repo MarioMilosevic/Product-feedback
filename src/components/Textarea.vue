@@ -5,15 +5,14 @@
       id="comment"
       class="form__textarea"
       v-model="localContent"
-      :maxlength="maxCharacters || null"
-      @input="$emit('update-content', localContent)"
+      :maxlength="maxCharacters"
+      @input="$emit('update-textarea', localContent)"
     >
     </textarea>
   </form>
 </template>
 
 <script lang="ts">
-
 export default {
   components: {},
   props: {
@@ -23,11 +22,10 @@ export default {
     },
     content: {
       type: String,
-      required: false,
-      default: "",
+      required: true,
     },
   },
-  emits: ["update-content"],
+  emits: ["update-textarea"],
   data() {
     return {
       localContent: this.content,
