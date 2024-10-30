@@ -4,34 +4,40 @@
       name="comment"
       id="comment"
       class="form__textarea"
-      v-model="content"
-      :maxlength="maxCharachters"
+      v-model="localContent"
+      :maxlength="maxCharacters || null"
+      @input="$emit('update-content', localContent)"
     >
     </textarea>
-    <div class="form__characters">
-      <p>{{ remainingCharacters }} characters left</p>
-      <ActionButton color="purple">
-        Post Comment
-      </ActionButton>
-    </div>
   </form>
 </template>
-<script>
-import ActionButton from "./ActionButton.vue";
 
+<script lang="ts">
 export default {
-  components: { ActionButton },
-  props: {},
+  components: {},
+  props: {
+    maxCharacters: {
+      type: Number,
+      required: false,
+    },
+    content: {
+      type: String,
+      required: false,
+      default: "",
+    },
+  },
+  emits: ["update-content"],
   data() {
     return {
-      content: "",
-      maxCharachters: 225,
+      localContent: this.content,
     };
   },
   computed: {
     remainingCharacters() {
-      return this.maxCharachters - this.content.length
-    }
+      return this.maxCharacters
+        ? this.maxCharacters - this.content.length
+        : Infinity;
+    },
   },
   mounted() {
     //

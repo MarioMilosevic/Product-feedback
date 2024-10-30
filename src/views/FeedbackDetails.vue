@@ -27,11 +27,19 @@
 
     <div class="wrapper__addComment">
       <h4>Add comment</h4>
-      <Textarea />
+      <Textarea :maxCharacters="maxCharacters" :content="textAreaContent" @update-content="handleUpdateContent"/>
+      <div class="wrapper__addComment-div">
+        <p>{{ remainingCharacters }} characters left</p>
+        <ActionButton color="purple"> Post Comment </ActionButton>
+      </div>
     </div>
   </div>
 
-  <Modal :isModalOpen="isModalOpen" @close-modal="closeModal"/>
+  <ModalForm
+    :isModalOpen="isModalOpen"
+    :content="textAreaContent"
+    @close-modal="closeModal"
+  />
 </template>
 
 <script lang="ts">
@@ -42,7 +50,7 @@ import Icon from "src/components/Icon.vue";
 import Textarea from "src/components/Textarea.vue";
 import { fetchSingleFeedback } from "src/api/FeedbacksApi";
 import ActionButton from "src/components/ActionButton.vue";
-import Modal from "src/components/Modal.vue";
+import ModalForm from "src/components/ModalForm.vue";
 import Input from "src/components/Input.vue";
 export default {
   components: {
@@ -51,7 +59,7 @@ export default {
     Comment,
     Textarea,
     ActionButton,
-    Modal,
+    ModalForm,
     Input,
   },
   props: {
@@ -61,6 +69,8 @@ export default {
     return {
       singleFeedback: {} as SingleFeedbackType,
       isModalOpen: false,
+      textAreaContent: "",
+      maxCharacters: 225,
     };
   },
   computed: {
@@ -69,6 +79,9 @@ export default {
     },
     commentCount() {
       return this.singleFeedback.Comments.length;
+    },
+    remainingCharacters() {
+      return this.maxCharacters - this.textAreaContent.length;
     },
   },
   async created() {
@@ -83,7 +96,10 @@ export default {
       this.isModalOpen = true;
     },
     closeModal() {
-      this.isModalOpen = false
+      this.isModalOpen = false;
+    },
+    handleUpdateContent(newContent :string) {
+      this.textAreaContent = newContent
     }
   },
 };
@@ -142,6 +158,12 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+
+    &-div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 }
 
