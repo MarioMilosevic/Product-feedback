@@ -29,9 +29,8 @@
 </template>
 
 <script lang="ts">
+import { useFeedbackStore } from "src/stores/FeedbackStore";
 import Icon from "src/components/Icon.vue";
-import { FeedbackType } from "src/types/types";
-import { PropType } from "vue";
 import ActionButton from "src/components/ActionButton.vue";
 
 export default {
@@ -40,20 +39,18 @@ export default {
     ActionButton,
   },
   props: {
-    feedbacks: {
-      type: Array as PropType<FeedbackType[]>,
-      required: true,
-    },
   },
   emits:['open-modal'],
   data() {
-    return {};
+    return {
+      feedbackStore:useFeedbackStore()
+    };
   },
   computed: {
     feedbacksLength() {
-      return this.feedbacks.length;
+      return this.feedbackStore.feedbacks.length;
     },
-    //
+ 
   },
   mounted() {
     //

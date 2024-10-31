@@ -10,4 +10,4 @@ export const emptyFeedback = {
 };
 
 export const categoryOptions = ["UI", "UX", "Enhancement", "Bug", "Feature"];
-export const statusOptions = ["Suggestion", "Planned", "In-progress", "Live"];
+export const statusOptions = ["Planned", "In-progress", "Live"];

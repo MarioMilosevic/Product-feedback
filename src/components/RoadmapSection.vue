@@ -1,0 +1,67 @@
+<template>
+  <section class="section">
+    <div class="section__header">
+      <h4>Roadmap</h4>
+      <button>View</button>
+    </div>
+    <div class="section__counts">
+      <Status
+        v-for="(count, status) in statusCounts"
+        :key="status"
+        :status="status"
+        :count="count"
+      />
+    </div>
+  </section>
+</template>
+
+<script lang="ts">
+import { useFeedbackStore } from "src/stores/FeedbackStore";
+import Status from "src/components/Status.vue";
+
+export default {
+  components: { Status },
+  props: {},
+  data() {
+    return {};
+  },
+  computed: {
+    statusCounts() {
+      const feedbackStore = useFeedbackStore();
+      return feedbackStore.getStatusCount;
+    },
+    //
+  },
+  mounted() {
+    //
+  },
+  methods: {
+    //
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+@import "src/scss/_variables.scss";
+
+.section {
+  background-color: $secondary-color;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: $border-radius-medium;
+  gap: 1rem;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__counts {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+</style>

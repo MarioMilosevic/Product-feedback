@@ -1,16 +1,18 @@
 <script lang="ts">
 import ImageSection from "src/components/ImageSection.vue";
 import CategoriesSection from "src/components/CategoriesSection.vue";
+import RoadmapSection from "src/components/RoadmapSection.vue";
 
 export default {
   name: "Sidebar",
   components: {
     ImageSection,
-    CategoriesSection
+    CategoriesSection,
+    RoadmapSection,
   },
 
   computed: {
-  //
+    //
   },
   mounted() {
     //
@@ -22,6 +24,7 @@ export default {
   <aside class="sidebar">
     <ImageSection />
     <CategoriesSection />
+    <RoadmapSection />
   </aside>
 </template>
 

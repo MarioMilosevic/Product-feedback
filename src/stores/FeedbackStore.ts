@@ -12,23 +12,20 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       return (feedbackId: number) =>
         state.feedbacks.find((feedback) => feedback.id === feedbackId);
     },
-    getFeedbackCommentsLength: (state) => {
-      return (feedbackId: number) => {
-        const currentFeedback = state.feedbacks.find(
-          (feedback) => feedback.id === feedbackId
-        );
-        if (currentFeedback) {
-          return currentFeedback.Comments.length;
+    getStatusCount: (state) => {
+      return state.feedbacks.reduce((acc, feedback) => {
+        if (acc[feedback.status]) {
+          acc[feedback.status]++;
+        } else {
+          acc[feedback.status] = 1;
         }
-      };
+        return acc;
+      }, {} as Record<string, number>);
     },
   },
   actions: {
     setFeedbacks(feedbacks: FeedbackType[]) {
       this.feedbacks = feedbacks;
-    },
-    getFeedbacks() {
-      this.feedbacks;
     },
   },
 });
