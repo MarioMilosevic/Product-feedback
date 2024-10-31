@@ -2,7 +2,7 @@
   <section class="section">
     <div class="section__header">
       <h4>Roadmap</h4>
-      <button>View</button>
+      <button class="section__header-button">View</button>
     </div>
     <div class="section__counts">
       <Status
@@ -18,9 +18,10 @@
 <script lang="ts">
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import Status from "src/components/Status.vue";
+import Category from "src/components/Category.vue";
 
 export default {
-  components: { Status },
+  components: { Status, Category },
   props: {},
   data() {
     return {};
@@ -56,6 +57,15 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    &-button {
+      border: none;
+      padding: 5px 10px;
+      background-color: $secondary-color;
+      color: $terniary-color;
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
 
   &__counts {

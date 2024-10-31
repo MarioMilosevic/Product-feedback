@@ -20,7 +20,7 @@ export default {
       type: String,
       required: true,
       validator(value) {
-        return ["small", "medium", "big"].includes(value);
+        return ["extra-small","small", "medium", "big"].includes(value);
       },
     },
   },
@@ -44,6 +44,8 @@ button {
   border-radius: $border-radius-medium;
   color: $secondary-color;
 }
+
+
 
 .small {
   padding: 0.5rem 1rem;
