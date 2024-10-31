@@ -5,12 +5,28 @@ export default {
       type: String,
       required: true,
     },
+    isSelected: {
+      type: Boolean,
+      required: false,
+    },
+    hoverEnabled: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
 
 <template>
-  <button class="category">{{ category }}</button>
+  <button
+    :class="[
+      'category',
+      { hoverEnabled: hoverEnabled },
+      { isSelected: isSelected },
+    ]"
+  >
+    {{ category }}
+  </button>
 </template>
 
 <style lang="scss" scoped>
@@ -23,5 +39,15 @@ export default {
   background-color: $primary-color;
   color: $terniary-color;
   border-radius: $border-radius-medium;
+}
+
+.hoverEnabled {
+  &:hover {
+    background-color: $primary-color-hover;
+  }
+}
+.isSelected {
+  background-color: $terniary-color;
+  color: $secondary-color;
 }
 </style>

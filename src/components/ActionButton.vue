@@ -59,33 +59,33 @@ button {
 
 .button-blue {
   background-color: $terniary-color;
-}
 
-.button-blue:hover {
-  background-color: $terniary-color-hover;
+  &:hover {
+    background-color: $terniary-color-hover;
+  }
 }
 
 .button-purple {
   background-color: $forthiary-color;
-}
 
-.button-purple:hover {
-  background-color: $forthiary-color-hover;
+  &:hover {
+    background-color: $forthiary-color-hover;
+  }
 }
 
 .button-red {
   background-color: $error-color;
-}
 
-.button-red:hover {
-  background-color: $error-color-hover;
+  &:hover {
+    background-color: $error-color-hover;
+  }
 }
 
 .button-grey {
   background-color: $cancel-color;
-}
 
-.button-grey:hover {
-  background-color: $cancel-color-hover;
+  &:hover {
+    background-color: $cancel-color-hover;
+  }
 }
 </style>

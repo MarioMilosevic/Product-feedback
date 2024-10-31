@@ -27,7 +27,6 @@ export default {
 
 <style lang="scss" scoped>
 .sidebar {
-  border: 1px solid black;
   width: 25%;
   display: flex;
   flex-direction: column;

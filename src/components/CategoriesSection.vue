@@ -3,6 +3,8 @@
     <Category
       v-for="(category, index) in allOptions"
       :key="index"
+      :isSelected="index === categoryIndex"
+      :hoverEnabled="index === categoryIndex ? false : true"
       :category="category"
     />
   </section>
@@ -20,6 +22,7 @@ export default {
   data() {
     return {
       allOptions: ["All", ...categoryOptions],
+      categoryIndex:0
     };
   },
   computed: {
@@ -39,9 +42,11 @@ export default {
 
 .section {
   background-color: $secondary-color;
-  padding: 1rem;
-  display: flex;
-  flex-wrap: wrap;
+  padding: 2rem;
+  display: grid;
+  border-radius: $border-radius-medium;
+  align-items: center;
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
 }
 </style>
