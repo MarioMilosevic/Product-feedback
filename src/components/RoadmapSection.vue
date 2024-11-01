@@ -24,12 +24,13 @@ export default {
   components: { Status, Category },
   props: {},
   data() {
-    return {};
+    return {
+      feedbackStore : useFeedbackStore()
+    };
   },
   computed: {
     statusCounts() {
-      const feedbackStore = useFeedbackStore();
-      return feedbackStore.getStatusCount;
+      return this.feedbackStore.getStatusCount;
     },
     //
   },

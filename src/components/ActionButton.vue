@@ -6,22 +6,16 @@
   </button>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   props: {
     color: {
       type: String,
       required: true,
-      validator(value) {
-        return ["blue", "purple", "red", "grey"].includes(value);
-      },
     },
     size: {
       type: String,
       required: true,
-      validator(value) {
-        return ["extra-small","small", "medium", "big"].includes(value);
-      },
     },
   },
   computed: {
