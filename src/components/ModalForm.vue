@@ -120,7 +120,7 @@ export default {
   emits: ["close-modal"],
   data() {
     return {
-      singleFeedback:this.feedback
+      singleFeedback: this.feedback,
     };
   },
   computed: {
@@ -153,7 +153,7 @@ export default {
   top: 0;
   left: 0;
   backdrop-filter: blur(3px);
-  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.6);
 
   &__modal {
     border-radius: $border-radius-big;
@@ -169,6 +169,7 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+
 
     &-form {
       background-color: $secondary-color;

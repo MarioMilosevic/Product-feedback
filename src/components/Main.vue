@@ -1,6 +1,6 @@
 <template>
   <main>
-    <FeedbackNav  @open-modal="openModal" />
+    <FeedbackNav @open-modal="openModal" />
     <Feedback
       v-for="feedback in feedbacks"
       :key="feedback.id"
@@ -18,8 +18,7 @@
 <script lang="ts">
 import { emptyFeedback } from "src/utils/constants";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
-import { fetchFeedbacks } from "src/api/FeedbacksApi";
-import { mapActions, mapState } from "pinia";
+import { mapState } from "pinia";
 import Feedback from "src/components/Feedback.vue";
 import FeedbackNav from "src/components/FeedbackNav.vue";
 import ModalForm from "src/components/ModalForm.vue";
@@ -38,16 +37,10 @@ export default {
       isModalOpen: false,
     };
   },
-   async created() {
-    const data = await fetchFeedbacks();
-    this.setFeedbacks(data);
-  },
   computed: {
-    ...mapState(useFeedbackStore, ["feedbacks"])
+    ...mapState(useFeedbackStore, ["feedbacks"]),
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setFeedbacks"]),
-
     closeModal() {
       this.isModalOpen = false;
     },
