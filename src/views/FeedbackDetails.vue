@@ -1,5 +1,7 @@
 <template>
-  <div v-if="singleFeedback.id" class="wrapper">
+  <LoadingSpinner v-if="isLoading" />
+  <div v-else class="wrapper">
+    <!-- <div v-if="singleFeedback.id" class="wrapper"> -->
     <div class="wrapper__header">
       <router-link to="/" class="wrapper__header-backButton">
         <Icon>
@@ -40,24 +42,23 @@
   </div>
 
   <ModalForm
+  v-if="singleFeedback.id"
     :feedback="singleFeedback"
     :isModalOpen="isModalOpen"
-    :content="textAreaContent"
     @close-modal="closeModal"
   />
 </template>
 
 <script lang="ts">
 import { SingleFeedbackType } from "src/types/types";
+import { fetchSingleFeedback } from "src/api/FeedbacksApi";
 import Feedback from "src/components/Feedback.vue";
 import Comment from "src/components/Comment.vue";
 import Icon from "src/components/Icon.vue";
 import Textarea from "src/components/Textarea.vue";
-import { fetchSingleFeedback } from "src/api/FeedbacksApi";
 import ActionButton from "src/components/ActionButton.vue";
 import ModalForm from "src/components/ModalForm.vue";
-import Input from "src/components/Input.vue";
-import { emptyFeedback } from "src/utils/constants";
+import LoadingSpinner from "src/components/LoadingSpinner.vue";
 
 export default {
   components: {
@@ -67,17 +68,18 @@ export default {
     Textarea,
     ActionButton,
     ModalForm,
-    Input,
+    LoadingSpinner,
   },
   props: {
     id: { type: String, required: true },
   },
   data() {
     return {
-      singleFeedback: emptyFeedback as SingleFeedbackType,
+      singleFeedback: {} as SingleFeedbackType,
       isModalOpen: false,
       textAreaContent: "",
       maxCharacters: 225,
+      isLoading: true,
     };
   },
   computed: {
@@ -93,10 +95,10 @@ export default {
   },
   async created() {
     const data = await fetchSingleFeedback(this.feedbackId);
-    this.singleFeedback = {
-      ...data,
-      Comments: data.Comments,
-    };
+    if (data) {
+      this.singleFeedback = { ...data };
+      this.isLoading = false;
+    }
   },
   methods: {
     editFeedback() {
@@ -109,11 +111,14 @@ export default {
       this.textAreaContent = newContent;
     },
   },
+  mounted() {
+    //
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../scss/variables";
+@import "src/scss/variables";
 
 .wrapper {
   max-width: 800px;

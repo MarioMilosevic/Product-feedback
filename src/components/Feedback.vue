@@ -86,6 +86,7 @@ export default {
   border-radius: $border-radius-big;
   padding: 2rem;
   display: flex;
+  gap: 1rem;
   justify-content: space-between;
   cursor: pointer;
   align-items: center;

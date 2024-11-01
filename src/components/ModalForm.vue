@@ -3,7 +3,7 @@
     <div class="overlay__modal">
       <Icon class="overlay__modal-headerIcon">
         <path
-          v-if="singleFeedback.id"
+          v-if="feedback"
           stroke-linecap="round"
           stroke-linejoin="round"
           d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
@@ -47,8 +47,9 @@
             Choose a category for your feedback
           </template>
         </Select>
+
         <Select
-          v-if="singleFeedback.id"
+          v-if="feedback"
           name="status"
           :content="singleFeedback.status"
           @update-select="updateStatus"
@@ -56,6 +57,7 @@
           <template v-slot:title> Update Status </template>
           <template v-slot:description> Change feature state </template>
         </Select>
+
         <div class="overlay__modal-form-text">
           <h4>Feedback Detail</h4>
           <p>
@@ -66,7 +68,7 @@
         <Textarea :content="singleFeedback.description" />
         <div
           class="overlay__modal-form-buttonContainer"
-          :class="[singleFeedback.id ? 'visible' : 'notVisible']"
+          :class="[feedback ? 'visible' : 'notVisible']"
         >
           <ActionButton v-if="singleFeedback.id" color="red" size="medium">
             Delete
@@ -97,6 +99,7 @@ import Textarea from "src/components/Textarea.vue";
 import ActionButton from "src/components/ActionButton.vue";
 import { FeedbackType } from "src/types/types.ts";
 import { PropType } from "vue";
+import { emptyFeedback } from "src/utils/constants";
 
 export default {
   name: "Modal",
@@ -114,18 +117,18 @@ export default {
     },
     feedback: {
       type: Object as PropType<FeedbackType>,
-      required: true,
+      default: null,
     },
   },
   emits: ["close-modal"],
   data() {
     return {
-      singleFeedback: this.feedback,
+      singleFeedback: this.feedback || emptyFeedback,
     };
   },
   computed: {
     title() {
-      return this.feedback.id ? "Edit Feedback" : "Create New Feedback";
+      return this.feedback ? "Edit Feedback" : "Create New Feedback";
     },
   },
   mounted() {
@@ -170,7 +173,6 @@ export default {
     flex-direction: column;
     gap: 1rem;
 
-
     &-form {
       background-color: $secondary-color;
       padding: 1rem;
@@ -191,7 +193,6 @@ export default {
       &-buttonContainer {
         margin-top: 1rem;
         display: flex;
-        /* justify-content: space-between; */
 
         &-div {
           display: flex;

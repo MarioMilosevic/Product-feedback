@@ -7,16 +7,13 @@
       :feedback="feedback"
     />
     <ModalForm
-      :feedback="emptyFeedback"
       :isModalOpen="isModalOpen"
-      :content="emptyFeedback"
       @close-modal="closeModal"
     />
   </main>
 </template>
 
 <script lang="ts">
-import { emptyFeedback } from "src/utils/constants";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapState } from "pinia";
 import Feedback from "src/components/Feedback.vue";
@@ -33,7 +30,6 @@ export default {
   props: {},
   data() {
     return {
-      emptyFeedback: emptyFeedback,
       isModalOpen: false,
     };
   },

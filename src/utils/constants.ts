@@ -1,5 +1,6 @@
 export const emptyFeedback = {
-  category: "Feature",
+  category: "",
+  // category: "Feature",
   created_at: "",
   description: "",
   id: 0,
