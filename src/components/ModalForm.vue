@@ -30,13 +30,22 @@
         />
       </Icon>
 
-      <form class="overlay__modal-form">
-        <Input type="text" name="title" :content="singleFeedback.title">
+      <form
+        class="overlay__modal-form"
+        @submit.prevent="submitForm(singleFeedback)"
+      >
+        <Input
+          type="text"
+          name="title"
+          :content="singleFeedback.title"
+          @update-input="updateTitle"
+        >
           <template v-slot:title> FeedbackTitle </template>
           <template v-slot:description>
             Add a short, descriptive headline
           </template>
         </Input>
+
         <Select
           name="category"
           :content="singleFeedback.category"
@@ -65,7 +74,10 @@
             etc.
           </p>
         </div>
-        <Textarea :content="singleFeedback.description" />
+        <Textarea
+          :content="singleFeedback.description"
+          @update-textarea="updateTextarea"
+        />
         <div
           class="overlay__modal-form-buttonContainer"
           :class="[feedback ? 'visible' : 'notVisible']"
@@ -135,12 +147,22 @@ export default {
     //
   },
   methods: {
+    updateTitle(newTitle: string) {
+      this.singleFeedback.title = newTitle;
+    },
     updateCategory(newCategory: string) {
-      console.log(newCategory)
+      console.log(newCategory);
       this.singleFeedback.category = newCategory;
     },
     updateStatus(newStatus: string) {
       this.singleFeedback.status = newStatus;
+    },
+    updateTextarea(newText: string) {
+      console.log("novi opis", newText);
+      this.singleFeedback.description = newText;
+    },
+    submitForm(formData) {
+      console.log(formData);
     },
   },
 };
