@@ -2,11 +2,11 @@ export type FeedbackType = {
   category: string;
   created_at?: string;
   description: string;
-  id: number;
+  id: number | string;
   likes: number;
   status: string;
   title: string;
-  Comments?: {
+  Comments: {
     feedbackId: number;
   }[];
 };

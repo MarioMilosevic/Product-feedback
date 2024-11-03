@@ -27,5 +27,8 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     setFeedbacks(feedbacks: FeedbackType[]) {
       this.feedbacks = feedbacks;
     },
+    addFeedback(feedback: FeedbackType) {
+      this.feedbacks.push(feedback)
+    }
   },
 });

@@ -105,6 +105,7 @@ export default {
       this.isModalOpen = true;
     },
     closeModal() {
+      // e.preventDefault();
       this.isModalOpen = false;
     },
     handleUpdateTextarea(newContent: string) {

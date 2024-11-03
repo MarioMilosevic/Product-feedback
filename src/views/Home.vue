@@ -32,7 +32,6 @@ export default {
     const data = await fetchFeedbacks();
     if (data) {
       this.setFeedbacks(data);
-      console.log(data)
       this.isLoading = false;
     }
   },

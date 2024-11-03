@@ -1,5 +1,10 @@
+    <!-- @click="$emit('click-event')" -->
+
 <template>
-  <button :class="[buttonColor, buttonSize]" @click="$emit('click-event')">
+  <button
+    :class="[buttonColor, buttonSize]"
+    :type="type"
+  >
     <h3>
       <slot />
     </h3>
@@ -7,6 +12,8 @@
 </template>
 
 <script lang="ts">
+import { PropType } from "vue";
+
 export default {
   props: {
     color: {
@@ -16,6 +23,10 @@ export default {
     size: {
       type: String,
       required: true,
+    },
+    type: {
+      type: String as PropType<"button" | "submit" | "reset" | undefined>,
+      default: "button",
     },
   },
   computed: {
@@ -38,8 +49,6 @@ button {
   border-radius: $border-radius-medium;
   color: $secondary-color;
 }
-
-
 
 .small {
   padding: 0.5rem 1rem;

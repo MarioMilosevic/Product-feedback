@@ -93,11 +93,11 @@
             <ActionButton
               color="grey"
               size="medium"
-              @click="$emit('close-modal')"
+              @click.prevent="$emit('close-modal')"
             >
               Cancel
             </ActionButton>
-            <ActionButton color="purple" size="medium" @click="handleSubmit">
+            <ActionButton color="purple" size="medium" type="submit">
               Save Changes
             </ActionButton>
           </div>
@@ -118,6 +118,8 @@ import { FeedbackType } from "src/types/types.ts";
 import { PropType } from "vue";
 import { emptyFeedback } from "src/utils/constants";
 import { addFeedback } from "src/api/FeedbacksApi";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
+import { mapActions } from "pinia";
 
 export default {
   name: "Modal",
@@ -142,7 +144,7 @@ export default {
   data() {
     return {
       singleFeedback:
-        this.feedback as FeedbackType || emptyFeedback as FeedbackType,
+        (this.feedback as FeedbackType) || (emptyFeedback as FeedbackType),
       errors: {} as Record<string, string>,
     };
   },
@@ -155,6 +157,7 @@ export default {
     //
   },
   methods: {
+    ...mapActions(useFeedbackStore, ["addFeedback"]),
     updateTitle(newTitle: string) {
       this.singleFeedback.title = newTitle;
     },
@@ -167,12 +170,18 @@ export default {
     updateTextarea(newText: string) {
       this.singleFeedback.description = newText;
     },
-    handleSubmit() {
-      console.log(this.singleFeedback);
+    async handleSubmit() {
+      console.log("forma submitovana");
       const validation = modalFormSchema.safeParse(this.singleFeedback);
       if (validation.success) {
-        addFeedback(this.singleFeedback);
-        this.$emit('close-modal')
+        try {
+          const data = await addFeedback(this.singleFeedback);
+          const newFeedback = { ...data, Comments: [] }
+          this.$emit("close-modal");
+          this.addFeedback(newFeedback);
+        } catch (error) {
+          console.error("Error adding feedback", error);
+        }
       } else {
         this.errors = validation.error.errors.reduce((acc, err) => {
           const key = err.path.length > 0 ? err.path[0] : "";
