@@ -30,10 +30,7 @@
         />
       </Icon>
 
-      <form
-        class="overlay__modal-form"
-        @submit.prevent="submitForm(singleFeedback)"
-      >
+      <form class="overlay__modal-form" @submit.prevent="handleSubmit">
         <Input
           type="text"
           name="title"
@@ -45,6 +42,7 @@
             Add a short, descriptive headline
           </template>
         </Input>
+        <span v-if="errors.title" class="error">{{ errors.title }}</span>
 
         <Select
           name="category"
@@ -56,6 +54,7 @@
             Choose a category for your feedback
           </template>
         </Select>
+        <span v-if="errors.category" class="error">{{ errors.category }}</span>
 
         <Select
           v-if="feedback"
@@ -66,6 +65,7 @@
           <template v-slot:title> Update Status </template>
           <template v-slot:description> Change feature state </template>
         </Select>
+        <span v-if="errors.status" class="error">{{ errors.status }}</span>
 
         <div class="overlay__modal-form-text">
           <h4>Feedback Detail</h4>
@@ -78,6 +78,10 @@
           :content="singleFeedback.description"
           @update-textarea="updateTextarea"
         />
+        <span v-if="errors.description" class="error">{{
+          errors.description
+        }}</span>
+
         <div
           class="overlay__modal-form-buttonContainer"
           :class="[feedback ? 'visible' : 'notVisible']"
@@ -93,7 +97,7 @@
             >
               Cancel
             </ActionButton>
-            <ActionButton color="purple" size="medium">
+            <ActionButton color="purple" size="medium" @click="handleSubmit">
               Save Changes
             </ActionButton>
           </div>
@@ -109,9 +113,11 @@ import Select from "src/components/Select.vue";
 import Icon from "src/components/Icon.vue";
 import Textarea from "src/components/Textarea.vue";
 import ActionButton from "src/components/ActionButton.vue";
+import { modalFormSchema } from "src/validation/modalFormSchema";
 import { FeedbackType } from "src/types/types.ts";
 import { PropType } from "vue";
 import { emptyFeedback } from "src/utils/constants";
+import { addFeedback } from "src/api/FeedbacksApi";
 
 export default {
   name: "Modal",
@@ -135,7 +141,9 @@ export default {
   emits: ["close-modal"],
   data() {
     return {
-      singleFeedback: this.feedback || emptyFeedback,
+      singleFeedback:
+        this.feedback as FeedbackType || emptyFeedback as FeedbackType,
+      errors: {} as Record<string, string>,
     };
   },
   computed: {
@@ -151,18 +159,27 @@ export default {
       this.singleFeedback.title = newTitle;
     },
     updateCategory(newCategory: string) {
-      console.log(newCategory);
       this.singleFeedback.category = newCategory;
     },
     updateStatus(newStatus: string) {
       this.singleFeedback.status = newStatus;
     },
     updateTextarea(newText: string) {
-      console.log("novi opis", newText);
       this.singleFeedback.description = newText;
     },
-    submitForm(formData) {
-      console.log(formData);
+    handleSubmit() {
+      console.log(this.singleFeedback);
+      const validation = modalFormSchema.safeParse(this.singleFeedback);
+      if (validation.success) {
+        addFeedback(this.singleFeedback);
+        this.$emit('close-modal')
+      } else {
+        this.errors = validation.error.errors.reduce((acc, err) => {
+          const key = err.path.length > 0 ? err.path[0] : "";
+          acc[key] = err.message;
+          return acc;
+        }, {} as Record<string, string>);
+      }
     },
   },
 };
@@ -247,5 +264,10 @@ export default {
 
 .notVisible {
   justify-content: flex-end;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
 }
 </style>

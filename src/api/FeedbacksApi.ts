@@ -5,7 +5,7 @@ export const fetchFeedbacks = async (): Promise<FeedbackType[]> => {
   try {
     const { data, error } = await supabase.from("Feedbacks")
       .select(`*, Comments (
-      feedbackId:id)`)
+      feedbackId:id)`);
     // .order()
 
     if (error) {
@@ -35,6 +35,24 @@ export const fetchSingleFeedback = async (id: number) => {
   } catch (error) {
     console.error("Error fetching data", error);
     return;
+  }
+};
+
+export const addFeedback = async (newFeedback: FeedbackType) => {
+  console.log(newFeedback)
+  try {
+    const { data, error } = await supabase
+      .from("Feedbacks")
+      .insert(newFeedback)
+      .select();
+
+    if (error) {
+      console.log("Unable to add new feedback", error);
+      return;
+    }
+    console.log(data);
+  } catch (error) {
+    console.error("Unexpected error occured", error);
   }
 };
 
