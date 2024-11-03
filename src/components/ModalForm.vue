@@ -136,10 +136,11 @@ export default {
   },
   methods: {
     updateCategory(newCategory: string) {
-      this.feedback.category = newCategory;
+      console.log(newCategory)
+      this.singleFeedback.category = newCategory;
     },
     updateStatus(newStatus: string) {
-      this.feedback.status = newStatus;
+      this.singleFeedback.status = newStatus;
     },
   },
 };

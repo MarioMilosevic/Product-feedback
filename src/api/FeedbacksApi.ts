@@ -5,7 +5,8 @@ export const fetchFeedbacks = async (): Promise<FeedbackType[]> => {
   try {
     const { data, error } = await supabase.from("Feedbacks")
       .select(`*, Comments (
-      feedbackId:id)`);
+      feedbackId:id)`)
+    // .order()
 
     if (error) {
       console.log(error);
@@ -36,3 +37,20 @@ export const fetchSingleFeedback = async (id: number) => {
     return;
   }
 };
+
+// export const toggleLike = async (id: number) => {
+//   try {
+//     const { data, error } = await supabase
+//       .from("Feedbacks")
+//       .select('likes')
+//       .eq("id", id)
+//       .select();
+//     if (error) {
+//       console.log(error);
+//       return;
+//     }
+//     console.log(data);
+//   } catch (error) {
+//     console.error("Unable to toggleLike", error);
+//   }
+// };
