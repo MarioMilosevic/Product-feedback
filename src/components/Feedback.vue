@@ -86,6 +86,7 @@ export default {
 @import "../scss/variables";
 
 .feedback {
+  /* min-width: 740px; */
   width: 100%;
   background-color: $secondary-color;
   border-radius: $border-radius-big;

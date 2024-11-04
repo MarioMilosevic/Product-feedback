@@ -27,8 +27,11 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     setFeedbacks(feedbacks: FeedbackType[]) {
       this.feedbacks = feedbacks;
     },
-    addFeedback(feedback: FeedbackType) {
-      this.feedbacks.push(feedback)
-    }
+    addFeedbackToStore(feedback: FeedbackType) {
+      this.feedbacks.push(feedback);
+    },
+    deleteFeedbackFromStore(id: number) {
+      this.feedbacks = this.feedbacks.filter((feedback) => feedback.id !== id);
+    },
   },
 });

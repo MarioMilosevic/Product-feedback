@@ -49,8 +49,26 @@ export const addFeedback = async (newFeedback: FeedbackType) => {
       console.log("Unable to add new feedback", error);
       return;
     }
-    console.log("iz Apija", data);
-    return data
+    return data;
+  } catch (error) {
+    console.error("Unexpected error occured", error);
+  }
+};
+
+export const deleteFeedback = async (id: number) => {
+  try {
+    const { data, error } = await supabase
+      .from("Feedbacks")
+      .delete()
+      .eq("id", id)
+      .select()
+      .single();
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    return data;
   } catch (error) {
     console.error("Unexpected error occured", error);
   }

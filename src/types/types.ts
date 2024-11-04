@@ -2,7 +2,7 @@ export type FeedbackType = {
   category: string;
   created_at?: string;
   description: string;
-  id: number | string;
+  id: number;
   likes: number;
   status: string;
   title: string;

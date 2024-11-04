@@ -24,10 +24,7 @@ export default {
   },
   computed: {
     spanColor() {
-      if (this.status === "Planned") return "planned";
-      if (this.status === "In-progress") return "in-progress";
-      if (this.status === "Live") return "live";
-      return "";
+      return `${this.status}`
     },
   },
   mounted() {
@@ -59,15 +56,19 @@ export default {
     border-radius: 9999px;
   }
 
-  .planned {
+  .Planned {
     background-color: $error-color;
   }
-  .in-progress {
+  .In-progress {
     background-color: $terniary-color;
   }
 
-  .live {
+  .Live {
     background-color: $forthiary-color;
+  }
+
+  .Suggestion {
+    background-color: $cancel-color;
   }
 }
 </style>

@@ -13,7 +13,7 @@
         </Icon>
         <h4>Go Back</h4>
       </router-link>
-      <ActionButton color="blue" size="big" @click-event="editFeedback">
+      <ActionButton color="blue" size="big" @click="editFeedback">
         Edit Feedback
       </ActionButton>
     </div>
@@ -105,7 +105,6 @@ export default {
       this.isModalOpen = true;
     },
     closeModal() {
-      // e.preventDefault();
       this.isModalOpen = false;
     },
     handleUpdateTextarea(newContent: string) {
@@ -123,6 +122,7 @@ export default {
 
 .wrapper {
   max-width: 800px;
+  width:100%;
   margin: 0 auto;
   grid-column: span 4;
   display: flex;

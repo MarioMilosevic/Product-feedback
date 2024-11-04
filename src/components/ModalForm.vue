@@ -86,7 +86,7 @@
           class="overlay__modal-form-buttonContainer"
           :class="[feedback ? 'visible' : 'notVisible']"
         >
-          <ActionButton v-if="singleFeedback.id" color="red" size="medium">
+          <ActionButton v-if="singleFeedback.id" color="red" size="medium" @click="deleteHandler(singleFeedback.id)">
             Delete
           </ActionButton>
           <div class="overlay__modal-form-buttonContainer-div">
@@ -117,9 +117,10 @@ import { modalFormSchema } from "src/validation/modalFormSchema";
 import { FeedbackType } from "src/types/types.ts";
 import { PropType } from "vue";
 import { emptyFeedback } from "src/utils/constants";
-import { addFeedback } from "src/api/FeedbacksApi";
+import { addFeedback, deleteFeedback } from "src/api/FeedbacksApi";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapActions } from "pinia";
+import { useRoute } from "vue-router";
 
 export default {
   name: "Modal",
@@ -157,7 +158,7 @@ export default {
     //
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["addFeedback"]),
+    ...mapActions(useFeedbackStore, ["addFeedbackToStore", "deleteFeedbackFromStore"]),
     updateTitle(newTitle: string) {
       this.singleFeedback.title = newTitle;
     },
@@ -171,14 +172,14 @@ export default {
       this.singleFeedback.description = newText;
     },
     async handleSubmit() {
-      console.log("forma submitovana");
       const validation = modalFormSchema.safeParse(this.singleFeedback);
       if (validation.success) {
         try {
           const data = await addFeedback(this.singleFeedback);
           const newFeedback = { ...data, Comments: [] }
           this.$emit("close-modal");
-          this.addFeedback(newFeedback);
+          this.addFeedbackToStore(newFeedback);
+          this.singleFeedback = emptyFeedback as FeedbackType
         } catch (error) {
           console.error("Error adding feedback", error);
         }
@@ -190,6 +191,12 @@ export default {
         }, {} as Record<string, string>);
       }
     },
+    async deleteHandler(id: number) {
+      const data = await deleteFeedback(id)
+      if (data.id) {
+        this.$router.push('/')
+      }
+    }
   },
 };
 </script>
