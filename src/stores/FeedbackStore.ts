@@ -6,8 +6,8 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     return {
       feedbacks: [] as FeedbackType[],
       filters: {
-        filter: "All",
-        sort: "Most Likes",
+        filter: "",
+        sort: "",
       },
       // isLoading: false,
     };

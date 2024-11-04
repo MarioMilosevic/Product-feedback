@@ -16,13 +16,13 @@
           name="suggestions"
           id="suggestions"
           class="navigation__parentDiv__childDiv-select"
-          v-model="selected"
+          v-model="feedbackStore.filters.sort"
           @change="sortFeedbacks"
         >
-          <option value="mostLikes">Most Likes</option>
-          <option value="leastLikes">Least Likes</option>
-          <option value="mostComments">Most Comments</option>
-          <option value="leastComments">Least Comments</option>
+          <option value="Most Likes">Most Likes</option>
+          <option value="Least Likes">Least Likes</option>
+          <option value="Most Comments">Most Comments</option>
+          <option value="Least Comments">Least Comments</option>
         </select>
       </div>
     </div>
@@ -36,6 +36,8 @@
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import Icon from "src/components/Icon.vue";
 import ActionButton from "src/components/ActionButton.vue";
+import { mapActions } from "pinia";
+import { fetchFeedbacks } from "src/api/FeedbacksApi";
 
 export default {
   components: {
@@ -47,7 +49,6 @@ export default {
   data() {
     return {
       feedbackStore: useFeedbackStore(),
-      selected: "mostLikes",
     };
   },
   computed: {
@@ -59,9 +60,16 @@ export default {
     //
   },
   methods: {
-    sortFeedbacks() {
-      console.log('promjena')
-    }
+    ...mapActions(useFeedbackStore, ["setSort", "setFeedbacks"]),
+    async sortFeedbacks() {
+      console.log("Sort option changed to:", this.feedbackStore.filters.sort);
+      this.setSort(this.feedbackStore.filters.sort);
+      const data = await fetchFeedbacks(
+        this.feedbackStore.filters.filter,
+        this.feedbackStore.filters.sort
+      );
+      this.setFeedbacks(data);
+    },
     //
   },
 };

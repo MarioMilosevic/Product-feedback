@@ -12,3 +12,8 @@ export const emptyFeedback = {
 
 export const categoryOptions = ["UI", "UX", "Enhancement", "Bug", "Feature"];
 export const statusOptions = ["Planned", "In-progress", "Live"];
+
+export const initialFiltersState = {
+  filter: "All",
+  sort: "Most Likes",
+};

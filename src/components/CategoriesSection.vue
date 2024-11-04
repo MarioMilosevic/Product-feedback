@@ -16,14 +16,14 @@ import { categoryOptions } from "src/utils/constants";
 import Category from "src/components/Category.vue";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { fetchFeedbacks } from "src/api/FeedbacksApi";
-import { mapActions } from "pinia";
+import { mapActions, mapState } from "pinia";
 
 export default {
   components: {
     Category,
   },
   props: {},
-  emits:['filter-categories'],
+  // emits:['filter-categories'],
   data() {
     return {
       allOptions: ["All", ...categoryOptions],
@@ -32,20 +32,22 @@ export default {
   },
   computed: {
     //
+    ...mapState(useFeedbackStore, ["filters"]),
   },
   mounted() {
     //
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setFeedbacks"]),
+    ...mapActions(useFeedbackStore, ["setFeedbacks", "setFilter"]),
 
     async changeCategory(category: string, categoryIndex: number) {
       // this.setLoading(true)
-      this.$emit('filter-categories')
+      // this.$emit('filter-categories')
       this.categoryIndex = categoryIndex;
-      const data = await fetchFeedbacks(category, "Most Likes");
+      this.setFilter(category);
+      const data = await fetchFeedbacks(category, this.filters.sort);
       if (data) {
-        this.setFeedbacks(data)
+        this.setFeedbacks(data);
         // this.setLoading(false)
       }
     },

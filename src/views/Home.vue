@@ -1,5 +1,5 @@
 <template>
-  <LoadingSpinner v-if="isLoading"/>
+  <LoadingSpinner v-if="isLoading" />
   <template v-else>
     <Sidebar />
     <Main />
@@ -12,13 +12,14 @@ import Main from "src/components/Main.vue";
 import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import { mapActions } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
+import { initialFiltersState } from "src/utils/constants";
 import LoadingSpinner from "src/components/LoadingSpinner.vue";
 
 export default {
   components: {
     Sidebar,
     Main,
-    LoadingSpinner
+    LoadingSpinner,
   },
   data() {
     return {
@@ -32,7 +33,12 @@ export default {
   },
   async created() {
     this.isLoading = true;
-    const data = await fetchFeedbacks("All", "Most Likes");
+    this.setFilter(initialFiltersState.filter);
+    this.setSort(initialFiltersState.sort);
+    const data = await fetchFeedbacks(
+      initialFiltersState.filter,
+      initialFiltersState.sort
+    );
     // console.log(data)
     if (data) {
       this.setFeedbacks(data);
@@ -40,7 +46,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setFeedbacks"]),
+    ...mapActions(useFeedbackStore, ["setFeedbacks", "setFilter", "setSort"]),
   },
   mounted() {
     //
