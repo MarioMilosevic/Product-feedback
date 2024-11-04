@@ -24,7 +24,7 @@ export const fetchFeedbacks = async (
       
     }
     else if (sort === "Least Likes") {
-      // console.log('uslo u least')
+      console.log('uslo u least')
       query = query.order("likes", { ascending: true });
     }
     //  else if (sort === "Most comments") {

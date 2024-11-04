@@ -27,6 +27,9 @@ export default {
       // neki stejt za filterovanje
     };
   },
+  computed: {
+    // ...mapState(useFeedbackStore,['isLoading'])
+  },
   async created() {
     this.isLoading = true;
     const data = await fetchFeedbacks("All", "Most Likes");

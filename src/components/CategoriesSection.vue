@@ -23,6 +23,7 @@ export default {
     Category,
   },
   props: {},
+  emits:['filter-categories'],
   data() {
     return {
       allOptions: ["All", ...categoryOptions],
@@ -37,11 +38,16 @@ export default {
   },
   methods: {
     ...mapActions(useFeedbackStore, ["setFeedbacks"]),
+
     async changeCategory(category: string, categoryIndex: number) {
+      // this.setLoading(true)
+      this.$emit('filter-categories')
       this.categoryIndex = categoryIndex;
       const data = await fetchFeedbacks(category, "Most Likes");
-      this.setFeedbacks(data)
-      // console.log(data);
+      if (data) {
+        this.setFeedbacks(data)
+        // this.setLoading(false)
+      }
     },
   },
 };

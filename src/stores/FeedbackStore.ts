@@ -5,6 +5,11 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
   state: () => {
     return {
       feedbacks: [] as FeedbackType[],
+      filters: {
+        filter: "All",
+        sort: "Most Likes",
+      },
+      // isLoading: false,
     };
   },
   getters: {
@@ -22,6 +27,9 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
         return acc;
       }, {} as Record<string, number>);
     },
+    getFilters: (state) => {
+      return state.filters;
+    },
   },
   actions: {
     setFeedbacks(feedbacks: FeedbackType[]) {
@@ -33,5 +41,15 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     deleteFeedbackFromStore(id: number) {
       this.feedbacks = this.feedbacks.filter((feedback) => feedback.id !== id);
     },
+    setFilter(filter: string) {
+      this.filters = { ...this.filters, filter: filter };
+    },
+    setSort(sort: string) {
+      this.filters = { ...this.filters, sort: sort };
+    },
+
+    // setLoading(value: boolean) {
+    //   this.isLoading = value;
+    // },
   },
 });

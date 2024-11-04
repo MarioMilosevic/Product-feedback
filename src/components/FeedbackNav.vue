@@ -16,6 +16,8 @@
           name="suggestions"
           id="suggestions"
           class="navigation__parentDiv__childDiv-select"
+          v-model="selected"
+          @change="sortFeedbacks"
         >
           <option value="mostLikes">Most Likes</option>
           <option value="leastLikes">Least Likes</option>
@@ -24,7 +26,9 @@
         </select>
       </div>
     </div>
-    <ActionButton color="purple" size="big" @click="$emit('open-modal')"> Add Feedback </ActionButton>
+    <ActionButton color="purple" size="big" @click="$emit('open-modal')">
+      Add Feedback
+    </ActionButton>
   </nav>
 </template>
 
@@ -38,24 +42,26 @@ export default {
     Icon,
     ActionButton,
   },
-  props: {
-  },
-  emits:['open-modal'],
+  props: {},
+  emits: ["open-modal"],
   data() {
     return {
-      feedbackStore:useFeedbackStore()
+      feedbackStore: useFeedbackStore(),
+      selected: "mostLikes",
     };
   },
   computed: {
     feedbacksLength() {
       return this.feedbackStore.feedbacks.length;
     },
- 
   },
   mounted() {
     //
   },
   methods: {
+    sortFeedbacks() {
+      console.log('promjena')
+    }
     //
   },
 };
@@ -85,6 +91,7 @@ export default {
         border: none;
         outline: none;
         cursor: pointer;
+        font-size: 1rem;
       }
     }
   }

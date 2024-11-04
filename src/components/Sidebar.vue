@@ -10,7 +10,6 @@ export default {
     CategoriesSection,
     RoadmapSection,
   },
-
   computed: {
     //
   },
