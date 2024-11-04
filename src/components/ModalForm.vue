@@ -125,8 +125,7 @@ import { emptyFeedback } from "src/utils/constants";
 import { addFeedback, deleteFeedback } from "src/api/FeedbacksApi";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapActions } from "pinia";
-import { toast } from "vue3-toastify";
-import "vue3-toastify/dist/index.css";
+import { showToast } from "src/utils/toastify";
 
 export default {
   name: "Modal",
@@ -161,6 +160,9 @@ export default {
     },
   },
   mounted() {
+    console.log("prop feedback", this.feedback)
+    console.log("empty feedback",emptyFeedback)
+    console.log("single feedback",this.singleFeedback)
     //
   },
   methods: {
@@ -168,6 +170,11 @@ export default {
       "addFeedbackToStore",
       "deleteFeedbackFromStore",
     ]),
+    resetFeedback() {
+      console.log(emptyFeedback)
+      this.singleFeedback = emptyFeedback as FeedbackType
+      console.log(this.singleFeedback)
+    },
     updateTitle(newTitle: string) {
       this.singleFeedback.title = newTitle;
     },
@@ -189,16 +196,13 @@ export default {
           if (newFeedback.id) {
             this.$emit("close-modal");
             this.addFeedbackToStore(newFeedback);
-            this.singleFeedback = emptyFeedback as FeedbackType;
-            toast.success("New Feedback added !", {
-               position: toast.POSITION.TOP_CENTER,
-            });
+            this.resetFeedback()
+            // this.singleFeedback = emptyFeedback as FeedbackType;
+            showToast("New Feedback added");
           }
         } catch (error) {
           console.error("Error adding feedback", error);
-          toast.error("Error adding feedback", {
-            position:toast.POSITION.TOP_CENTER
-          });
+          showToast("Error adding feedback", "error");
         }
       } else {
         this.errors = validation.error.errors.reduce((acc, err) => {
