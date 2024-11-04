@@ -86,7 +86,12 @@
           class="overlay__modal-form-buttonContainer"
           :class="[feedback ? 'visible' : 'notVisible']"
         >
-          <ActionButton v-if="singleFeedback.id" color="red" size="medium" @click="deleteHandler(singleFeedback.id)">
+          <ActionButton
+            v-if="singleFeedback.id"
+            color="red"
+            size="medium"
+            @click="deleteHandler(singleFeedback.id)"
+          >
             Delete
           </ActionButton>
           <div class="overlay__modal-form-buttonContainer-div">
@@ -120,7 +125,8 @@ import { emptyFeedback } from "src/utils/constants";
 import { addFeedback, deleteFeedback } from "src/api/FeedbacksApi";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapActions } from "pinia";
-import { useRoute } from "vue-router";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 export default {
   name: "Modal",
@@ -158,7 +164,10 @@ export default {
     //
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["addFeedbackToStore", "deleteFeedbackFromStore"]),
+    ...mapActions(useFeedbackStore, [
+      "addFeedbackToStore",
+      "deleteFeedbackFromStore",
+    ]),
     updateTitle(newTitle: string) {
       this.singleFeedback.title = newTitle;
     },
@@ -176,12 +185,20 @@ export default {
       if (validation.success) {
         try {
           const data = await addFeedback(this.singleFeedback);
-          const newFeedback = { ...data, Comments: [] }
-          this.$emit("close-modal");
-          this.addFeedbackToStore(newFeedback);
-          this.singleFeedback = emptyFeedback as FeedbackType
+          const newFeedback = { ...data, Comments: [] };
+          if (newFeedback.id) {
+            this.$emit("close-modal");
+            this.addFeedbackToStore(newFeedback);
+            this.singleFeedback = emptyFeedback as FeedbackType;
+            toast.success("New Feedback added !", {
+               position: toast.POSITION.TOP_CENTER,
+            });
+          }
         } catch (error) {
           console.error("Error adding feedback", error);
+          toast.error("Error adding feedback", {
+            position:toast.POSITION.TOP_CENTER
+          });
         }
       } else {
         this.errors = validation.error.errors.reduce((acc, err) => {
@@ -192,11 +209,11 @@ export default {
       }
     },
     async deleteHandler(id: number) {
-      const data = await deleteFeedback(id)
+      const data = await deleteFeedback(id);
       if (data.id) {
-        this.$router.push('/')
+        this.$router.push("/");
       }
-    }
+    },
   },
 };
 </script>
