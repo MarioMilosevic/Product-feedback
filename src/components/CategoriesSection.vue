@@ -6,6 +6,7 @@
       :isSelected="index === categoryIndex"
       :hoverEnabled="index === categoryIndex ? false : true"
       :category="category"
+      @category-event="changeCategory(category, index)"
     />
   </section>
 </template>
@@ -13,6 +14,9 @@
 <script lang="ts">
 import { categoryOptions } from "src/utils/constants";
 import Category from "src/components/Category.vue";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
+import { fetchFeedbacks } from "src/api/FeedbacksApi";
+import { mapActions } from "pinia";
 
 export default {
   components: {
@@ -22,7 +26,7 @@ export default {
   data() {
     return {
       allOptions: ["All", ...categoryOptions],
-      categoryIndex:0
+      categoryIndex: 0,
     };
   },
   computed: {
@@ -32,7 +36,13 @@ export default {
     //
   },
   methods: {
-    //
+    ...mapActions(useFeedbackStore, ["setFeedbacks"]),
+    async changeCategory(category: string, categoryIndex: number) {
+      this.categoryIndex = categoryIndex;
+      const data = await fetchFeedbacks(category, "Most Likes");
+      this.setFeedbacks(data)
+      // console.log(data);
+    },
   },
 };
 </script>

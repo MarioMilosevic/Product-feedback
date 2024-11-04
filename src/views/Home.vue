@@ -29,7 +29,8 @@ export default {
   },
   async created() {
     this.isLoading = true;
-    const data = await fetchFeedbacks();
+    const data = await fetchFeedbacks("All", "Most Likes");
+    // console.log(data)
     if (data) {
       this.setFeedbacks(data);
       this.isLoading = false;

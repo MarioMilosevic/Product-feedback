@@ -149,8 +149,7 @@ export default {
   emits: ["close-modal"],
   data() {
     return {
-      singleFeedback:
-        (this.feedback as FeedbackType) || (emptyFeedback as FeedbackType),
+      singleFeedback: this.feedback || { ...emptyFeedback },
       errors: {} as Record<string, string>,
     };
   },
@@ -160,9 +159,6 @@ export default {
     },
   },
   mounted() {
-    console.log("prop feedback", this.feedback)
-    console.log("empty feedback",emptyFeedback)
-    console.log("single feedback",this.singleFeedback)
     //
   },
   methods: {
@@ -171,9 +167,9 @@ export default {
       "deleteFeedbackFromStore",
     ]),
     resetFeedback() {
-      console.log(emptyFeedback)
-      this.singleFeedback = emptyFeedback as FeedbackType
-      console.log(this.singleFeedback)
+      console.log(emptyFeedback);
+      this.singleFeedback = emptyFeedback as FeedbackType;
+      console.log(this.singleFeedback);
     },
     updateTitle(newTitle: string) {
       this.singleFeedback.title = newTitle;
@@ -196,7 +192,7 @@ export default {
           if (newFeedback.id) {
             this.$emit("close-modal");
             this.addFeedbackToStore(newFeedback);
-            this.resetFeedback()
+            this.resetFeedback();
             // this.singleFeedback = emptyFeedback as FeedbackType;
             showToast("New Feedback added");
           }
@@ -215,7 +211,13 @@ export default {
     async deleteHandler(id: number) {
       const data = await deleteFeedback(id);
       if (data.id) {
-        this.$router.push("/");
+        showToast("Deleted feedback successfully");
+        this.$emit("close-modal");
+        setTimeout(() => {
+          this.$router.push("/");
+        }, 2000);
+      } else {
+        showToast("Something went wrong, please try again", "error");
       }
     },
   },

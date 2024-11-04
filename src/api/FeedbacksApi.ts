@@ -1,11 +1,41 @@
 import supabase from "../config/supabaseClient";
 import { FeedbackType } from "../types/types";
 
-export const fetchFeedbacks = async (): Promise<FeedbackType[]> => {
+export const fetchFeedbacks = async (
+  filter: string,
+  sort: string
+): Promise<FeedbackType[]> => {
+  console.log(filter)
+  console.log(sort)
   try {
-    const { data, error } = await supabase.from("Feedbacks")
-      .select(`*, Comments (
-      feedbackId:id)`);
+    let query = supabase
+      .from("Feedbacks")
+      .select(`*, Comments (feedbackId:id)`);
+
+    if (filter !== "All") {
+      console.log('uslo')
+      console.log(filter)
+      query = query.eq("category", filter);
+    }
+
+    if (sort === "Most Likes") {
+      // console.log('uslo u most')
+      query = query.order("likes", { ascending: false });
+      
+    }
+    else if (sort === "Least Likes") {
+      // console.log('uslo u least')
+      query = query.order("likes", { ascending: true });
+    }
+    //  else if (sort === "Most comments") {
+    // za kasnije
+    //   }
+    //  else if (sort === "Least comments") {
+    // za kasnije
+    //   }
+
+    //
+    const { data, error } = await query
 
     if (error) {
       console.log(error);
@@ -17,6 +47,22 @@ export const fetchFeedbacks = async (): Promise<FeedbackType[]> => {
     return [];
   }
 };
+// export const fetchFeedbacks = async (): Promise<FeedbackType[]> => {
+//   try {
+//     const { data, error } = await supabase.from("Feedbacks")
+//       .select(`*, Comments (
+//       feedbackId:id)`);
+
+//     if (error) {
+//       console.log(error);
+//       return [];
+//     }
+//     return data as FeedbackType[];
+//   } catch (error) {
+//     console.log(error);
+//     return [];
+//   }
+// };
 
 export const fetchSingleFeedback = async (id: number) => {
   try {

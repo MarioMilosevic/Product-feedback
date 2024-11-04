@@ -14,6 +14,7 @@ export default {
       default: false,
     },
   },
+  emits: ['category-event']
 };
 </script>
 
@@ -24,6 +25,7 @@ export default {
       { hoverEnabled: hoverEnabled },
       { isSelected: isSelected },
     ]"
+    @click="$emit('category-event')"
   >
     {{ category }}
   </button>
@@ -33,6 +35,7 @@ export default {
 @import "src/scss/variables";
 
 .category {
+  transition: all 300ms;
   padding: 10px 15px;
   border: none;
   cursor: pointer;
