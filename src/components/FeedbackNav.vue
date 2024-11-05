@@ -62,7 +62,6 @@ export default {
   methods: {
     ...mapActions(useFeedbackStore, ["setSort", "setFeedbacks"]),
     async sortFeedbacks() {
-      console.log("Sort option changed to:", this.feedbackStore.filters.sort);
       this.setSort(this.feedbackStore.filters.sort);
       const data = await fetchFeedbacks(
         this.feedbackStore.filters.filter,
@@ -70,7 +69,6 @@ export default {
       );
       this.setFeedbacks(data);
     },
-    //
   },
 };
 </script>

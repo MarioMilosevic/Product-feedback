@@ -5,37 +5,35 @@ export const fetchFeedbacks = async (
   filter: string,
   sort: string
 ): Promise<FeedbackType[]> => {
-  console.log(filter)
-  console.log(sort)
+  // console.log(filter);
+  // console.log(sort);
   try {
     let query = supabase
       .from("Feedbacks")
-      .select(`*, Comments (feedbackId:id)`);
+      .select(`*, Comments (feedbackId:id)`, { count: "exact" });
 
     if (filter !== "All") {
-      console.log('uslo')
-      console.log(filter)
+      // console.log("uslo");
+      // console.log(filter);
       query = query.eq("category", filter);
     }
 
     if (sort === "Most Likes") {
-      // console.log('uslo u most')
       query = query.order("likes", { ascending: false });
-      
-    }
-    else if (sort === "Least Likes") {
-      console.log('uslo u least')
+    } else if (sort === "Least Likes") {
+      // console.log("uslo u least");
       query = query.order("likes", { ascending: true });
+    } else if (sort === "Most Comments") {
+      // console.log("uslo u most comments");
+      query = query.order("Comments", { ascending: false });
+    } else if (sort === "Least Comments") {
+      // console.log("uslo u least comments");
+      query = query.order("Comments", { ascending: true });
     }
-    //  else if (sort === "Most comments") {
-    // za kasnije
-    //   }
-    //  else if (sort === "Least comments") {
-    // za kasnije
-    //   }
 
     //
-    const { data, error } = await query
+    const { data, error, count } = await query;
+    // console.log(count)
 
     if (error) {
       console.log(error);
