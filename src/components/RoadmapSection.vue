@@ -35,7 +35,13 @@ export default {
     //
   },
   mounted() {
+    console.log(this.feedbackStore.getStatusCount)
     //
+  },
+  watch: {
+    watch() {
+      console.log(this.feedbackStore.getStatusCount)
+    }
   },
   methods: {
     //
@@ -53,7 +59,7 @@ export default {
   flex-direction: column;
   border-radius: $border-radius-medium;
   gap: 1rem;
-
+  
   &__header {
     display: flex;
     justify-content: space-between;

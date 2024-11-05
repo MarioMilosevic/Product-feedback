@@ -5,35 +5,26 @@ export const fetchFeedbacks = async (
   filter: string,
   sort: string
 ): Promise<FeedbackType[]> => {
-  // console.log(filter);
-  // console.log(sort);
   try {
-    let query = supabase
-      .from("Feedbacks")
-      .select(`*, Comments (feedbackId:id)`, { count: "exact" });
+    let query = supabase.from("Feedbacks").select(`*, Comments(count)`);
 
     if (filter !== "All") {
-      // console.log("uslo");
-      // console.log(filter);
       query = query.eq("category", filter);
     }
 
     if (sort === "Most Likes") {
       query = query.order("likes", { ascending: false });
     } else if (sort === "Least Likes") {
-      // console.log("uslo u least");
       query = query.order("likes", { ascending: true });
-    } else if (sort === "Most Comments") {
-      // console.log("uslo u most comments");
-      query = query.order("Comments", { ascending: false });
-    } else if (sort === "Least Comments") {
-      // console.log("uslo u least comments");
-      query = query.order("Comments", { ascending: true });
     }
 
-    //
-    const { data, error, count } = await query;
-    // console.log(count)
+    const { data, error } = await query;
+
+    if (sort === "Most Comments") {
+      data?.sort((a, b) => b.Comments[0].count - a.Comments[0].count);
+    } else if (sort === "Least Comments") {
+      data?.sort((a, b) => a.Comments[0].count - b.Comments[0].count);
+    }
 
     if (error) {
       console.log(error);

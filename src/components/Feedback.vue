@@ -2,7 +2,7 @@
   <div class="feedback">
     <div class="feedback__content">
       <button class="feedback__content__likes">
-      <!-- <button class="feedback__content__likes" @click="toggleLike"> -->
+        <!-- <button class="feedback__content__likes" @click="toggleLike"> -->
         <Icon class="feedback__content__likes-caret">
           <path
             stroke-linecap="round"
@@ -24,7 +24,8 @@
       </router-link>
     </div>
 
-    <div v-if="feedback.Comments.length > 0" class="feedback__comments">
+    <div v-if="commentsCount > 0" class="feedback__comments">
+      <!-- <div v-if="feedback.Comments.length > 0" class="feedback__comments"> -->
       <Icon class="size-24" fill="#f0f9ff">
         <path
           stroke-linecap="round"
@@ -34,8 +35,8 @@
       </Icon>
 
       <span class="feedback__comments-length">{{
-        feedback.Comments.length
-      }}</span>
+        commentsCount
+}}</span>
     </div>
   </div>
 </template>
@@ -62,23 +63,29 @@ export default {
   data() {
     return {
       // isLiked:this.feedback.
-    }
+    };
   },
   computed: {
     feedbackId() {
       return this.feedback.id;
+    },
+    commentsCount() {
+      return this.feedback.Comments?.[0]?.count || 0;
     },
   },
   methods: {
     // async toggleLike() {
     //   try {
     //     await toggleLike(this.feedback.id)
-    //     this.feedback.likes += 1 
+    //     this.feedback.likes += 1
     //   } catch (error) {
     //     console.log('Error toggling like:', error)
     //   }
     // }
-  }
+  },
+  mounted() {
+    //
+  },
 };
 </script>
 
