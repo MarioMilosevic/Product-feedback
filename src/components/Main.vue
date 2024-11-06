@@ -51,11 +51,6 @@ export default {
   mounted() {
     // console.log(this.feedbacks);
   },
-  watch: {
-    feedbacks() {
-      console.log("feedbacks watcheer", this.feedbacks);
-    },
-  },
 };
 </script>
 

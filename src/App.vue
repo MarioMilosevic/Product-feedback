@@ -6,8 +6,8 @@
 <script lang="ts">
 import { mapActions } from "pinia";
 import { getData } from "src/api/FeedbacksApi";
-import SharedLayout from "src/components/SharedLayout.vue";
 import { useFeedbackStore } from "./stores/FeedbackStore";
+import SharedLayout from "src/components/SharedLayout.vue";
 export default {
   components: {
     SharedLayout,

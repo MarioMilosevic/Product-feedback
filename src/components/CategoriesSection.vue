@@ -6,15 +6,15 @@
       :isSelected="index === categoryIndex"
       :hoverEnabled="index === categoryIndex ? false : true"
       :category="category"
-      @category-event="changeCategory(category, index)"
-    />
-  </section>
-</template>
+      />
+    </section>
+  </template>
+    <!-- @category-event="changeCategory(category, index)" -->
 
 <script lang="ts">
 import Category from "src/components/Category.vue";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
-import { fetchFeedbacks } from "src/api/FeedbacksApi";
+// import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import { mapActions, mapState } from "pinia";
 
 export default {
@@ -46,19 +46,19 @@ export default {
   methods: {
     ...mapActions(useFeedbackStore, ["setFeedbacks", "setFilter"]),
 
-    async changeCategory(category: string, categoryIndex: number) {
-      console.log(category)
-      this.$router.replace(category)
-      // this.setLoading(true)
-      // this.$emit('filter-categories')
-      this.categoryIndex = categoryIndex;
-      this.setFilter(category);
-      const data = await fetchFeedbacks(category, this.filters.sort);
-      if (data) {
-        this.setFeedbacks(data);
-        // this.setLoading(false)
-      }
-    },
+    // async changeCategory(category: string, categoryIndex: number) {
+    //   console.log(category)
+    //   this.$router.replace(category)
+    //   // this.setLoading(true)
+    //   // this.$emit('filter-categories')
+    //   this.categoryIndex = categoryIndex;
+    //   this.setFilter(category);
+    //   const data = await fetchFeedbacks(category, this.filters.sort);
+    //   if (data) {
+    //     this.setFeedbacks(data);
+    //     // this.setLoading(false)
+    //   }
+    // },
   },
 };
 </script>

@@ -41,7 +41,9 @@ export const getData = async () => {
   try {
     const feedbacksQuery = supabase
       .from("Feedbacks")
-      .select(`*, Comments(count)`);
+      .select(`*, Comments(count), 
+        status:Status(status),
+        category:Categories(category)`);
     const categoriesQuery = supabase.from("Categories").select(`*`);
     const statusQuery = supabase.from("Status").select(`*`);
 
@@ -59,10 +61,6 @@ export const getData = async () => {
       );
       return;
     }
-
-    console.log("feedbacks", feedbacksData);
-    console.log("categories", categoriesData);
-    console.log("status", statusData);
 
     return {
       feedbacks: feedbacksData as FeedbackType[],

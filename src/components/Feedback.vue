@@ -20,7 +20,7 @@
       >
         <h4>{{ feedback.title }}</h4>
         <p>{{ feedback.description }}</p>
-        <Category :category="feedback.category" />
+        <Category :category="feedback.category.category" />
       </router-link>
     </div>
 

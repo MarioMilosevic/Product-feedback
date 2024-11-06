@@ -21,10 +21,10 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     },
     getStatusCount: (state) => {
       return state.feedbacks.reduce((acc, feedback) => {
-        if (acc[feedback.status]) {
-          acc[feedback.status]++;
+        if (acc[feedback.status.status]) {
+          acc[feedback.status.status]++;
         } else {
-          acc[feedback.status] = 1;
+          acc[feedback.status.status] = 1;
         }
         return acc;
       }, {} as Record<string, number>);
