@@ -3,7 +3,7 @@
   <div v-else class="wrapper">
     <!-- <div v-if="singleFeedback.id" class="wrapper"> -->
     <div class="wrapper__header">
-      <router-link to="/" class="wrapper__header-backButton">
+      <router-link to="/all" class="wrapper__header-backButton">
         <Icon>
           <path
             stroke-linecap="round"

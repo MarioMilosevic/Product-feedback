@@ -4,6 +4,7 @@
       <h4><slot name="title" /></h4>
       <p class="selectContainer__paragraph"><slot name="description" /></p>
     </label>
+
     <select
       :name="name"
       :id="name"
@@ -18,7 +19,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { categoryOptions, statusOptions } from "src/utils/constants";
 
 export default {
@@ -26,9 +27,6 @@ export default {
     name: {
       type: String,
       required: true,
-      validator(value) {
-        return ["category", "status"].includes(value);
-      },
     },
     content: {
       type: String,

@@ -36,22 +36,46 @@ export const fetchFeedbacks = async (
     return [];
   }
 };
-// export const fetchFeedbacks = async (): Promise<FeedbackType[]> => {
-//   try {
-//     const { data, error } = await supabase.from("Feedbacks")
-//       .select(`*, Comments (
-//       feedbackId:id)`);
 
-//     if (error) {
-//       console.log(error);
-//       return [];
-//     }
-//     return data as FeedbackType[];
-//   } catch (error) {
-//     console.log(error);
-//     return [];
-//   }
-// };
+export const getData = async () => {
+  try {
+    let feedbacksQuery = supabase
+      .from("Feedbacks")
+      .select(`*, Comments(count)`);
+    let categoriesQuery = supabase.from("Categories").select(`*`);
+    let statusQuery = supabase.from("Status").select(`*`);
+
+    const [feedbacksResponse, categoriesResponse, statusResponse] =
+      await Promise.all([feedbacksQuery, categoriesQuery, statusQuery]);
+
+    const { data: feedbacksData, error: feedbacksError } = feedbacksResponse;
+    const { data: categoriesData, error: categoriesError } = categoriesResponse;
+    const { data: statusData, error: statusError } = statusResponse;
+
+    if (feedbacksError || categoriesError || statusError) {
+      console.log(
+        "Unable to fetch data",
+        feedbacksError || categoriesError || statusError
+      );
+      return;
+    }
+
+    console.log("feedbacks", feedbacksData);
+    console.log("categories", categoriesData);
+    console.log("status", statusData);
+
+    return {
+     feedbacks: feedbacksData,
+     categories: categoriesData,
+     status: statusData,
+    };
+
+    // return data as FeedbackType[];
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
 
 export const fetchSingleFeedback = async (id: number) => {
   try {

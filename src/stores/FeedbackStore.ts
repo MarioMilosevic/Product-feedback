@@ -5,6 +5,7 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
   state: () => {
     return {
       feedbacks: [] as FeedbackType[],
+      // kategorije a maknucu filters
       filters: {
         filter: "",
         sort: "",

@@ -24,13 +24,9 @@ export default {
   data() {
     return {
       isLoading: false,
-      // u svakom slucaju da sve fecujem, al da filterujem drugi stejt i taj prikazujem
-      // neki stejt za filterovanje
     };
   },
-  computed: {
-    // ...mapState(useFeedbackStore,['isLoading'])
-  },
+  computed: {},
   async created() {
     this.isLoading = true;
     this.setFilter(initialFiltersState.filter);
@@ -49,7 +45,16 @@ export default {
     ...mapActions(useFeedbackStore, ["setFeedbacks", "setFilter", "setSort"]),
   },
   mounted() {
+    console.log(this.$router.props)
     //
   },
 };
 </script>
+
+<!-- u bazu roadmap 
+ categories
+ da sa paramsima sredim onaj fetch getData
+ da popravim Select i input i label
+
+ 
+ -->

@@ -4,6 +4,7 @@
       <h4><slot name="title" /></h4>
       <p class="inputContainer__paragraph"><slot name="description" /></p>
     </label>
+    
     <input
       :type="name"
       class="inputContainer__input"

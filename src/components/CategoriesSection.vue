@@ -41,6 +41,8 @@ export default {
     ...mapActions(useFeedbackStore, ["setFeedbacks", "setFilter"]),
 
     async changeCategory(category: string, categoryIndex: number) {
+      console.log(category)
+      this.$router.replace(category)
       // this.setLoading(true)
       // this.$emit('filter-categories')
       this.categoryIndex = categoryIndex;
