@@ -38,3 +38,15 @@ export type UserType = {
   image: string;
   username: string;
 };
+
+export type CategoryType = {
+  category: string;
+  created_at: string;
+  id: number;
+}
+
+export type StatusType = {
+  status: string;
+  created_at: string;
+  id: number;
+};

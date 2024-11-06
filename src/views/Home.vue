@@ -45,7 +45,7 @@ export default {
     ...mapActions(useFeedbackStore, ["setFeedbacks", "setFilter", "setSort"]),
   },
   mounted() {
-    console.log(this.$router.props)
+    // console.log(this.$router.props)
     //
   },
 };

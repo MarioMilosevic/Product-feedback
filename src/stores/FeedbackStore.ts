@@ -1,16 +1,17 @@
 import { defineStore } from "pinia";
-import { FeedbackType } from "../types/types";
+import { FeedbackType, CategoryType, StatusType } from "src/types/types";
 
 export const useFeedbackStore = defineStore("feedbacksStore", {
   state: () => {
     return {
       feedbacks: [] as FeedbackType[],
+      categories: [] as CategoryType[],
+      statusOptions: [] as StatusType[],
       // kategorije a maknucu filters
       filters: {
         filter: "",
         sort: "",
       },
-      // isLoading: false,
     };
   },
   getters: {
@@ -31,6 +32,9 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     getFilters: (state) => {
       return state.filters;
     },
+    getCategories: (state) => {
+      return state.categories.map(category => category.category);
+    },
   },
   actions: {
     setFeedbacks(feedbacks: FeedbackType[]) {
@@ -48,9 +52,11 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     setSort(sort: string) {
       this.filters = { ...this.filters, sort: sort };
     },
-
-    // setLoading(value: boolean) {
-    //   this.isLoading = value;
-    // },
+    setCategories(categories: CategoryType[]) {
+      this.categories = categories;
+    },
+    setStatusOptions(status: StatusType[]) {
+      this.statusOptions = status;
+    },
   },
 });

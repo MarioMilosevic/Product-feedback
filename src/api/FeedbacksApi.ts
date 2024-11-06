@@ -1,5 +1,5 @@
 import supabase from "../config/supabaseClient";
-import { FeedbackType } from "../types/types";
+import { CategoryType, FeedbackType, StatusType } from "../types/types";
 
 export const fetchFeedbacks = async (
   filter: string,
@@ -39,11 +39,11 @@ export const fetchFeedbacks = async (
 
 export const getData = async () => {
   try {
-    let feedbacksQuery = supabase
+    const feedbacksQuery = supabase
       .from("Feedbacks")
       .select(`*, Comments(count)`);
-    let categoriesQuery = supabase.from("Categories").select(`*`);
-    let statusQuery = supabase.from("Status").select(`*`);
+    const categoriesQuery = supabase.from("Categories").select(`*`);
+    const statusQuery = supabase.from("Status").select(`*`);
 
     const [feedbacksResponse, categoriesResponse, statusResponse] =
       await Promise.all([feedbacksQuery, categoriesQuery, statusQuery]);
@@ -65,15 +65,13 @@ export const getData = async () => {
     console.log("status", statusData);
 
     return {
-     feedbacks: feedbacksData,
-     categories: categoriesData,
-     status: statusData,
+      feedbacks: feedbacksData as FeedbackType[],
+      categories: categoriesData as CategoryType[],
+      statusOptions: statusData as StatusType[],
     };
-
-    // return data as FeedbackType[];
   } catch (error) {
     console.log(error);
-    return [];
+    return null;
   }
 };
 

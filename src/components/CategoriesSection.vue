@@ -1,7 +1,7 @@
 <template>
   <section class="section">
     <Category
-      v-for="(category, index) in allOptions"
+      v-for="(category, index) in allCategories"
       :key="index"
       :isSelected="index === categoryIndex"
       :hoverEnabled="index === categoryIndex ? false : true"
@@ -12,7 +12,6 @@
 </template>
 
 <script lang="ts">
-import { categoryOptions } from "src/utils/constants";
 import Category from "src/components/Category.vue";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { fetchFeedbacks } from "src/api/FeedbacksApi";
@@ -26,13 +25,20 @@ export default {
   // emits:['filter-categories'],
   data() {
     return {
-      allOptions: ["All", ...categoryOptions],
+      // allOptions: ["All", ],
       categoryIndex: 0,
     };
   },
   computed: {
     //
-    ...mapState(useFeedbackStore, ["filters"]),
+    ...mapState(useFeedbackStore, ["filters", "categories"]),
+
+    allCategories() {
+      const feedbackstore = useFeedbackStore()
+      const categories = feedbackstore.getCategories
+      return ['All', ...categories]
+    }
+    // categories
   },
   mounted() {
     //
