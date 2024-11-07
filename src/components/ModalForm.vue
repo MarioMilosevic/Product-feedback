@@ -15,7 +15,6 @@
           d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
         />
       </Icon>
-
       <h1>{{ title }}</h1>
       <Icon
         class="overlay__modal-icon"
@@ -31,20 +30,25 @@
       </Icon>
 
       <form class="overlay__modal-form" @submit.prevent="handleSubmit">
-        <Input
-          type="text"
-          name="title"
-          :content="singleFeedback.title"
-          @update-input="updateTitle"
-        >
-          <template v-slot:title> FeedbackTitle </template>
-          <template v-slot:description>
-            Add a short, descriptive headline
-          </template>
-        </Input>
+        <FormBlock>
+          <Label :name="title"/>
+          
+          <!-- <Input
+            type="text"
+            name="title"
+            :content="singleFeedback.title"
+            @update-input="updateTitle"
+          >
+            <template v-slot:title> FeedbackTitle </template>
+            <template v-slot:description>
+              Add a short, descriptive headline
+            </template>
+          </Input> -->
+
+        </FormBlock>
         <span v-if="errors.title" class="error">{{ errors.title }}</span>
 
-        <Select
+        <!-- <Select
           name="category"
           :content="singleFeedback.category.category"
           @update-select="updateCategory"
@@ -77,7 +81,7 @@
         <Textarea
           :content="singleFeedback.description"
           @update-textarea="updateTextarea"
-        />
+        /> -->
         <span v-if="errors.description" class="error">{{
           errors.description
         }}</span>
@@ -113,11 +117,14 @@
 </template>
 
 <script lang="ts">
-import Input from "src/components/Input.vue";
+// import Input from "src/components/Input.vue";
+import InputPogresni from "src/components/InputPogresni.vue"
 import Select from "src/components/Select.vue";
 import Icon from "src/components/Icon.vue";
 import Textarea from "src/components/Textarea.vue";
 import ActionButton from "src/components/ActionButton.vue";
+import Label from "src/components/Label.vue";
+import FormBlock from "src/components/FormBlock.vue";
 import { modalFormSchema } from "src/validation/modalFormSchema";
 import { FeedbackType } from "src/types/types.ts";
 import { PropType } from "vue";
@@ -130,11 +137,13 @@ import { showToast } from "src/utils/toastify";
 export default {
   name: "Modal",
   components: {
-    Input,
+    InputPogresni,
     Select,
     Icon,
     Textarea,
     ActionButton,
+    FormBlock,
+    Label
   },
   props: {
     isModalOpen: {
