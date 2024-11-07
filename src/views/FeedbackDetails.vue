@@ -96,6 +96,7 @@ export default {
   async created() {
     const data = await fetchSingleFeedback(this.feedbackId);
     if (data) {
+      // console.log(data)
       this.singleFeedback = { ...data };
       this.isLoading = false;
     }
@@ -112,6 +113,7 @@ export default {
     },
   },
   mounted() {
+    console.log(this.singleFeedback)
     //
   },
 };

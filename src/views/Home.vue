@@ -9,15 +9,21 @@
 <script lang="ts">
 import Sidebar from "src/components/Sidebar.vue";
 import Main from "src/components/Main.vue";
+import LoadingSpinner from "src/components/LoadingSpinner.vue";
 import { mapActions } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
-import LoadingSpinner from "src/components/LoadingSpinner.vue";
 
 export default {
   components: {
     Sidebar,
     Main,
     LoadingSpinner,
+  },
+  props: {
+    category: {
+      type: String,
+      required: true,
+    },
   },
   data() {
     return {
@@ -29,6 +35,7 @@ export default {
     ...mapActions(useFeedbackStore, ["setFeedbacks"]),
   },
   mounted() {
+    console.log(this.category)
     //
   },
 };

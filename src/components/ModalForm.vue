@@ -46,7 +46,7 @@
 
         <Select
           name="category"
-          :content="singleFeedback.category"
+          :content="singleFeedback.category.category"
           @update-select="updateCategory"
         >
           <template v-slot:title> Category </template>
@@ -59,7 +59,7 @@
         <Select
           v-if="feedback"
           name="status"
-          :content="singleFeedback.status"
+          :content="singleFeedback.status.status"
           @update-select="updateStatus"
         >
           <template v-slot:title> Update Status </template>
@@ -159,6 +159,7 @@ export default {
     },
   },
   mounted() {
+    console.log(this.singleFeedback)
     //
   },
   methods: {
@@ -175,10 +176,10 @@ export default {
       this.singleFeedback.title = newTitle;
     },
     updateCategory(newCategory: string) {
-      this.singleFeedback.category = newCategory;
+      this.singleFeedback.category.category = newCategory;
     },
     updateStatus(newStatus: string) {
-      this.singleFeedback.status = newStatus;
+      this.singleFeedback.status.status = newStatus;
     },
     updateTextarea(newText: string) {
       this.singleFeedback.description = newText;

@@ -12,7 +12,7 @@
 
       <div class="navigation__parentDiv__childDiv">
         <label for="suggestions">Sort by:</label>
-        <select
+        <!-- <select
           name="suggestions"
           id="suggestions"
           class="navigation__parentDiv__childDiv-select"
@@ -23,7 +23,7 @@
           <option value="Least Likes">Least Likes</option>
           <option value="Most Comments">Most Comments</option>
           <option value="Least Comments">Least Comments</option>
-        </select>
+        </select> -->
       </div>
     </div>
     <ActionButton color="purple" size="big" @click="$emit('open-modal')">
@@ -34,10 +34,10 @@
 
 <script lang="ts">
 import { useFeedbackStore } from "src/stores/FeedbackStore";
-import Icon from "src/components/Icon.vue";
-import ActionButton from "src/components/ActionButton.vue";
 import { mapActions } from "pinia";
 import { fetchFeedbacks } from "src/api/FeedbacksApi";
+import Icon from "src/components/Icon.vue";
+import ActionButton from "src/components/ActionButton.vue";
 
 export default {
   components: {
@@ -60,15 +60,16 @@ export default {
     //
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setSort", "setFeedbacks"]),
-    async sortFeedbacks() {
-      this.setSort(this.feedbackStore.filters.sort);
-      const data = await fetchFeedbacks(
-        this.feedbackStore.filters.filter,
-        this.feedbackStore.filters.sort
-      );
-      this.setFeedbacks(data);
-    },
+    ...mapActions(useFeedbackStore, ["setFeedbacks"]),
+
+    // async sortFeedbacks() {
+    //   this.setSort(this.feedbackStore.filters.sort);
+    //   const data = await fetchFeedbacks(
+    //     this.feedbackStore.filters.filter,
+    //     this.feedbackStore.filters.sort
+    //   );
+    //   this.setFeedbacks(data);
+    // },
   },
 };
 </script>

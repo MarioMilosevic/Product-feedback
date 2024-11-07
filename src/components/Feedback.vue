@@ -3,7 +3,7 @@
     <div class="feedback__content">
       <button class="feedback__content__likes">
         <!-- <button class="feedback__content__likes" @click="toggleLike"> -->
-        <Icon class="feedback__content__likes-caret">
+        <Icon class="feedback__content__likes-caret" size="small">
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -26,7 +26,7 @@
 
     <div v-if="commentsCount > 0" class="feedback__comments">
       <!-- <div v-if="feedback.Comments.length > 0" class="feedback__comments"> -->
-      <Icon class="size-24" fill="#f0f9ff">
+      <Icon class="size-24" fill="#f0f9ff" size="medium">
         <path
           stroke-linecap="round"
           stroke-linejoin="round"

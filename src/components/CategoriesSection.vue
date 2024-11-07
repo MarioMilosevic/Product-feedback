@@ -6,10 +6,10 @@
       :isSelected="index === categoryIndex"
       :hoverEnabled="index === categoryIndex ? false : true"
       :category="category"
+      @category-event="changeCategory(category, index)"
       />
     </section>
   </template>
-    <!-- @category-event="changeCategory(category, index)" -->
 
 <script lang="ts">
 import Category from "src/components/Category.vue";
@@ -45,6 +45,12 @@ export default {
   },
   methods: {
     ...mapActions(useFeedbackStore, ["setFeedbacks", "setFilter"]),
+
+   async changeCategory(category: string, index: number) {
+      console.log(category, index)
+     this.$router.replace(category)
+      
+    }
 
     // async changeCategory(category: string, categoryIndex: number) {
     //   console.log(category)

@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
 import FeedbackDetails from "src/views/FeedbackDetails.vue";
-import NotFound from "../views/NotFound.vue";
+import NotFound from "src/views/NotFound.vue";
 import Home from "src/views/Home.vue";
 
 const routes = [
   {
     path: "/",
-    redirect: "/all",
+    redirect: "/All",
   },
   {
-    path: "/all",
+    path: "/:category",
     name: "Home",
     component: Home,
     props:true

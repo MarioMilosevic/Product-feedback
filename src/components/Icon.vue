@@ -5,16 +5,15 @@
     :viewBox="viewBox"
     :stroke-width="strokeWidth"
     :stroke="stroke"
-    :class="class"
-    :width="width"
-    :height="height"
+    :class="[iconSize]"
+    :size="size"
     @click="$emit('click')"
   >
     <slot></slot>
   </svg>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   props: {
     xmlns: {
@@ -37,19 +36,31 @@ export default {
       type: String,
       default: "currentColor",
     },
-    class: {
+    size: {
       type: String,
-      default: "size-6",
-    },
-    width: {
-      type: [String, Number],
-      default: 20,
-    },
-    height: {
-      type: [String, Number],
-      default: 20,
+      default: "medium",
     },
   },
   emits: ["click"],
+  computed: {
+    iconSize() {
+      return this.size;
+    },
+  },
 };
 </script>
+
+<style lang="scss" scoped>
+.small {
+  width: 1rem;
+  height: 1rem;
+}
+.medium {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.big {
+  width: 2rem;
+  height: 2rem;
+}
+</style>

@@ -39,8 +39,7 @@ export const fetchFeedbacks = async (
 
 export const getData = async () => {
   try {
-    const feedbacksQuery = supabase
-      .from("Feedbacks")
+    const feedbacksQuery = supabase.from("Feedbacks")
       .select(`*, Comments(count), 
         status:Status(status),
         category:Categories(category)`);
@@ -61,7 +60,6 @@ export const getData = async () => {
       );
       return;
     }
-
     return {
       feedbacks: feedbacksData as FeedbackType[],
       categories: categoriesData as CategoryType[],
@@ -77,7 +75,10 @@ export const fetchSingleFeedback = async (id: number) => {
   try {
     const { data, error } = await supabase
       .from("Feedbacks")
-      .select(`*, Comments(*, Users(*))`)
+      .select(
+        `*,status:Status(status),
+        category:Categories(category) ,Comments(*, Users(*))`
+      )
       .eq("id", id)
       .single();
 
@@ -85,12 +86,31 @@ export const fetchSingleFeedback = async (id: number) => {
       console.error("Unable to fetch feedback");
       return;
     }
+    console.log("iz apija", data);
     return data;
   } catch (error) {
     console.error("Error fetching data", error);
     return;
   }
 };
+// export const fetchSingleFeedback = async (id: number) => {
+//   try {
+//     const { data, error } = await supabase
+//       .from("Feedbacks")
+//       .select(`*, Comments(*, Users(*))`)
+//       .eq("id", id)
+//       .single();
+
+//     if (error) {
+//       console.error("Unable to fetch feedback");
+//       return;
+//     }
+//     return data;
+//   } catch (error) {
+//     console.error("Error fetching data", error);
+//     return;
+//   }
+// };
 
 export const addFeedback = async (newFeedback: FeedbackType) => {
   try {
