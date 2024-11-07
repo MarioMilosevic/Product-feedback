@@ -31,34 +31,72 @@
 
       <form class="overlay__modal-form" @submit.prevent="handleSubmit">
         <FormBlock>
-          <Label :name="title"/>
-          
-          <!-- <Input
-            type="text"
-            name="title"
-            :content="singleFeedback.title"
-            @update-input="updateTitle"
-          >
-            <template v-slot:title> FeedbackTitle </template>
-            <template v-slot:description>
-              Add a short, descriptive headline
-            </template>
-          </Input> -->
-
+          <template #label>
+            <Label name="title">
+              <template #title>Feedback Title</template>
+              <template #description
+                >Add a short, descriptive headline</template
+              >
+            </Label>
+          </template>
+          <template #default>
+            <Input
+              name="title"
+              type="text"
+              :content="singleFeedback.title"
+              @update-input="updateTitle"
+            />
+          </template>
         </FormBlock>
         <span v-if="errors.title" class="error">{{ errors.title }}</span>
 
-        <!-- <Select
-          name="category"
-          :content="singleFeedback.category.category"
-          @update-select="updateCategory"
-        >
-          <template v-slot:title> Category </template>
-          <template v-slot:description>
-            Choose a category for your feedback
+        <FormBlock>
+          <template #label>
+            <Label name="category">
+              <template #title>Category</template>
+              <template #description
+                >Choose a category for your feedback</template
+              >
+            </Label>
           </template>
-        </Select>
+          <template #default>
+            <Select
+              name="category"
+              :content="singleFeedback.category.category"
+              @update-select="updateCategory"
+            >
+              <!-- <template #title> Category </template>
+              <template #description>
+                Choose a category for your feedback
+              </template> -->
+            </Select>
+          </template>
+        </FormBlock>
         <span v-if="errors.category" class="error">{{ errors.category }}</span>
+
+        <FormBlock>
+          <template #label>
+            <Label name="status">
+              <template #title>Update Status</template>
+              <template #description>Change feature state</template>
+            </Label>
+          </template>
+          <template #default>
+            <Select
+              name="category"
+              :content="singleFeedback.status.status"
+              @update-select="updateStatus"
+            >
+              <template #title> Category </template>
+              <template #description>
+                Choose a category for your feedback
+              </template>
+            </Select>
+          </template>
+        </FormBlock>
+        <span v-if="errors.status" class="error">{{ errors.status }}</span>
+
+        <!-- 
 
         <Select
           v-if="feedback"
@@ -69,7 +107,6 @@
           <template v-slot:title> Update Status </template>
           <template v-slot:description> Change feature state </template>
         </Select>
-        <span v-if="errors.status" class="error">{{ errors.status }}</span>
 
         <div class="overlay__modal-form-text">
           <h4>Feedback Detail</h4>
@@ -118,13 +155,13 @@
 
 <script lang="ts">
 // import Input from "src/components/Input.vue";
-import InputPogresni from "src/components/InputPogresni.vue"
 import Select from "src/components/Select.vue";
 import Icon from "src/components/Icon.vue";
 import Textarea from "src/components/Textarea.vue";
 import ActionButton from "src/components/ActionButton.vue";
 import Label from "src/components/Label.vue";
 import FormBlock from "src/components/FormBlock.vue";
+import Input from "src/components/Input.vue";
 import { modalFormSchema } from "src/validation/modalFormSchema";
 import { FeedbackType } from "src/types/types.ts";
 import { PropType } from "vue";
@@ -137,13 +174,13 @@ import { showToast } from "src/utils/toastify";
 export default {
   name: "Modal",
   components: {
-    InputPogresni,
     Select,
     Icon,
     Textarea,
     ActionButton,
     FormBlock,
-    Label
+    Label,
+    Input,
   },
   props: {
     isModalOpen: {
@@ -168,7 +205,7 @@ export default {
     },
   },
   mounted() {
-    console.log(this.singleFeedback)
+    console.log(this.singleFeedback);
     //
   },
   methods: {
@@ -274,9 +311,13 @@ export default {
         flex-direction: column;
         gap: 4px;
 
-        p {
+        /* p {
           font-size: 12px;
-        }
+        } */
+      }
+
+      &__paragraph {
+        font-size: 12px;
       }
 
       &-buttonContainer {

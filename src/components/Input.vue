@@ -1,22 +1,20 @@
 <template>
-  <select
-    :name="name"
-    :id="name"
-    class="select"
+  <input
+    :type="name"
+    class="input"
     v-model="localContent"
-    @change="$emit('update-select', localContent)"
-  >
-    <option v-for="(option, index) in options" :key="index" :value="option">
-      {{ option }}
-    </option>
-  </select>
+    @input="$emit('update-input', localContent)"
+  />
 </template>
 
 <script lang="ts">
-import { categoryOptions, statusOptions } from "src/utils/constants";
-
 export default {
+  components: {},
   props: {
+    type: {
+      type: String,
+      default: "text",
+    },
     name: {
       type: String,
       required: true,
@@ -26,22 +24,28 @@ export default {
       required: true,
     },
   },
+  emits: ["update-input"],
   data() {
     return {
       localContent: this.content,
     };
   },
   computed: {
-    options() {
-      return this.name === "category" ? categoryOptions : statusOptions;
-    },
+    //
+  },
+  mounted() {
+    //
+  },
+  methods: {
+    //
   },
 };
 </script>
 
 <style lang="scss" scoped>
 @import "src/scss/_variables.scss";
-.select {
+
+.input {
   padding: 1rem;
   background-color: $primary-color;
   border-radius: $border-radius-medium;

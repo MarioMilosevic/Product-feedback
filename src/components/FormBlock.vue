@@ -1,7 +1,7 @@
 <template>
   <div class="formBlock">
-    <slot/>
-    <!-- <slot/> -->
+    <slot name="label"/>
+    <slot></slot>
   </div>
 </template>
 <script lang="ts">

@@ -1,5 +1,12 @@
 <template>
-  <label :for="name"></label>
+  <label :for="name" class="label">
+    <h4>
+      <slot name="title"/>
+    </h4>
+    <p class="label__paragraph">
+      <slot name="description" />
+    </p>
+  </label>
 </template>
 
 <script lang="ts">
@@ -27,9 +34,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-label {
+.label {
   display: flex;
   flex-direction: column;
   gap: 4px;
+
+  &__title {
+    font-weight: 700;
+  }
+
+  &__paragraph {
+    font-size: 12px;
+  }
 }
 </style>
