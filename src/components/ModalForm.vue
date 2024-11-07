@@ -74,7 +74,7 @@
         </FormBlock>
         <span v-if="errors.category" class="error">{{ errors.category }}</span>
 
-        <FormBlock>
+        <FormBlock v-if="feedback">
           <template #label>
             <Label name="status">
               <template #title>Update Status</template>
@@ -96,29 +96,23 @@
         </FormBlock>
         <span v-if="errors.status" class="error">{{ errors.status }}</span>
 
-        <!-- 
-
-        <Select
-          v-if="feedback"
-          name="status"
-          :content="singleFeedback.status.status"
-          @update-select="updateStatus"
-        >
-          <template v-slot:title> Update Status </template>
-          <template v-slot:description> Change feature state </template>
-        </Select>
-
-        <div class="overlay__modal-form-text">
-          <h4>Feedback Detail</h4>
-          <p>
-            Include any specific comments on what should be improved, added,
-            etc.
-          </p>
-        </div>
-        <Textarea
-          :content="singleFeedback.description"
-          @update-textarea="updateTextarea"
-        /> -->
+        <FormBlock>
+          <template #label>
+            <Label name="status">
+              <template #title>Feedback detail</template>
+              <template #description
+                >Include any specific comments on what should be improved,
+                added, etc.</template
+              >
+            </Label>
+          </template>
+          <template #default>
+            <Textarea
+              :content="singleFeedback.description"
+              @update-textarea="updateTextarea"
+            />
+          </template>
+        </FormBlock>
         <span v-if="errors.description" class="error">{{
           errors.description
         }}</span>

@@ -31,6 +31,5 @@ export default {
   flex-direction: column;
   background-color: $secondary-color;
   gap: 1rem;
-  border: 1px solid black;
 }
 </style>
