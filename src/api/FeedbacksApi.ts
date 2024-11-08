@@ -1,41 +1,64 @@
-import supabase from "../config/supabaseClient";
-import { CategoryType, FeedbackType, StatusType } from "../types/types";
+import supabase from "src/config/supabaseClient";
+import { CategoryType, FeedbackType, StatusType } from "src/types/types";
 
-export const fetchFeedbacks = async (
-  filter: string,
-  sort: string
-): Promise<FeedbackType[]> => {
+export const fetchFeedbacks = async (id: number) => {
   try {
-    let query = supabase.from("Feedbacks").select(`*, Comments(count)`);
-
-    if (filter !== "All") {
-      query = query.eq("category", filter);
-    }
-
-    if (sort === "Most Likes") {
-      query = query.order("likes", { ascending: false });
-    } else if (sort === "Least Likes") {
-      query = query.order("likes", { ascending: true });
+    let query = supabase.from("Feedbacks").select(
+      `*, Comments(count), 
+        status:Status(status),
+        category:Categories(category)`
+    );
+    if (id) {
+      query.eq("category", id);
     }
 
     const { data, error } = await query;
-
-    if (sort === "Most Comments") {
-      data?.sort((a, b) => b.Comments[0].count - a.Comments[0].count);
-    } else if (sort === "Least Comments") {
-      data?.sort((a, b) => a.Comments[0].count - b.Comments[0].count);
-    }
-
     if (error) {
-      console.log(error);
-      return [];
+      console.error("Unable to fetch feedbacks", error);
+      return;
     }
-    return data as FeedbackType[];
+
+    return data;
   } catch (error) {
     console.log(error);
     return [];
   }
 };
+// export const fetchFeedbacks = async (
+//   filter: string,
+//   sort: string
+// ): Promise<FeedbackType[]> => {
+//   try {
+//     let query = supabase.from("Feedbacks").select(`*, Comments(count)`);
+
+//     if (filter !== "All") {
+//       query = query.eq("category", filter);
+//     }
+
+//     if (sort === "Most Likes") {
+//       query = query.order("likes", { ascending: false });
+//     } else if (sort === "Least Likes") {
+//       query = query.order("likes", { ascending: true });
+//     }
+
+//     const { data, error } = await query;
+
+//     if (sort === "Most Comments") {
+//       data?.sort((a, b) => b.Comments[0].count - a.Comments[0].count);
+//     } else if (sort === "Least Comments") {
+//       data?.sort((a, b) => a.Comments[0].count - b.Comments[0].count);
+//     }
+
+//     if (error) {
+//       console.log(error);
+//       return [];
+//     }
+//     return data as FeedbackType[];
+//   } catch (error) {
+//     console.log(error);
+//     return [];
+//   }
+// };
 
 export const getData = async () => {
   try {
@@ -43,7 +66,10 @@ export const getData = async () => {
       .select(`*, Comments(count), 
         status:Status(status),
         category:Categories(category)`);
-    const categoriesQuery = supabase.from("Categories").select(`*`);
+    const categoriesQuery = supabase
+      .from("Categories")
+      .select(`*`)
+      .order("id", { ascending: true });
     const statusQuery = supabase.from("Status").select(`*`);
 
     const [feedbacksResponse, categoriesResponse, statusResponse] =

@@ -5,16 +5,16 @@
       :key="index"
       :isSelected="index === categoryIndex"
       :hoverEnabled="index === categoryIndex ? false : true"
-      :category="category"
-      @category-event="changeCategory(category, index)"
-      />
-    </section>
-  </template>
+      :category="category.category"
+      @category-event="changeCategory(category.category, category.id)"
+    />
+  </section>
+</template>
 
 <script lang="ts">
 import Category from "src/components/Category.vue";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
-// import { fetchFeedbacks } from "src/api/FeedbacksApi";
+import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import { mapActions, mapState } from "pinia";
 
 export default {
@@ -31,28 +31,27 @@ export default {
   },
   computed: {
     //
-    ...mapState(useFeedbackStore, ["filters", "categories"]),
+    ...mapState(useFeedbackStore, ["categories"]),
 
     allCategories() {
-      const feedbackstore = useFeedbackStore()
-      const categories = feedbackstore.getCategories
-      return ['All', ...categories]
-    }
+      const feedbackstore = useFeedbackStore();
+      const categories = feedbackstore.getCategories;
+      return [{ id: 0, category: "All" }, ...categories];
+    },
     // categories
   },
-  mounted() {
-    //
-  },
   methods: {
-    ...mapActions(useFeedbackStore, ["setFeedbacks", "setFilter"]),
+    ...mapActions(useFeedbackStore, ["setFeedbacks"]),
+    async changeCategory(name: string, id: number) {
+      this.$router.replace(name);
+      this.categoryIndex = id;
+      const data = await fetchFeedbacks(id);
+      if (data) {
+        this.setFeedbacks(data);
+      }
+    },
 
-   async changeCategory(category: string, index: number) {
-      console.log(category, index)
-     this.$router.replace(category)
-      
-    }
-
-    // async changeCategory(category: string, categoryIndex: number) {
+    // async changeCategory(name: string, categoryIndex: number) {
     //   console.log(category)
     //   this.$router.replace(category)
     //   // this.setLoading(true)
@@ -65,6 +64,9 @@ export default {
     //     // this.setLoading(false)
     //   }
     // },
+  },
+  mounted() {
+    //
   },
 };
 </script>

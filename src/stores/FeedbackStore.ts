@@ -33,7 +33,8 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     //   return state.filters;
     // },
     getCategories: (state) => {
-      return state.categories.map(category => category.category);
+      return state.categories
+      // return state.categories.map(category => category.category);
     },
   },
   actions: {

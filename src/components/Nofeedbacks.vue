@@ -4,8 +4,7 @@
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 131 137"
-      height="136px"
-      width="130px"
+      class="section__icon"
     >
       <g data-v-30a547e3="" opacity=".5">
         <path
@@ -175,7 +174,6 @@ export default {
     //
   },
 };
-// <ActionButton color="purple" size="medium" @click="$emit('open-modal')"
 </script>
 
 <style lang="scss" scoped>
@@ -194,6 +192,11 @@ export default {
     text-align: center;
     display: flex;
     line-height: 25px;
+  }
+
+  &__icon {
+    width: 136px;
+    height: 130px;
   }
 }
 </style>

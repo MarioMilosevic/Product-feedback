@@ -14,7 +14,9 @@ export default {
       default: false,
     },
   },
-  emits: ['category-event']
+  emits: ['category-event'],
+  mounted() {
+  }
 };
 </script>
 
