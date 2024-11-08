@@ -208,9 +208,7 @@ export default {
       "deleteFeedbackFromStore",
     ]),
     resetFeedback() {
-      console.log(emptyFeedback);
       this.singleFeedback = emptyFeedback as FeedbackType;
-      console.log(this.singleFeedback);
     },
     updateTitle(newTitle: string) {
       this.singleFeedback.title = newTitle;

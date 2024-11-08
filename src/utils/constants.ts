@@ -14,11 +14,3 @@ export const emptyFeedback = {
   // ako su komentari onda nemam error u konzoli vec u supabazi trebam staviti default broj ako nema komentara da bude 0 ako su Comments undefined
 };
 
-export const categoryOptions = ["UI", "UX", "Enhancement", "Bug", "Feature"];
-
-export const statusOptions = ["Planned", "In-progress", "Live"];
-
-export const initialFiltersState = {
-  filter: "All",
-  sort: "Most Likes",
-};

@@ -29,7 +29,6 @@ export default {
   computed: {
     statusCounts() {
       const feedbackStore = useFeedbackStore();
-
       return feedbackStore.getStatusCount;
     },
     

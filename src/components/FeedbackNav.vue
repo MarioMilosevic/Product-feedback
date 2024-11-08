@@ -8,10 +8,14 @@
           d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
         />
       </Icon>
-      <h3>{{ feedbacksLength }} Suggestions</h3>
+      <h3>{{ getFeedbacksLength }} Suggestions</h3>
 
       <div class="navigation__parentDiv__childDiv">
-        <label for="suggestions">Sort by:</label>
+        <Label for="suggestions" name="sort">
+          <template #title>Sort By:</template>
+        </Label>
+        <Select name="sort"></Select>
+
         <!-- <select
           name="suggestions"
           id="suggestions"
@@ -34,8 +38,10 @@
 
 <script lang="ts">
 import { useFeedbackStore } from "src/stores/FeedbackStore";
-import { mapActions } from "pinia";
-import { fetchFeedbacks } from "src/api/FeedbacksApi";
+import { mapActions, mapState } from "pinia";
+import Select from "src/components/Select.vue";
+import Label from "src/components/Label.vue";
+// import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import Icon from "src/components/Icon.vue";
 import ActionButton from "src/components/ActionButton.vue";
 
@@ -43,33 +49,22 @@ export default {
   components: {
     Icon,
     ActionButton,
+    Select,
+    Label,
   },
   props: {},
   emits: ["open-modal"],
   data() {
-    return {
-      feedbackStore: useFeedbackStore(),
-    };
+    return {};
   },
   computed: {
-    feedbacksLength() {
-      return this.feedbackStore.feedbacks.length;
-    },
+    ...mapState(useFeedbackStore, ["feedbacks", "getFeedbacksLength"]),
   },
   mounted() {
     //
   },
   methods: {
     ...mapActions(useFeedbackStore, ["setFeedbacks"]),
-
-    // async sortFeedbacks() {
-    //   this.setSort(this.feedbackStore.filters.sort);
-    //   const data = await fetchFeedbacks(
-    //     this.feedbackStore.filters.filter,
-    //     this.feedbackStore.filters.sort
-    //   );
-    //   this.setFeedbacks(data);
-    // },
   },
 };
 </script>

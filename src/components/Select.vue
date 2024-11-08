@@ -13,7 +13,9 @@
 </template>
 
 <script lang="ts">
-import { categoryOptions, statusOptions } from "src/utils/constants";
+import { mapActions, mapState } from 'pinia';
+import { useFeedbackStore } from 'src/stores/FeedbackStore';
+
 
 export default {
   props: {
@@ -29,12 +31,19 @@ export default {
   data() {
     return {
       localContent: this.content,
+      feedbackStore:useFeedbackStore()
     };
   },
   computed: {
+    ...mapState(useFeedbackStore, ['statusOptions', 'categories', 'getStatusOptions', 'getCategories']),
     options() {
-      return this.name === "category" ? categoryOptions : statusOptions;
+      return this.name === "category" ? this.getCategories : this.getStatusOptions;
     },
+  },
+  methods: {
+  },
+  mounted() {
+    console.log(this.statusOptions)
   },
 };
 </script>

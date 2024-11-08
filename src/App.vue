@@ -6,7 +6,7 @@
 <script lang="ts">
 import { mapActions } from "pinia";
 import { getData } from "src/api/FeedbacksApi";
-import { useFeedbackStore } from "./stores/FeedbackStore";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
 import SharedLayout from "src/components/SharedLayout.vue";
 export default {
   components: {
@@ -15,6 +15,7 @@ export default {
   async created() {
     const data = await getData();
     if (data) {
+      this.$router.push("All");
       this.setCategories(data.categories);
       this.setFeedbacks(data.feedbacks);
       this.setStatusOptions(data.statusOptions);

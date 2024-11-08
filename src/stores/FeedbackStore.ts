@@ -7,11 +7,6 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       feedbacks: [] as FeedbackType[],
       categories: [] as CategoryType[],
       statusOptions: [] as StatusType[],
-      // kategorije a maknucu filters
-      // filters: {
-      //   filter: "",
-      //   sort: "",
-      // },
     };
   },
   getters: {
@@ -29,13 +24,15 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
         return acc;
       }, {} as Record<string, number>);
     },
-    // getFilters: (state) => {
-    //   return state.filters;
-    // },
     getCategories: (state) => {
-      return state.categories
-      // return state.categories.map(category => category.category);
+      return state.categories.map((category) => category.category)
     },
+    getStatusOptions: (state) => {
+      return state.statusOptions.map((status) => status.status)
+    },
+    getFeedbacksLength: (state) => {
+      return state.feedbacks.length
+    }
   },
   actions: {
     setFeedbacks(feedbacks: FeedbackType[]) {
@@ -47,12 +44,6 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     deleteFeedbackFromStore(id: number) {
       this.feedbacks = this.feedbacks.filter((feedback) => feedback.id !== id);
     },
-    // setFilter(filter: string) {
-    //   this.filters = { ...this.filters, filter: filter };
-    // },
-    // setSort(sort: string) {
-    //   this.filters = { ...this.filters, sort: sort };
-    // },
     setCategories(categories: CategoryType[]) {
       this.categories = categories;
     },
