@@ -1,13 +1,13 @@
 export type feedbacksDataType = {
   category: {
-    category: string;
+    name: string;
   };
   created_at?: string;
   description: string;
   id: number;
   likes: number;
   status: {
-    status: string;
+    name: string;
   };
   title: string;
   Comments: {
@@ -17,14 +17,14 @@ export type feedbacksDataType = {
 
 export type FeedbackType = {
   category: {
-    category:string
+    name:string
   };
   created_at?: string;
   description: string;
   id: number;
   likes: number;
   status: {
-    status:string
+    name:string
   };
   title: string;
   Comments: {

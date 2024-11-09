@@ -1,8 +1,6 @@
 <template>
   <main>
     <FeedbackNav @open-modal="openModal" />
-    <!-- <LoadingSpinner v-if="isLoading" /> -->
-
     <Feedback
       v-if="feedbacks.length > 0"
       v-for="feedback in feedbacks"

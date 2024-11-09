@@ -12,13 +12,12 @@ const routes = [
     path: "/:category",
     name: "Home",
     component: Home,
-    props:true
+    // props:true
   },
   {
     path: "/details/:id",
     name: "FeedbackDetails",
     component: FeedbackDetails,
-    props: true,
   },
   {
     path: "/:catchAll(.*)",

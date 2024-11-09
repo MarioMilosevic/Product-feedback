@@ -63,13 +63,9 @@
             <Select
               color="white"
               name="category"
-              :content="singleFeedback.category.category"
+              :options="getCategoriesArr"
               @update-select="updateCategory"
             >
-              <!-- <template #title> Category </template>
-              <template #description>
-                Choose a category for your feedback
-              </template> -->
             </Select>
           </template>
         </FormBlock>
@@ -85,8 +81,8 @@
           <template #default>
             <Select
               color="white"
-              name="category"
-              :content="singleFeedback.status.status"
+              name="status"
+              :options="getStatusArr"
               @update-select="updateStatus"
             >
               <template #title> Category </template>
@@ -164,7 +160,7 @@ import { PropType } from "vue";
 import { emptyFeedback } from "src/utils/constants";
 import { addFeedback, deleteFeedback } from "src/api/FeedbacksApi";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
-import { mapActions } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { showToast } from "src/utils/toastify";
 
 export default {
@@ -196,12 +192,29 @@ export default {
     };
   },
   computed: {
+    ...mapState(useFeedbackStore, [
+      "categories",
+      "statusOptions",
+      "getStatusOptions",
+      "getCategories",
+    ]),
+
     title() {
       return this.feedback ? "Edit Feedback" : "Create New Feedback";
     },
+    getCategoriesArr() {
+      const categoryObjects = this.getCategories;
+      const categoryArr = categoryObjects.map((category) => category.name);
+      return categoryArr;
+    },
+    getStatusArr() {
+      const statusObjects = this.getStatusOptions;
+      const statusArr = statusObjects.map((status) => status.name);
+      return statusArr;
+    },
   },
   mounted() {
-    console.log(this.singleFeedback);
+    console.log(this.getCategories);
     //
   },
   methods: {

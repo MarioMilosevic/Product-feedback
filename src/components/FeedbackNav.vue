@@ -15,21 +15,8 @@
           <Label for="suggestions" name="sort">
             <template #title>Sort By:</template>
           </Label>
-          <Select color="blue" name="sort"></Select>
+          <Select color="blue" name="sort" :options="navSortOptions" content="Most Likes"></Select>
         </FormBlock>
-
-        <!-- <select
-          name="suggestions"
-          id="suggestions"
-          class="navigation__parentDiv__childDiv-select"
-          v-model="feedbackStore.filters.sort"
-          @change="sortFeedbacks"
-        >
-          <option value="Most Likes">Most Likes</option>
-          <option value="Least Likes">Least Likes</option>
-          <option value="Most Comments">Most Comments</option>
-          <option value="Least Comments">Least Comments</option>
-        </select> -->
       </div>
     </div>
     <ActionButton color="purple" size="small" @click="$emit('open-modal')">
@@ -43,7 +30,7 @@ import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapActions, mapState } from "pinia";
 import Select from "src/components/Select.vue";
 import Label from "src/components/Label.vue";
-// import { fetchFeedbacks } from "src/api/FeedbacksApi";
+import { navSortOptions } from "src/utils/constants";
 import Icon from "src/components/Icon.vue";
 import ActionButton from "src/components/ActionButton.vue";
 import FormBlock from "src/components/FormBlock.vue";
@@ -59,12 +46,15 @@ export default {
   props: {},
   emits: ["open-modal"],
   data() {
-    return {};
+    return {
+      navSortOptions
+    };
   },
   computed: {
     ...mapState(useFeedbackStore, ["feedbacks", "getFeedbacksLength"]),
   },
   mounted() {
+    console.log(navSortOptions)
     //
   },
   methods: {

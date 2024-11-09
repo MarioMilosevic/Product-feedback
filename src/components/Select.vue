@@ -13,7 +13,6 @@
 </template>
 
 <script lang="ts">
-import { mapActions, mapState } from 'pinia';
 import { useFeedbackStore } from 'src/stores/FeedbackStore';
 
 
@@ -23,9 +22,13 @@ export default {
       type: String,
       required: true,
     },
-    content: {
-      type: String,
+    options: {
+      type: Array,
       required: true,
+    },
+    content: {
+      type:String,
+      required:true
     },
     color: {
       type:String,
@@ -39,15 +42,11 @@ export default {
     };
   },
   computed: {
-    ...mapState(useFeedbackStore, ['statusOptions', 'categories', 'getStatusOptions', 'getCategories']),
-    options() {
-      return this.name === "category" ? this.getCategories : this.getStatusOptions;
-    },
   },
   methods: {
   },
   mounted() {
-    console.log(this.statusOptions)
+    console.log(this.options)
   },
 };
 </script>
@@ -63,9 +62,13 @@ export default {
 
 .blue {
   background-color: $terniary-color;
+  color: $primary-color;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .white {
   background-color: $primary-color;
 }
+
 </style>

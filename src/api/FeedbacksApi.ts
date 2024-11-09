@@ -1,12 +1,13 @@
 import supabase from "src/config/supabaseClient";
-import { CategoryType, FeedbackType, StatusType } from "src/types/types";
+import { FeedbackType } from "src/types/types";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
 
 export const fetchFeedbacks = async (id: number) => {
   try {
     let query = supabase.from("Feedbacks").select(
       `*, Comments(count), 
-        status:Status(status),
-        category:Categories(category)`
+        status:Status(name),
+        category:Categories(name)`
     );
     if (id) {
       query.eq("category", id);
@@ -62,10 +63,11 @@ export const fetchFeedbacks = async (id: number) => {
 
 export const getData = async () => {
   try {
+    const store = useFeedbackStore();
     const feedbacksQuery = supabase.from("Feedbacks")
       .select(`*, Comments(count), 
-        status:Status(status),
-        category:Categories(category)`);
+        status:Status(name),
+        category:Categories(name)`);
     const categoriesQuery = supabase
       .from("Categories")
       .select(`*`)
@@ -86,11 +88,9 @@ export const getData = async () => {
       );
       return;
     }
-    return {
-      feedbacks: feedbacksData as FeedbackType[],
-      categories: categoriesData as CategoryType[],
-      statusOptions: statusData as StatusType[],
-    };
+    store.setFeedbacks(feedbacksData);
+    store.setCategories(categoriesData);
+    store.setStatusOptions(statusData);
   } catch (error) {
     console.log(error);
     return null;
@@ -119,6 +119,7 @@ export const fetchSingleFeedback = async (id: number) => {
     return;
   }
 };
+
 // export const fetchSingleFeedback = async (id: number) => {
 //   try {
 //     const { data, error } = await supabase

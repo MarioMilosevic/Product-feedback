@@ -5,8 +5,8 @@
       :key="index"
       :isSelected="index === categoryIndex"
       :hoverEnabled="index === categoryIndex ? false : true"
-      :category="category.category"
-      @category-event="changeCategory(category.category, category.id)"
+      :category="category.name"
+      @category-event="changeCategory(category.name, category.id)"
     />
   </section>
 </template>
@@ -22,10 +22,8 @@ export default {
     Category,
   },
   props: {},
-  // emits:['filter-categories'],
   data() {
     return {
-      // allOptions: ["All", ],
       categoryIndex: 0,
     };
   },
@@ -36,9 +34,8 @@ export default {
     allCategories() {
       const feedbackstore = useFeedbackStore();
       const categories = feedbackstore.getCategories;
-      return [{ id: 0, category: "All" }, ...categories];
+      return [{ id: 0, name: "All" }, ...categories];
     },
-    // categories
   },
   methods: {
     ...mapActions(useFeedbackStore, ["setFeedbacks"]),
@@ -50,20 +47,6 @@ export default {
         this.setFeedbacks(data);
       }
     },
-
-    // async changeCategory(name: string, categoryIndex: number) {
-    //   console.log(category)
-    //   this.$router.replace(category)
-    //   // this.setLoading(true)
-    //   // this.$emit('filter-categories')
-    //   this.categoryIndex = categoryIndex;
-    //   this.setFilter(category);
-    //   const data = await fetchFeedbacks(category, this.filters.sort);
-    //   if (data) {
-    //     this.setFeedbacks(data);
-    //     // this.setLoading(false)
-    //   }
-    // },
   },
   mounted() {
     //
