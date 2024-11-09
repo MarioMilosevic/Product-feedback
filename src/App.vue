@@ -1,6 +1,9 @@
 <template>
-  <SharedLayout />
-  <RouterView />
+  <LoadingSpinner v-if="isLoading" />
+  <template v-else>
+    <SharedLayout />
+    <RouterView />
+  </template>
 </template>
 
 <script lang="ts">
@@ -8,17 +11,26 @@ import { mapActions } from "pinia";
 import { getData } from "src/api/FeedbacksApi";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import SharedLayout from "src/components/SharedLayout.vue";
+import LoadingSpinner from "src/components/LoadingSpinner.vue";
 export default {
   components: {
     SharedLayout,
+    LoadingSpinner
+  },
+  data() {
+    return {
+      isLoading: false,
+    };
   },
   async created() {
+    this.isLoading = true;
     const data = await getData();
     if (data) {
       this.$router.push("All");
       this.setCategories(data.categories);
       this.setFeedbacks(data.feedbacks);
       this.setStatusOptions(data.statusOptions);
+      this.isLoading = false;
     }
   },
   methods: {

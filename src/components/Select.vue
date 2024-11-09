@@ -2,7 +2,7 @@
   <select
     :name="name"
     :id="name"
-    class="select"
+    :class="['select', color]"
     v-model="localContent"
     @change="$emit('update-select', localContent)"
   >
@@ -27,6 +27,10 @@ export default {
       type: String,
       required: true,
     },
+    color: {
+      type:String,
+      required:true
+    }
   },
   data() {
     return {
@@ -52,9 +56,16 @@ export default {
 @import "src/scss/_variables.scss";
 .select {
   padding: 1rem;
-  background-color: $primary-color;
   border-radius: $border-radius-medium;
   border: none;
   outline-color: $terniary-color;
+}
+
+.blue {
+  background-color: $terniary-color;
+}
+
+.white {
+  background-color: $primary-color;
 }
 </style>

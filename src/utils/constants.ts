@@ -14,3 +14,6 @@ export const emptyFeedback = {
   // ako su komentari onda nemam error u konzoli vec u supabazi trebam staviti default broj ako nema komentara da bude 0 ako su Comments undefined
 };
 
+export const sortOptions = ['Most Likes', "Least Likes", "Most Comments", "Least Comments"]
+
+

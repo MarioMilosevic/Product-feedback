@@ -61,6 +61,7 @@
           </template>
           <template #default>
             <Select
+              color="white"
               name="category"
               :content="singleFeedback.category.category"
               @update-select="updateCategory"
@@ -83,6 +84,7 @@
           </template>
           <template #default>
             <Select
+              color="white"
               name="category"
               :content="singleFeedback.status.status"
               @update-select="updateStatus"

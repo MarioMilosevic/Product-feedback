@@ -1,19 +1,23 @@
 <template>
-  <div class="formBlock">
-    <slot name="label"/>
+  <div :class="['formBlock', direction, color]">
+    <slot name="label" />
     <slot></slot>
   </div>
 </template>
 <script lang="ts">
 export default {
   components: {},
-  props: {},
-  data() {
-    return {};
+  props: {
+    direction: {
+      type: String,
+      default: "column",
+    },
+    color: {
+      type: String,
+      default: "white",
+    },
   },
-  computed: {
-    //
-  },
+  computed: {},
   mounted() {
     //
   },
@@ -28,8 +32,24 @@ export default {
 
 .formBlock {
   display: flex;
-  flex-direction: column;
   background-color: $secondary-color;
   gap: 1rem;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.row {
+  flex-direction: row;
+  align-items: center;
+}
+
+.white {
+  background-color: $secondary-color;
+}
+
+.blue {
+  background-color: $terniary-color;
 }
 </style>

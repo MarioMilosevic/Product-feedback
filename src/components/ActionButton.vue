@@ -1,13 +1,8 @@
-    <!-- @click="$emit('click-event')" -->
+<!-- @click="$emit('click-event')" -->
 
 <template>
-  <button
-    :class="[buttonColor, buttonSize]"
-    :type="type"
-  >
-    <h3>
-      <slot />
-    </h3>
+  <button :class="[size, color, 'button']" :type="type">
+    <slot />
   </button>
 </template>
 
@@ -29,25 +24,20 @@ export default {
       default: "button",
     },
   },
-  computed: {
-    buttonColor() {
-      return `button-${this.color}`;
-    },
-    buttonSize() {
-      return this.size;
-    },
-  },
+  computed: {},
 };
 </script>
 
 <style lang="scss" scoped>
 @import "src/scss/_variables.scss";
 
-button {
+.button {
   cursor: pointer;
   border: none;
   border-radius: $border-radius-medium;
   color: $secondary-color;
+  font-weight: 500;
+  font-size: 1rem;
 }
 
 .small {
@@ -70,7 +60,7 @@ button {
   }
 }
 
-.button-purple {
+.purple {
   background-color: $forthiary-color;
 
   &:hover {
@@ -78,7 +68,7 @@ button {
   }
 }
 
-.button-red {
+.red {
   background-color: $error-color;
 
   &:hover {
@@ -86,7 +76,7 @@ button {
   }
 }
 
-.button-grey {
+.grey {
   background-color: $cancel-color;
 
   &:hover {

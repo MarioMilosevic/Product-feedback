@@ -25,7 +25,7 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       }, {} as Record<string, number>);
     },
     getCategories: (state) => {
-      return state.categories.map((category) => category.category)
+      return state.categories.map((category) => category)
     },
     getStatusOptions: (state) => {
       return state.statusOptions.map((status) => status.status)

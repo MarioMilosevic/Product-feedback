@@ -11,10 +11,12 @@
       <h3>{{ getFeedbacksLength }} Suggestions</h3>
 
       <div class="navigation__parentDiv__childDiv">
-        <Label for="suggestions" name="sort">
-          <template #title>Sort By:</template>
-        </Label>
-        <Select name="sort"></Select>
+        <FormBlock direction="row" color="blue">
+          <Label for="suggestions" name="sort">
+            <template #title>Sort By:</template>
+          </Label>
+          <Select color="blue" name="sort"></Select>
+        </FormBlock>
 
         <!-- <select
           name="suggestions"
@@ -30,7 +32,7 @@
         </select> -->
       </div>
     </div>
-    <ActionButton color="purple" size="big" @click="$emit('open-modal')">
+    <ActionButton color="purple" size="small" @click="$emit('open-modal')">
       Add Feedback
     </ActionButton>
   </nav>
@@ -44,6 +46,7 @@ import Label from "src/components/Label.vue";
 // import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import Icon from "src/components/Icon.vue";
 import ActionButton from "src/components/ActionButton.vue";
+import FormBlock from "src/components/FormBlock.vue";
 
 export default {
   components: {
@@ -51,6 +54,7 @@ export default {
     ActionButton,
     Select,
     Label,
+    FormBlock
   },
   props: {},
   emits: ["open-modal"],
