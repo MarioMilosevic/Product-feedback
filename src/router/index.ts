@@ -18,6 +18,7 @@ const routes = [
     path: "/details/:id",
     name: "FeedbackDetails",
     component: FeedbackDetails,
+    props:true
   },
   {
     path: "/:catchAll(.*)",

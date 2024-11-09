@@ -65,6 +65,7 @@
               name="category"
               :options="getCategoriesArr"
               @update-select="updateCategory"
+              :content="singleFeedback.category.name"
             >
             </Select>
           </template>
@@ -84,6 +85,7 @@
               name="status"
               :options="getStatusArr"
               @update-select="updateStatus"
+              :content="singleFeedback.status.name"
             >
               <template #title> Category </template>
               <template #description>

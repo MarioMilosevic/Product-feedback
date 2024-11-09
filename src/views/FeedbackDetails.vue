@@ -13,7 +13,7 @@
         </Icon>
         <h4>Go Back</h4>
       </router-link>
-      <ActionButton color="blue" size="big" @click="editFeedback">
+      <ActionButton color="blue" size="big" @click="editFeedback" >
         Edit Feedback
       </ActionButton>
     </div>

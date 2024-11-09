@@ -6,7 +6,7 @@
     </div>
     <div class="section__counts">
       <Status
-        v-for="(count, status) in statusCounts"
+        v-for="(count, status) in getStatusCount"
         :key="status"
         :status="status"
         :count="count"
@@ -19,6 +19,7 @@
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import Status from "src/components/Status.vue";
 import Category from "src/components/Category.vue";
+import { mapState } from "pinia";
 
 export default {
   components: { Status, Category },
@@ -27,11 +28,7 @@ export default {
     return {};
   },
   computed: {
-    statusCounts() {
-      const feedbackStore = useFeedbackStore();
-      return feedbackStore.getStatusCount;
-    },
-    
+    ...mapState(useFeedbackStore, ['getStatusCount'])
   },
   mounted() {
     //

@@ -52,7 +52,7 @@ export default {
   padding: 1rem 2rem;
 }
 
-.button-blue {
+.blue {
   background-color: $terniary-color;
 
   &:hover {

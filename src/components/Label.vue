@@ -3,7 +3,7 @@
     <h4>
       <slot name="title"/>
     </h4>
-    <p class="label__paragraph">
+    <p v-if="$slots.description" class="label__paragraph">
       <slot name="description" />
     </p>
   </label>
