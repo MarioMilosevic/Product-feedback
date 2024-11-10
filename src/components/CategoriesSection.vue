@@ -40,7 +40,6 @@ export default {
   methods: {
     ...mapActions(useFeedbackStore, ["setFeedbacks"]),
     async changeCategory(name: string, id: number) {
-      this.$router.replace(name);
       this.categoryIndex = id;
       const data = await fetchFeedbacks(id);
       if (data) {

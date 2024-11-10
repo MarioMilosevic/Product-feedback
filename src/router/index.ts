@@ -6,19 +6,17 @@ import Home from "src/views/Home.vue";
 const routes = [
   {
     path: "/",
-    redirect: "/All",
+    redirect: "/home",
   },
   {
-    path: "/:category",
+    path: "/home",
     name: "Home",
     component: Home,
-    // props:true
   },
   {
     path: "/details/:id",
     name: "FeedbackDetails",
     component: FeedbackDetails,
-    props:true
   },
   {
     path: "/:catchAll(.*)",

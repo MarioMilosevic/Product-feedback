@@ -22,7 +22,6 @@ export default {
     };
   },
   async created() {
-    this.$router.push("All")
     this.isLoading = true;
     await getData();
     this.isLoading = false;

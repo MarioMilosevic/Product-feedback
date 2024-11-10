@@ -70,9 +70,9 @@ export default {
     ModalForm,
     LoadingSpinner,
   },
-  props: {
-    id: { type: String, required: true },
-  },
+  // props: {
+  //   id: { type: String, required: true },
+  // },
   data() {
     return {
       singleFeedback: {} as SingleFeedbackType,
@@ -84,7 +84,7 @@ export default {
   },
   computed: {
     feedbackId() {
-      return Number(this.id);
+      return Number(this.$route.params.id);
     },
     commentCount() {
       return this.singleFeedback.Comments.length;
@@ -113,7 +113,6 @@ export default {
     },
   },
   mounted() {
-    console.log(this.singleFeedback)
     //
   },
 };

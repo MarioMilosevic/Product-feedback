@@ -13,10 +13,6 @@ export default {
     Main,
   },
   props: {
-    // category: {
-    //   type: String,
-    //   required: true,
-    // },
   },
   data() {
     return {};
@@ -24,7 +20,6 @@ export default {
   computed: {},
   methods: {},
   mounted() {
-    // console.log(this.category);
   },
 };
 </script>
