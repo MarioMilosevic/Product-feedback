@@ -2,11 +2,7 @@
   <nav class="navigation">
     <div class="navigation__parentDiv">
       <Icon>
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
-        />
+        <Lightbulb />
       </Icon>
       <h3>{{ getFeedbacksLength }} Suggestions</h3>
 
@@ -15,7 +11,12 @@
           <Label for="suggestions" name="sort">
             <template #title>Sort By:</template>
           </Label>
-          <Select color="blue" name="sort" :options="navSortOptions" content="Most Likes"></Select>
+          <Select
+            color="blue"
+            name="sort"
+            :options="navSortOptions"
+            content="Most Likes"
+          ></Select>
         </FormBlock>
       </div>
     </div>
@@ -34,6 +35,7 @@ import { navSortOptions } from "src/utils/constants";
 import Icon from "src/components/Icon.vue";
 import ActionButton from "src/components/ActionButton.vue";
 import FormBlock from "src/components/FormBlock.vue";
+import Lightbulb from "src/icons/Lightbulb.vue";
 
 export default {
   components: {
@@ -41,13 +43,14 @@ export default {
     ActionButton,
     Select,
     Label,
-    FormBlock
+    FormBlock,
+    Lightbulb,
   },
   props: {},
   emits: ["open-modal"],
   data() {
     return {
-      navSortOptions
+      navSortOptions,
     };
   },
   computed: {

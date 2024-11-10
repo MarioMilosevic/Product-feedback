@@ -3,11 +3,7 @@
     <div class="feedback__content">
       <button class="feedback__content__likes">
         <Icon class="feedback__content__likes-caret" size="small">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="m4.5 15.75 7.5-7.5 7.5 7.5"
-          />
+           <Caret/>
         </Icon>
         <span class="feedback__content__likes-number">
           {{ feedback.likes }}
@@ -25,16 +21,10 @@
 
     <div v-if="commentsCount > 0" class="feedback__comments">
       <Icon class="size-24" fill="#f0f9ff" size="medium">
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z"
-        />
+         <Chat/>
       </Icon>
 
-      <span class="feedback__comments-length">{{
-        commentsCount
-}}</span>
+      <span class="feedback__comments-length">{{ commentsCount }}</span>
     </div>
   </div>
 </template>
@@ -42,8 +32,10 @@
 <script lang="ts">
 import { PropType } from "vue";
 import { FeedbackType } from "src/types/types";
-import Icon from "./Icon.vue";
-import Category from "./Category.vue";
+import Icon from "src/components/Icon.vue";
+import Category from "src/components/Category.vue";
+import Caret from "src/icons/Caret.vue"
+import Chat from "src/icons/Chat.vue";
 
 export default {
   name: "Feedback",
@@ -56,11 +48,11 @@ export default {
   components: {
     Category,
     Icon,
+    Caret,
+    Chat
   },
   data() {
-    return {
-      // isLiked:this.feedback.
-    };
+    return {};
   },
   computed: {
     feedbackId() {
@@ -70,8 +62,7 @@ export default {
       return this.feedback.Comments?.[0]?.count || 0;
     },
   },
-  methods: {
-  },
+  methods: {},
   mounted() {
     //
   },
@@ -82,7 +73,6 @@ export default {
 @import "../scss/variables";
 
 .feedback {
-  /* min-width: 740px; */
   width: 100%;
   background-color: $secondary-color;
   border-radius: $border-radius-big;

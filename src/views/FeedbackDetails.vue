@@ -4,11 +4,7 @@
     <div class="wrapper__header">
       <router-link :to="{ name: 'Home' }" class="wrapper__header-backButton">
         <Icon>
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
-          />
+          <LeftArrow />
         </Icon>
         <h4>Go Back</h4>
       </router-link>
@@ -58,6 +54,7 @@ import Textarea from "src/components/Textarea.vue";
 import ActionButton from "src/components/ActionButton.vue";
 import ModalForm from "src/components/ModalForm.vue";
 import LoadingSpinner from "src/components/LoadingSpinner.vue";
+import LeftArrow from "src/icons/LeftArrow.vue";
 
 export default {
   components: {
@@ -68,6 +65,7 @@ export default {
     ActionButton,
     ModalForm,
     LoadingSpinner,
+    LeftArrow,
   },
   data() {
     return {
@@ -90,7 +88,7 @@ export default {
     },
   },
   async created() {
-    this.isLoading = true
+    this.isLoading = true;
     const data = await fetchSingleFeedback(this.feedbackId);
     if (data) {
       this.singleFeedback = { ...data };

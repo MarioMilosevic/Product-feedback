@@ -1,5 +1,5 @@
 <template>
-  <LoadingSpinner v-if="isLoading"/>
+  <LoadingSpinner v-if="isLoading" />
   <template v-else>
     <Sidebar />
     <Main />
@@ -9,30 +9,24 @@
 <script lang="ts">
 import Sidebar from "src/components/Sidebar.vue";
 import Main from "src/components/Main.vue";
-import { getData } from "src/api/FeedbacksApi";
 import LoadingSpinner from "src/components/LoadingSpinner.vue";
+import { getData } from "src/api/FeedbacksApi";
 
 export default {
   components: {
     Sidebar,
     Main,
-    LoadingSpinner
-  },
-  props: {
+    LoadingSpinner,
   },
   data() {
     return {
-      isLoading:false
+      isLoading: false,
     };
   },
   async created() {
     this.isLoading = true;
     await getData();
     this.isLoading = false;
-  },
-  computed: {},
-  methods: {},
-  mounted() {
   },
 };
 </script>

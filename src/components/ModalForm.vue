@@ -2,31 +2,16 @@
   <div v-if="isModalOpen" class="overlay">
     <div class="overlay__modal">
       <Icon class="overlay__modal-headerIcon">
-        <path
-          v-if="feedback"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-        />
-        <path
-          v-else
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-        />
+        <Edit v-if="feedback" />
+        <Add v-else />
       </Icon>
       <h1>{{ title }}</h1>
       <Icon
         class="overlay__modal-icon"
-        width="30px"
-        height="30px"
+        size="big"
         @click="$emit('close-modal')"
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-        />
+        <Close />
       </Icon>
 
       <form class="overlay__modal-form" @submit.prevent="handleSubmit">
@@ -163,6 +148,9 @@ import { addFeedback, deleteFeedback } from "src/api/FeedbacksApi";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapActions, mapState } from "pinia";
 import { showToast } from "src/utils/toastify";
+import Add from "src/icons/Add.vue";
+import Edit from "src/icons/Edit.vue";
+import Close from "src/icons/Close.vue";
 
 export default {
   name: "Modal",
@@ -174,6 +162,9 @@ export default {
     FormBlock,
     Label,
     Input,
+    Add,
+    Edit,
+    Close,
   },
   props: {
     isModalOpen: {
@@ -204,18 +195,6 @@ export default {
     title() {
       return this.feedback ? "Edit Feedback" : "Create New Feedback";
     },
-    // getCategoriesArr() {
-    //   const categoryObjects = this.getCategories;
-    //   const categoryArr = categoryObjects.map((category) => category.name);
-    //   return categoryArr;
-    // },
-    // getStatusArr() {
-    //   const statusObjects = this.getStatusOptions;
-    //   console.log(statusObjects)
-    //   const statusArr = statusObjects.map((status) => status);
-    //   console.log(statusArr)
-    //   return statusArr;
-    // },
   },
   mounted() {
     // console.log("modal forma getCategoryNames", this.getCategoryNames);

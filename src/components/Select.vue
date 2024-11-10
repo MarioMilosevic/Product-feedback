@@ -46,7 +46,7 @@ export default {
   methods: {
   },
   mounted() {
-    console.log("select prop opcije",this.options)
+    // console.log("select prop opcije",this.options)
   },
 };
 </script>
