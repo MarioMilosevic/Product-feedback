@@ -17,41 +17,31 @@ export type feedbacksDataType = {
 
 export type FeedbackType = {
   category: {
-    name:string
+    name: string;
   };
   created_at?: string;
   description: string;
-  id: number;
+  id?: number;
   likes: number;
   status: {
-    name:string
+    name: string;
   };
   title: string;
-  Comments: {
-    count: number;
-  }[];
+  Comments: CommentType[];
 };
-// export type FeedbackType = {
-//   category: number;
-//   created_at?: string;
-//   description: string;
-//   id: number;
-//   likes: number;
-//   status: number;
-//   title: string;
-//   Comments: {
-//     count: number;
-//   }[];
-// };
 
 export type SingleFeedbackType = {
   Comments: CommentType[];
-  category: string;
+  category: {
+    name: string;
+  };
   created_at: string;
   description: string;
   id: number;
   likes: number;
-  status: string;
+  status: {
+    name: string;
+  };
   title: string;
 };
 
@@ -62,6 +52,7 @@ export type CommentType = {
   id: number;
   userId: number;
   Users: UserType;
+  count?: number;
 };
 
 export type UserType = {
@@ -79,7 +70,7 @@ export type CategoryType = {
 };
 
 export type StatusType = {
-  status: string;
+  name: string;
   created_at: string;
   id: number;
 };

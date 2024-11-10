@@ -54,7 +54,6 @@ export default {
     ...mapState(useFeedbackStore, ["feedbacks", "getFeedbacksLength"]),
   },
   mounted() {
-    console.log(navSortOptions)
     //
   },
   methods: {

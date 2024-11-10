@@ -2,7 +2,7 @@
 export default {
   props: {
     category: {
-      type: Object,
+      type: String,
       required: true,
     },
     isSelected: {

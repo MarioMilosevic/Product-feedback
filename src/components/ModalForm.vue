@@ -63,7 +63,7 @@
             <Select
               color="white"
               name="category"
-              :options="getCategoriesArr"
+              :options="getCategoryNames"
               @update-select="updateCategory"
               :content="singleFeedback.category.name"
             >
@@ -83,7 +83,7 @@
             <Select
               color="white"
               name="status"
-              :options="getStatusArr"
+              :options="getStatusNames"
               @update-select="updateStatus"
               :content="singleFeedback.status.name"
             >
@@ -148,7 +148,6 @@
 </template>
 
 <script lang="ts">
-// import Input from "src/components/Input.vue";
 import Select from "src/components/Select.vue";
 import Icon from "src/components/Icon.vue";
 import Textarea from "src/components/Textarea.vue";
@@ -197,27 +196,32 @@ export default {
     ...mapState(useFeedbackStore, [
       "categories",
       "statusOptions",
-      "getStatusOptions",
-      "getCategories",
+      "getStatusObjects",
+      "getStatusNames",
+      "getCategoryObjects",
+      "getCategoryNames",
     ]),
-
     title() {
       return this.feedback ? "Edit Feedback" : "Create New Feedback";
     },
-    getCategoriesArr() {
-      const categoryObjects = this.getCategories;
-      const categoryArr = categoryObjects.map((category) => category.name);
-      return categoryArr;
-    },
-    getStatusArr() {
-      const statusObjects = this.getStatusOptions;
-      const statusArr = statusObjects.map((status) => status.name);
-      return statusArr;
-    },
+    // getCategoriesArr() {
+    //   const categoryObjects = this.getCategories;
+    //   const categoryArr = categoryObjects.map((category) => category.name);
+    //   return categoryArr;
+    // },
+    // getStatusArr() {
+    //   const statusObjects = this.getStatusOptions;
+    //   console.log(statusObjects)
+    //   const statusArr = statusObjects.map((status) => status);
+    //   console.log(statusArr)
+    //   return statusArr;
+    // },
   },
   mounted() {
-    console.log(this.getCategories);
-    //
+    // console.log("modal forma getCategoryNames", this.getCategoryNames);
+    // console.log("modal forma getCategoryObjects", this.getCategoryObjects);
+    // console.log("modal forma getStatusNames", this.getStatusNames);
+    // console.log("modal forma getStatusObjects", this.getStatusObjects);
   },
   methods: {
     ...mapActions(useFeedbackStore, [
@@ -231,10 +235,10 @@ export default {
       this.singleFeedback.title = newTitle;
     },
     updateCategory(newCategory: string) {
-      this.singleFeedback.category.category = newCategory;
+      this.singleFeedback.category.name = newCategory;
     },
     updateStatus(newStatus: string) {
-      this.singleFeedback.status.status = newStatus;
+      this.singleFeedback.status.name = newStatus;
     },
     updateTextarea(newText: string) {
       this.singleFeedback.description = newText;

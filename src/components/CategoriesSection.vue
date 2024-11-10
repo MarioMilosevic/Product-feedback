@@ -28,12 +28,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(useFeedbackStore, ["categories"]),
+    ...mapState(useFeedbackStore, ["categories", "getCategoryObjects"]),
 
     allCategories() {
-      const feedbackstore = useFeedbackStore();
-      const categories = feedbackstore.getCategories;
-      return [{ id: 0, name: "All" }, ...categories];
+      return [{ id: 0, name: "All" }, ...this.getCategoryObjects];
     },
   },
   methods: {

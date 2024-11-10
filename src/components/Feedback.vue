@@ -2,7 +2,6 @@
   <div class="feedback">
     <div class="feedback__content">
       <button class="feedback__content__likes">
-        <!-- <button class="feedback__content__likes" @click="toggleLike"> -->
         <Icon class="feedback__content__likes-caret" size="small">
           <path
             stroke-linecap="round"
@@ -25,7 +24,6 @@
     </div>
 
     <div v-if="commentsCount > 0" class="feedback__comments">
-      <!-- <div v-if="feedback.Comments.length > 0" class="feedback__comments"> -->
       <Icon class="size-24" fill="#f0f9ff" size="medium">
         <path
           stroke-linecap="round"
@@ -44,7 +42,6 @@
 <script lang="ts">
 import { PropType } from "vue";
 import { FeedbackType } from "src/types/types";
-// import { toggleLike } from "src/api/FeedbacksApi";
 import Icon from "./Icon.vue";
 import Category from "./Category.vue";
 
@@ -74,14 +71,6 @@ export default {
     },
   },
   methods: {
-    // async toggleLike() {
-    //   try {
-    //     await toggleLike(this.feedback.id)
-    //     this.feedback.likes += 1
-    //   } catch (error) {
-    //     console.log('Error toggling like:', error)
-    //   }
-    // }
   },
   mounted() {
     //

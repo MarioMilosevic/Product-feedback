@@ -69,16 +69,13 @@ export default {
     ModalForm,
     LoadingSpinner,
   },
-  // props: {
-  //   id: { type: String, required: true },
-  // },
   data() {
     return {
       singleFeedback: {} as SingleFeedbackType,
       isModalOpen: false,
       textAreaContent: "",
       maxCharacters: 225,
-      isLoading: true,
+      isLoading: false,
     };
   },
   computed: {
@@ -93,9 +90,9 @@ export default {
     },
   },
   async created() {
+    this.isLoading = true
     const data = await fetchSingleFeedback(this.feedbackId);
     if (data) {
-      // console.log(data)
       this.singleFeedback = { ...data };
       this.isLoading = false;
     }

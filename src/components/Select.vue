@@ -46,7 +46,7 @@ export default {
   methods: {
   },
   mounted() {
-    console.log(this.options)
+    console.log("select prop opcije",this.options)
   },
 };
 </script>
@@ -65,6 +65,7 @@ export default {
   color: $primary-color;
   font-size: 1rem;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .white {
