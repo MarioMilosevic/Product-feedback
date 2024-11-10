@@ -1,31 +1,16 @@
 <template>
-  <LoadingSpinner v-if="isLoading" />
-  <template v-else>
-    <SharedLayout />
-    <RouterView />
-  </template>
+  <SharedLayout />
+  <RouterView />
 </template>
 
 <script lang="ts">
-import { getData } from "src/api/FeedbacksApi";
 import SharedLayout from "src/components/SharedLayout.vue";
-import LoadingSpinner from "src/components/LoadingSpinner.vue";
+import Home from "src/views/Home.vue";
 
 export default {
   components: {
     SharedLayout,
-    LoadingSpinner,
+    Home,
   },
-  data() {
-    return {
-      isLoading: false,
-    };
-  },
-  async created() {
-    this.isLoading = true;
-    await getData();
-    this.isLoading = false;
-  },
-  methods: {},
 };
 </script>

@@ -73,7 +73,7 @@ export type UserType = {
 };
 
 export type CategoryType = {
-  category: string;
+  name: string;
   created_at: string;
   id: number;
 };

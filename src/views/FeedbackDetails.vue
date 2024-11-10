@@ -1,9 +1,8 @@
 <template>
   <LoadingSpinner v-if="isLoading" />
   <div v-else class="wrapper">
-    <!-- <div v-if="singleFeedback.id" class="wrapper"> -->
     <div class="wrapper__header">
-      <router-link to="/all" class="wrapper__header-backButton">
+      <router-link :to="{ name: 'Home' }" class="wrapper__header-backButton">
         <Icon>
           <path
             stroke-linecap="round"
@@ -13,7 +12,7 @@
         </Icon>
         <h4>Go Back</h4>
       </router-link>
-      <ActionButton color="blue" size="big" @click="editFeedback" >
+      <ActionButton color="blue" size="big" @click="editFeedback">
         Edit Feedback
       </ActionButton>
     </div>
@@ -42,7 +41,7 @@
   </div>
 
   <ModalForm
-  v-if="singleFeedback.id"
+    v-if="singleFeedback.id"
     :feedback="singleFeedback"
     :isModalOpen="isModalOpen"
     @close-modal="closeModal"
@@ -123,7 +122,7 @@ export default {
 
 .wrapper {
   max-width: 800px;
-  width:100%;
+  width: 100%;
   margin: 0 auto;
   grid-column: span 4;
   display: flex;

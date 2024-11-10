@@ -68,6 +68,7 @@ export const getData = async () => {
       .select(`*, Comments(count), 
         status:Status(name),
         category:Categories(name)`);
+    
     const categoriesQuery = supabase
       .from("Categories")
       .select(`*`)
@@ -96,6 +97,7 @@ export const getData = async () => {
     return null;
   }
 };
+
 
 export const fetchSingleFeedback = async (id: number) => {
   try {

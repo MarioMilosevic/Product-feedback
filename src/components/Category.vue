@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
 export default {
   props: {
     category: {
-      type: String,
+      type: Object,
       required: true,
     },
     isSelected: {

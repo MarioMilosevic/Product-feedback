@@ -6,7 +6,7 @@
       :isSelected="index === categoryIndex"
       :hoverEnabled="index === categoryIndex ? false : true"
       :category="category.name"
-      @category-event="changeCategory(category.name, category.id)"
+      @category-event="changeCategory(category.id)"
     />
   </section>
 </template>
@@ -28,7 +28,6 @@ export default {
     };
   },
   computed: {
-    //
     ...mapState(useFeedbackStore, ["categories"]),
 
     allCategories() {
@@ -39,7 +38,7 @@ export default {
   },
   methods: {
     ...mapActions(useFeedbackStore, ["setFeedbacks"]),
-    async changeCategory(name: string, id: number) {
+    async changeCategory(id: number) {
       this.categoryIndex = id;
       const data = await fetchFeedbacks(id);
       if (data) {
