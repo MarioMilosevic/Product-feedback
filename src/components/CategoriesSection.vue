@@ -28,17 +28,22 @@ export default {
     };
   },
   computed: {
-    ...mapState(useFeedbackStore, ["categories", "getCategoryObjects"]),
+    ...mapState(useFeedbackStore, [
+      "categories",
+      "getCategoryObjects",
+      "getSort",
+    ]),
 
     allCategories() {
       return [{ id: 0, name: "All" }, ...this.getCategoryObjects];
     },
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setFeedbacks"]),
+    ...mapActions(useFeedbackStore, ["setFeedbacks", "setFilterId"]),
     async changeCategory(id: number) {
       this.categoryIndex = id;
-      const data = await fetchFeedbacks(id);
+      this.setFilterId(id);
+      const data = await fetchFeedbacks(id, this.getSort);
       if (data) {
         this.setFeedbacks(data);
       }

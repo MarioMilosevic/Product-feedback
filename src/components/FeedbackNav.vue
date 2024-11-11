@@ -5,7 +5,6 @@
         <Lightbulb />
       </Icon>
       <h3>{{ getFeedbacksLength }} Suggestions</h3>
-
       <div class="navigation__parentDiv__childDiv">
         <FormBlock direction="row" color="blue">
           <Label for="suggestions" name="sort">
@@ -15,7 +14,8 @@
             color="blue"
             name="sort"
             :options="navSortOptions"
-            content="Most Likes"
+            :content="getSort"
+            @update-select="updateSelect"
           ></Select>
         </FormBlock>
       </div>
@@ -36,6 +36,7 @@ import Icon from "src/components/Icon.vue";
 import ActionButton from "src/components/ActionButton.vue";
 import FormBlock from "src/components/FormBlock.vue";
 import Lightbulb from "src/icons/Lightbulb.vue";
+import { fetchFeedbacks } from "src/api/FeedbacksApi";
 
 export default {
   components: {
@@ -54,13 +55,26 @@ export default {
     };
   },
   computed: {
-    ...mapState(useFeedbackStore, ["feedbacks", "getFeedbacksLength"]),
+    ...mapState(useFeedbackStore, [
+      "feedbacks",
+      "getFeedbacksLength",
+      "getSort",
+      "getFilterId",
+    ]),
   },
   mounted() {
     //
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setFeedbacks"]),
+    ...mapActions(useFeedbackStore, ["setFeedbacks", "setSort", "setFilterId"]),
+
+    async updateSelect(value: string) {
+      this.setSort(value);
+      const data = await fetchFeedbacks(this.getFilterId, value);
+      if (data) {
+        this.setFeedbacks(data);
+      }
+    },
   },
 };
 </script>

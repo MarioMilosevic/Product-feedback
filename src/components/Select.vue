@@ -35,6 +35,7 @@ export default {
       required:true
     }
   },
+  emits:['update-select'],
   data() {
     return {
       localContent: this.content,
@@ -47,6 +48,7 @@ export default {
   },
   mounted() {
     // console.log("select prop opcije",this.options)
+    console.log(this.localContent)
   },
 };
 </script>
