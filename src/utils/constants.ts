@@ -9,7 +9,7 @@ export const emptyFeedback = {
     name: "Suggestion",
   },
   title: "",
-  Comments:[]
+  // Comments:[]
 };
 
 export const navSortOptions = [

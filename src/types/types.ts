@@ -74,3 +74,13 @@ export type StatusType = {
   created_at: string;
   id: number;
 };
+
+export type SubmitFeedbackType = {
+  Comments: CommentType[],
+  category: string;
+  description: string;
+  likes: number;
+  status: string;
+  title: string;
+  id?:number
+}

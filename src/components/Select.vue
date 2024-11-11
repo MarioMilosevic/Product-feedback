@@ -13,8 +13,7 @@
 </template>
 
 <script lang="ts">
-import { useFeedbackStore } from 'src/stores/FeedbackStore';
-
+import { useFeedbackStore } from "src/stores/FeedbackStore";
 
 export default {
   props: {
@@ -27,28 +26,25 @@ export default {
       required: true,
     },
     content: {
-      type:String,
-      required:true
+      type: String,
+      required: true,
     },
     color: {
-      type:String,
-      required:true
-    }
+      type: String,
+      required: true,
+    },
   },
-  emits:['update-select'],
+  emits: ["update-select"],
   data() {
     return {
       localContent: this.content,
-      feedbackStore:useFeedbackStore()
+      feedbackStore: useFeedbackStore(),
     };
   },
-  computed: {
-  },
-  methods: {
-  },
+  computed: {},
+  methods: {},
   mounted() {
     // console.log("select prop opcije",this.options)
-    console.log(this.localContent)
   },
 };
 </script>
@@ -73,5 +69,4 @@ export default {
 .white {
   background-color: $primary-color;
 }
-
 </style>

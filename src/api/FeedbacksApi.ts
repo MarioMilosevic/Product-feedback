@@ -5,6 +5,7 @@ import { useFeedbackStore } from "src/stores/FeedbackStore";
 export const getData = async () => {
   try {
     const store = useFeedbackStore();
+
     const feedbacksQuery = supabase.from("Feedbacks")
       .select(`*, Comments(count), 
         status:Status(name),
@@ -99,21 +100,59 @@ export const fetchSingleFeedback = async (id: number) => {
   }
 };
 
-export const addFeedback = async (newFeedback: FeedbackType) => {
+export const addFeedback = async (feedback: FeedbackType) => {
+  console.log(feedback)
+
   try {
+    const categoryQuery = supabase
+      .from("Categories")
+      .select()
+      .eq("name", feedback.category.name)
+      .single();
+
+    const statusQuery = supabase
+      .from("Status")
+      .select()
+      .eq("name", feedback.status.name)
+      .single();
+
+    const [categoryResponse, statusResponse] = await Promise.all([
+      categoryQuery,
+      statusQuery,
+    ]);
+
+    const { data: categoryData, error: categoryError } = categoryResponse;
+    const { data: statusData, error: statusError } = statusResponse;
+
+    if (categoryError || statusError) {
+      console.error("Unable to fetch data", categoryError || statusError);
+      return;
+    }
+
+    const newFeedback = {
+      ...feedback,
+      category: categoryData.id,
+      status: statusData.id,
+    };
+
     const { data, error } = await supabase
       .from("Feedbacks")
       .insert(newFeedback)
       .select()
-      .single();
+      .single()
 
     if (error) {
-      console.log("Unable to add new feedback", error);
+      console.error("Unable to add new feedback", error);
       return;
     }
-    return data;
+    feedback.Comments = []
+    feedback.id = data.id
+    console.log('vracam feedback iz apija', feedback)
+
+    return feedback;
   } catch (error) {
     console.error("Unexpected error occured", error);
+    return;
   }
 };
 

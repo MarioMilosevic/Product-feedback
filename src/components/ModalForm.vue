@@ -214,42 +214,37 @@ export default {
       this.singleFeedback.title = newTitle;
     },
     updateCategory(newCategory: string) {
-      console.log("apdejt kategorije", newCategory);
       this.singleFeedback.category.name = newCategory;
     },
     updateStatus(newStatus: string) {
-      console.log("apdejt statusa", newStatus);
       this.singleFeedback.status.name = newStatus;
     },
     updateTextarea(newText: string) {
       this.singleFeedback.description = newText;
     },
     async handleSubmit() {
-      console.log(this.singleFeedback)
-      // const validation = modalFormSchema.safeParse(this.singleFeedback);
-      // console.log(validation)
-      // if (validation.success) {
-      //   try {
-      //     const data = await addFeedback(this.singleFeedback);
-      //     const newFeedback = { ...data, Comments: [] };
-      //     if (newFeedback.id) {
-      //       this.$emit("close-modal");
-      //       this.addFeedbackToStore(newFeedback);
-      //       this.resetFeedback();
-      //       // this.singleFeedback = emptyFeedback as FeedbackType;
-      //       showToast("New Feedback added");
-      //     }
-      //   } catch (error) {
-      //     console.error("Error adding feedback", error);
-      //     showToast("Error adding feedback", "error");
-      //   }
-      // } else {
-      //   this.errors = validation.error.errors.reduce((acc, err) => {
-      //     const key = err.path.length > 0 ? err.path[0] : "";
-      //     acc[key] = err.message;
-      //     return acc;
-      //   }, {} as Record<string, string>);
-      // }
+      const validation = modalFormSchema.safeParse(this.singleFeedback);
+      if (validation.success) {
+        try {
+          const data = await addFeedback(this.singleFeedback);
+          if (data && data.id) {
+            this.$emit("close-modal");
+            this.addFeedbackToStore(data);
+            this.resetFeedback();
+            this.singleFeedback = emptyFeedback as FeedbackType;
+            showToast("New Feedback added");
+          }
+        } catch (error) {
+          console.error("Error adding feedback", error);
+          showToast("Error adding feedback", "error");
+        }
+      } else {
+        this.errors = validation.error.errors.reduce((acc, err) => {
+          const key = err.path.length > 0 ? err.path[0] : "";
+          acc[key] = err.message;
+          return acc;
+        }, {} as Record<string, string>);
+      }
     },
     async deleteHandler(id: number) {
       const data = await deleteFeedback(id);
