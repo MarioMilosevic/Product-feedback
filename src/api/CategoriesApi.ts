@@ -17,3 +17,21 @@ export const fetchCategories = async () => {
     showToast("Unexpected error occured", "error");
   }
 };
+
+export const fetchSingleCategory = async (name: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("Categories")
+      .select()
+      .eq("name", name)
+      .single();
+    if (error) {
+      console.error("Unable to fetch category", error);
+      return;
+    }
+    return data;
+  } catch (error) {
+    console.error("Unexpected error occured", error);
+    showToast("Unexpected error occured", "error");
+  }
+};

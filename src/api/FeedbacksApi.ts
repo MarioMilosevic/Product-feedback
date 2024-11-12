@@ -122,6 +122,7 @@ export const fetchSingleFeedback = async (id: number) => {
 
 export const addFeedback = async (feedback: FeedbackType) => {
   try {
+    // uzimam category prema imenu name i id
     const categoryQuery = supabase
       .from("Categories")
       .select()
@@ -199,20 +200,21 @@ export const editFeedback = async (
   console.log(feedbackId);
   console.log(updatedFeedback);
 
-  // try {
-  //   const { data, error } = await supabase
-  //     .from("Feedbacks")
-  //     .update(updatedFeedback)
-  //     .eq("id", feedbackId)
-  //     .single();
+  try {
+    const { data, error } = await supabase
+      .from("Feedbacks")
+      .update(updatedFeedback)
+      .eq("id", feedbackId)
+      .single();
 
-  //   if (error) {
-  //     console.error("Unable to update feedback", error);
-  //     return;
-  //   }
+    if (error) {
+      console.error("Unable to update feedback", error);
+      return;
+    }
 
-  //   console.log(data);
-  // } catch (error) {
-  //   console.error("Unexpected error occured", error);
-  // }
+    console.log(data);
+    return data
+  } catch (error) {
+    console.error("Unexpected error occured", error);
+  }
 };

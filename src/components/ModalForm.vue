@@ -200,8 +200,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.feedback)
-    console.log(this.getStatusNames)
   },
   methods: {
     ...mapActions(useFeedbackStore, [
@@ -260,8 +258,11 @@ export default {
       }
     },
     async submitEditFeedback() {
-      console.log('edit feedback')
-      // const data = await editFeedback(this.feedback.id, this.singleFeedback)
+      if (this.feedback.id) {
+        console.log('edit feedback')
+        const data = await editFeedback(this.feedback.id, this.singleFeedback)
+        console.log("editovani objekat iz baze",data)
+      }
     }
   },
 };
