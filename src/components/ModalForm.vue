@@ -14,7 +14,7 @@
         <Close />
       </Icon>
 
-      <form class="overlay__modal-form" @submit.prevent="handleSubmit">
+      <form class="overlay__modal-form" @submit.prevent="submitHandler">
         <FormBlock>
           <template #label>
             <Label name="title">
@@ -118,7 +118,7 @@
             <ActionButton
               color="grey"
               size="medium"
-              @click.prevent="$emit('close-modal')"
+              @click="$emit('close-modal')"
             >
               Cancel
             </ActionButton>
@@ -144,7 +144,7 @@ import { modalFormSchema } from "src/validation/modalFormSchema";
 import { FeedbackType } from "src/types/types.ts";
 import { PropType } from "vue";
 import { emptyFeedback } from "src/utils/constants";
-import { addFeedback, deleteFeedback } from "src/api/FeedbacksApi";
+import { addFeedback, deleteFeedback, editFeedback } from "src/api/FeedbacksApi";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapActions, mapState } from "pinia";
 import { showToast } from "src/utils/toastify";
@@ -195,12 +195,13 @@ export default {
     title() {
       return this.feedback ? "Edit Feedback" : "Create New Feedback";
     },
+    submitHandler() {
+      return this.feedback ? this.submitEditFeedback : this.submitNewFeedback
+    }
   },
   mounted() {
-    // console.log("modal forma getCategoryNames", this.getCategoryNames);
-    // console.log("modal forma getCategoryObjects", this.getCategoryObjects);
-    // console.log("modal forma getStatusNames", this.getStatusNames);
-    // console.log("modal forma getStatusObjects", this.getStatusObjects);
+    console.log(this.feedback)
+    console.log(this.getStatusNames)
   },
   methods: {
     ...mapActions(useFeedbackStore, [
@@ -208,7 +209,7 @@ export default {
       "deleteFeedbackFromStore",
     ]),
     resetFeedback() {
-      this.singleFeedback = emptyFeedback as FeedbackType;
+      this.singleFeedback = {...emptyFeedback} as FeedbackType;
     },
     updateTitle(newTitle: string) {
       this.singleFeedback.title = newTitle;
@@ -222,7 +223,7 @@ export default {
     updateTextarea(newText: string) {
       this.singleFeedback.description = newText;
     },
-    async handleSubmit() {
+    async submitNewFeedback() {
       const validation = modalFormSchema.safeParse(this.singleFeedback);
       if (validation.success) {
         try {
@@ -258,6 +259,10 @@ export default {
         showToast("Something went wrong, please try again", "error");
       }
     },
+    async submitEditFeedback() {
+      console.log('edit feedback')
+      // const data = await editFeedback(this.feedback.id, this.singleFeedback)
+    }
   },
 };
 </script>

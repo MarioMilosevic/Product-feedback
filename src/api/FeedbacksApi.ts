@@ -1,42 +1,47 @@
 import supabase from "src/config/supabaseClient";
 import { FeedbackType } from "src/types/types";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
+// import { showToast } from "src/utils/toastify";
+import { fetchStatusOptions } from "src/api/StatusApi";
+import { fetchCategories } from "src/api/CategoriesApi";
 
 export const getData = async () => {
   try {
     const store = useFeedbackStore();
 
-    const feedbacksQuery = supabase.from("Feedbacks")
-      .select(`*, Comments(count), 
-        status:Status(name),
-        category:Categories(name)`);
-
-    const categoriesQuery = supabase
-      .from("Categories")
-      .select(`*`)
-      .order("id", { ascending: true });
-    const statusQuery = supabase.from("Status").select(`*`);
-
-    const [feedbacksResponse, categoriesResponse, statusResponse] =
-      await Promise.all([feedbacksQuery, categoriesQuery, statusQuery]);
-
-    const { data: feedbacksData, error: feedbacksError } = feedbacksResponse;
-    const { data: categoriesData, error: categoriesError } = categoriesResponse;
-    const { data: statusData, error: statusError } = statusResponse;
-
-    if (feedbacksError || categoriesError || statusError) {
-      console.log(
-        "Unable to fetch data",
-        feedbacksError || categoriesError || statusError
-      );
-      return;
+    const [feedbacksData, categoriesData, statusData] = await Promise.all([
+      fetchAllFeedbacks(),
+      fetchCategories(),
+      fetchStatusOptions(),
+    ]);
+    if (feedbacksData && categoriesData && statusData) {
+      store.setCategories(categoriesData);
+      store.setFeedbacks(feedbacksData);
+      store.setStatusOptions(statusData);
     }
-    store.setFeedbacks(feedbacksData);
-    store.setCategories(categoriesData);
-    store.setStatusOptions(statusData);
   } catch (error) {
     console.log(error);
     return null;
+  }
+};
+
+export const fetchAllFeedbacks = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("Feedbacks")
+      .select(
+        `*, Comments(count), 
+        status:Status(name),
+        category:Categories(name)`
+      )
+      .order("likes", { ascending: false });
+    if (error) {
+      console.error("Unable to fetch feedbacks", error);
+      return;
+    }
+    return data;
+  } catch (error) {
+    console.error("Unexpected error occured", error);
   }
 };
 
@@ -80,7 +85,8 @@ export const fetchFeedbacks = async (id: number, sort: string) => {
 
 export const fetchSingleFeedback = async (id: number) => {
   try {
-    const { data, error } = await supabase
+    const store = useFeedbackStore();
+    const singleFeedbackQuery = supabase
       .from("Feedbacks")
       .select(
         `*,status:Status(name),
@@ -89,10 +95,24 @@ export const fetchSingleFeedback = async (id: number) => {
       .eq("id", id)
       .single();
 
+    const [singleFeedbackResponse, categoriesData, statusData] =
+      await Promise.all([
+        singleFeedbackQuery,
+        fetchCategories(),
+        fetchStatusOptions(),
+      ]);
+
+    const { data, error } = singleFeedbackResponse;
+
     if (error) {
-      console.error("Unable to fetch feedback");
+      console.error("Unable to fetch single feedback", error);
       return;
     }
+    if (categoriesData && statusData) {
+      store.setCategories(categoriesData);
+      store.setStatusOptions(statusData);
+    }
+
     return data;
   } catch (error) {
     console.error("Error fetching data", error);
@@ -101,8 +121,6 @@ export const fetchSingleFeedback = async (id: number) => {
 };
 
 export const addFeedback = async (feedback: FeedbackType) => {
-  console.log(feedback)
-
   try {
     const categoryQuery = supabase
       .from("Categories")
@@ -139,15 +157,14 @@ export const addFeedback = async (feedback: FeedbackType) => {
       .from("Feedbacks")
       .insert(newFeedback)
       .select()
-      .single()
+      .single();
 
     if (error) {
       console.error("Unable to add new feedback", error);
       return;
     }
-    feedback.Comments = []
-    feedback.id = data.id
-    console.log('vracam feedback iz apija', feedback)
+    feedback.Comments = [];
+    feedback.id = data.id;
 
     return feedback;
   } catch (error) {
@@ -173,4 +190,29 @@ export const deleteFeedback = async (id: number) => {
   } catch (error) {
     console.error("Unexpected error occured", error);
   }
+};
+
+export const editFeedback = async (
+  feedbackId: number,
+  updatedFeedback: FeedbackType
+) => {
+  console.log(feedbackId);
+  console.log(updatedFeedback);
+
+  // try {
+  //   const { data, error } = await supabase
+  //     .from("Feedbacks")
+  //     .update(updatedFeedback)
+  //     .eq("id", feedbackId)
+  //     .single();
+
+  //   if (error) {
+  //     console.error("Unable to update feedback", error);
+  //     return;
+  //   }
+
+  //   console.log(data);
+  // } catch (error) {
+  //   console.error("Unexpected error occured", error);
+  // }
 };

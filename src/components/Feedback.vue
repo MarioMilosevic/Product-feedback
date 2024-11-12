@@ -14,7 +14,7 @@
         :to="{ name: 'FeedbackDetails', params: { id: feedbackId } }"
       >
         <h4>{{ feedback.title }}</h4>
-        <p>{{ feedback.description }}</p>
+        <p class="feedback__content__link-paragraph"> {{ feedback.description }}</p>
         <Category :category="feedback.category.name" />
       </router-link>
     </div>
@@ -86,14 +86,20 @@ export default {
     display: flex;
     align-items: center;
     gap: 2rem;
-
+    flex-grow: 1;
+    
     &__link {
       text-decoration: none;
       color: inherit;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      width: 100%;
       gap: 1rem;
+
+      &-paragraph {
+        line-height: 1.5rem;
+      }
     }
 
     &__likes {
