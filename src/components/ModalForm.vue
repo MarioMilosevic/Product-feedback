@@ -144,7 +144,11 @@ import { modalFormSchema } from "src/validation/modalFormSchema";
 import { FeedbackType } from "src/types/types.ts";
 import { PropType } from "vue";
 import { emptyFeedback } from "src/utils/constants";
-import { addFeedback, deleteFeedback, editFeedback } from "src/api/FeedbacksApi";
+import {
+  addFeedback,
+  deleteFeedback,
+  editFeedback,
+} from "src/api/FeedbacksApi";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapActions, mapState } from "pinia";
 import { showToast } from "src/utils/toastify";
@@ -196,18 +200,17 @@ export default {
       return this.feedback ? "Edit Feedback" : "Create New Feedback";
     },
     submitHandler() {
-      return this.feedback ? this.submitEditFeedback : this.submitNewFeedback
-    }
+      return this.feedback ? this.submitEditFeedback : this.submitNewFeedback;
+    },
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     ...mapActions(useFeedbackStore, [
       "addFeedbackToStore",
       "deleteFeedbackFromStore",
     ]),
     resetFeedback() {
-      this.singleFeedback = {...emptyFeedback} as FeedbackType;
+      this.singleFeedback = { ...emptyFeedback } as FeedbackType;
     },
     updateTitle(newTitle: string) {
       this.singleFeedback.title = newTitle;
@@ -259,11 +262,12 @@ export default {
     },
     async submitEditFeedback() {
       if (this.feedback.id) {
-        console.log('edit feedback')
-        const data = await editFeedback(this.feedback.id, this.singleFeedback)
-        console.log("editovani objekat iz baze",data)
+        console.log("edit feedback");
+        this.$emit("close-modal");
+        const data = await editFeedback(this.feedback.id, this.singleFeedback);
+        console.log("editovani objekat iz baze", data);
       }
-    }
+    },
   },
 };
 </script>

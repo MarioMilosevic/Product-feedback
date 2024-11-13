@@ -2,8 +2,8 @@ import supabase from "src/config/supabaseClient";
 import { FeedbackType } from "src/types/types";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 // import { showToast } from "src/utils/toastify";
-import { fetchStatusOptions } from "src/api/StatusApi";
-import { fetchCategories } from "src/api/CategoriesApi";
+import { fetchSingleStatusOption, fetchStatusOptions } from "src/api/StatusApi";
+import { fetchCategories, fetchSingleCategory } from "src/api/CategoriesApi";
 
 export const getData = async () => {
   try {
@@ -122,31 +122,10 @@ export const fetchSingleFeedback = async (id: number) => {
 
 export const addFeedback = async (feedback: FeedbackType) => {
   try {
-    // uzimam category prema imenu name i id
-    const categoryQuery = supabase
-      .from("Categories")
-      .select()
-      .eq("name", feedback.category.name)
-      .single();
-
-    const statusQuery = supabase
-      .from("Status")
-      .select()
-      .eq("name", feedback.status.name)
-      .single();
-
-    const [categoryResponse, statusResponse] = await Promise.all([
-      categoryQuery,
-      statusQuery,
+    const [categoryData, statusData] = await Promise.all([
+      fetchSingleCategory(feedback.category.name),
+      fetchSingleStatusOption(feedback.status.name),
     ]);
-
-    const { data: categoryData, error: categoryError } = categoryResponse;
-    const { data: statusData, error: statusError } = statusResponse;
-
-    if (categoryError || statusError) {
-      console.error("Unable to fetch data", categoryError || statusError);
-      return;
-    }
 
     const newFeedback = {
       ...feedback,
@@ -164,7 +143,7 @@ export const addFeedback = async (feedback: FeedbackType) => {
       console.error("Unable to add new feedback", error);
       return;
     }
-    feedback.Comments = [];
+    // feedback.Comments = [];
     feedback.id = data.id;
 
     return feedback;
@@ -195,12 +174,47 @@ export const deleteFeedback = async (id: number) => {
 
 export const editFeedback = async (
   feedbackId: number,
-  updatedFeedback: FeedbackType
+  feedback: FeedbackType
 ) => {
   console.log(feedbackId);
-  console.log(updatedFeedback);
-
+  console.log(feedback);
   try {
+    const [categoryData, statusData] = await Promise.all([
+      fetchSingleCategory(feedback.category.name),
+      fetchSingleStatusOption(feedback.status.name),
+    ]);
+    console.log("test", feedback);
+
+    console.log("category data", categoryData);
+    console.log("status data", statusData);
+    const { Comments, ...feedbackNoComments } = feedback;
+
+    // delete feedback.Comments;
+    console.log("drugi test", feedback);
+
+    const updatedFeedback = {
+      ...feedbackNoComments,
+      category: categoryData.id,
+      status: statusData.id,
+    };
+    console.log(updatedFeedback);
+
+    // trebam da fecam trenutnim feedbackom u bazu da dobijem reference za kategoriju id i status id
+
+    // const updatedFeedback = {
+    //   ...feedbackNoComments,
+    //   category: categoryData.id,
+    //   status: statusData.id,
+    // };
+
+    // const updatedFeedback = {
+    //   ...feedback,
+    //   category: categoryData.id,
+    //   status: statusData.id,
+    // };
+
+    // delete updatedFeedback.Comments
+
     const { data, error } = await supabase
       .from("Feedbacks")
       .update(updatedFeedback)
@@ -213,7 +227,7 @@ export const editFeedback = async (
     }
 
     console.log(data);
-    return data
+    return data;
   } catch (error) {
     console.error("Unexpected error occured", error);
   }

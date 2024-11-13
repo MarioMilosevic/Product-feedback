@@ -27,7 +27,7 @@ export type FeedbackType = {
     name: string;
   };
   title: string;
-  Comments: CommentType[];
+  Comments?: CommentType[];
 };
 
 export type SingleFeedbackType = {
