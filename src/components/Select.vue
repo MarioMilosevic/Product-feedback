@@ -20,6 +20,8 @@ export default {
     name: {
       type: String,
       required: true,
+      // ovo dodao
+      default: "",
     },
     options: {
       type: Array,
