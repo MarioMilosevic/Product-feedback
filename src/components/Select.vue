@@ -4,8 +4,8 @@
     :id="name"
     :class="['select', color]"
     v-model="localContent"
-    @change="$emit('update-select', localContent)"
-  >
+    >
+    <!-- @change="$emit('update-select', localContent)" -->
     <option v-for="(option, index) in options" :key="index" :value="option">
       {{ option }}
     </option>
@@ -20,8 +20,6 @@ export default {
     name: {
       type: String,
       required: true,
-      // ovo dodao
-      default: "",
     },
     options: {
       type: Array,
@@ -36,7 +34,7 @@ export default {
       required: true,
     },
   },
-  emits: ["update-select"],
+  // emits: ["update-select"],
   data() {
     return {
       localContent: this.content,
@@ -48,6 +46,11 @@ export default {
   mounted() {
     // console.log("select prop opcije",this.options)
   },
+  // watch: {
+  //   newSelect() {
+  //     console.log("novi lokal kontent",this.localContent)
+  //   }
+  // }
 };
 </script>
 

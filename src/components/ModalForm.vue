@@ -261,6 +261,7 @@ export default {
       }
     },
     async submitEditFeedback() {
+      // u doks component v model
       if (this.feedback.id) {
         console.log("edit feedback");
         this.$emit("close-modal");
