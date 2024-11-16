@@ -264,6 +264,7 @@ export default {
       // u doks component v model
       if (this.feedback.id) {
         console.log("edit feedback");
+        console.log('add test here')
         this.$emit("close-modal");
         const data = await editFeedback(this.feedback.id, this.singleFeedback);
         console.log("editovani objekat iz baze", data);
