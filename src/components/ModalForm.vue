@@ -183,7 +183,7 @@ export default {
   emits: ["close-modal"],
   data() {
     return {
-      singleFeedback: this.feedback || { ...emptyFeedback },
+      singleFeedback: Object.create(this.feedback) || { ...emptyFeedback },
       errors: {} as Record<string, string>,
     };
   },
@@ -261,13 +261,11 @@ export default {
       }
     },
     async submitEditFeedback() {
-      // u doks component v model
       if (this.feedback.id) {
-        console.log("edit feedback");
-        console.log('add test here')
-        this.$emit("close-modal");
+        console.log("formData", this.singleFeedback);
         const data = await editFeedback(this.feedback.id, this.singleFeedback);
         console.log("editovani objekat iz baze", data);
+        this.$emit("close-modal");
       }
     },
   },

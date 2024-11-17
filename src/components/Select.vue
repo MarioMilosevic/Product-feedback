@@ -4,8 +4,8 @@
     :id="name"
     :class="['select', color]"
     v-model="localContent"
+    @change="$emit('update-select', localContent)"
     >
-    <!-- @change="$emit('update-select', localContent)" -->
     <option v-for="(option, index) in options" :key="index" :value="option">
       {{ option }}
     </option>
@@ -34,7 +34,7 @@ export default {
       required: true,
     },
   },
-  // emits: ["update-select"],
+  emits: ["update-select"],
   data() {
     return {
       localContent: this.content,
