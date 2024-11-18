@@ -183,7 +183,9 @@ export default {
   emits: ["close-modal"],
   data() {
     return {
-      singleFeedback: Object.create(this.feedback) || { ...emptyFeedback },
+      singleFeedback: this.feedback
+        ? { ...this.feedback }
+        : { ...emptyFeedback },
       errors: {} as Record<string, string>,
     };
   },
@@ -263,8 +265,7 @@ export default {
     async submitEditFeedback() {
       if (this.feedback.id) {
         console.log("formData", this.singleFeedback);
-        const data = await editFeedback(this.feedback.id, this.singleFeedback);
-        console.log("editovani objekat iz baze", data);
+        const data = await editFeedback(this.singleFeedback);
         this.$emit("close-modal");
       }
     },

@@ -172,53 +172,25 @@ export const deleteFeedback = async (id: number) => {
   }
 };
 
-export const editFeedback = async (
-  feedbackId: number,
-  feedback: FeedbackType
-) => {
-  console.log(feedbackId);
-  console.log(feedback);
+export const editFeedback = async (feedback: FeedbackType) => {
   try {
     const [categoryData, statusData] = await Promise.all([
       fetchSingleCategory(feedback.category.name),
       fetchSingleStatusOption(feedback.status.name),
     ]);
-    console.log("test", feedback);
-
-    console.log("category data", categoryData);
-    console.log("status data", statusData);
     const { Comments, ...feedbackNoComments } = feedback;
-
-    // delete feedback.Comments;
-    console.log("drugi test", feedback);
 
     const updatedFeedback = {
       ...feedbackNoComments,
       category: categoryData.id,
       status: statusData.id,
     };
-    console.log(updatedFeedback);
-
-    // trebam da fecam trenutnim feedbackom u bazu da dobijem reference za kategoriju id i status id
-
-    // const updatedFeedback = {
-    //   ...feedbackNoComments,
-    //   category: categoryData.id,
-    //   status: statusData.id,
-    // };
-
-    // const updatedFeedback = {
-    //   ...feedback,
-    //   category: categoryData.id,
-    //   status: statusData.id,
-    // };
-
-    // delete updatedFeedback.Comments
 
     const { data, error } = await supabase
       .from("Feedbacks")
       .update(updatedFeedback)
-      .eq("id", feedbackId)
+      .eq("id", updatedFeedback.id)
+      .select()
       .single();
 
     if (error) {
@@ -226,8 +198,12 @@ export const editFeedback = async (
       return;
     }
 
-    console.log(data);
-    return data;
+    const feedbackUI = {
+      ...data,
+      status: statusData.name,
+      category: categoryData.name,
+    };
+    return feedbackUI;
   } catch (error) {
     console.error("Unexpected error occured", error);
   }
