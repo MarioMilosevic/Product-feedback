@@ -213,7 +213,8 @@ export default {
       "editFeedbackFromStore"
     ]),
     resetFeedback() {
-      this.singleFeedback = { ...emptyFeedback } as FeedbackType;
+      this.singleFeedback = { ...emptyFeedback };
+      this.singleFeedback.category.name = ""
     },
     updateTitle(newTitle: string) {
       this.singleFeedback.title = newTitle;
@@ -236,7 +237,7 @@ export default {
             this.$emit("close-modal");
             this.addFeedbackToStore(data);
             this.resetFeedback();
-            this.singleFeedback = emptyFeedback as FeedbackType;
+            console.log("nakon reseta",this.singleFeedback)
             showToast("New Feedback added");
           }
         } catch (error) {
@@ -270,6 +271,7 @@ export default {
         this.singleFeedback = data
         this.$emit('update-feedback', data)
         this.$emit("close-modal");
+        showToast('Feedback updated sucessfully')
       }
     },
   },

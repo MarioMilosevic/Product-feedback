@@ -154,7 +154,17 @@ export const addFeedback = async (feedback: FeedbackType) => {
 };
 
 export const deleteFeedback = async (id: number) => {
+  console.log(id)
   try {
+    const response = await supabase
+      .from("Comments")
+      .delete()
+      .eq("feedbackId", id)
+
+    if (response.status !== 204) {
+      console.error("Unable to delete comment");
+      return;
+    }
     const { data, error } = await supabase
       .from("Feedbacks")
       .delete()
@@ -199,7 +209,6 @@ export const editFeedback = async (feedback: FeedbackType) => {
     }
 
     const feedbackUI = await fetchSingleFeedback(data.id);
-    console.log(feedbackUI);
     return feedbackUI;
   } catch (error) {
     console.error("Unexpected error occured", error);
