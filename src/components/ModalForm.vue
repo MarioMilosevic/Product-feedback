@@ -180,7 +180,7 @@ export default {
       default: null,
     },
   },
-  emits: ["close-modal"],
+  emits: ["close-modal", 'update-feedback'],
   data() {
     return {
       singleFeedback: this.feedback
@@ -210,6 +210,7 @@ export default {
     ...mapActions(useFeedbackStore, [
       "addFeedbackToStore",
       "deleteFeedbackFromStore",
+      "editFeedbackFromStore"
     ]),
     resetFeedback() {
       this.singleFeedback = { ...emptyFeedback } as FeedbackType;
@@ -266,6 +267,8 @@ export default {
       if (this.feedback.id) {
         console.log("formData", this.singleFeedback);
         const data = await editFeedback(this.singleFeedback);
+        this.singleFeedback = data
+        this.$emit('update-feedback', data)
         this.$emit("close-modal");
       }
     },

@@ -198,11 +198,8 @@ export const editFeedback = async (feedback: FeedbackType) => {
       return;
     }
 
-    const feedbackUI = {
-      ...data,
-      status: statusData.name,
-      category: categoryData.name,
-    };
+    const feedbackUI = await fetchSingleFeedback(data.id);
+    console.log(feedbackUI);
     return feedbackUI;
   } catch (error) {
     console.error("Unexpected error occured", error);

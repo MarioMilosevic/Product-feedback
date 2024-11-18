@@ -7,7 +7,7 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       feedbacks: [] as FeedbackType[],
       categories: [] as CategoryType[],
       statusOptions: [] as StatusType[],
-      filterId:0,
+      filterId: 0,
       sort: "Most Likes",
     };
   },
@@ -45,8 +45,8 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       return state.sort;
     },
     getFilterId: (state) => {
-      return state.filterId
-    }
+      return state.filterId;
+    },
   },
   actions: {
     setFeedbacks(feedbacks: FeedbackType[]) {
@@ -58,6 +58,11 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     deleteFeedbackFromStore(id: number) {
       this.feedbacks = this.feedbacks.filter((feedback) => feedback.id !== id);
     },
+    editFeedbackFromStore(feedback: FeedbackType) {
+      this.feedbacks = this.feedbacks.map((f) =>
+        f.id === feedback.id ? { ...f, ...feedback } : f
+      );
+    },
     setCategories(categories: CategoryType[]) {
       this.categories = categories;
     },
@@ -68,7 +73,7 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       this.sort = value;
     },
     setFilterId(value: number) {
-      this.filterId = value
-    }
+      this.filterId = value;
+    },
   },
 });

@@ -41,6 +41,7 @@
     :feedback="singleFeedback"
     :isModalOpen="isModalOpen"
     @close-modal="closeModal"
+    @update-feedback="updateFeedback"
   />
 </template>
 
@@ -57,6 +58,14 @@ import LoadingSpinner from "src/components/LoadingSpinner.vue";
 import LeftArrow from "src/icons/LeftArrow.vue";
 
 export default {
+  async created() {
+    this.isLoading = true;
+    const data = await fetchSingleFeedback(this.feedbackId);
+    if (data) {
+      this.singleFeedback = { ...data };
+      this.isLoading = false;
+    }
+  },
   components: {
     Feedback,
     Icon,
@@ -87,14 +96,6 @@ export default {
       return this.maxCharacters - this.textAreaContent.length;
     },
   },
-  async created() {
-    this.isLoading = true;
-    const data = await fetchSingleFeedback(this.feedbackId);
-    if (data) {
-      this.singleFeedback = { ...data };
-      this.isLoading = false;
-    }
-  },
   methods: {
     editFeedback() {
       this.isModalOpen = true;
@@ -105,6 +106,9 @@ export default {
     handleUpdateTextarea(newContent: string) {
       this.textAreaContent = newContent;
     },
+    updateFeedback(newFeedback:SingleFeedbackType) {
+      this.singleFeedback = newFeedback
+    }
   },
   mounted() {
     //
