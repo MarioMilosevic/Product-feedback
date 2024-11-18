@@ -180,7 +180,7 @@ export default {
       default: null,
     },
   },
-  emits: ["close-modal", 'update-feedback'],
+  emits: ["close-modal", "update-feedback"],
   data() {
     return {
       singleFeedback: this.feedback
@@ -210,11 +210,10 @@ export default {
     ...mapActions(useFeedbackStore, [
       "addFeedbackToStore",
       "deleteFeedbackFromStore",
-      "editFeedbackFromStore"
+      "editFeedbackFromStore",
     ]),
     resetFeedback() {
-      this.singleFeedback = { ...emptyFeedback };
-      this.singleFeedback.category.name = ""
+      this.singleFeedback = { ...emptyFeedback, category: { name: "" } };
     },
     updateTitle(newTitle: string) {
       this.singleFeedback.title = newTitle;
@@ -237,7 +236,6 @@ export default {
             this.$emit("close-modal");
             this.addFeedbackToStore(data);
             this.resetFeedback();
-            console.log("nakon reseta",this.singleFeedback)
             showToast("New Feedback added");
           }
         } catch (error) {
@@ -266,12 +264,11 @@ export default {
     },
     async submitEditFeedback() {
       if (this.feedback.id) {
-        console.log("formData", this.singleFeedback);
         const data = await editFeedback(this.singleFeedback);
-        this.singleFeedback = data
-        this.$emit('update-feedback', data)
+        this.singleFeedback = data;
+        this.$emit("update-feedback", data);
         this.$emit("close-modal");
-        showToast('Feedback updated sucessfully')
+        showToast("Feedback updated sucessfully");
       }
     },
   },
