@@ -13,7 +13,6 @@
       >
         <Close />
       </Icon>
-
       <form class="overlay__modal-form" @submit.prevent="submitHandler">
         <FormBlock>
           <template #label>
@@ -106,6 +105,7 @@
           class="overlay__modal-form-buttonContainer"
           :class="[feedback ? 'visible' : 'notVisible']"
         >
+          <!--  -->
           <ActionButton
             v-if="singleFeedback.id"
             color="red"
@@ -114,6 +114,7 @@
           >
             Delete
           </ActionButton>
+          <!--  -->
           <div class="overlay__modal-form-buttonContainer-div">
             <ActionButton
               color="grey"
@@ -314,12 +315,7 @@ export default {
         display: flex;
         flex-direction: column;
         gap: 4px;
-
-        /* p {
-          font-size: 12px;
-        } */
       }
-
       &__paragraph {
         font-size: 12px;
       }

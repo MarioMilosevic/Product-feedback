@@ -2,15 +2,24 @@
   <LoadingSpinner v-if="isLoading" />
   <div v-else class="wrapper">
     <div class="wrapper__header">
-      <router-link :to="{ name: 'Home' }" class="wrapper__header-backButton">
+      <ActionButton color="grey" size="medium" @click="goBack">
         <Icon>
           <LeftArrow />
         </Icon>
-        <h4>Go Back</h4>
-      </router-link>
-      <ActionButton color="blue" size="big" @click="editFeedback">
-        Edit Feedback
+        <span>Go Back</span>
       </ActionButton>
+      <div class="wrapper__header-div">
+          <ActionButton
+            color="red"
+            size="medium"
+            @click="deleteHandler(singleFeedback.id)"
+          >
+            Delete
+          </ActionButton>
+        <ActionButton color="blue" size="big" @click="editFeedback">
+          Edit Feedback
+        </ActionButton>
+      </div>
     </div>
     <Feedback :feedback="singleFeedback" />
     <div class="wrapper__comments">
@@ -47,7 +56,7 @@
 
 <script lang="ts">
 import { SingleFeedbackType } from "src/types/types";
-import { fetchSingleFeedback } from "src/api/FeedbacksApi";
+import { fetchSingleFeedback, deleteFeedback } from "src/api/FeedbacksApi";
 import Feedback from "src/components/feedbacks/Feedback.vue";
 import Comment from "src/components/UI/Comment.vue";
 import Icon from "src/components/UI/Icon.vue";
@@ -56,6 +65,7 @@ import ActionButton from "src/components/UI/ActionButton.vue";
 import ModalForm from "src/components/UI/ModalForm.vue";
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
 import LeftArrow from "src/icons/LeftArrow.vue";
+import { showToast } from "src/utils/toastify";
 
 export default {
   async created() {
@@ -109,6 +119,19 @@ export default {
     updateFeedback(newFeedback: SingleFeedbackType) {
       this.singleFeedback = newFeedback;
     },
+    goBack() {
+          this.$router.push("/");
+    },
+    async deleteHandler(id: number) {
+      const data = await deleteFeedback(id);
+      if (data.id) {
+        this.$emit("close-modal");
+        this.goBack();
+        showToast("Deleted feedback successfully");
+      } else {
+        showToast("Something went wrong, please try again", "error");
+      }
+    },
   },
   mounted() {
     //
@@ -134,6 +157,11 @@ export default {
     justify-content: space-between;
     padding: 0.6rem 0;
 
+    &-div {
+      display: flex;
+      gap: 1rem;
+    }
+
     &-editButton {
       cursor: pointer;
       padding: 1rem 2rem;
@@ -141,16 +169,6 @@ export default {
       background-color: $terniary-color;
       border-radius: $border-radius-medium;
       color: $secondary-color;
-    }
-
-    &-backButton {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 6px 12px;
-      cursor: pointer;
-      text-decoration: none;
-      color: inherit;
     }
   }
 

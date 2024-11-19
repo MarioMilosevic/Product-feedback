@@ -38,6 +38,10 @@ export default {
   color: $secondary-color;
   font-weight: 500;
   font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .small {

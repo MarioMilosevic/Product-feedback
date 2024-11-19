@@ -1,5 +1,8 @@
 <template>
-  <div class="feedback">
+  <router-link
+    :to="{ name: 'FeedbackDetails', params: { id: feedbackId } }"
+    class="feedback"
+  >
     <div class="feedback__content">
       <button class="feedback__content__likes">
         <Icon class="feedback__content__likes-caret" size="small">
@@ -9,26 +12,21 @@
           {{ feedback.likes }}
         </span>
       </button>
-      <router-link
-        class="feedback__content__link"
-        :to="{ name: 'FeedbackDetails', params: { id: feedbackId } }"
-      >
+      <div class="feedback__content__div">
         <h4>{{ feedback.title }}</h4>
-        <p class="feedback__content__link-paragraph">
+        <p class="feedback__content__div-paragraph">
           {{ feedback.description }}
         </p>
         <Category :category="feedback.category.name" />
-      </router-link>
+      </div>
     </div>
-
     <div v-if="commentsCount > 0" class="feedback__comments">
       <Icon class="size-24" fill="#f0f9ff" size="medium">
         <Chat />
       </Icon>
-
       <span class="feedback__comments-length">{{ commentsCount }}</span>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script lang="ts">
@@ -74,8 +72,9 @@ export default {
 <style lang="scss" scoped>
 @import "src/scss/variables";
 
-
 .feedback {
+  text-decoration: none;
+  color: inherit;
   width: 100%;
   background-color: $secondary-color;
   border-radius: $border-radius-big;
@@ -91,9 +90,7 @@ export default {
     gap: 2rem;
     flex-grow: 1;
 
-    &__link {
-      text-decoration: none;
-      color: inherit;
+    &__div {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
