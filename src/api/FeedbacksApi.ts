@@ -1,7 +1,6 @@
 import supabase from "src/config/supabaseClient";
 import { FeedbackType } from "src/types/types";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
-// import { showToast } from "src/utils/toastify";
 import { fetchSingleStatusOption, fetchStatusOptions } from "src/api/StatusApi";
 import { fetchCategories, fetchSingleCategory } from "src/api/CategoriesApi";
 
@@ -143,7 +142,6 @@ export const addFeedback = async (feedback: FeedbackType) => {
       console.error("Unable to add new feedback", error);
       return;
     }
-    // feedback.Comments = [];
     feedback.id = data.id;
 
     return feedback;
@@ -154,7 +152,6 @@ export const addFeedback = async (feedback: FeedbackType) => {
 };
 
 export const deleteFeedback = async (id: number) => {
-  console.log(id)
   try {
     const response = await supabase
       .from("Comments")

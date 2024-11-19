@@ -9,13 +9,13 @@
         <span>Go Back</span>
       </ActionButton>
       <div class="wrapper__header-div">
-          <ActionButton
-            color="red"
-            size="medium"
-            @click="deleteHandler(singleFeedback.id)"
-          >
-            Delete
-          </ActionButton>
+        <ActionButton
+          color="red"
+          size="medium"
+          @click="deleteHandler(singleFeedback.id)"
+        >
+          Delete
+        </ActionButton>
         <ActionButton color="blue" size="big" @click="editFeedback">
           Edit Feedback
         </ActionButton>
@@ -120,14 +120,16 @@ export default {
       this.singleFeedback = newFeedback;
     },
     goBack() {
-          this.$router.push("/");
+      this.$router.push("/home");
     },
     async deleteHandler(id: number) {
       const data = await deleteFeedback(id);
       if (data.id) {
         this.$emit("close-modal");
         this.goBack();
-        showToast("Deleted feedback successfully");
+        this.$nextTick(() => {
+          showToast("Deleted feedback successfully");
+        });
       } else {
         showToast("Something went wrong, please try again", "error");
       }

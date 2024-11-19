@@ -1,13 +1,15 @@
 <template>
   <nav>
-    Mario
-    <!-- <LoadingSpinner /> -->
+    <ActionButton size="big" color="purple"> Log In</ActionButton>
   </nav>
 </template>
+
 <script lang="ts">
-import LoadingSpinner from "./LoadingSpinner.vue";
+import ActionButton from "src/components/UI/ActionButton.vue";
 export default {
-  components: { LoadingSpinner },
+  components: {
+    ActionButton,
+  },
   props: {},
   data() {
     return {};
@@ -24,9 +26,10 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 nav {
-  border: 1px solid black;
   grid-column: span 4;
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

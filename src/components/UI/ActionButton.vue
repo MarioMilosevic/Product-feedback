@@ -1,5 +1,3 @@
-<!-- @click="$emit('click-event')" -->
-
 <template>
   <button :class="[size, color, 'button']" :type="type">
     <slot />
