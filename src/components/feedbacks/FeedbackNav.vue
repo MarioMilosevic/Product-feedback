@@ -29,12 +29,12 @@
 <script lang="ts">
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapActions, mapState } from "pinia";
-import Select from "src/components/Select.vue";
-import Label from "src/components/Label.vue";
+import Select from "src/components/UI/Select.vue";
+import Label from "src/components/UI/Label.vue";
 import { navSortOptions } from "src/utils/constants";
-import Icon from "src/components/Icon.vue";
-import ActionButton from "src/components/ActionButton.vue";
-import FormBlock from "src/components/FormBlock.vue";
+import Icon from "src/components/UI/Icon.vue";
+import ActionButton from "src/components/UI/ActionButton.vue";
+import FormBlock from "src/components/UI/FormBlock.vue";
 import Lightbulb from "src/icons/Lightbulb.vue";
 import { fetchFeedbacks } from "src/api/FeedbacksApi";
 
@@ -79,12 +79,12 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "src/scss/_variables.scss";
 
 .navigation {
   background-color: $terniary-color;
-  padding: 16px 32px;
+  padding: 1rem 2rem;
   border-radius: $border-radius-medium;
   color: $secondary-color;
   display: flex;
@@ -99,7 +99,7 @@ export default {
       &-select {
         background-color: $terniary-color;
         color: $secondary-color;
-        padding: 8px 4px;
+        padding: 8px 4px; // dodaj rem
         border: none;
         outline: none;
         cursor: pointer;

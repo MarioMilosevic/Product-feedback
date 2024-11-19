@@ -7,7 +7,7 @@
       :key="feedback.id"
       :feedback="feedback"
     />
-    <Nofeedbacks v-else @open-modal="openModal"/>
+    <Nofeedbacks v-else @open-modal="openModal" />
     <ModalForm :isModalOpen="isModalOpen" @close-modal="closeModal" />
   </main>
 </template>
@@ -15,11 +15,11 @@
 <script lang="ts">
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapState } from "pinia";
-import Feedback from "src/components/Feedback.vue";
-import FeedbackNav from "src/components/FeedbackNav.vue";
-import ModalForm from "src/components/ModalForm.vue";
-import LoadingSpinner from "src/components/LoadingSpinner.vue";
-import Nofeedbacks from "src/components/Nofeedbacks.vue";
+import Feedback from "src/components/feedbacks/Feedback.vue";
+import FeedbackNav from "src/components/feedbacks/FeedbackNav.vue";
+import ModalForm from "src/components/UI/ModalForm.vue";
+import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
+import Nofeedbacks from "src/components/feedbacks/Nofeedbacks.vue";
 
 export default {
   name: "Main",
@@ -47,7 +47,7 @@ export default {
     },
   },
   mounted() {
-    // 
+    //
   },
 };
 </script>

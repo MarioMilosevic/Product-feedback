@@ -17,8 +17,8 @@
 
 <script lang="ts">
 import { useFeedbackStore } from "src/stores/FeedbackStore";
-import Status from "src/components/Status.vue";
-import Category from "src/components/Category.vue";
+import Status from "src/components/UI/Status.vue";
+import Category from "src/components/UI/Category.vue";
 import { mapState } from "pinia";
 
 export default {
@@ -28,7 +28,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(useFeedbackStore, ['getStatusCount'])
+    ...mapState(useFeedbackStore, ["getStatusCount"]),
   },
   mounted() {
     //

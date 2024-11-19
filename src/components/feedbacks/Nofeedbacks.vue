@@ -22,8 +22,8 @@
 </template>
 
 <script lang="ts">
-import Icon from "src/components/Icon.vue";
-import ActionButton from "src/components/ActionButton.vue";
+import Icon from "src/components/UI/Icon.vue";
+import ActionButton from "src/components/UI/ActionButton.vue";
 import Inspector from "src/icons/Inspector.vue";
 
 export default {

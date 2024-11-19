@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { PropType } from "vue";
-import { CommentType } from "../types/types";
+import { CommentType } from "../../types/types";
 export default {
   components: {},
   props: {
@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../scss/variables";
+@import "src/scss/variables";
 
 .singleComment {
   display: flex;

@@ -48,13 +48,13 @@
 <script lang="ts">
 import { SingleFeedbackType } from "src/types/types";
 import { fetchSingleFeedback } from "src/api/FeedbacksApi";
-import Feedback from "src/components/Feedback.vue";
-import Comment from "src/components/Comment.vue";
-import Icon from "src/components/Icon.vue";
-import Textarea from "src/components/Textarea.vue";
-import ActionButton from "src/components/ActionButton.vue";
-import ModalForm from "src/components/ModalForm.vue";
-import LoadingSpinner from "src/components/LoadingSpinner.vue";
+import Feedback from "src/components/feedbacks/Feedback.vue";
+import Comment from "src/components/UI/Comment.vue";
+import Icon from "src/components/UI/Icon.vue";
+import Textarea from "src/components/UI/Textarea.vue";
+import ActionButton from "src/components/UI/ActionButton.vue";
+import ModalForm from "src/components/UI/ModalForm.vue";
+import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
 import LeftArrow from "src/icons/LeftArrow.vue";
 
 export default {
@@ -106,9 +106,9 @@ export default {
     handleUpdateTextarea(newContent: string) {
       this.textAreaContent = newContent;
     },
-    updateFeedback(newFeedback:SingleFeedbackType) {
-      this.singleFeedback = newFeedback
-    }
+    updateFeedback(newFeedback: SingleFeedbackType) {
+      this.singleFeedback = newFeedback;
+    },
   },
   mounted() {
     //

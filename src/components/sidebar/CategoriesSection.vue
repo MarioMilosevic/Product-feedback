@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import Category from "src/components/Category.vue";
+import Category from "src/components/UI/Category.vue";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import { mapActions, mapState } from "pinia";

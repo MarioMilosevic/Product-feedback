@@ -1,7 +1,7 @@
 <script lang="ts">
-import ImageSection from "src/components/ImageSection.vue";
-import CategoriesSection from "src/components/CategoriesSection.vue";
-import RoadmapSection from "src/components/RoadmapSection.vue";
+import ImageSection from "src/components/sidebar/ImageSection.vue";
+import CategoriesSection from "src/components/sidebar/CategoriesSection.vue";
+import RoadmapSection from "src/components/sidebar/RoadmapSection.vue";
 
 export default {
   name: "Sidebar",

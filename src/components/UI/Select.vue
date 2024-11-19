@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { useFeedbackStore } from "src/stores/FeedbackStore";
+// import { useFeedbackStore } from "src/stores/FeedbackStore";
 
 export default {
   props: {
@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       localContent: this.content,
-      feedbackStore: useFeedbackStore(),
+      // feedbackStore: useFeedbackStore(),
     };
   },
   computed: {},

@@ -3,7 +3,7 @@
     <div class="feedback__content">
       <button class="feedback__content__likes">
         <Icon class="feedback__content__likes-caret" size="small">
-           <Caret/>
+          <Caret />
         </Icon>
         <span class="feedback__content__likes-number">
           {{ feedback.likes }}
@@ -14,14 +14,16 @@
         :to="{ name: 'FeedbackDetails', params: { id: feedbackId } }"
       >
         <h4>{{ feedback.title }}</h4>
-        <p class="feedback__content__link-paragraph"> {{ feedback.description }}</p>
+        <p class="feedback__content__link-paragraph">
+          {{ feedback.description }}
+        </p>
         <Category :category="feedback.category.name" />
       </router-link>
     </div>
 
     <div v-if="commentsCount > 0" class="feedback__comments">
       <Icon class="size-24" fill="#f0f9ff" size="medium">
-         <Chat/>
+        <Chat />
       </Icon>
 
       <span class="feedback__comments-length">{{ commentsCount }}</span>
@@ -32,9 +34,9 @@
 <script lang="ts">
 import { PropType } from "vue";
 import { FeedbackType } from "src/types/types";
-import Icon from "src/components/Icon.vue";
-import Category from "src/components/Category.vue";
-import Caret from "src/icons/Caret.vue"
+import Icon from "src/components/UI/Icon.vue";
+import Category from "src/components/UI/Category.vue";
+import Caret from "src/icons/Caret.vue";
 import Chat from "src/icons/Chat.vue";
 
 export default {
@@ -49,7 +51,7 @@ export default {
     Category,
     Icon,
     Caret,
-    Chat
+    Chat,
   },
   data() {
     return {};
@@ -70,7 +72,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../scss/variables";
+@import "src/scss/variables";
+
 
 .feedback {
   width: 100%;
@@ -87,7 +90,7 @@ export default {
     align-items: center;
     gap: 2rem;
     flex-grow: 1;
-    
+
     &__link {
       text-decoration: none;
       color: inherit;

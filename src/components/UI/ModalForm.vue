@@ -133,13 +133,13 @@
 </template>
 
 <script lang="ts">
-import Select from "src/components/Select.vue";
-import Icon from "src/components/Icon.vue";
-import Textarea from "src/components/Textarea.vue";
-import ActionButton from "src/components/ActionButton.vue";
-import Label from "src/components/Label.vue";
-import FormBlock from "src/components/FormBlock.vue";
-import Input from "src/components/Input.vue";
+import Select from "src/components/UI/Select.vue";
+import Icon from "src/components/UI/Icon.vue";
+import Textarea from "src/components/UI/Textarea.vue";
+import ActionButton from "src/components/UI/ActionButton.vue";
+import Label from "src/components/UI/Label.vue";
+import FormBlock from "src/components/UI/FormBlock.vue";
+import Input from "src/components/UI/Input.vue";
 import { modalFormSchema } from "src/validation/modalFormSchema";
 import { FeedbackType } from "src/types/types.ts";
 import { PropType } from "vue";
