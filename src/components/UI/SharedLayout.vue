@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <ActionButton size="big" color="purple"> Log In</ActionButton>
+    <ActionButton size="big" color="purple" @click="goToLoginPage">Log In</ActionButton>
   </nav>
 </template>
 
@@ -21,6 +21,9 @@ export default {
     //
   },
   methods: {
+    goToLoginPage() {
+      this.$router.push("/login")
+    }
     //
   },
 };

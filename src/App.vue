@@ -5,7 +5,7 @@
 
 <script lang="ts">
 import SharedLayout from "src/components/UI/SharedLayout.vue";
-import Home from "src/views/Home.vue";
+import Home from "src/pages/Home.vue";
 
 export default {
   components: {
