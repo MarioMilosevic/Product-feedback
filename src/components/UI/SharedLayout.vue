@@ -1,6 +1,8 @@
 <template>
   <nav>
-    <ActionButton size="big" color="purple" @click="goToLoginPage">Log In</ActionButton>
+    <ActionButton size="big" color="purple" @click="goToLoginPage"
+      >Log In</ActionButton
+    >
   </nav>
 </template>
 
@@ -14,24 +16,19 @@ export default {
   data() {
     return {};
   },
-  computed: {
-    //
-  },
-  mounted() {
-    //
-  },
+  computed: {},
+  mounted() {},
   methods: {
     goToLoginPage() {
-      this.$router.push("/login")
-    }
-    //
+      this.$router.push("/login");
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 nav {
-  grid-column: span 4;
+  grid-column: span 8;
   display: flex;
   justify-content: flex-end;
 }

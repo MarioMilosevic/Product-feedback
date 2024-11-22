@@ -40,6 +40,7 @@ export default {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  transition: all 0.3s;
 }
 
 .small {

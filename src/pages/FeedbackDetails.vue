@@ -147,7 +147,7 @@ export default {
 .wrapper {
   width: 100%;
   margin: 0 auto;
-  grid-column: span 4;
+  grid-column: span 8;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;

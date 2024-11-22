@@ -54,7 +54,7 @@ export default {
 
 <style lang="scss" scoped>
 main {
-  grid-column: span 3;
+  grid-column: span 7;
   display: flex;
   flex-direction: column;
   gap: 1rem;

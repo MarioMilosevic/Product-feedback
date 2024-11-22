@@ -2,10 +2,18 @@
   <div class="wrapper">
     <h1>{{ title }} Form</h1>
     <div class="wrapper__title">
-      <ActionButton :color="hasAccount ? 'blue' : 'white'" size="medium" @click="toggleLogin">
+      <ActionButton
+        :color="hasAccount ? 'blue' : 'white'"
+        size="medium"
+        @click="toggleLogin"
+      >
         <h3>Login</h3>
       </ActionButton>
-      <ActionButton :color="!hasAccount ? 'blue' : 'white'" size="medium" @click="toggleSignUp">
+      <ActionButton
+        :color="!hasAccount ? 'blue' : 'white'"
+        size="medium"
+        @click="toggleSignUp"
+      >
         <h3>Sign Up</h3>
       </ActionButton>
     </div>
@@ -14,15 +22,15 @@
       v-if="!hasAccount"
       type="text"
       name="email"
-      :content="loginCredentials.name"
-      placeholder="Name"
+      :content="loginCredentials.fullName"
+      placeholder="Full Name"
     />
     <Input
       v-if="!hasAccount"
       type="text"
       name="email"
-      :content="loginCredentials.lastName"
-      placeholder="Last Name"
+      :content="loginCredentials.username"
+      placeholder="Username"
     />
     <Input
       type="text"
@@ -67,8 +75,8 @@ export default {
   data() {
     return {
       loginCredentials: {
-        name: "",
-        lastName: "",
+        fullName: "",
+        username: "",
         email: "",
         password: "",
         userImage: "",
@@ -91,10 +99,10 @@ export default {
   },
   methods: {
     toggleSignUp() {
-      this.hasAccount = false
+      this.hasAccount = false;
     },
     toggleLogin() {
-      this.hasAccount = true
+      this.hasAccount = true;
     },
     //
   },
@@ -104,9 +112,9 @@ export default {
 @import "src/scss/_variables.scss";
 
 .wrapper {
-  padding: 1.5rem;
+  padding: 1.5rem 0;
   border-radius: 10px;
-  grid-area: 2 / 2/ 3 / 4;
+  grid-area: 2 / 3/ 3 / 7;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -116,7 +124,7 @@ export default {
   &__title {
     display: flex;
     align-items: center;
-    overflow: hidden;
+    gap: 0.5rem;
   }
 }
 </style>
