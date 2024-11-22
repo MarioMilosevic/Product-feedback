@@ -2,13 +2,14 @@
   <div class="wrapper">
     <h1>{{ title }} Form</h1>
     <div class="wrapper__title">
-      <ActionButton color="blue" size="medium" @click="toggleLogin">
+      <ActionButton :color="hasAccount ? 'blue' : 'white'" size="medium" @click="toggleLogin">
         <h3>Login</h3>
       </ActionButton>
-      <ActionButton color="white" size="medium" @click="toggleSignUp">
+      <ActionButton :color="!hasAccount ? 'blue' : 'white'" size="medium" @click="toggleSignUp">
         <h3>Sign Up</h3>
       </ActionButton>
     </div>
+
     <Input
       v-if="!hasAccount"
       type="text"
