@@ -1,6 +1,7 @@
 <template>
   <input
-    :type="name"
+    :id="name"
+    :type="type"
     class="input"
     v-model="localContent"
     @input="$emit('update-input', localContent)"
@@ -29,15 +30,6 @@ export default {
     return {
       localContent: this.content,
     };
-  },
-  computed: {
-    //
-  },
-  mounted() {
-    //
-  },
-  methods: {
-    //
   },
 };
 </script>

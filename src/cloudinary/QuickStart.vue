@@ -1,14 +1,15 @@
 <template>
   <UploadWidget />
-  <img width="400" id="uploadedimage" src="" />
+  <!-- <img width="400" id="uploadedimage" src="" /> -->
 </template>
 
 <script lang="ts">
+import { cloudName } from 'src/config/cloudinaryClient';
 import { Cloudinary } from '@cloudinary/url-gen/index';
 import UploadWidget from './UploadWidget.vue';
 const cld = new Cloudinary({
   cloud: {
-    cloudName:"demo"
+    cloudName:cloudName
   }
 })
 export default {
