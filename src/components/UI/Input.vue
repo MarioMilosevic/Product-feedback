@@ -3,6 +3,7 @@
     :id="name"
     :type="type"
     class="input"
+    :placeholder="placeholder"
     v-model="localContent"
     @input="$emit('update-input', localContent)"
   />
@@ -24,6 +25,10 @@ export default {
       type: String,
       required: true,
     },
+    placeholder: {
+      type: String,
+      default: "",
+    },
   },
   emits: ["update-input"],
   data() {
@@ -43,5 +48,9 @@ export default {
   border-radius: $border-radius-medium;
   border: none;
   outline-color: $terniary-color;
+
+  &:focus::placeholder {
+    color: $terniary-color;
+  }
 }
 </style>

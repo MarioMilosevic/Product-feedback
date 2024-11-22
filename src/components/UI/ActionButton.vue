@@ -85,4 +85,10 @@ export default {
     background-color: $cancel-color-hover;
   }
 }
+
+.white {
+  background-color: $primary-color-hover;
+  color: $cancel-color-hover;
+  border: 1px solid $cancel-color-hover;
+}
 </style>

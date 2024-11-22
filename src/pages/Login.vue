@@ -1,47 +1,53 @@
 <template>
   <div class="wrapper">
-    <h1>Login Form</h1>
+    <h1>{{ title }} Form</h1>
     <div class="wrapper__title">
-        <ActionButton color="blue" size="medium">
-          <h2>Login</h2>
-        </ActionButton>
-        <ActionButton color="grey" size="medium">
-          <h2>Sign Up</h2>
-        </ActionButton>
+      <ActionButton color="blue" size="medium" @click="toggleLogin">
+        <h3>Login</h3>
+      </ActionButton>
+      <ActionButton color="white" size="medium" @click="toggleSignUp">
+        <h3>Sign Up</h3>
+      </ActionButton>
     </div>
-    <FormBlock>
-      <Label name="email">
-        <template #title>
-          Email Address
-        </template>
-      </Label>
-      <Input type="text" name="email" :content="loginCredentials.email"/>
-    </FormBlock>
-    <FormBlock>
-      <Label name="email">
-        <template #title>
-          Email Address
-        </template>
-      </Label>
-      <Input type="text" name="email" :content="loginCredentials.email"/>
-    </FormBlock>
-    <FormBlock>
-      <Label name="email">
-        <template #title>
-          Email Address
-        </template>
-      </Label>
-      <Input type="text" name="email" :content="loginCredentials.email"/>
-    </FormBlock>
-    <FormBlock>
-      <Label name="email">
-        <template #title>
-          Email Address
-        </template>
-      </Label>
-      <Input type="text" name="email" :content="loginCredentials.email"/>
-    </FormBlock>
-</div>
+    <Input
+      v-if="!hasAccount"
+      type="text"
+      name="email"
+      :content="loginCredentials.name"
+      placeholder="Name"
+    />
+    <Input
+      v-if="!hasAccount"
+      type="text"
+      name="email"
+      :content="loginCredentials.lastName"
+      placeholder="Last Name"
+    />
+    <Input
+      type="text"
+      name="email"
+      :content="loginCredentials.email"
+      placeholder="Email Address"
+    />
+    <Input
+      type="text"
+      name="email"
+      :content="loginCredentials.password"
+      placeholder="Password"
+    />
+    <Input
+      v-if="!hasAccount"
+      type="text"
+      name="email"
+      :content="loginCredentials.password"
+      placeholder="Confirm Password"
+    />
+    <div>
+      <ActionButton color="blue" size="big">
+        <h3>Sign Up</h3>
+      </ActionButton>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -54,26 +60,41 @@ export default {
     ActionButton,
     FormBlock,
     Input,
-    Label
+    Label,
   },
   props: {},
   data() {
     return {
       loginCredentials: {
+        name: "",
+        lastName: "",
         email: "",
         password: "",
-        fullName: "",
-        userImage:""
-      }
+        userImage: "",
+      },
+      hasAccount: true,
     };
   },
   computed: {
+    title() {
+      return this.hasAccount ? "Login" : "Sign Up";
+    },
+    // isSelected ? blue : white
+    buttonColor() {
+      return this.hasAccount ? "blue" : "white";
+    },
     //
   },
   mounted() {
     //
   },
   methods: {
+    toggleSignUp() {
+      this.hasAccount = false
+    },
+    toggleLogin() {
+      this.hasAccount = true
+    },
     //
   },
 };
@@ -81,9 +102,9 @@ export default {
 <style scoped lang="scss">
 @import "src/scss/_variables.scss";
 
-
 .wrapper {
-  border: 1px solid black;
+  padding: 1.5rem;
+  border-radius: 10px;
   grid-area: 2 / 2/ 3 / 4;
   display: flex;
   flex-direction: column;
@@ -92,9 +113,9 @@ export default {
   background-color: $primary-color-hover;
 
   &__title {
-    border: 1px solid black;
     display: flex;
     align-items: center;
+    overflow: hidden;
   }
 }
 </style>
