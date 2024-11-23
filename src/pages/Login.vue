@@ -1,5 +1,5 @@
 <template>
-  <form class="wrapper">
+  <div class="wrapper">
     <h1>{{ title }} Form</h1>
     <div class="wrapper__title">
       <ActionButton
@@ -18,63 +18,73 @@
       </ActionButton>
     </div>
 
-    <Input
-      v-if="!hasAccount"
-      type="text"
-      name="email"
-      :content="loginCredentials.fullName"
-      placeholder="Full Name"
-    />
-    <Input
-      v-if="!hasAccount"
-      type="text"
-      name="email"
-      :content="loginCredentials.username"
-      placeholder="Username"
-    />
-    <Input
-      type="text"
-      name="email"
-      :content="loginCredentials.email"
-      placeholder="Email Address"
-    />
-    <Input
-      type="text"
-      name="email"
-      :content="loginCredentials.password"
-      placeholder="Password"
-    />
-    <Input
-      v-if="!hasAccount"
-      type="text"
-      name="email"
-      :content="loginCredentials.password"
-      placeholder="Confirm Password"
-    />
-    <div>
+  
+    <LoginForm v-if="hasAccount"/>
+    <SignUpForm v-else/>
+
+    <!-- <form class="wrapper__form">
+      <div class="wrapper__form-div">
+        <Input
+        v-if="!hasAccount"
+        type="text"
+        name="email"
+        :content="loginCredentials.fullName"
+        placeholder="Full Name"
+        />
+        <Input
+        v-if="!hasAccount"
+        type="text"
+        name="email"
+        :content="loginCredentials.username"
+        placeholder="Username"
+        />
+        <Input
+        type="text"
+        name="email"
+        :content="loginCredentials.email"
+        placeholder="Email Address"
+        />
+        <Input
+        type="text"
+        name="email"
+        :content="loginCredentials.password"
+        placeholder="Password"
+        />
+        <Input
+        v-if="!hasAccount"
+        type="text"
+        name="email"
+        :content="loginCredentials.password"
+        placeholder="Confirm Password"
+        />
+        <UploadWidget v-if="!hasAccount" />
+      </div>
+      -->
+
       <ActionButton color="blue" size="big">
         <h3>{{ submitButton }}</h3>
       </ActionButton>
-    </div>
-    <Mario/>
-  </form>
+  </div>
 </template>
 
 <script lang="ts">
-import Mario from "src/cloudinary/Mario.vue";
-import QuickStart from "src/cloudinary/QuickStart.vue";
+import UploadWidget from "src/cloudinary/UploadWidget.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
 import FormBlock from "src/components/UI/FormBlock.vue";
 import Input from "src/components/UI/Input.vue";
 import Label from "src/components/UI/Label.vue";
+import LoginForm from "src/components/auth/LoginForm.vue";
+import SignUpForm from "src/components/auth/SignUpForm.vue";
+
 export default {
   components: {
     ActionButton,
     FormBlock,
     Input,
     Label,
-    QuickStart,
-    Mario
+    UploadWidget,
+    LoginForm,
+    SignUpForm
   },
   props: {},
   data() {
@@ -136,6 +146,23 @@ export default {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+  }
+
+  &__form {
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+
+    &-div {
+      border: 1px solid black;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      /* flex-wrap: wrap; */
+      justify-content: center;
+    }
   }
 }
 </style>

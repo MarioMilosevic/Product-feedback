@@ -1,40 +1,58 @@
+<template>
+  <FileButton @click.prevent="openUploadWidget">Upload Image</FileButton>
+</template>
+
 <script lang="ts">
-import { AdvancedImage } from '@cloudinary/vue';
-import { Cloudinary } from '@cloudinary/url-gen';
+import FileButton from "src/components/UI/FileButton.vue";
+import Input from "src/components/UI/Input.vue";
+import { cloud_name } from "src/config/cloudinaryClient";
 
-// Import required actions.
-import { sepia } from "@cloudinary/url-gen/actions/effect";
-import { cloudName } from 'src/config/cloudinaryClient';
+interface CloudinaryError {
+  message?: string;
+  http_code?: number;
+  [key: string]: any;
+}
 
-// Create a Cloudinary instance and set your cloud name.
-const cld = new Cloudinary({
-  cloud: {
-    cloudName:"dyogkyl2u",
-  },
-});
-
-
-
-// Instantiate a CloudinaryImage object for the image with the public ID, 'front_face'.
-// const myImg = cld.image('front_face');
-
-// // Apply the transformation.
-// myImg
-//   .effect(sepia());  // Apply a sepia effect.
+interface CloudinaryResult {
+  event: string;
+  info: {
+    public_id: string;
+    secure_url: string;
+    [key: string]: any; // Add other properties as needed
+  };
+}
 
 export default {
   components: {
-    AdvancedImage,
+    FileButton,
+    Input
   },
+  props: {},
   data() {
-    return {
-    };
+    return {};
+  },
+  computed: {
+    //
+  },
+  mounted() {
+    //
+  },
+  methods: {
+    openUploadWidget() {
+      const widget = cloudinary.createUploadWidget(
+        {
+          cloudName: cloud_name,
+          uploadPreset: "upload_widget",
+        },
+        (error: CloudinaryError, result: CloudinaryResult) => {
+          if (!error && result && result.event === "success") {
+            console.log("Done! Here is the image info: ", result.info);
+          }
+        }
+      );
+      widget.open();
+    },
   },
 };
 </script>
-
-<!-- Render the image in a Vue.js component. -->
-<template>
-  <div>
-  </div>
-</template>
+<style></style>
