@@ -1,27 +1,25 @@
 <template>
   <div class="wrapper">
-    <h1>{{ title }} Form</h1>
-    <div class="wrapper__title">
-      <ActionButton
-        :color="loginButtonColor"
-        size="medium"
-        @click="toggleLogin"
-      >
+    <h1>Login Form</h1>
+    <!-- <div class="wrapper__title">
+      <ActionButton color="blue" size="medium" @click="toggleLogin">
         <h3>Login</h3>
       </ActionButton>
-      <ActionButton
-        :color="signUpButtonColor"
-        size="medium"
-        @click="toggleSignUp"
-      >
+      <ActionButton color="white" size="medium" @click="toggleSignUp">
         <h3>Sign Up</h3>
       </ActionButton>
+    </div> -->
+    <LoginForm />
+
+    <div class="wrapper__buttons">
+      <ActionButton color="blue" size="big">
+        <h3>Login</h3>
+      </ActionButton>
+      <p>
+        Don't have an account ?
+         <router-link :to="{name: 'Sign Up'} " class="wrapper__buttons-span"> Sign up </router-link>
+      </p>
     </div>
-    <LoginForm v-if="hasAccount" />
-    <SignUpForm v-else />
-    <ActionButton color="blue" size="big">
-      <h3>{{ submitButton }}</h3>
-    </ActionButton>
   </div>
 </template>
 
@@ -51,18 +49,6 @@ export default {
     };
   },
   computed: {
-    title() {
-      return this.hasAccount ? "Login" : "Sign Up";
-    },
-    loginButtonColor() {
-      return this.hasAccount ? "blue" : "white";
-    },
-    signUpButtonColor() {
-      return !this.hasAccount ? "blue" : "white";
-    },
-    submitButton() {
-      return this.hasAccount ? "Login" : "Sign Up";
-    },
     //
   },
   mounted() {
@@ -98,21 +84,14 @@ export default {
     align-items: center;
     gap: 0.5rem;
   }
-
-  &__form {
-    /* border: 1px solid black; */
+  &__buttons {
     display: flex;
-    flex-direction: column;
     gap: 1rem;
-    justify-content: center;
+    flex-direction: column;
 
-    &-div {
-      border: 1px solid black;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      /* flex-wrap: wrap; */
-      justify-content: center;
+    &-span {
+      /* cursor: pointer; */
+
     }
   }
 }

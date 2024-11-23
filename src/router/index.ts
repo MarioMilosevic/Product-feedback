@@ -3,7 +3,7 @@ import FeedbackDetails from "src/pages/FeedbackDetails.vue";
 import NotFound from "src/pages/NotFound.vue";
 import Home from "src/pages/Home.vue";
 import Login from "src/pages/Login.vue";
-
+import SignUp from "src/pages/SignUp.vue";
 const routes = [
   {
     path: "/",
@@ -24,6 +24,12 @@ const routes = [
     name: "Login",
     component: Login,
   },
+  {
+    path: "/sign-up",
+    name: "Sign Up",
+    component: SignUp,
+  },
+
   {
     path: "/:catchAll(.*)",
     name: "NotFound",

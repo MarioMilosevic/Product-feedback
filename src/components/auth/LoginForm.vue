@@ -1,25 +1,31 @@
 <template>
-  <form submit.prevent>
-    <Input
-      type="text"
-      name="email"
-      :content="loginCredentials.email"
-      placeholder="Email Address"
-    />
-    <Input
-      type="text"
-      name="email"
-      :content="loginCredentials.password"
-      placeholder="Password"
-    />
-  </form>
+  <AuthenticationForm display="flex">
+    <template #email>
+      <Input
+        type="text"
+        name="email"
+        :content="loginCredentials.email"
+        placeholder="Email Address"
+      />
+    </template>
+    <template #password>
+      <Input
+        type="text"
+        name="password"
+        :content="loginCredentials.password"
+        placeholder="Password"
+      />
+    </template>
+  </AuthenticationForm>
 </template>
 <script lang="ts">
-import Input from "../UI/Input.vue";
+import Input from "src/components/UI/Input.vue";
+import AuthenticationForm from "src/components/auth/AuthenticationForm.vue";
 
 export default {
   components: {
     Input,
+    AuthenticationForm,
   },
   props: {},
   data() {
@@ -41,11 +47,3 @@ export default {
   },
 };
 </script>
-
-<style scoped lang="scss">
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-</style>

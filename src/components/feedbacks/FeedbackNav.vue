@@ -7,7 +7,7 @@
       <h3>{{ getFeedbacksLength }} Suggestions</h3>
       <div class="navigation__parentDiv__childDiv">
         <FormBlock direction="row" color="blue">
-          <Label for="suggestions" name="sort">
+          <Label name="sort">
             <template #title>Sort By:</template>
           </Label>
           <Select
