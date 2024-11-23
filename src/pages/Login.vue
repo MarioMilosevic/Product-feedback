@@ -1,36 +1,42 @@
 <template>
   <div class="wrapper">
     <h1>Login Form</h1>
-    <!-- <div class="wrapper__title">
-      <ActionButton color="blue" size="medium" @click="toggleLogin">
-        <h3>Login</h3>
-      </ActionButton>
-      <ActionButton color="white" size="medium" @click="toggleSignUp">
-        <h3>Sign Up</h3>
-      </ActionButton>
-    </div> -->
-    <LoginForm />
-
+    <AuthenticationForm display="flex">
+      <template #email>
+        <Input
+          type="text"
+          name="email"
+          :content="loginCredentials.email"
+          placeholder="Email Address"
+        />
+      </template>
+      <template #password>
+        <Input
+          type="text"
+          name="password"
+          :content="loginCredentials.password"
+          placeholder="Password"
+        />
+      </template>
+    </AuthenticationForm>
     <div class="wrapper__buttons">
       <ActionButton color="blue" size="big">
         <h3>Login</h3>
       </ActionButton>
       <p>
         Don't have an account ?
-         <router-link :to="{name: 'Sign Up'} " class="wrapper__buttons-span"> Sign up </router-link>
+        <router-link :to="{ name: 'Sign Up' }"> Sign up </router-link>
       </p>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import UploadWidget from "src/cloudinary/UploadWidget.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
 import FormBlock from "src/components/UI/FormBlock.vue";
 import Input from "src/components/UI/Input.vue";
 import Label from "src/components/UI/Label.vue";
-import LoginForm from "src/components/auth/LoginForm.vue";
-import SignUpForm from "src/components/auth/SignUpForm.vue";
+import AuthenticationForm from "src/components/auth/AuthenticationForm.vue";
 
 export default {
   components: {
@@ -38,14 +44,15 @@ export default {
     FormBlock,
     Input,
     Label,
-    UploadWidget,
-    LoginForm,
-    SignUpForm,
+    AuthenticationForm,
   },
   props: {},
   data() {
     return {
-      hasAccount: true,
+      loginCredentials: {
+        email: "",
+        password: "",
+      },
     };
   },
   computed: {
@@ -55,12 +62,6 @@ export default {
     //
   },
   methods: {
-    toggleSignUp() {
-      this.hasAccount = false;
-    },
-    toggleLogin() {
-      this.hasAccount = true;
-    },
     //
   },
 };
@@ -88,11 +89,6 @@ export default {
     display: flex;
     gap: 1rem;
     flex-direction: column;
-
-    &-span {
-      /* cursor: pointer; */
-
-    }
   }
 }
 </style>
