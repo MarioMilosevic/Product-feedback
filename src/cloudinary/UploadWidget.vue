@@ -13,6 +13,8 @@ const cld = new Cloudinary({
   },
 });
 
+
+
 // Instantiate a CloudinaryImage object for the image with the public ID, 'front_face'.
 // const myImg = cld.image('front_face');
 

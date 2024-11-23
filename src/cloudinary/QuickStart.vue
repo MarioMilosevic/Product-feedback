@@ -1,32 +1,35 @@
 <template>
-  <UploadWidget />
-  <!-- <img width="400" id="uploadedimage" src="" /> -->
+  <div>
+    <AdvancedImage :cld-img="myImg"/>
+  </div>
 </template>
 
 <script lang="ts">
-import { cloudName } from 'src/config/cloudinaryClient';
-import { Cloudinary } from '@cloudinary/url-gen/index';
-import UploadWidget from './UploadWidget.vue';
-const cld = new Cloudinary({
+import { Cloudinary } from "@cloudinary/url-gen";
+import { cloud_name } from "src/config/cloudinaryClient";
+import { AdvancedImage } from "@cloudinary/vue";
+import { fill } from "@cloudinary/url-gen/actions/resize";
+
+
+// Create a Cloudinary instance and set your cloud name.
+export const cld = new Cloudinary({
   cloud: {
-    cloudName:cloudName
-  }
-})
+    cloudName: cloud_name,
+  },
+});
+
+const myImg = cld.image("docs/models");
+myImg.resize(fill().width(250).height(250));
+console.log(myImg.toURL())
+
 export default {
-  name: "QuickStart",
   components: {
-    UploadWidget: UploadWidget,
+    AdvancedImage,
+  },
+  data() {
+    return {
+      myImg,
+    };
   },
 };
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

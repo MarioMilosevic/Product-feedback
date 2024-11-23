@@ -1,16 +1,16 @@
 <template>
-  <div class="wrapper">
+  <form class="wrapper">
     <h1>{{ title }} Form</h1>
     <div class="wrapper__title">
       <ActionButton
-        :color="hasAccount ? 'blue' : 'white'"
+        :color="loginButtonColor"
         size="medium"
         @click="toggleLogin"
       >
         <h3>Login</h3>
       </ActionButton>
       <ActionButton
-        :color="!hasAccount ? 'blue' : 'white'"
+        :color="signUpButtonColor"
         size="medium"
         @click="toggleSignUp"
       >
@@ -53,13 +53,16 @@
     />
     <div>
       <ActionButton color="blue" size="big">
-        <h3>Sign Up</h3>
+        <h3>{{ submitButton }}</h3>
       </ActionButton>
     </div>
-  </div>
+    <Mario/>
+  </form>
 </template>
 
 <script lang="ts">
+import Mario from "src/cloudinary/Mario.vue";
+import QuickStart from "src/cloudinary/QuickStart.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
 import FormBlock from "src/components/UI/FormBlock.vue";
 import Input from "src/components/UI/Input.vue";
@@ -70,6 +73,8 @@ export default {
     FormBlock,
     Input,
     Label,
+    QuickStart,
+    Mario
   },
   props: {},
   data() {
@@ -88,9 +93,14 @@ export default {
     title() {
       return this.hasAccount ? "Login" : "Sign Up";
     },
-    // isSelected ? blue : white
-    buttonColor() {
+    loginButtonColor() {
       return this.hasAccount ? "blue" : "white";
+    },
+    signUpButtonColor() {
+      return !this.hasAccount ? "blue" : "white";
+    },
+    submitButton() {
+      return this.hasAccount ? "Login" : "Sign Up";
     },
     //
   },
@@ -108,6 +118,7 @@ export default {
   },
 };
 </script>
+
 <style scoped lang="scss">
 @import "src/scss/_variables.scss";
 
