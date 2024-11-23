@@ -1,9 +1,9 @@
 <template>
-   <button>
-    <slot/>
-   </button>
+  <button>
+    <slot />
+  </button>
 </template>
-<script lang='ts'>
+<script lang="ts">
 export default {
   components: {},
   props: {},
@@ -11,13 +11,13 @@ export default {
     return {};
   },
   computed: {
-    // 
+    //
   },
   mounted() {
-    // 
+    //
   },
   methods: {
-      // 
+    //
   },
 };
 </script>
@@ -25,17 +25,14 @@ export default {
 <style scoped lang="scss">
 @import "src/scss/_variables.scss";
 
-label {
-padding: 1rem;
-border-radius: $border-radius-medium;
-background-color: $primary-color;
-border: none;
-
-  outline-color: $terniary-color;
-
-  &:focus::placeholder {
-    color: $terniary-color;
-  }
+button {
+  padding: 1rem;
+  border-radius: $border-radius-medium;
+  background-color: $primary-color;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  color: $image-button-color;
+  font-weight: 400;
 }
-
 </style>

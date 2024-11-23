@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form submit.prevent>
     <Input
       type="text"
       name="email"
@@ -41,4 +41,11 @@ export default {
   },
 };
 </script>
-<style></style>
+
+<style scoped lang="scss">
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+</style>

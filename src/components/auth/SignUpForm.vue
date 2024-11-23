@@ -66,4 +66,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped lang="scss">
+form {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 1rem;
+}
+</style>

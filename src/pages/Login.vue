@@ -17,53 +17,11 @@
         <h3>Sign Up</h3>
       </ActionButton>
     </div>
-
-  
-    <LoginForm v-if="hasAccount"/>
-    <SignUpForm v-else/>
-
-    <!-- <form class="wrapper__form">
-      <div class="wrapper__form-div">
-        <Input
-        v-if="!hasAccount"
-        type="text"
-        name="email"
-        :content="loginCredentials.fullName"
-        placeholder="Full Name"
-        />
-        <Input
-        v-if="!hasAccount"
-        type="text"
-        name="email"
-        :content="loginCredentials.username"
-        placeholder="Username"
-        />
-        <Input
-        type="text"
-        name="email"
-        :content="loginCredentials.email"
-        placeholder="Email Address"
-        />
-        <Input
-        type="text"
-        name="email"
-        :content="loginCredentials.password"
-        placeholder="Password"
-        />
-        <Input
-        v-if="!hasAccount"
-        type="text"
-        name="email"
-        :content="loginCredentials.password"
-        placeholder="Confirm Password"
-        />
-        <UploadWidget v-if="!hasAccount" />
-      </div>
-      -->
-
-      <ActionButton color="blue" size="big">
-        <h3>{{ submitButton }}</h3>
-      </ActionButton>
+    <LoginForm v-if="hasAccount" />
+    <SignUpForm v-else />
+    <ActionButton color="blue" size="big">
+      <h3>{{ submitButton }}</h3>
+    </ActionButton>
   </div>
 </template>
 
@@ -84,18 +42,11 @@ export default {
     Label,
     UploadWidget,
     LoginForm,
-    SignUpForm
+    SignUpForm,
   },
   props: {},
   data() {
     return {
-      loginCredentials: {
-        fullName: "",
-        username: "",
-        email: "",
-        password: "",
-        userImage: "",
-      },
       hasAccount: true,
     };
   },
@@ -139,7 +90,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
   background-color: $primary-color-hover;
 
   &__title {
