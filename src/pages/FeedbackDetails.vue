@@ -60,7 +60,7 @@ import { fetchSingleFeedback, deleteFeedback } from "src/api/FeedbacksApi";
 import Feedback from "src/components/feedbacks/Feedback.vue";
 import Comment from "src/components/UI/Comment.vue";
 import Icon from "src/components/UI/Icon.vue";
-import Textarea from "src/components/UI/Textarea.vue";
+import Textarea from "src/components/form/Textarea.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
 import ModalForm from "src/components/UI/ModalForm.vue";
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";

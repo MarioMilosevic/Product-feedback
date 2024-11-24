@@ -29,12 +29,12 @@
 <script lang="ts">
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapActions, mapState } from "pinia";
-import Select from "src/components/UI/Select.vue";
-import Label from "src/components/UI/Label.vue";
+import Select from "src/components/form/Select.vue";
+import Label from "src/components/form/Label.vue";
 import { navSortOptions } from "src/utils/constants";
 import Icon from "src/components/UI/Icon.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
-import FormBlock from "src/components/UI/FormBlock.vue";
+import FormBlock from "src/components/form/FormBlock.vue";
 import Lightbulb from "src/icons/Lightbulb.vue";
 import { fetchFeedbacks } from "src/api/FeedbacksApi";
 

@@ -31,8 +31,12 @@
               @update-input="updateTitle"
             />
           </template>
+          <template #error v-if="errors.title">
+            <FormError>
+              {{ errors.title }}
+            </FormError>
+          </template>
         </FormBlock>
-        <span v-if="errors.title" class="error">{{ errors.title }}</span>
 
         <FormBlock>
           <template #label>
@@ -53,9 +57,12 @@
             >
             </Select>
           </template>
+          <template #error v-if="errors.category">
+            <FormError>
+              {{ errors.category }}
+            </FormError>
+          </template>
         </FormBlock>
-        <span v-if="errors.category" class="error">{{ errors.category }}</span>
-
         <FormBlock v-if="feedback">
           <template #label>
             <Label name="status">
@@ -77,9 +84,12 @@
               </template>
             </Select>
           </template>
+          <template #error v-if="errors.status">
+            <FormError>
+              {{ errors.status }}
+            </FormError>
+          </template>
         </FormBlock>
-        <span v-if="errors.status" class="error">{{ errors.status }}</span>
-
         <FormBlock>
           <template #label>
             <Label name="status">
@@ -96,11 +106,12 @@
               @update-textarea="updateTextarea"
             />
           </template>
+          <template #error v-if="errors.description">
+            <FormError>
+              {{ errors.description }}
+            </FormError>
+          </template>
         </FormBlock>
-        <span v-if="errors.description" class="error">{{
-          errors.description
-        }}</span>
-
         <div
           class="overlay__modal-form-buttonContainer"
           :class="[feedback ? 'visible' : 'notVisible']"
@@ -132,13 +143,13 @@
 </template>
 
 <script lang="ts">
-import Select from "src/components/UI/Select.vue";
+import Select from "src/components/form/Select.vue";
 import Icon from "src/components/UI/Icon.vue";
-import Textarea from "src/components/UI/Textarea.vue";
+import Textarea from "src/components/form/Textarea.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
-import Label from "src/components/UI/Label.vue";
-import FormBlock from "src/components/UI/FormBlock.vue";
-import Input from "src/components/UI/Input.vue";
+import Label from "src/components/form/Label.vue";
+import FormBlock from "src/components/form/FormBlock.vue";
+import Input from "src/components/form/Input.vue";
 import { modalFormSchema } from "src/validation/modalFormSchema";
 import { FeedbackType } from "src/types/types.ts";
 import { PropType } from "vue";
@@ -154,6 +165,7 @@ import { showToast } from "src/utils/toastify";
 import Add from "src/icons/Add.vue";
 import Edit from "src/icons/Edit.vue";
 import Close from "src/icons/Close.vue";
+import FormError from "src/components/form/FormError.vue";
 
 export default {
   name: "Modal",
@@ -168,6 +180,7 @@ export default {
     Add,
     Edit,
     Close,
+    FormError,
   },
   props: {
     isModalOpen: {

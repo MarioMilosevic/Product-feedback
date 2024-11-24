@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import FileButton from "src/components/UI/FileButton.vue";
-import Input from "src/components/UI/Input.vue";
+import Input from "src/components/form/Input.vue";
 import { cloud_name } from "src/config/cloudinaryClient";
 
 interface CloudinaryError {
@@ -24,19 +24,15 @@ interface CloudinaryResult {
 export default {
   components: {
     FileButton,
-    Input
+    Input,
   },
-  props: {
-  },
-  emits: ['image-event'],
+  props: {},
+  emits: ["image-event"],
   data() {
-    return {
-    };
+    return {};
   },
-  computed: {
-  },
-  mounted() {
-  },
+  computed: {},
+  mounted() {},
   methods: {
     openUploadWidget() {
       const widget = cloudinary.createUploadWidget(
@@ -47,7 +43,7 @@ export default {
         (error: CloudinaryError, result: CloudinaryResult) => {
           if (!error && result && result.event === "success") {
             // console.log("Done! Here is the image info: ", result.info);
-            this.$emit('image-event', result.info.secure_url)
+            this.$emit("image-event", result.info.secure_url);
           }
         }
       );

@@ -1,7 +1,8 @@
 <template>
   <div :class="['formBlock', direction, color]">
     <slot name="label" />
-    <slot></slot>
+    <slot/>
+    <slot name="error"/>
   </div>
 </template>
 <script lang="ts">

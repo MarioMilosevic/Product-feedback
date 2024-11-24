@@ -3,52 +3,94 @@
     <template #form>
       <AuthenticationForm display="grid">
         <template #fullName>
-          <Input
-            type="text"
-            name="fullName"
-            :content="signUpCredentials.fullName"
-            placeholder="Full Name"
-            @update-input="updateFullName"
-          />
+          <FormBlock>
+            <Input
+              type="text"
+              name="fullName"
+              :content="signUpCredentials.fullName"
+              placeholder="Full Name"
+              @update-input="updateFullName"
+            />
+            <template #error v-if="errors.fullName">
+              <FormError>
+                {{ errors.fullName }}
+              </FormError>
+            </template>
+          </FormBlock>
         </template>
         <template #userName>
-          <Input
-            type="text"
-            name="userName"
-            :content="signUpCredentials.username"
-            placeholder="Username"
-            @update-input="updateUsername"
-          />
+          <FormBlock>
+            <Input
+              type="text"
+              name="userName"
+              :content="signUpCredentials.username"
+              placeholder="Username"
+              @update-input="updateUsername"
+            />
+            <template #error v-if="errors.username">
+              <FormError>
+                {{ errors.username }}
+              </FormError>
+            </template>
+          </FormBlock>
         </template>
         <template #email>
-          <Input
-            type="email"
-            name="email"
-            :content="signUpCredentials.email"
-            placeholder="Email Address"
-            @update-input="updateEmail"
-          />
+          <FormBlock>
+            <Input
+              type="email"
+              name="email"
+              :content="signUpCredentials.email"
+              placeholder="Email Address"
+              @update-input="updateEmail"
+            />
+            <template #error v-if="errors.email">
+              <FormError>
+                {{ errors.email }}
+              </FormError>
+            </template>
+          </FormBlock>
         </template>
         <template #password>
-          <Input
-            type="password"
-            name="password"
-            :content="signUpCredentials.password"
-            placeholder="Password"
-            @update-input="updatePassword"
-          />
+          <FormBlock>
+            <Input
+              type="password"
+              name="password"
+              :content="signUpCredentials.password"
+              placeholder="Password"
+              @update-input="updatePassword"
+            />
+            <template #error v-if="errors.password">
+              <FormError>
+                {{ errors.password }}
+              </FormError>
+            </template>
+          </FormBlock>
         </template>
         <template #confirmPassword>
-          <Input
-            type="password"
-            name="confirmPassword"
-            :content="signUpCredentials.password"
-            placeholder="Confirm Password"
-            @update-input="updateConfirmPassword"
-          />
+          <FormBlock>
+            <Input
+              type="password"
+              name="confirmPassword"
+              :content="signUpCredentials.confirmPassword"
+              placeholder="Confirm Password"
+              @update-input="updateConfirmPassword"
+            />
+            <template #error v-if="errors.confirmPassword">
+              <FormError>
+                {{ errors.confirmPassword }}
+              </FormError>
+            </template>
+          </FormBlock>
         </template>
         <template #image>
-          <UploadWidget @image-event="updateImage" />
+          <FormBlock>
+            <UploadWidget @image-event="updateImage" />
+            <template #error v-if="errors.image">
+              <FormError>
+                {{ errors.confirmPassword }}
+              </FormError>
+            </template>
+          </FormBlock>
         </template>
         <template #submit>
           <ActionButton
@@ -61,7 +103,7 @@
           </ActionButton>
         </template>
         <template #homepage>
-          <ActionButton color="purple" size="big">
+          <ActionButton color="purple" size="big" @click="goToHomepage">
             <h3>Homepage</h3>
           </ActionButton>
         </template>
@@ -72,11 +114,14 @@
 
 <script lang="ts">
 import UploadWidget from "src/cloudinary/UploadWidget.vue";
-import Input from "src/components/UI/Input.vue";
+import Input from "src/components/form/Input.vue";
 import AuthenticationForm from "src/components/auth/AuthenticationForm.vue";
 import AuthenticationWrapper from "src/components/auth/AuthenticationWrapper.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
 import { createNewUser } from "src/api/UsersApi";
+import { signUpFormSchema } from "src/validation/signUpFormSchema";
+import FormBlock from "src/components/form/FormBlock.vue";
+import FormError from "src/components/form/FormError.vue";
 
 export default {
   components: {
@@ -85,6 +130,8 @@ export default {
     AuthenticationForm,
     AuthenticationWrapper,
     ActionButton,
+    FormBlock,
+    FormError,
   },
   props: {},
   data() {
@@ -97,11 +144,15 @@ export default {
         confirmPassword: "",
         image: "",
       },
+      errors: {} as Record<string, string>,
     };
   },
   computed: {},
   mounted() {},
   methods: {
+    goToHomepage() {
+      this.$router.push("/home");
+    },
     updateFullName(fullName: string) {
       this.signUpCredentials.fullName = fullName;
     },
@@ -122,7 +173,21 @@ export default {
       this.signUpCredentials.image = imageUrl;
     },
     async signUpNewUser() {
-      createNewUser(this.signUpCredentials);
+      try {
+        const validation = signUpFormSchema.safeParse(this.signUpCredentials);
+        if (validation.sucess) {
+          console.log(validation);
+          createNewUser(this.signUpCredentials);
+        } else {
+          this.errors = validation.error.errors.reduce((acc, err) => {
+            const key = err.path.length > 0 ? err.path[0] : "";
+            acc[key] = err.message;
+            return acc;
+          }, {} as Record<string, string>);
+        }
+      } catch (error) {
+        console.error("Unexpected error occured", error);
+      }
     },
   },
 };

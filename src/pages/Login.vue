@@ -24,7 +24,7 @@
           </ActionButton>
         </template>
         <template #homepage>
-          <ActionButton color="purple" size="big">
+          <ActionButton color="purple" size="big" @click="goToHomepage">
             <h3>Homepage</h3>
           </ActionButton>
         </template>
@@ -35,9 +35,9 @@
 
 <script lang="ts">
 import ActionButton from "src/components/UI/ActionButton.vue";
-import FormBlock from "src/components/UI/FormBlock.vue";
-import Input from "src/components/UI/Input.vue";
-import Label from "src/components/UI/Label.vue";
+import FormBlock from "src/components/form/FormBlock.vue";
+import Input from "src/components/form/Input.vue";
+import Label from "src/components/form/Label.vue";
 import AuthenticationForm from "src/components/auth/AuthenticationForm.vue";
 import AuthenticationWrapper from "src/components/auth/AuthenticationWrapper.vue";
 
@@ -66,7 +66,9 @@ export default {
     //
   },
   methods: {
-    //
+    goToHomepage() {
+      this.$router.push("/home");
+    },
   },
 };
 </script>
