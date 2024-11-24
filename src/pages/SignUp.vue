@@ -12,25 +12,21 @@
               @update-input="updateFullName"
             />
             <template #error v-if="errors.fullName">
-              <FormError>
-                {{ errors.fullName }}
-              </FormError>
+              {{ errors.fullName }}
             </template>
           </FormBlock>
         </template>
-        <template #userName>
+        <template #username>
           <FormBlock>
             <Input
               type="text"
-              name="userName"
+              name="username"
               :content="signUpCredentials.username"
               placeholder="Username"
               @update-input="updateUsername"
             />
             <template #error v-if="errors.username">
-              <FormError>
-                {{ errors.username }}
-              </FormError>
+              {{ errors.username }}
             </template>
           </FormBlock>
         </template>
@@ -44,9 +40,7 @@
               @update-input="updateEmail"
             />
             <template #error v-if="errors.email">
-              <FormError>
-                {{ errors.email }}
-              </FormError>
+              {{ errors.email }}
             </template>
           </FormBlock>
         </template>
@@ -60,9 +54,7 @@
               @update-input="updatePassword"
             />
             <template #error v-if="errors.password">
-              <FormError>
-                {{ errors.password }}
-              </FormError>
+              {{ errors.password }}
             </template>
           </FormBlock>
         </template>
@@ -76,9 +68,7 @@
               @update-input="updateConfirmPassword"
             />
             <template #error v-if="errors.confirmPassword">
-              <FormError>
-                {{ errors.confirmPassword }}
-              </FormError>
+              {{ errors.confirmPassword }}
             </template>
           </FormBlock>
         </template>
@@ -86,9 +76,7 @@
           <FormBlock>
             <UploadWidget @image-event="updateImage" />
             <template #error v-if="errors.image">
-              <FormError>
-                {{ errors.confirmPassword }}
-              </FormError>
+              {{ errors.confirmPassword }}
             </template>
           </FormBlock>
         </template>
@@ -121,7 +109,6 @@ import ActionButton from "src/components/UI/ActionButton.vue";
 import { createNewUser } from "src/api/UsersApi";
 import { signUpFormSchema } from "src/validation/signUpFormSchema";
 import FormBlock from "src/components/form/FormBlock.vue";
-import FormError from "src/components/form/FormError.vue";
 
 export default {
   components: {
@@ -131,7 +118,6 @@ export default {
     AuthenticationWrapper,
     ActionButton,
     FormBlock,
-    FormError,
   },
   props: {},
   data() {
@@ -173,21 +159,21 @@ export default {
       this.signUpCredentials.image = imageUrl;
     },
     async signUpNewUser() {
-      try {
-        const validation = signUpFormSchema.safeParse(this.signUpCredentials);
-        if (validation.sucess) {
-          console.log(validation);
-          createNewUser(this.signUpCredentials);
-        } else {
-          this.errors = validation.error.errors.reduce((acc, err) => {
-            const key = err.path.length > 0 ? err.path[0] : "";
-            acc[key] = err.message;
-            return acc;
-          }, {} as Record<string, string>);
-        }
-      } catch (error) {
-        console.error("Unexpected error occured", error);
-      }
+      createNewUser(this.signUpCredentials)
+        // const validation = signUpFormSchema.safeParse(this.signUpCredentials);
+        // if (validation.sucess) {
+        //   console.log(validation);
+        //   createNewUser(this.signUpCredentials);
+        // } else {
+        //   this.errors = validation.error.errors.reduce((acc, err) => {
+        //     const key = err.path.length > 0 ? err.path[0] : "";
+        //     acc[key] = err.message;
+        //     return acc;
+        //   }, {} as Record<string, string>);
+        // }
+      // } catch (error) {
+      //   console.error("Unexpected error occured", error);
+      // }
     },
   },
 };

@@ -32,9 +32,7 @@
             />
           </template>
           <template #error v-if="errors.title">
-            <FormError>
               {{ errors.title }}
-            </FormError>
           </template>
         </FormBlock>
 
@@ -58,9 +56,7 @@
             </Select>
           </template>
           <template #error v-if="errors.category">
-            <FormError>
               {{ errors.category }}
-            </FormError>
           </template>
         </FormBlock>
         <FormBlock v-if="feedback">
@@ -85,9 +81,7 @@
             </Select>
           </template>
           <template #error v-if="errors.status">
-            <FormError>
               {{ errors.status }}
-            </FormError>
           </template>
         </FormBlock>
         <FormBlock>
@@ -107,9 +101,7 @@
             />
           </template>
           <template #error v-if="errors.description">
-            <FormError>
               {{ errors.description }}
-            </FormError>
           </template>
         </FormBlock>
         <div
@@ -165,7 +157,6 @@ import { showToast } from "src/utils/toastify";
 import Add from "src/icons/Add.vue";
 import Edit from "src/icons/Edit.vue";
 import Close from "src/icons/Close.vue";
-import FormError from "src/components/form/FormError.vue";
 
 export default {
   name: "Modal",
@@ -180,7 +171,6 @@ export default {
     Add,
     Edit,
     Close,
-    FormError,
   },
   props: {
     isModalOpen: {
@@ -320,7 +310,7 @@ export default {
       padding: 1rem;
       display: flex;
       flex-direction: column;
-      gap: 1.3rem;
+      gap: 2rem;
 
       &-text {
         display: flex;

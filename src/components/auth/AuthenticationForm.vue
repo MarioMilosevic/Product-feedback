@@ -1,7 +1,7 @@
 <template>
   <div :class="divClass">
     <slot name="fullName" />
-    <slot name="userName" />
+    <slot name="username" />
     <slot name="email" />
     <slot name="password" />
     <slot name="confirmPassword" />

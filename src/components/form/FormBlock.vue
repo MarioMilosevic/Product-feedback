@@ -1,8 +1,10 @@
 <template>
   <div :class="['formBlock', direction, color]">
     <slot name="label" />
-    <slot/>
-    <slot name="error"/>
+    <slot />
+    <p class="error">
+      <slot name="error" />
+    </p>
   </div>
 </template>
 <script lang="ts">
@@ -35,6 +37,15 @@ export default {
   display: flex;
   background-color: $secondary-color;
   gap: 1rem;
+  position: relative;
+}
+
+.error {
+  position: absolute;
+  bottom: -20%;
+  left: 0%;
+  color: $error-color;
+  font-size: 0.8rem;
 }
 
 .column {
