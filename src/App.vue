@@ -1,5 +1,5 @@
 <template>
-  <SharedLayout />
+  <SharedLayout v-if="hasSharedLayout" />
   <RouterView />
 </template>
 
@@ -11,6 +11,11 @@ export default {
   components: {
     SharedLayout,
     Home,
+  },
+  computed: {
+    hasSharedLayout() {
+      return !this.$route.meta.isCredentialsForm;
+    },
   },
 };
 </script>

@@ -4,6 +4,7 @@ import NotFound from "src/pages/NotFound.vue";
 import Home from "src/pages/Home.vue";
 import Login from "src/pages/Login.vue";
 import SignUp from "src/pages/SignUp.vue";
+
 const routes = [
   {
     path: "/",
@@ -23,11 +24,13 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
+    meta: {isCredentialsForm:true}
   },
   {
     path: "/sign-up",
     name: "Sign up",
     component: SignUp,
+    meta: {isCredentialsForm:true}
   },
 
   {
