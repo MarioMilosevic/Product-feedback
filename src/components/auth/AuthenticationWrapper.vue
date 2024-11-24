@@ -1,17 +1,13 @@
 <template>
-  <div class="wrapper">
+  <form class="wrapper">
+  <!-- <form class="wrapper" v-on:submit.prevent="mario"> -->
     <h1>{{ title }} Form</h1>
     <slot name="form" />
-    <div class="wrapper__buttons">
-      <ActionButton color="blue" size="big">
-        <h3>{{ title }}</h3>
-      </ActionButton>
-      <p>
-        {{ haveAccount }} have an account ?
-        <router-link :to="{ name: link }"> {{ link }} </router-link>
-      </p>
-    </div>
-  </div>
+    <p>
+      {{ haveAccount }} have an account ?
+      <router-link :to="{ name: link }"> {{ link }} </router-link>
+    </p>
+  </form>
 </template>
 
 <script lang="ts">
@@ -41,11 +37,11 @@ export default {
       return this.type === "Login" ? "Sign up" : "Login";
     },
   },
-  mounted() {
-    //
-  },
+  mounted() {},
   methods: {
-    //
+    mario() {
+      console.log('mario')
+    }
   },
 };
 </script>
@@ -62,16 +58,5 @@ export default {
   align-items: center;
   gap: 2rem;
   background-color: $primary-color-hover;
-
-  &__title {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  &__buttons {
-    display: flex;
-    gap: 1rem;
-    flex-direction: column;
-  }
 }
 </style>

@@ -18,6 +18,16 @@
             placeholder="Password"
           />
         </template>
+        <template #submit>
+          <ActionButton color="blue" size="big">
+            <h3>Login</h3>
+          </ActionButton>
+        </template>
+        <template #homepage>
+          <ActionButton color="purple" size="big">
+            <h3>Homepage</h3>
+          </ActionButton>
+        </template>
       </AuthenticationForm>
     </template>
   </AuthenticationWrapper>

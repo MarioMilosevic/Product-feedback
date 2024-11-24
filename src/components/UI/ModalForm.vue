@@ -105,7 +105,6 @@
           class="overlay__modal-form-buttonContainer"
           :class="[feedback ? 'visible' : 'notVisible']"
         >
-          <!--  -->
           <ActionButton
             v-if="singleFeedback.id"
             color="red"
@@ -114,7 +113,6 @@
           >
             Delete
           </ActionButton>
-          <!--  -->
           <div class="overlay__modal-form-buttonContainer-div">
             <ActionButton
               color="grey"

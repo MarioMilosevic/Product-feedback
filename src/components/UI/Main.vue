@@ -18,7 +18,6 @@ import { mapState } from "pinia";
 import Feedback from "src/components/feedbacks/Feedback.vue";
 import FeedbackNav from "src/components/feedbacks/FeedbackNav.vue";
 import ModalForm from "src/components/UI/ModalForm.vue";
-import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
 import Nofeedbacks from "src/components/feedbacks/Nofeedbacks.vue";
 
 export default {
@@ -27,7 +26,6 @@ export default {
     Feedback,
     FeedbackNav,
     ModalForm,
-    LoadingSpinner,
     Nofeedbacks,
   },
   data() {

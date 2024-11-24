@@ -2,24 +2,6 @@
   <div class="loader"></div>
 </template>
 
-<script lang="ts">
-export default {
-  components: {},
-  props: {},
-  data() {
-    return {};
-  },
-  computed: {
-    //
-  },
-  mounted() {
-    //
-  },
-  methods: {
-    //
-  },
-};
-</script>
 <style lang="scss" scoped>
 .loader {
   width: 48px;
@@ -32,6 +14,7 @@ export default {
   animation: rotation 1s linear infinite;
   grid-column: span 4;
   margin: 10rem auto;
+  grid-area: 2 / 4 / 3 / 5;
 }
 
 @keyframes rotation {

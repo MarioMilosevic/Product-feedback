@@ -18,7 +18,6 @@ interface CloudinaryResult {
   info: {
     public_id: string;
     secure_url: string;
-    [key: string]: any; // Add other properties as needed
   };
 }
 
@@ -27,15 +26,16 @@ export default {
     FileButton,
     Input
   },
-  props: {},
+  props: {
+  },
+  emits: ['image-event'],
   data() {
-    return {};
+    return {
+    };
   },
   computed: {
-    //
   },
   mounted() {
-    //
   },
   methods: {
     openUploadWidget() {
@@ -46,7 +46,8 @@ export default {
         },
         (error: CloudinaryError, result: CloudinaryResult) => {
           if (!error && result && result.event === "success") {
-            console.log("Done! Here is the image info: ", result.info);
+            // console.log("Done! Here is the image info: ", result.info);
+            this.$emit('image-event', result.info.secure_url)
           }
         }
       );

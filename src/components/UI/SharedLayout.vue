@@ -1,7 +1,10 @@
 <template>
   <nav>
-    <ActionButton size="big" color="purple" @click="goToLoginPage"
+    <ActionButton size="big" color="blue" @click="goToLoginPage"
       >Log In</ActionButton
+    >
+    <ActionButton size="big" color="purple" @click="goToSignUpPage"
+      >Sign Up</ActionButton
     >
   </nav>
 </template>
@@ -22,6 +25,9 @@ export default {
     goToLoginPage() {
       this.$router.push("/login");
     },
+    goToSignUpPage() {
+      this.$router.push("/sign-up");
+    },
   },
 };
 </script>
@@ -31,5 +37,6 @@ nav {
   grid-column: span 8;
   display: flex;
   justify-content: flex-end;
+  gap: 1rem;
 }
 </style>

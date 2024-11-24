@@ -1,13 +1,18 @@
 <template>
-  <form :class="formClass">
+  <div :class="divClass">
     <slot name="fullName" />
     <slot name="userName" />
     <slot name="email" />
     <slot name="password" />
     <slot name="confirmPassword" />
     <slot name="image" />
-  </form>
+    <div class="buttons">
+      <slot name="submit" />
+      <slot name="homepage" />
+    </div>
+  </div>
 </template>
+
 <script lang="ts">
 export default {
   components: {},
@@ -21,16 +26,12 @@ export default {
     return {};
   },
   computed: {
-    formClass() {
+    divClass() {
       return `${this.display}`;
     },
   },
-  mounted() {
-    //
-  },
-  methods: {
-    //
-  },
+  mounted() {},
+  methods: {},
 };
 </script>
 
@@ -45,5 +46,13 @@ export default {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
+}
+
+.buttons {
+  grid-column: span 2;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 </style>
