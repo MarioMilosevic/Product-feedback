@@ -4,9 +4,8 @@
     <slot name="form" />
     <div class="wrapper__buttons">
       <ActionButton color="blue" size="big">
-        <h3>Login</h3>
+        <h3>{{ title }}</h3>
       </ActionButton>
-
       <p>
         {{ haveAccount }} have an account ?
         <router-link :to="{ name: link }"> {{ link }} </router-link>

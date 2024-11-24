@@ -1,40 +1,26 @@
 <template>
   <AuthenticationWrapper type="Login">
     <template #form>
-    <AuthenticationForm display="flex">
-      <template #email>
-        <Input
-          type="text"
-          name="email"
-          :content="loginCredentials.email"
-          placeholder="Email Address"
-        />
-      </template>
-      <template #password>
-        <Input
-          type="text"
-          name="password"
-          :content="loginCredentials.password"
-          placeholder="Password"
-        />
-      </template>
-    </AuthenticationForm>
+      <AuthenticationForm display="flex">
+        <template #email>
+          <Input
+            type="text"
+            name="email"
+            :content="loginCredentials.email"
+            placeholder="Email Address"
+          />
+        </template>
+        <template #password>
+          <Input
+            type="text"
+            name="password"
+            :content="loginCredentials.password"
+            placeholder="Password"
+          />
+        </template>
+      </AuthenticationForm>
     </template>
-
-
   </AuthenticationWrapper>
-  <!-- <div class="wrapper">
-    <h1>Login Form</h1>
-    <div class="wrapper__buttons">
-      <ActionButton color="blue" size="big">
-        <h3>Login</h3>
-      </ActionButton>
-      <p>
-        Don't have an account ?
-        <router-link :to="{ name: 'Sign up' }"> Sign up </router-link>
-      </p>
-    </div>
-  </div> -->
 </template>
 
 <script lang="ts">
@@ -52,7 +38,7 @@ export default {
     Input,
     Label,
     AuthenticationForm,
-    AuthenticationWrapper
+    AuthenticationWrapper,
   },
   props: {},
   data() {
