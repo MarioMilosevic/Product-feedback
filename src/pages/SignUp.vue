@@ -17,6 +17,7 @@
             name="userName"
             :content="signUpCredentials.username"
             placeholder="Username"
+            @update-input="updateUsername"
           />
         </template>
         <template #email>
@@ -25,6 +26,7 @@
             name="email"
             :content="signUpCredentials.email"
             placeholder="Email Address"
+            @update-input="updateEmail"
           />
         </template>
         <template #password>
@@ -33,6 +35,7 @@
             name="password"
             :content="signUpCredentials.password"
             placeholder="Password"
+            @update-input="updatePassword"
           />
         </template>
         <template #confirmPassword>
@@ -41,13 +44,19 @@
             name="confirmPassword"
             :content="signUpCredentials.password"
             placeholder="Confirm Password"
+            @update-input="updateConfirmPassword"
           />
         </template>
         <template #image>
-          <UploadWidget @image-event="getImageInfo"/>
+          <UploadWidget @image-event="updateImage" />
         </template>
         <template #submit>
-          <ActionButton color="blue" size="big" type="submit" @click.prevent="signUpNewUser">
+          <ActionButton
+            color="blue"
+            size="big"
+            type="submit"
+            @click.prevent="signUpNewUser"
+          >
             <h3>Sign Up</h3>
           </ActionButton>
         </template>
@@ -85,27 +94,36 @@ export default {
         username: "",
         email: "",
         password: "",
+        confirmPassword: "",
         image: "",
       },
     };
   },
-  computed: {
-    //
-  },
-  mounted() {
-    //
-  },
+  computed: {},
+  mounted() {},
   methods: {
+    updateFullName(fullName: string) {
+      this.signUpCredentials.fullName = fullName;
+    },
+    updateUsername(username: string) {
+      this.signUpCredentials.username = username;
+    },
+    updateEmail(email: string) {
+      this.signUpCredentials.email = email;
+    },
+    updatePassword(password: string) {
+      this.signUpCredentials.password = password;
+    },
+    updateConfirmPassword(confirmPassword: string) {
+      this.signUpCredentials.confirmPassword = confirmPassword;
+    },
+    updateImage(imageUrl: string) {
+      console.log("valjda sam dobio sta sam trebao", imageUrl);
+      this.signUpCredentials.image = imageUrl;
+    },
     async signUpNewUser() {
-      createNewUser(this.signUpCredentials)
+      createNewUser(this.signUpCredentials);
     },
-    updateTitle(newTitle: string) {
-      this.signUpCredentials.fullName = newTitle;
-    },
-    getImageInfo(imageUrl:string) {
-      console.log("valjda sam dobio sta sam trebao", imageUrl)
-      this.signUpCredentials.image = imageUrl
-    }
   },
 };
 </script>
