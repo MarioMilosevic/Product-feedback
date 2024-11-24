@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <AuthenticationForm display="grid">
             <template #fullName>
                 <Input

@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapper">
-    <h1>Login Form</h1>
+  <AuthenticationWrapper type="Login">
+    <template #form>
     <AuthenticationForm display="flex">
       <template #email>
         <Input
@@ -19,16 +19,22 @@
         />
       </template>
     </AuthenticationForm>
+    </template>
+
+
+  </AuthenticationWrapper>
+  <!-- <div class="wrapper">
+    <h1>Login Form</h1>
     <div class="wrapper__buttons">
       <ActionButton color="blue" size="big">
         <h3>Login</h3>
       </ActionButton>
       <p>
         Don't have an account ?
-        <router-link :to="{ name: 'Sign Up' }"> Sign up </router-link>
+        <router-link :to="{ name: 'Sign up' }"> Sign up </router-link>
       </p>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script lang="ts">
@@ -37,6 +43,7 @@ import FormBlock from "src/components/UI/FormBlock.vue";
 import Input from "src/components/UI/Input.vue";
 import Label from "src/components/UI/Label.vue";
 import AuthenticationForm from "src/components/auth/AuthenticationForm.vue";
+import AuthenticationWrapper from "src/components/auth/AuthenticationWrapper.vue";
 
 export default {
   components: {
@@ -45,6 +52,7 @@ export default {
     Input,
     Label,
     AuthenticationForm,
+    AuthenticationWrapper
   },
   props: {},
   data() {
