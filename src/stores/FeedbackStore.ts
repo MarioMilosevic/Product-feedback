@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { FeedbackType, CategoryType, StatusType } from "src/types/types";
+import { FeedbackType, CategoryType, StatusType, UserType } from "src/types/types";
 
 export const useFeedbackStore = defineStore("feedbacksStore", {
   state: () => {
@@ -9,7 +9,7 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       statusOptions: [] as StatusType[],
       filterId: 0,
       sort: "Most Likes",
-      user:null
+      user:{} as UserType
     };
   },
   getters: {
@@ -48,6 +48,9 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     getFilterId: (state) => {
       return state.filterId;
     },
+    getUser: (state) => {
+      return state.user
+    }
   },
   actions: {
     setFeedbacks(feedbacks: FeedbackType[]) {
@@ -76,7 +79,7 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     setFilterId(value: number) {
       this.filterId = value;
     },
-    setUser(newUser) {
+    setUser(newUser:UserType) {
       this.user = newUser
     }
   },

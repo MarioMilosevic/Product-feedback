@@ -109,6 +109,8 @@ import ActionButton from "src/components/UI/ActionButton.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
 import { createNewUser } from "src/api/UsersApi";
 import { signUpFormSchema } from "src/validation/signUpFormSchema";
+import { mapActions } from "pinia";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
 
 export default {
   components: {
@@ -136,6 +138,8 @@ export default {
   computed: {},
   mounted() {},
   methods: {
+    ...mapActions(useFeedbackStore, ["setUser"]),
+
     goToHomepage() {
       this.$router.push("/home");
     },
@@ -164,6 +168,10 @@ export default {
         if (validation.success) {
           console.log(validation);
           const newUser = await createNewUser(this.signUpCredentials);
+          this.setUser(newUser)
+          this.$router.push('/home')
+          // da redirecta na homepage
+          // u shared layoutu renderovati sliku usera i sign out dugme
          console.log(newUser)
         } else {
           this.errors = validation.error.errors.reduce((acc, err) => {
