@@ -10,6 +10,7 @@
 </template>
 
 <script lang="ts">
+// import { retrieveUser } from "src/api/UsersApi";
 import ActionButton from "src/components/UI/ActionButton.vue";
 export default {
   components: {
@@ -17,9 +18,15 @@ export default {
   },
   props: {},
   data() {
-    return {};
+    return {
+    user:null
+    };
   },
   computed: {},
+ async created() {
+  //  const user = await retrieveUser()
+  // console.log("user shared layout",user)
+  },
   mounted() {},
   methods: {
     goToLoginPage() {

@@ -106,9 +106,9 @@ import Input from "src/components/form/Input.vue";
 import AuthenticationForm from "src/components/auth/AuthenticationForm.vue";
 import AuthenticationWrapper from "src/components/auth/AuthenticationWrapper.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
+import FormBlock from "src/components/form/FormBlock.vue";
 import { createNewUser } from "src/api/UsersApi";
 import { signUpFormSchema } from "src/validation/signUpFormSchema";
-import FormBlock from "src/components/form/FormBlock.vue";
 
 export default {
   components: {
@@ -159,21 +159,22 @@ export default {
       this.signUpCredentials.image = imageUrl;
     },
     async signUpNewUser() {
-      createNewUser(this.signUpCredentials)
-        // const validation = signUpFormSchema.safeParse(this.signUpCredentials);
-        // if (validation.sucess) {
-        //   console.log(validation);
-        //   createNewUser(this.signUpCredentials);
-        // } else {
-        //   this.errors = validation.error.errors.reduce((acc, err) => {
-        //     const key = err.path.length > 0 ? err.path[0] : "";
-        //     acc[key] = err.message;
-        //     return acc;
-        //   }, {} as Record<string, string>);
-        // }
-      // } catch (error) {
-      //   console.error("Unexpected error occured", error);
-      // }
+      try {
+        const validation = signUpFormSchema.safeParse(this.signUpCredentials);
+        if (validation.success) {
+          console.log(validation);
+          const newUser = await createNewUser(this.signUpCredentials);
+         console.log(newUser)
+        } else {
+          this.errors = validation.error.errors.reduce((acc, err) => {
+            const key = err.path.length > 0 ? err.path[0] : "";
+            acc[key] = err.message;
+            return acc;
+          }, {} as Record<string, string>);
+        }
+      } catch (error) {
+        console.error("Unexpected error occured", error);
+      }
     },
   },
 };

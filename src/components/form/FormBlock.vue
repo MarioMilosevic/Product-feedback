@@ -38,11 +38,12 @@ export default {
   background-color: $secondary-color;
   gap: 1rem;
   position: relative;
+  border-radius: $border-radius-medium;
 }
 
 .error {
   position: absolute;
-  bottom: -20%;
+  bottom: -1.25rem;
   left: 0%;
   color: $error-color;
   font-size: 0.8rem;

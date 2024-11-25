@@ -5,10 +5,10 @@ export const signUpFormSchema = z
     fullName: z
       .string()
       .min(5, {
-        message: "Full name must be at least 5 characters long",
+        message: "Must be at least 5 characters long",
       })
       .includes(" ", {
-        message: "Full name must contain at least 2 words",
+        message: "Must contain at least 2 words",
       }),
     username: z
       .string()
@@ -28,10 +28,10 @@ export const signUpFormSchema = z
   .extend({
     password: z
       .string()
-      .min(8, { message: "Password must be at least 8 characters" }),
+      .min(8, { message: "Must be at least 8 characters" }),
     confirmPassword: z
       .string()
-      .min(8, { message: "Password must be at least 8 characters" }),
+      .min(8, { message: "Must be at least 8 characters" }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",

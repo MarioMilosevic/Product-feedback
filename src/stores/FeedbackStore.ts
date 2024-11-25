@@ -9,6 +9,7 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       statusOptions: [] as StatusType[],
       filterId: 0,
       sort: "Most Likes",
+      user:null
     };
   },
   getters: {
@@ -75,5 +76,8 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     setFilterId(value: number) {
       this.filterId = value;
     },
+    setUser(newUser) {
+      this.user = newUser
+    }
   },
 });
