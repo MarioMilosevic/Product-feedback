@@ -39,12 +39,11 @@ export default {
   },
   async created() {
     const user = await retrieveUser();
+    console.log("user iz created", user);
     this.setUser(user);
     console.log("user shared layout", user);
   },
-  mounted() {
-    // console.log(this.getUser);
-  },
+  mounted() {},
   methods: {
     ...mapActions(useFeedbackStore, ["setUser"]),
     goToLoginPage() {
@@ -56,7 +55,7 @@ export default {
     async localSignOutUser() {
       await signOutUser();
       this.setUser({} as UserType);
-      showToast('User signed out')
+      showToast("User signed out");
     },
   },
 };

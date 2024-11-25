@@ -31,7 +31,8 @@ export const createNewUser = async (user: UserFormType) => {
     }
     console.log(data);
     const {
-      user: {id,
+      user: {
+        id,
         user_metadata: { fullName, image, username },
       },
     } = data;
@@ -40,7 +41,7 @@ export const createNewUser = async (user: UserFormType) => {
       fullName: fullName,
       username: username,
       image: image,
-      auth_id : id
+      auth_id: id,
     };
 
     console.log(userForTable);
@@ -61,13 +62,44 @@ export const createNewUser = async (user: UserFormType) => {
   }
 };
 
+export const signInUser = async (email: string, password: string) => {
+  console.log(email);
+  console.log(password);
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      console.error('Unable to sign in user', error)
+      return
+    }
+    console.log(data)
+    return data
+
+  } catch (error) {
+    console.error('Unexpected error occured', error)
+  }
+};
+
+export const signOutUser = async () => {
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Unable to sign out", error);
+    }
+  } catch (error) {
+    console.error("Unexpected error occured", error);
+    showToast("Unexpected error occured", "error");
+  }
+};
 
 export const retrieveUser = async () => {
   try {
     const { data: authData, error: authError } = await supabase.auth.getUser();
     if (authError) {
-      console.error("Error retrieving authenticated user:", authError.message);
-      return null;
+      return {};
     }
 
     const user = authData?.user;
@@ -87,20 +119,9 @@ export const retrieveUser = async () => {
       return null;
     }
 
-    return data; 
+    return data;
   } catch (unexpectedError) {
     console.error("An unexpected error occurred:", unexpectedError);
     return null;
   }
 };
-
-export const signOutUser = async () => {
-  try {
-    const {error } = await supabase.auth.signOut();
-    if (error) {
-      console.error('Unable to sign out', error)
-    }
-  } catch (error) {
-    
-  }
-}
