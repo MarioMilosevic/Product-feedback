@@ -1,6 +1,5 @@
 <template>
   <form class="wrapper">
-  <!-- <form class="wrapper" v-on:submit.prevent="mario"> -->
     <h1>{{ title }} Form</h1>
     <slot name="form" />
     <p>

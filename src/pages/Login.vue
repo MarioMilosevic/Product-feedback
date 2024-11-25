@@ -3,22 +3,32 @@
     <template #form>
       <AuthenticationForm display="flex">
         <template #email>
-          <Input
+          <FormBlock>
+            <Input
             type="email"
             name="email"
             :content="loginCredentials.email"
             placeholder="Email Address"
             @update-input="updateEmail"
-          />
+            />
+            <template #error v-if="errors.email">
+              {{ errors.email }}
+            </template>
+          </FormBlock>
         </template>
         <template #password>
-          <Input
+          <FormBlock>
+            <Input
             type="password"
             name="password"
             :content="loginCredentials.password"
             placeholder="Password"
             @update-input="updatePassword"
-          />
+            />
+            <template #error v-if="errors.password">
+              {{ errors.password }}
+            </template>
+          </FormBlock>
         </template>
         <template #submit>
           <ActionButton color="blue" size="big" @click="localSignInUser">
@@ -37,12 +47,13 @@
 
 <script lang="ts">
 import ActionButton from "src/components/UI/ActionButton.vue";
-import FormBlock from "src/components/form/FormBlock.vue";
 import Input from "src/components/form/Input.vue";
 import Label from "src/components/form/Label.vue";
 import AuthenticationForm from "src/components/auth/AuthenticationForm.vue";
 import AuthenticationWrapper from "src/components/auth/AuthenticationWrapper.vue";
+import FormBlock from "src/components/form/FormBlock.vue";
 import { signInUser } from "src/api/UsersApi";
+import { loginFormSchema } from "src/validation/loginFormSchema";
 
 export default {
   components: {
@@ -60,6 +71,7 @@ export default {
         email: "",
         password: "",
       },
+      errors: {} as Record<string, string>,
     };
   },
   computed: {
@@ -79,11 +91,28 @@ export default {
       this.loginCredentials.password = value;
     },
     async localSignInUser() {
-      const user = await signInUser(
-        this.loginCredentials.email,
-        this.loginCredentials.password
-      );
-      console.log(user);
+      try {
+        const validation = loginFormSchema.safeParse(this.loginCredentials);
+        console.log(validation)
+        if (validation.success) {
+          const user = await signInUser(
+            this.loginCredentials.email,
+            this.loginCredentials.password
+          );
+          if (user) {
+            this.$router.push("/home");
+          }
+        } else {
+          console.log('uslo')
+          this.errors = validation.error.errors.reduce((acc, err) => {
+            const key = err.path.length > 0 ? err.path[0] : "";
+            acc[key] = err.message;
+            return acc;
+          }, {} as Record<string, string>);
+        }
+      } catch (error) {
+        console.error("Unexpected error occured", error);
+      }
     },
   },
 };

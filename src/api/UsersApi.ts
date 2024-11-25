@@ -76,7 +76,8 @@ export const signInUser = async (email: string, password: string) => {
       return
     }
     console.log(data)
-    return data
+    const {user} = data
+    return user
 
   } catch (error) {
     console.error('Unexpected error occured', error)

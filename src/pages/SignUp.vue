@@ -170,8 +170,6 @@ export default {
           const newUser = await createNewUser(this.signUpCredentials);
           this.setUser(newUser)
           this.$router.push('/home')
-          // da redirecta na homepage
-          // u shared layoutu renderovati sliku usera i sign out dugme
          console.log(newUser)
         } else {
           this.errors = validation.error.errors.reduce((acc, err) => {
