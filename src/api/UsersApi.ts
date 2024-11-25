@@ -61,40 +61,12 @@ export const createNewUser = async (user: UserFormType) => {
   }
 };
 
-// export const retrieveUser = async () => {
-//   try {
-//     const {
-//       data: { user },
-//       error: authError,
-//     } = await supabase.auth.getUser();
-//     if (authError) {
-//       console.error("Error retrieving user", authError);
-//       return;
-//     }
-
-//     const { data, error } = await supabase
-//       .from("Users")
-//       .select()
-//       .eq("email", user.email)
-//       .single();
-
-//     if (error) {
-//       console.error("Unable to fetch user from table", error);
-//       return;
-//     }
-
-//     return data;
-//   } catch (error) {
-//     console.error("Unexpected error occured", error);
-//   }
-// };
 
 export const retrieveUser = async () => {
   try {
-    // Fetch authenticated user
     const { data: authData, error: authError } = await supabase.auth.getUser();
     if (authError) {
-      // console.error("Error retrieving authenticated user:", authError.message);
+      console.error("Error retrieving authenticated user:", authError.message);
       return null;
     }
 
@@ -104,11 +76,10 @@ export const retrieveUser = async () => {
       return null;
     }
 
-    // Query Users table
     const { data, error } = await supabase
       .from("Users")
-      .select("*")
-      .eq("email", user.email)
+      .select()
+      .eq("auth_id", user.id)
       .single();
 
     if (error) {
@@ -116,10 +87,20 @@ export const retrieveUser = async () => {
       return null;
     }
 
-    return data; // Return the user data
+    return data; 
   } catch (unexpectedError) {
     console.error("An unexpected error occurred:", unexpectedError);
     return null;
   }
 };
 
+export const signOutUser = async () => {
+  try {
+    const {error } = await supabase.auth.signOut();
+    if (error) {
+      console.error('Unable to sign out', error)
+    }
+  } catch (error) {
+    
+  }
+}

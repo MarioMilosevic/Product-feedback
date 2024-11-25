@@ -4,7 +4,9 @@
       <figure>
         <img :src="getUser.image" :alt="getUser.image" />
       </figure>
-      <ActionButton size="big" color="purple"> Sign Out </ActionButton>
+      <ActionButton size="big" color="purple" @click="localSignOutUser">
+        Sign Out
+      </ActionButton>
     </template>
     <template v-else>
       <ActionButton size="big" color="blue" @click="goToLoginPage"
@@ -18,26 +20,26 @@
 </template>
 
 <script lang="ts">
-import { retrieveUser } from "src/api/UsersApi";
+import { retrieveUser, signOutUser } from "src/api/UsersApi";
 import { mapState, mapActions } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import ActionButton from "src/components/UI/ActionButton.vue";
+import { UserType } from "src/types/types";
+import { showToast } from "src/utils/toastify";
 export default {
   components: {
     ActionButton,
   },
   props: {},
   data() {
-    return {
-      user: null,
-    };
+    return {};
   },
   computed: {
     ...mapState(useFeedbackStore, ["getUser"]),
   },
   async created() {
     const user = await retrieveUser();
-    this.setUser(user)
+    this.setUser(user);
     console.log("user shared layout", user);
   },
   mounted() {
@@ -50,6 +52,11 @@ export default {
     },
     goToSignUpPage() {
       this.$router.push("/sign-up");
+    },
+    async localSignOutUser() {
+      await signOutUser();
+      this.setUser({} as UserType);
+      showToast('User signed out')
     },
   },
 };
