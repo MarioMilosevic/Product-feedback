@@ -9,7 +9,7 @@
         <span>Go Back</span>
       </ActionButton>
       <div class="wrapper__header-div">
-        <ActionButton
+        <!-- <ActionButton
           color="red"
           size="medium"
           @click="deleteHandler(singleFeedback.id)"
@@ -18,10 +18,10 @@
         </ActionButton>
         <ActionButton color="blue" size="big" @click="editFeedback">
           Edit Feedback
-        </ActionButton>
+        </ActionButton> -->
       </div>
     </div>
-    <Feedback :isEditing="true" :feedback="singleFeedback" />
+    <Feedback :isEditing="true" :feedback="singleFeedback" @edit-event="editFeedback" @delete-event="deleteHandler(singleFeedback.id)"/>
     <div class="wrapper__comments">
       <h3>{{ commentCount }} <span>Comments</span></h3>
       <Comment

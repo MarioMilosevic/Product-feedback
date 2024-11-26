@@ -26,8 +26,13 @@
       </Icon>
       <span class="feedback__comments-length">{{ commentsCount }}</span>
     </div>
-    <div v-if="feedback.userId === getUser.auth_id && isEditing">
-      Ovo je od usera
+    <div v-if="feedback.userId === getUser.auth_id && isEditing" class="edit-delete">
+      <Icon size="big" @click="$emit('edit-event')">
+        <Edit/>
+      </Icon>
+      <Icon size="big" @click="$emit('delete-event')">
+        <Delete/>
+      </Icon>
     </div>
   </router-link>
 </template>
@@ -41,6 +46,8 @@ import Caret from "src/icons/Caret.vue";
 import Chat from "src/icons/Chat.vue";
 import { mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
+import Edit from "src/icons/Edit.vue";
+import Delete from "src/icons/Delete.vue";
 
 export default {
   name: "Feedback",
@@ -54,11 +61,14 @@ export default {
       default:false,
     }
   },
+  emits:['edit-event', 'delete-event'],
   components: {
     Category,
     Icon,
     Caret,
     Chat,
+    Edit,
+    Delete
   },
   data() {
     return {};
@@ -150,5 +160,11 @@ export default {
       font-size: 1rem;
     }
   }
+}
+
+.edit-delete {
+  display: flex;
+  width: 100px;
+  gap:2rem;
 }
 </style>
