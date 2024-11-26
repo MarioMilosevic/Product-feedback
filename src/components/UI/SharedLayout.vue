@@ -12,9 +12,9 @@
       <ActionButton size="big" color="blue" @click="goToLoginPage"
         >Log In</ActionButton
       >
-      <ActionButton size="big" color="purple" @click="goToSignUpPage"
+    <!--   <ActionButton size="big" color="purple" @click="goToSignUpPage"
         >Sign Up</ActionButton
-      >
+      > -->
     </template>
   </nav>
 </template>

@@ -21,7 +21,7 @@
         </ActionButton>
       </div>
     </div>
-    <Feedback :feedback="singleFeedback" />
+    <Feedback :isEditing="true" :feedback="singleFeedback" />
     <div class="wrapper__comments">
       <h3>{{ commentCount }} <span>Comments</span></h3>
       <Comment

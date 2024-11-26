@@ -45,6 +45,7 @@ export const createNewUser = async (user: UserFormType) => {
     };
 
     console.log(userForTable);
+    // do odje je dobro
 
     const { data: userData, error: userError } = await supabase
       .from("Users")
@@ -72,15 +73,14 @@ export const signInUser = async (email: string, password: string) => {
     });
 
     if (error) {
-      console.error('Unable to sign in user', error)
-      return
+      console.error("Unable to sign in user", error);
+      return;
     }
-    console.log(data)
-    const {user} = data
-    return user
-
+    console.log(data);
+    const { user } = data;
+    return user;
   } catch (error) {
-    console.error('Unexpected error occured', error)
+    console.error("Unexpected error occured", error);
   }
 };
 

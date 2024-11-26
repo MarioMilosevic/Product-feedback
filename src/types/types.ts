@@ -28,6 +28,7 @@ export type FeedbackType = {
   };
   title: string;
   Comments?: CommentType[];
+  userId?: string;
 };
 
 export type SingleFeedbackType = {

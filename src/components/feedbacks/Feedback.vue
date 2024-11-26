@@ -26,6 +26,9 @@
       </Icon>
       <span class="feedback__comments-length">{{ commentsCount }}</span>
     </div>
+    <div v-if="feedback.userId === getUser.auth_id && isEditing">
+      Ovo je od usera
+    </div>
   </router-link>
 </template>
 
@@ -36,6 +39,8 @@ import Icon from "src/components/UI/Icon.vue";
 import Category from "src/components/UI/Category.vue";
 import Caret from "src/icons/Caret.vue";
 import Chat from "src/icons/Chat.vue";
+import { mapState } from "pinia";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
 
 export default {
   name: "Feedback",
@@ -44,6 +49,10 @@ export default {
       type: Object as PropType<FeedbackType>,
       required: true,
     },
+    isEditing: {
+      type: Boolean,
+      default:false,
+    }
   },
   components: {
     Category,
@@ -55,6 +64,7 @@ export default {
     return {};
   },
   computed: {
+    ...mapState(useFeedbackStore, ['getUser']),
     feedbackId() {
       return this.feedback.id;
     },
@@ -64,6 +74,8 @@ export default {
   },
   methods: {},
   mounted() {
+    console.log(this.feedback)
+    console.log(this.getUser)
     //
   },
 };
