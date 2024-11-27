@@ -8,10 +8,19 @@
       <p>Home</p>
     </router-link>
     <slot name="form" />
-    <p>
-      {{ haveAccount }} have an account ?
-      <router-link :to="{ name: link }"> {{ link }} </router-link>
-    </p>
+    <div class="wrapper__links">
+      <p>
+        {{ haveAccount }} have an account ?
+        <router-link :to="{ name: link }" class="wrapper__links-link"> {{ link }} </router-link>
+      </p>
+        <p v-if="type==='Login'">
+          Or,
+          <span class="wrapper__links-link">
+            log in as
+            guest 
+          </span>
+        </p>
+    </div>
   </form>
 </template>
 
@@ -47,11 +56,7 @@ export default {
     },
   },
   mounted() {},
-  methods: {
-    mario() {
-      console.log("mario");
-    },
-  },
+  methods: {},
 };
 </script>
 
@@ -83,6 +88,24 @@ export default {
     &:hover {
       text-decoration: underline;
       text-underline-offset: 0.2rem;
+    }
+  }
+
+  &__links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+
+    &-link {
+      color: $terniary-color;
+      text-decoration: none;
+      cursor: pointer;
+    
+      &:hover {
+        color: $terniary-color-hover;
+      }
+
     }
   }
 }
