@@ -19,6 +19,7 @@ const routes = [
     path: "/details/:id",
     name: "FeedbackDetails",
     component: FeedbackDetails,
+    meta:{backAllowed:true}
   },
   {
     path: "/login",

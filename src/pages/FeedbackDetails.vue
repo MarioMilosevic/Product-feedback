@@ -1,18 +1,12 @@
 <template>
   <LoadingSpinner v-if="isLoading" />
   <div v-else class="wrapper">
-    <div class="wrapper__header">
-      <ActionButton color="grey" size="medium" @click="goBack">
-        <Icon>
-          <LeftArrow />
-        </Icon>
-        <span>Go Back</span>
-      </ActionButton>
-      <div class="wrapper__header-div">
-      </div>
-    </div>
-
-    <Feedback :isEditing="singleFeedback.userId === getUser.auth_id" :feedback="singleFeedback" @edit-event="editFeedback" @delete-event="deleteHandler(singleFeedback.id)"/>
+    <Feedback
+      :isEditing="singleFeedback.userId === getUser.auth_id"
+      :feedback="singleFeedback"
+      @edit-event="editFeedback"
+      @delete-event="deleteHandler(singleFeedback.id)"
+    />
     <div class="wrapper__comments">
       <h3>{{ commentCount }} <span>Comments</span></h3>
       <Comment
@@ -114,14 +108,12 @@ export default {
     updateFeedback(newFeedback: SingleFeedbackType) {
       this.singleFeedback = newFeedback;
     },
-    goBack() {
-      this.$router.push("/home");
-    },
+   
     async deleteHandler(id: number) {
       const data = await deleteFeedback(id);
       if (data.id) {
         this.$emit("close-modal");
-        this.goBack();
+      this.$router.push("/home");
         this.$nextTick(() => {
           showToast("Deleted feedback successfully");
         });
@@ -130,9 +122,7 @@ export default {
       }
     },
   },
-  mounted() {
-    //
-  },
+  mounted() {},
 };
 </script>
 
@@ -146,27 +136,6 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.6rem 0;
-
-    &-div {
-      display: flex;
-      gap: 1rem;
-    }
-
-    &-editButton {
-      cursor: pointer;
-      padding: 1rem 2rem;
-      border: none;
-      background-color: $terniary-color;
-      border-radius: $border-radius-medium;
-      color: $secondary-color;
-    }
-  }
 
   &__comments {
     background-color: $secondary-color;
