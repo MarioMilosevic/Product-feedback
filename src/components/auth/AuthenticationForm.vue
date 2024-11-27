@@ -6,9 +6,8 @@
     <slot name="password" />
     <slot name="confirmPassword" />
     <slot name="image" />
-    <div class="buttons">
+    <div :class="buttonClass">
       <slot name="submit" />
-      <slot name="homepage" />
     </div>
   </div>
 </template>
@@ -29,6 +28,9 @@ export default {
     divClass() {
       return `${this.display}`;
     },
+    buttonClass() {
+      return `${this.display}__button`;
+    },
   },
   mounted() {},
   methods: {},
@@ -40,19 +42,30 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+
+  &__button {
+    width: 100%;
+    display: flex;
+
+    & > * {
+      width: 100%;
+    }
+  }
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
-}
 
-.buttons {
-  grid-column: span 2;
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1rem;
+  &__button {
+    grid-column: span 2;
+    display: flex;
+    justify-content: center;
+
+    & > * {
+      width: 50%;
+    }
+  }
 }
 </style>

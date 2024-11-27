@@ -1,6 +1,12 @@
 <template>
   <form class="wrapper">
     <h1>{{ title }} Form</h1>
+    <router-link :to="{ name: 'Home' }" class="wrapper__back">
+      <Icon>
+        <LeftArrow />
+      </Icon>
+      <p>Home</p>
+    </router-link>
     <slot name="form" />
     <p>
       {{ haveAccount }} have an account ?
@@ -11,10 +17,14 @@
 
 <script lang="ts">
 import ActionButton from "src/components/UI/ActionButton.vue";
+import Icon from "src/components/UI/Icon.vue";
+import LeftArrow from "src/icons/LeftArrow.vue";
 
 export default {
   components: {
     ActionButton,
+    Icon,
+    LeftArrow,
   },
   props: {
     type: {
@@ -39,8 +49,8 @@ export default {
   mounted() {},
   methods: {
     mario() {
-      console.log('mario')
-    }
+      console.log("mario");
+    },
   },
 };
 </script>
@@ -57,5 +67,23 @@ export default {
   align-items: center;
   gap: 2rem;
   background-color: $primary-color-hover;
+  position: relative;
+
+  &__back {
+    color: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: absolute;
+    top: 8%;
+    left: 5%;
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 0.2rem;
+    }
+  }
 }
 </style>

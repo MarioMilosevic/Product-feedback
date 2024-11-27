@@ -35,11 +35,11 @@
             <h3>Login</h3>
           </ActionButton>
         </template>
-        <template #homepage>
+        <!-- <template #homepage>
           <ActionButton color="purple" size="big" @click="goToHomepage">
             <h3>Homepage</h3>
           </ActionButton>
-        </template>
+        </template> -->
       </AuthenticationForm>
     </template>
   </AuthenticationWrapper>

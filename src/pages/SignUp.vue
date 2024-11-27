@@ -137,7 +137,6 @@ export default {
   computed: {},
   mounted() {},
   methods: {
-    // ...mapActions(useFeedbackStore, ["setUser"]),
 
     goToHomepage() {
       this.$router.push("/home");
@@ -166,11 +165,8 @@ export default {
         const validation = signUpFormSchema.safeParse(this.signUpCredentials);
         if (validation.success) {
           await createNewUser(this.signUpCredentials);
-          // const newUser = await createNewUser(this.signUpCredentials);
-          // this.setUser(newUser)
           this.$router.push("/login");
           this.$nextTick(() => {
-            console.log("odje");
             showToast("Account created successfully");
           });
         } else {
