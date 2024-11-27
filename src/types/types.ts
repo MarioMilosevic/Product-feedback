@@ -44,6 +44,7 @@ export type SingleFeedbackType = {
     name: string;
   };
   title: string;
+  userId: string;
 };
 
 export type CommentType = {
@@ -62,6 +63,7 @@ export type UserType = {
   id: number;
   image: string;
   username: string;
+  auth_id: string;
 };
 
 export type CategoryType = {

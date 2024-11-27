@@ -9,19 +9,10 @@
         <span>Go Back</span>
       </ActionButton>
       <div class="wrapper__header-div">
-        <!-- <ActionButton
-          color="red"
-          size="medium"
-          @click="deleteHandler(singleFeedback.id)"
-        >
-          Delete
-        </ActionButton>
-        <ActionButton color="blue" size="big" @click="editFeedback">
-          Edit Feedback
-        </ActionButton> -->
       </div>
     </div>
-    <Feedback :isEditing="true" :feedback="singleFeedback" @edit-event="editFeedback" @delete-event="deleteHandler(singleFeedback.id)"/>
+
+    <Feedback :isEditing="singleFeedback.userId === getUser.auth_id" :feedback="singleFeedback" @edit-event="editFeedback" @delete-event="deleteHandler(singleFeedback.id)"/>
     <div class="wrapper__comments">
       <h3>{{ commentCount }} <span>Comments</span></h3>
       <Comment
@@ -66,6 +57,8 @@ import ModalForm from "src/components/UI/ModalForm.vue";
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
 import LeftArrow from "src/icons/LeftArrow.vue";
 import { showToast } from "src/utils/toastify";
+import { mapState } from "pinia";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
 
 export default {
   async created() {
@@ -96,6 +89,8 @@ export default {
     };
   },
   computed: {
+    ...mapState(useFeedbackStore, ["getUser"]),
+
     feedbackId() {
       return Number(this.$route.params.id);
     },

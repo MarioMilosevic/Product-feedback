@@ -1,9 +1,9 @@
 <template>
-  <router-link
-    :to="{ name: 'FeedbackDetails', params: { id: feedbackId } }"
-    class="feedback"
-  >
-    <div class="feedback__content">
+  <div class="feedback">
+    <router-link
+      :to="{ name: 'FeedbackDetails', params: { id: feedbackId } }"
+      class="feedback__content"
+    >
       <button class="feedback__content__likes">
         <Icon class="feedback__content__likes-caret" size="small">
           <Caret />
@@ -19,22 +19,25 @@
         </p>
         <Category :category="feedback.category.name" />
       </div>
-    </div>
+    </router-link>
     <div v-if="commentsCount > 0" class="feedback__comments">
       <Icon class="size-24" fill="#f0f9ff" size="medium">
         <Chat />
       </Icon>
       <span class="feedback__comments-length">{{ commentsCount }}</span>
     </div>
-    <div v-if="feedback.userId === getUser.auth_id && isEditing" class="edit-delete">
-      <Icon size="big" @click="$emit('edit-event')">
-        <Edit/>
+    <div
+      v-if="isEditing"
+      class="edit-delete"
+    >
+      <Icon size="big" @click="$emit('edit-event')" :style="{cursor:'pointer'}">
+        <Edit />
       </Icon>
-      <Icon size="big" @click="$emit('delete-event')">
-        <Delete/>
+      <Icon size="big" @click="$emit('delete-event')" :style="{cursor:'pointer'}">
+        <Delete />
       </Icon>
     </div>
-  </router-link>
+  </div>
 </template>
 
 <script lang="ts">
@@ -44,8 +47,7 @@ import Icon from "src/components/UI/Icon.vue";
 import Category from "src/components/UI/Category.vue";
 import Caret from "src/icons/Caret.vue";
 import Chat from "src/icons/Chat.vue";
-import { mapState } from "pinia";
-import { useFeedbackStore } from "src/stores/FeedbackStore";
+
 import Edit from "src/icons/Edit.vue";
 import Delete from "src/icons/Delete.vue";
 
@@ -58,23 +60,22 @@ export default {
     },
     isEditing: {
       type: Boolean,
-      default:false,
-    }
+      default: false,
+    },
   },
-  emits:['edit-event', 'delete-event'],
+  emits: ["edit-event", "delete-event"],
   components: {
     Category,
     Icon,
     Caret,
     Chat,
     Edit,
-    Delete
+    Delete,
   },
   data() {
     return {};
   },
   computed: {
-    ...mapState(useFeedbackStore, ['getUser']),
     feedbackId() {
       return this.feedback.id;
     },
@@ -84,8 +85,6 @@ export default {
   },
   methods: {},
   mounted() {
-    console.log(this.feedback)
-    console.log(this.getUser)
     //
   },
 };
@@ -95,8 +94,6 @@ export default {
 @import "src/scss/variables";
 
 .feedback {
-  text-decoration: none;
-  color: inherit;
   width: 100%;
   background-color: $secondary-color;
   border-radius: $border-radius-big;
@@ -111,6 +108,8 @@ export default {
     align-items: center;
     gap: 2rem;
     flex-grow: 1;
+    color: inherit;
+    text-decoration: none;
 
     &__div {
       display: flex;
@@ -165,6 +164,6 @@ export default {
 .edit-delete {
   display: flex;
   width: 100px;
-  gap:2rem;
+  gap: 2rem;
 }
 </style>

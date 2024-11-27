@@ -108,9 +108,8 @@ import AuthenticationWrapper from "src/components/auth/AuthenticationWrapper.vue
 import ActionButton from "src/components/UI/ActionButton.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
 import { createNewUser } from "src/api/UsersApi";
+import { showToast } from "src/utils/toastify";
 import { signUpFormSchema } from "src/validation/signUpFormSchema";
-import { mapActions } from "pinia";
-import { useFeedbackStore } from "src/stores/FeedbackStore";
 
 export default {
   components: {
@@ -138,7 +137,7 @@ export default {
   computed: {},
   mounted() {},
   methods: {
-    ...mapActions(useFeedbackStore, ["setUser"]),
+    // ...mapActions(useFeedbackStore, ["setUser"]),
 
     goToHomepage() {
       this.$router.push("/home");
@@ -166,11 +165,14 @@ export default {
       try {
         const validation = signUpFormSchema.safeParse(this.signUpCredentials);
         if (validation.success) {
-          console.log(validation);
-          const newUser = await createNewUser(this.signUpCredentials);
-          this.setUser(newUser)
-          this.$router.push('/home')
-         console.log(newUser)
+          await createNewUser(this.signUpCredentials);
+          // const newUser = await createNewUser(this.signUpCredentials);
+          // this.setUser(newUser)
+          this.$router.push("/login");
+          this.$nextTick(() => {
+            console.log("odje");
+            showToast("Account created successfully");
+          });
         } else {
           this.errors = validation.error.errors.reduce((acc, err) => {
             const key = err.path.length > 0 ? err.path[0] : "";
