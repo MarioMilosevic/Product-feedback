@@ -33,27 +33,28 @@ import { useFeedbackStore } from "src/stores/FeedbackStore";
 import ActionButton from "src/components/UI/ActionButton.vue";
 import { UserType } from "src/types/types";
 import { showToast } from "src/utils/toastify";
+import { deleteUser } from "src/api/UsersApi";
 import LeftArrow from "src/icons/LeftArrow.vue";
 import Icon from "./Icon.vue";
 export default {
   components: {
     ActionButton,
     LeftArrow,
-    Icon
+    Icon,
   },
-  props: {
-  },
+  props: {},
   data() {
     return {};
   },
   computed: {
     ...mapState(useFeedbackStore, ["getUser"]),
-      backButton() {
-      return this.$route.meta.backAllowed
-    }
+    backButton() {
+      return this.$route.meta.backAllowed;
+    },
   },
   async created() {
     const user = await retrieveUser();
+    console.log(user);
     if (user.id) {
       this.setUser(user);
     }
@@ -71,11 +72,16 @@ export default {
       this.$router.push("/sign-up");
     },
     async localSignOutUser() {
-      await signOutUser();
-      this.setUser({} as UserType);
-      showToast("User signed out");
+      if (this.getUser.is_anonymous) {
+        console.log("treba da izbrise");
+        await deleteUser(this.getUser);
+      } else {
+        console.log("treba da izloguje");
+        // await signOutUser();
+        // this.setUser({} as UserType);
+        // showToast("User signed out");
+      }
     },
-    
   },
 };
 </script>

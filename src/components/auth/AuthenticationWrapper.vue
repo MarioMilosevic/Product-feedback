@@ -27,7 +27,7 @@ import ActionButton from "src/components/UI/ActionButton.vue";
 import Icon from "src/components/UI/Icon.vue";
 import LeftArrow from "src/icons/LeftArrow.vue";
 import { signInGuest } from "src/api/UsersApi";
-import { mapActions, mapState } from "pinia";
+import { mapActions } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 
 export default {

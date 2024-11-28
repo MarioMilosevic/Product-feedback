@@ -11,7 +11,7 @@ type UserFormType = {
   image: string;
 };
 
-export const createNewUser = async (user: UserFormType, signOut = true) => {
+export const createNewUser = async (user: UserFormType) => {
   try {
     const { email, password, fullName, username, image } = user;
     const { data, error } = await supabase.auth.signUp({
@@ -25,15 +25,14 @@ export const createNewUser = async (user: UserFormType, signOut = true) => {
         },
       },
     });
-
+    
     if (error) {
       showToast("Error occurred when signing up", "error");
       console.error("Error occurred when signing up", error);
       return;
     }
-    if (signOut) {
-      signOutUser();
-    }
+    signOutUser();
+    
 
     if (data?.user) {
       const {
@@ -41,15 +40,15 @@ export const createNewUser = async (user: UserFormType, signOut = true) => {
         user_metadata: { fullName, image, username },
       } = data.user;
 
+
       const userForTable = {
-       
         fullName,
         username,
         image,
         auth_id: id,
       };
 
-      await createTableUser(userForTable)
+      await createTableUser(userForTable);
     } else {
       console.error("Sign-up was successful but user data is null");
     }
@@ -114,8 +113,10 @@ export const retrieveUser = async () => {
       console.error("Error fetching user from Users table:", error.message);
       return null;
     }
+    console.log(data)
+    const userUI = {...data, is_anonymous:user.is_anonymous}
 
-    return data;
+    return userUI;
   } catch (unexpectedError) {
     console.error("An unexpected error occurred:", unexpectedError);
     return null;
@@ -128,8 +129,7 @@ export const signInGuest = async () => {
     image:
       "https://res.cloudinary.com/dyogkyl2u/image/upload/v1732794420/n2bl5a1rtgnjhfjoc6ze.svg",
     username: "@guest",
-    auth_id: ""
-    // email:"guest@gmail.com"
+    auth_id: "",
   };
 
   try {
@@ -141,12 +141,12 @@ export const signInGuest = async () => {
     if (error) {
       console.error("Unable to sign in guest", error);
     }
-    console.log(data);
     const { user } = data;
-    guest.auth_id = user?.id
-    // trebam u Users da ga ubacim
-    console.log(guest)
-    await createTableUser(guest)
+    if (user) {
+      guest.auth_id = user.id;
+    }
+    console.log(guest);
+    await createTableUser(guest);
 
     return user;
   } catch (error) {
@@ -155,7 +155,7 @@ export const signInGuest = async () => {
 };
 
 const createTableUser = async (user: UserType) => {
-  console.log(user)
+  console.log(user);
   const { error: userError } = await supabase
     .from("Users")
     .insert(user)
@@ -167,3 +167,18 @@ const createTableUser = async (user: UserType) => {
   }
   showToast("Account created successfully!");
 };
+
+export const deleteUser = async (user: UserType) => {
+  console.log(user)
+try {
+  // izbrise iz tabele usera
+  // const response = await supabase.from("Users").delete().eq('id', user.id)
+  // console.log(response)
+
+  // izbrise iz autentikacije usera
+
+  // sign outuje usera
+} catch (error) {
+  console.error("Unexpected error occured", error)
+}
+}
