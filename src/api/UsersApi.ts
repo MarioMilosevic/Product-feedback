@@ -172,11 +172,19 @@ export const deleteUser = async (user: UserType) => {
   console.log(user)
 try {
   // izbrise iz tabele usera
-  // const response = await supabase.from("Users").delete().eq('id', user.id)
-  // console.log(response)
+  const response = await supabase.from("Users").delete().eq('id', user.id)
+  console.log(response)
 
   // izbrise iz autentikacije usera
-
+  if (user.auth_id) {
+    const { data, error } = await supabase.auth.admin.deleteUser(
+      user.auth_id
+    );
+    if (error) {
+      console.error("Unable to delete user", error)
+    } 
+    console.log(data)
+ }
   // sign outuje usera
 } catch (error) {
   console.error("Unexpected error occured", error)
