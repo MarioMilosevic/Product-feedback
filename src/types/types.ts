@@ -58,12 +58,13 @@ export type CommentType = {
 };
 
 export type UserType = {
-  created_at: string;
+  created_at?: string;
+  id?: number;
   fullName: string;
-  id: number;
   image: string;
   username: string;
-  auth_id: string;
+  auth_id?: string;
+  is_anonymous?: boolean;
 };
 
 export type CategoryType = {

@@ -5,21 +5,19 @@
       <Icon>
         <LeftArrow />
       </Icon>
-      <p>Home</p>
     </router-link>
     <slot name="form" />
     <div class="wrapper__links">
       <p>
         {{ haveAccount }} have an account ?
-        <router-link :to="{ name: link }" class="wrapper__links-link"> {{ link }} </router-link>
+        <router-link :to="{ name: link }" class="wrapper__links-link">
+          {{ link }}
+        </router-link>
       </p>
-        <p v-if="type==='Login'">
-          Or,
-          <span class="wrapper__links-link">
-            log in as
-            guest 
-          </span>
-        </p>
+      <p v-if="type === 'Login'">
+        Or,
+        <span class="wrapper__links-link" @click="signInAnonymously"> log in as guest </span>
+      </p>
     </div>
   </form>
 </template>
@@ -28,6 +26,9 @@
 import ActionButton from "src/components/UI/ActionButton.vue";
 import Icon from "src/components/UI/Icon.vue";
 import LeftArrow from "src/icons/LeftArrow.vue";
+import { signInGuest } from "src/api/UsersApi";
+import { mapActions, mapState } from "pinia";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
 
 export default {
   components: {
@@ -56,7 +57,17 @@ export default {
     },
   },
   mounted() {},
-  methods: {},
+  methods: {
+    ...mapActions(useFeedbackStore, ['setUser']),
+    async signInAnonymously() {
+      const guestUser = await signInGuest();
+      console.log("gost",guestUser)
+      // if (guestUser) {
+      //   this.setUser(guestUser)
+      // }
+      
+    },
+  },
 };
 </script>
 
@@ -101,11 +112,10 @@ export default {
       color: $terniary-color;
       text-decoration: none;
       cursor: pointer;
-    
+
       &:hover {
         color: $terniary-color-hover;
       }
-
     }
   }
 }

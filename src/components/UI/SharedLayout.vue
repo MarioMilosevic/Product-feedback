@@ -33,9 +33,13 @@ import { useFeedbackStore } from "src/stores/FeedbackStore";
 import ActionButton from "src/components/UI/ActionButton.vue";
 import { UserType } from "src/types/types";
 import { showToast } from "src/utils/toastify";
+import LeftArrow from "src/icons/LeftArrow.vue";
+import Icon from "./Icon.vue";
 export default {
   components: {
     ActionButton,
+    LeftArrow,
+    Icon
   },
   props: {
   },

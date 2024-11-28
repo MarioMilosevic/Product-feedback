@@ -5,11 +5,11 @@
         <template #email>
           <FormBlock>
             <Input
-            type="email"
-            name="email"
-            :content="loginCredentials.email"
-            placeholder="Email Address"
-            @update-input="updateEmail"
+              type="email"
+              name="email"
+              :content="loginCredentials.email"
+              placeholder="Email Address"
+              @update-input="updateEmail"
             />
             <template #error v-if="errors.email">
               {{ errors.email }}
@@ -19,11 +19,11 @@
         <template #password>
           <FormBlock>
             <Input
-            type="password"
-            name="password"
-            :content="loginCredentials.password"
-            placeholder="Password"
-            @update-input="updatePassword"
+              type="password"
+              name="password"
+              :content="loginCredentials.password"
+              placeholder="Password"
+              @update-input="updatePassword"
             />
             <template #error v-if="errors.password">
               {{ errors.password }}
@@ -69,12 +69,8 @@ export default {
       errors: {} as Record<string, string>,
     };
   },
-  computed: {
-    //
-  },
-  mounted() {
-    //
-  },
+  computed: {},
+  mounted() {},
   methods: {
     goToHomepage() {
       this.$router.push("/home");
@@ -88,17 +84,16 @@ export default {
     async localSignInUser() {
       try {
         const validation = loginFormSchema.safeParse(this.loginCredentials);
-        console.log(validation)
         if (validation.success) {
           const user = await signInUser(
             this.loginCredentials.email,
             this.loginCredentials.password
           );
+          console.log('user nakon logina', user)
           if (user) {
             this.$router.push("/home");
           }
         } else {
-          console.log('uslo')
           this.errors = validation.error.errors.reduce((acc, err) => {
             const key = err.path.length > 0 ? err.path[0] : "";
             acc[key] = err.message;

@@ -137,7 +137,6 @@ export default {
   computed: {},
   mounted() {},
   methods: {
-
     goToHomepage() {
       this.$router.push("/home");
     },
@@ -168,6 +167,7 @@ export default {
           this.$router.push("/login");
           this.$nextTick(() => {
             showToast("Account created successfully");
+            // console.log('ne radi')
           });
         } else {
           this.errors = validation.error.errors.reduce((acc, err) => {

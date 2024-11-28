@@ -1,4 +1,5 @@
 import supabase from "src/config/supabaseClient";
+import { UserType } from "src/types/types";
 import { showToast } from "src/utils/toastify";
 
 type UserFormType = {
@@ -10,7 +11,7 @@ type UserFormType = {
   image: string;
 };
 
-export const createNewUser = async (user: UserFormType) => {
+export const createNewUser = async (user: UserFormType, signOut = true) => {
   try {
     const { email, password, fullName, username, image } = user;
     const { data, error } = await supabase.auth.signUp({
@@ -30,8 +31,9 @@ export const createNewUser = async (user: UserFormType) => {
       console.error("Error occurred when signing up", error);
       return;
     }
-
-    signOutUser();
+    if (signOut) {
+      signOutUser();
+    }
 
     if (data?.user) {
       const {
@@ -40,23 +42,14 @@ export const createNewUser = async (user: UserFormType) => {
       } = data.user;
 
       const userForTable = {
+       
         fullName,
         username,
         image,
         auth_id: id,
       };
 
-      const { error: userError } = await supabase
-        .from("Users")
-        .insert(userForTable)
-        .select();
-
-      if (userError) {
-        console.error("Unable to add new user", userError);
-        return;
-      } else {
-        showToast("Account created successfully!");
-      }
+      await createTableUser(userForTable)
     } else {
       console.error("Sign-up was successful but user data is null");
     }
@@ -65,7 +58,6 @@ export const createNewUser = async (user: UserFormType) => {
     console.error(error);
   }
 };
-
 
 export const signInUser = async (email: string, password: string) => {
   try {
@@ -79,6 +71,7 @@ export const signInUser = async (email: string, password: string) => {
       return;
     }
     const { user } = data;
+    console.log("login", user);
     return user;
   } catch (error) {
     console.error("Unexpected error occured", error);
@@ -103,10 +96,11 @@ export const retrieveUser = async () => {
     if (authError) {
       return {};
     }
+    console.log(authData);
 
     const user = authData?.user;
-    if (!user || !user.email) {
-      console.error("Authenticated user or email is missing");
+    if (!user.id) {
+      console.error("Authenticated user id is missing");
       return null;
     }
 
@@ -126,4 +120,50 @@ export const retrieveUser = async () => {
     console.error("An unexpected error occurred:", unexpectedError);
     return null;
   }
+};
+
+export const signInGuest = async () => {
+  const guest = {
+    fullName: "Guest",
+    image:
+      "https://res.cloudinary.com/dyogkyl2u/image/upload/v1732794420/n2bl5a1rtgnjhfjoc6ze.svg",
+    username: "@guest",
+    auth_id: ""
+    // email:"guest@gmail.com"
+  };
+
+  try {
+    const { data, error } = await supabase.auth.signInAnonymously({
+      options: {
+        data: guest,
+      },
+    });
+    if (error) {
+      console.error("Unable to sign in guest", error);
+    }
+    console.log(data);
+    const { user } = data;
+    guest.auth_id = user?.id
+    // trebam u Users da ga ubacim
+    console.log(guest)
+    await createTableUser(guest)
+
+    return user;
+  } catch (error) {
+    console.error("Unexpected error occured", error);
+  }
+};
+
+const createTableUser = async (user: UserType) => {
+  console.log(user)
+  const { error: userError } = await supabase
+    .from("Users")
+    .insert(user)
+    .select();
+
+  if (userError) {
+    console.error("Unable to add new user", userError);
+    return;
+  }
+  showToast("Account created successfully!");
 };
