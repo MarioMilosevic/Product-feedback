@@ -25,7 +25,7 @@
       />
       <div class="wrapper__addComment-div">
         <p>{{ remainingCharacters }} characters left</p>
-        <ActionButton color="purple" size="big"> Post Comment </ActionButton>
+        <ActionButton color="purple" size="big" @click="postComment"> Post Comment </ActionButton>
       </div>
     </div>
   </div>
@@ -53,10 +53,10 @@ import LeftArrow from "src/icons/LeftArrow.vue";
 import { showToast } from "src/utils/toastify";
 import { mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
+import { addComment } from "src/api/CommentsApi";
 
 export default {
   async created() {
-    this.isLoading = true;
     const data = await fetchSingleFeedback(this.feedbackId);
     if (data) {
       this.singleFeedback = { ...data };
@@ -79,12 +79,11 @@ export default {
       isModalOpen: false,
       textAreaContent: "",
       maxCharacters: 225,
-      isLoading: false,
+      isLoading: true,
     };
   },
   computed: {
     ...mapState(useFeedbackStore, ["getUser"]),
-
     feedbackId() {
       return Number(this.$route.params.id);
     },
@@ -121,8 +120,24 @@ export default {
         showToast("Something went wrong, please try again", "error");
       }
     },
+
+    async postComment() {
+      await addComment(this.singleFeedback.id)
+    }
+
   },
-  mounted() {},
+  mounted() {
+  },
+watch: {
+  singleFeedback: {
+    handler(newFeedback) {
+      console.log("Updated singleFeedback:", newFeedback);
+    },
+    deep: true, // Ensures the watch triggers for nested changes
+    immediate: false // Avoids triggering the watch on component creation
+  }
+}
+
 };
 </script>
 

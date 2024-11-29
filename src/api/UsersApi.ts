@@ -69,7 +69,6 @@ export const signInUser = async (email: string, password: string) => {
       return;
     }
     const { user } = data;
-    console.log("login", user);
     return user;
   } catch (error) {
     console.error("Unexpected error occured", error);
@@ -94,8 +93,6 @@ export const retrieveUser = async () => {
     if (authError) {
       return {};
     }
-    console.log(authData);
-
     const user = authData?.user;
     if (!user.id) {
       console.error("Authenticated user id is missing");
@@ -112,7 +109,6 @@ export const retrieveUser = async () => {
       console.error("Error fetching user from Users table:", error.message);
       return null;
     }
-    console.log(data);
     const userUI = { ...data, is_anonymous: user.is_anonymous };
 
     return userUI;
@@ -153,7 +149,6 @@ export const signInGuest = async () => {
 };
 
 const createTableUser = async (user: UserType) => {
-  console.log(user);
   const { error: userError } = await supabase
     .from("Users")
     .insert(user)

@@ -121,6 +121,7 @@ export const fetchSingleFeedback = async (id: number) => {
 
 export const addFeedback = async (feedback: FeedbackType) => {
   try {
+    const feedbackStore = useFeedbackStore();
     const [categoryData, statusData] = await Promise.all([
       fetchSingleCategory(feedback.category.name),
       fetchSingleStatusOption(feedback.status.name),
@@ -130,6 +131,7 @@ export const addFeedback = async (feedback: FeedbackType) => {
       ...feedback,
       category: categoryData.id,
       status: statusData.id,
+      userId: feedbackStore.getUser.auth_id,
     };
 
     const { data, error } = await supabase
@@ -156,7 +158,7 @@ export const deleteFeedback = async (id: number) => {
     const response = await supabase
       .from("Comments")
       .delete()
-      .eq("feedbackId", id)
+      .eq("feedbackId", id);
 
     if (response.status !== 204) {
       console.error("Unable to delete comment");
