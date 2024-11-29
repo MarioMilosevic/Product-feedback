@@ -16,7 +16,6 @@ export default {
     hasSharedLayout() {
       return !this.$route.meta.isCredentialsForm;
     },
-  
   },
 };
 </script>

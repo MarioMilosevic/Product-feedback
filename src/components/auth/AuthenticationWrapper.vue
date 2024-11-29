@@ -60,12 +60,10 @@ export default {
   methods: {
     ...mapActions(useFeedbackStore, ['setUser']),
     async signInAnonymously() {
-      const guestUser = await signInGuest();
-      console.log("gost",guestUser)
-      // if (guestUser) {
-      //   this.setUser(guestUser)
-      // }
-      
+      const guestUser = await signInGuest()
+      if (guestUser) {
+        this.$router.push('/home')
+      }
     },
   },
 };

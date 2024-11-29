@@ -1,6 +1,7 @@
 import supabase from "src/config/supabaseClient";
 import { UserType } from "src/types/types";
 import { showToast } from "src/utils/toastify";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
 
 type UserFormType = {
   fullName: string;
@@ -25,21 +26,19 @@ export const createNewUser = async (user: UserFormType) => {
         },
       },
     });
-    
+
     if (error) {
       showToast("Error occurred when signing up", "error");
       console.error("Error occurred when signing up", error);
       return;
     }
     signOutUser();
-    
 
     if (data?.user) {
       const {
         id,
         user_metadata: { fullName, image, username },
       } = data.user;
-
 
       const userForTable = {
         fullName,
@@ -113,8 +112,8 @@ export const retrieveUser = async () => {
       console.error("Error fetching user from Users table:", error.message);
       return null;
     }
-    console.log(data)
-    const userUI = {...data, is_anonymous:user.is_anonymous}
+    console.log(data);
+    const userUI = { ...data, is_anonymous: user.is_anonymous };
 
     return userUI;
   } catch (unexpectedError) {
@@ -145,7 +144,6 @@ export const signInGuest = async () => {
     if (user) {
       guest.auth_id = user.id;
     }
-    console.log(guest);
     await createTableUser(guest);
 
     return user;
@@ -169,24 +167,19 @@ const createTableUser = async (user: UserType) => {
 };
 
 export const deleteUser = async (user: UserType) => {
-  console.log(user)
-try {
-  // izbrise iz tabele usera
-  const response = await supabase.from("Users").delete().eq('id', user.id)
-  console.log(response)
-
-  // izbrise iz autentikacije usera
-  if (user.auth_id) {
-    const { data, error } = await supabase.auth.admin.deleteUser(
-      user.auth_id
-    );
-    if (error) {
-      console.error("Unable to delete user", error)
-    } 
-    console.log(data)
- }
-  // sign outuje usera
-} catch (error) {
-  console.error("Unexpected error occured", error)
-}
-}
+  try {
+    const store = useFeedbackStore();
+    signOutUser();
+    await supabase.from("Users").delete().eq("id", user.id);
+    if (user.auth_id) {
+      const { error } = await supabase.auth.admin.deleteUser(user.auth_id);
+      if (error) {
+        console.error("Unable to delete user", error);
+      }
+    }
+    showToast("Guest signed out");
+    store.setUser({} as UserType);
+  } catch (error) {
+    console.error("Unexpected error occured", error);
+  }
+};

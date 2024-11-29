@@ -5,7 +5,7 @@ import Home from "src/pages/Home.vue";
 import Login from "src/pages/Login.vue";
 import SignUp from "src/pages/SignUp.vue";
 
-const routes = [
+export const routes = [
   {
     path: "/",
     redirect: "/home",

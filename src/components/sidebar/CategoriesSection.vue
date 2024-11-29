@@ -21,7 +21,6 @@ export default {
   components: {
     Category,
   },
-  props: {},
   data() {
     return {
       categoryIndex: 0,
@@ -48,9 +47,6 @@ export default {
         this.setFeedbacks(data);
       }
     },
-  },
-  mounted() {
-    //
   },
 };
 </script>

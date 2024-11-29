@@ -10,12 +10,6 @@ export default {
     CategoriesSection,
     RoadmapSection,
   },
-  computed: {
-    //
-  },
-  mounted() {
-    //
-  },
 };
 </script>
 

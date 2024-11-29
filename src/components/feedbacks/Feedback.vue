@@ -47,7 +47,6 @@ import Icon from "src/components/UI/Icon.vue";
 import Category from "src/components/UI/Category.vue";
 import Caret from "src/icons/Caret.vue";
 import Chat from "src/icons/Chat.vue";
-
 import Edit from "src/icons/Edit.vue";
 import Delete from "src/icons/Delete.vue";
 
@@ -82,10 +81,6 @@ export default {
     commentsCount() {
       return this.feedback.Comments?.[0]?.count || 0;
     },
-  },
-  methods: {},
-  mounted() {
-    //
   },
 };
 </script>

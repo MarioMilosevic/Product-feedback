@@ -13,6 +13,9 @@ import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
 import { getData } from "src/api/FeedbacksApi";
 
 export default {
+//  async fetchData() {
+//   await getData()
+//   },
   components: {
     Sidebar,
     Main,
