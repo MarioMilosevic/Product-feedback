@@ -1,11 +1,6 @@
 <template>
   <nav class="nav">
-    <ActionButton color="grey" size="medium" @click="goBack" v-if="backButton">
-      <Icon>
-        <LeftArrow />
-      </Icon>
-      <span>Go Back</span>
-    </ActionButton>
+    <HomepageLink v-if="backButton" position=""/>
     <template v-if="getUser.id">
       <figure class="nav__figure">
         <img :src="getUser.image" :alt="getUser.image" />
@@ -35,12 +30,14 @@ import { UserType } from "src/types/types";
 import { showToast } from "src/utils/toastify";
 import { deleteUser } from "src/api/UsersApi";
 import LeftArrow from "src/icons/LeftArrow.vue";
-import Icon from "./Icon.vue";
+import Icon from "src/components/UI/Icon.vue";
+import HomepageLink from "src/components/UI/HomepageLink.vue";
 export default {
   components: {
     ActionButton,
     LeftArrow,
     Icon,
+    HomepageLink,
   },
   props: {},
   data() {
@@ -76,10 +73,9 @@ export default {
         console.log("treba da izbrise");
         await deleteUser(this.getUser);
       } else {
-        console.log("treba da izloguje");
-        // await signOutUser();
-        // this.setUser({} as UserType);
-        // showToast("User signed out");
+        await signOutUser();
+        this.setUser({} as UserType);
+        showToast("User signed out");
       }
     },
   },

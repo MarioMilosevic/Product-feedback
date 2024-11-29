@@ -1,11 +1,8 @@
 <template>
   <form class="wrapper">
     <h1>{{ title }} Form</h1>
-    <router-link :to="{ name: 'Home' }" class="wrapper__back">
-      <Icon>
-        <LeftArrow />
-      </Icon>
-    </router-link>
+    <HomepageLink position="absolute"/>
+ 
     <slot name="form" />
     <div class="wrapper__links">
       <p>
@@ -16,7 +13,9 @@
       </p>
       <p v-if="type === 'Login'">
         Or,
-        <span class="wrapper__links-link" @click="signInAnonymously"> log in as guest </span>
+        <span class="wrapper__links-link" @click="signInAnonymously">
+          log in as guest
+        </span>
       </p>
     </div>
   </form>
@@ -25,16 +24,18 @@
 <script lang="ts">
 import ActionButton from "src/components/UI/ActionButton.vue";
 import Icon from "src/components/UI/Icon.vue";
-import LeftArrow from "src/icons/LeftArrow.vue";
 import { signInGuest } from "src/api/UsersApi";
 import { mapActions } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
+import ArrowDown from "src/icons/ArrowDown.vue";
+import HomepageLink from "src/components/UI/HomepageLink.vue";
 
 export default {
   components: {
     ActionButton,
     Icon,
-    LeftArrow,
+    ArrowDown,
+    HomepageLink
   },
   props: {
     type: {
@@ -58,11 +59,11 @@ export default {
   },
   mounted() {},
   methods: {
-    ...mapActions(useFeedbackStore, ['setUser']),
+    ...mapActions(useFeedbackStore, ["setUser"]),
     async signInAnonymously() {
-      const guestUser = await signInGuest()
+      const guestUser = await signInGuest();
       if (guestUser) {
-        this.$router.push('/home')
+        this.$router.push("/home");
       }
     },
   },
@@ -82,23 +83,6 @@ export default {
   gap: 2rem;
   background-color: $primary-color-hover;
   position: relative;
-
-  &__back {
-    color: inherit;
-    cursor: pointer;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    position: absolute;
-    top: 8%;
-    left: 5%;
-
-    &:hover {
-      text-decoration: underline;
-      text-underline-offset: 0.2rem;
-    }
-  }
 
   &__links {
     display: flex;
