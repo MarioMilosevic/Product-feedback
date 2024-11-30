@@ -51,7 +51,7 @@ export default {
   },
   async created() {
     const user = await retrieveUser();
-    console.log(user);
+    console.log("trenutni user",user);
     if (user.id) {
       this.setUser(user);
     }

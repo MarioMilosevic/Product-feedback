@@ -1,5 +1,11 @@
 import { defineStore } from "pinia";
-import { FeedbackType, CategoryType, StatusType, UserType } from "src/types/types";
+import {
+  FeedbackType,
+  CategoryType,
+  StatusType,
+  UserType,
+  CommentType,
+} from "src/types/types";
 
 export const useFeedbackStore = defineStore("feedbacksStore", {
   state: () => {
@@ -9,7 +15,7 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       statusOptions: [] as StatusType[],
       filterId: 0,
       sort: "Most Likes",
-      user:{} as UserType
+      user: {} as UserType,
     };
   },
   getters: {
@@ -49,8 +55,8 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       return state.filterId;
     },
     getUser: (state) => {
-      return state.user
-    }
+      return state.user;
+    },
   },
   actions: {
     setFeedbacks(feedbacks: FeedbackType[]) {
@@ -67,6 +73,15 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
         f.id === feedback.id ? { ...f, ...feedback } : f
       );
     },
+    // addCommentToFeedback(feedbackId: number, comment: CommentType) {
+    //   // console.log(feedbackId);
+    //   // console.log(comment);
+    //   // const currentFeedback = this.feedbacks.find(
+    //   //   (feedback) => feedback.id === feedbackId
+    //   // );
+    //   // currentFeedback.Comments.push(comment)
+
+    // },
     setCategories(categories: CategoryType[]) {
       this.categories = categories;
     },
@@ -79,8 +94,8 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     setFilterId(value: number) {
       this.filterId = value;
     },
-    setUser(newUser:UserType) {
-      this.user = newUser
-    }
+    setUser(newUser: UserType) {
+      this.user = newUser;
+    },
   },
 });

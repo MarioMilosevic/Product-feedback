@@ -26,9 +26,6 @@ export default {
       return this.position;
     },
   },
-  mounted() {
-    console.log(this.position);
-  },
 };
 </script>
 

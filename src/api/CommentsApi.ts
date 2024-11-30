@@ -1,23 +1,19 @@
 import supabase from "src/config/supabaseClient";
+import { CommentType } from "src/types/types";
 
-export const addComment = async (id: number) => {
-    console.log(id)
-    try {
-        const { data, error } = await supabase
-        .from("Users")
-        
-    } catch (error) {
-        console.error('Unexpected error occured', error)
+export const addComment = async (comment: CommentType) => {
+  console.log(comment);
+  try {
+    const { data, error } = await supabase
+      .from("Comments")
+      .insert(comment)
+      .select()
+      .single();
+    if (error) {
+      console.error("Unable to add new comment", comment);
     }
-    /* treba da fecam korisnika da bih dobio auth id 
-    IMAM VEC AUTH_ID
-    i onda da ubacim novi komentar koji ima polja
-    id
-    created at
-    content
-    feedbackId
-    userId
-    auth_id
-    */
-
-}
+    return data;
+  } catch (error) {
+    console.error("Unexpected error occured", error);
+  }
+};

@@ -25,7 +25,9 @@
       />
       <div class="wrapper__addComment-div">
         <p>{{ remainingCharacters }} characters left</p>
-        <ActionButton color="purple" size="big" @click="postComment"> Post Comment </ActionButton>
+        <ActionButton color="purple" size="big" @click="postComment">
+          Post Comment
+        </ActionButton>
       </div>
     </div>
   </div>
@@ -51,7 +53,7 @@ import ModalForm from "src/components/UI/ModalForm.vue";
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
 import LeftArrow from "src/icons/LeftArrow.vue";
 import { showToast } from "src/utils/toastify";
-import { mapState } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { addComment } from "src/api/CommentsApi";
 
@@ -59,6 +61,7 @@ export default {
   async created() {
     const data = await fetchSingleFeedback(this.feedbackId);
     if (data) {
+      console.log(data);
       this.singleFeedback = { ...data };
       this.isLoading = false;
     }
@@ -83,7 +86,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useFeedbackStore, ["getUser"]),
+    ...mapState(useFeedbackStore, ["getUser", "getFeedback"]),
     feedbackId() {
       return Number(this.$route.params.id);
     },
@@ -95,6 +98,7 @@ export default {
     },
   },
   methods: {
+    // ...mapActions(useFeedbackStore, ['addCommentToFeedback']),
     editFeedback() {
       this.isModalOpen = true;
     },
@@ -107,12 +111,12 @@ export default {
     updateFeedback(newFeedback: SingleFeedbackType) {
       this.singleFeedback = newFeedback;
     },
-   
+
     async deleteHandler(id: number) {
       const data = await deleteFeedback(id);
       if (data.id) {
         this.$emit("close-modal");
-      this.$router.push("/home");
+        this.$router.push("/home");
         this.$nextTick(() => {
           showToast("Deleted feedback successfully");
         });
@@ -122,22 +126,34 @@ export default {
     },
 
     async postComment() {
-      await addComment(this.singleFeedback.id)
-    }
-
-  },
-  mounted() {
-  },
-watch: {
-  singleFeedback: {
-    handler(newFeedback) {
-      console.log("Updated singleFeedback:", newFeedback);
+      const newComment = {
+        content: this.textAreaContent,
+        feedbackId: this.singleFeedback.id,
+        auth_id: this.singleFeedback.userId,
+        userId: this.getUser.id,
+      };
+      const data = await addComment(newComment);
+      data.Users = {
+        auth_id: this.getUser.auth_id,
+        fullName: this.getUser.fullName,
+        id: this.getUser.id,
+        image: this.getUser.image,
+        username: this.getUser.username,
+      };
+      this.singleFeedback.Comments.push(data);
+      this.textAreaContent = "";
     },
-    deep: true, // Ensures the watch triggers for nested changes
-    immediate: false // Avoids triggering the watch on component creation
-  }
-}
-
+  },
+  mounted() {},
+  watch: {
+    singleFeedback: {
+      handler(newFeedback) {
+        console.log("Updated singleFeedback:", newFeedback);
+      },
+      deep: true, // Ensures the watch triggers for nested changes
+      immediate: false, // Avoids triggering the watch on component creation
+    },
+  },
 };
 </script>
 

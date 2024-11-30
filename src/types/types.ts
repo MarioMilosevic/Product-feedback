@@ -27,7 +27,8 @@ export type FeedbackType = {
     name: string;
   };
   title: string;
-  Comments?: CommentType[];
+  Comments: {count:number};
+  // Comments?: CommentType[];
   userId?: string;
 };
 
@@ -47,14 +48,24 @@ export type SingleFeedbackType = {
   userId: string;
 };
 
+
 export type CommentType = {
+  id?: number;
+  created_at?: string;
   content: string;
-  created_at: string;
   feedbackId: number;
-  id: number;
-  userId: number;
-  Users: UserType;
+  userId: number | undefined;
+  auth_id: string;
   count?: number;
+  // Users: {
+  //   auth_id: string;
+  //   created_at?: string;
+  //   fullName: string;
+  //   id?: number;
+  //   image: string;
+  //   username: string;
+  // };
+  Users?: UserType;
 };
 
 export type UserType = {
