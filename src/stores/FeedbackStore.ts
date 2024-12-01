@@ -15,6 +15,7 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       filterId: 0,
       sort: "Most Likes",
       user: {} as UserType,
+      loading: false,
     };
   },
   getters: {
@@ -56,6 +57,9 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     getUser: (state) => {
       return state.user;
     },
+    getLoading: (state) => {
+      return state.loading;
+    },
   },
   actions: {
     setFeedbacks(feedbacks: FeedbackType[]) {
@@ -86,6 +90,9 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     },
     setUser(newUser: UserType) {
       this.user = newUser;
+    },
+    setLoading(value: boolean) {
+      this.loading = value;
     },
   },
 });

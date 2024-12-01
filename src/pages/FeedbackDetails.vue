@@ -1,5 +1,5 @@
 <template>
-  <LoadingSpinner v-if="isLoading" />
+  <LoadingSpinner v-if="getLoading" />
   <div v-else class="wrapper">
     <Feedback
       :isEditing="singleFeedback.userId === getUser.auth_id"
@@ -55,16 +55,17 @@ import ModalForm from "src/components/UI/ModalForm.vue";
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
 import LeftArrow from "src/icons/LeftArrow.vue";
 import { showToast } from "src/utils/toastify";
-import { mapState } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { addComment } from "src/api/CommentsApi";
 
 export default {
   async created() {
+    this.setLoading(true)
     const data = await fetchSingleFeedback(this.feedbackId);
     if (data) {
       this.singleFeedback = { ...data };
-      this.isLoading = false;
+      this.setLoading(false)
     }
   },
   components: {
@@ -83,11 +84,10 @@ export default {
       isModalOpen: false,
       textAreaContent: "",
       maxCharacters: 225,
-      isLoading: true,
     };
   },
   computed: {
-    ...mapState(useFeedbackStore, ["getUser", "getFeedback"]),
+    ...mapState(useFeedbackStore, ["getUser", "getFeedback", 'getLoading']),
     feedbackId() {
       return Number(this.$route.params.id);
     },
@@ -99,6 +99,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(useFeedbackStore, ['setLoading']),
     editFeedback() {
       this.isModalOpen = true;
     },

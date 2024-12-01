@@ -1,6 +1,6 @@
 <template>
-  <nav class="nav">
-    <HomepageLink v-if="backButton" position="" />
+  <nav class="nav" v-if="getLoading === false">
+    <HomepageLink v-if="backButton" />
     <template v-if="getUser.id">
       <figure class="nav__figure">
         <img :src="getUser.image" :alt="getUser.image" />
@@ -44,7 +44,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(useFeedbackStore, ["getUser"]),
+    ...mapState(useFeedbackStore, ["getUser", 'getLoading']),
     backButton() {
       return this.$route.meta.backAllowed;
     },
@@ -58,7 +58,7 @@ export default {
   },
   mounted() {},
   methods: {
-    ...mapActions(useFeedbackStore, ["setUser"]),
+    ...mapActions(useFeedbackStore, ["setUser", 'setLoading']),
     goBack() {
       this.$router.push("/home");
     },

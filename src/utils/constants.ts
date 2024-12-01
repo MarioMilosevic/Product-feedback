@@ -6,7 +6,7 @@ export const emptyFeedback = {
   description: "",
   likes: 0,
   status: {
-    name: "Suggestion",
+    name: "Planned",
   },
   title: "",
 };

@@ -1,5 +1,5 @@
 <template>
-  <LoadingSpinner v-if="isLoading" />
+  <LoadingSpinner v-if="getLoading" />
   <template v-else>
     <Sidebar />
     <Main />
@@ -11,6 +11,8 @@ import Sidebar from "src/components/sidebar/Sidebar.vue";
 import Main from "src/components/UI/Main.vue";
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
 import { getData } from "src/api/FeedbacksApi";
+import { mapActions, mapState } from "pinia";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
 
 export default {
   components: {
@@ -18,14 +20,16 @@ export default {
     Main,
     LoadingSpinner,
   },
-  data() {
-    return {
-      isLoading: true,
-    };
-  },
   async created() {
+    this.setLoading(true)
     await getData();
-    this.isLoading = false;
+    this.setLoading(false)
   },
+  computed: {
+    ...mapState(useFeedbackStore, ['getLoading'])
+  },
+  methods: {
+    ...mapActions(useFeedbackStore, ['setLoading'])
+  }
 };
 </script>
