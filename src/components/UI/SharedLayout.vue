@@ -32,16 +32,13 @@ import { deleteUser } from "src/api/UsersApi";
 import LeftArrow from "src/icons/LeftArrow.vue";
 import Icon from "src/components/UI/Icon.vue";
 import HomepageLink from "src/components/UI/HomepageLink.vue";
+
 export default {
   components: {
     ActionButton,
     LeftArrow,
     Icon,
     HomepageLink,
-  },
-  props: {},
-  data() {
-    return {};
   },
   computed: {
     ...mapState(useFeedbackStore, ["getUser", 'getLoading']),
@@ -56,7 +53,6 @@ export default {
       this.setUser(user);
     }
   },
-  mounted() {},
   methods: {
     ...mapActions(useFeedbackStore, ["setUser", 'setLoading']),
     goBack() {

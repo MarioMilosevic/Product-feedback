@@ -32,20 +32,7 @@ export default {
     ActionButton,
     Inspector,
   },
-  props: {},
   emits: ["open-modal"],
-  data() {
-    return {};
-  },
-  computed: {
-    //
-  },
-  mounted() {
-    //
-  },
-  methods: {
-    //
-  },
 };
 </script>
 

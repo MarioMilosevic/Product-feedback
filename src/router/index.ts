@@ -19,25 +19,26 @@ export const routes = [
     path: "/details/:id",
     name: "FeedbackDetails",
     component: FeedbackDetails,
-    meta:{backAllowed:true}
+    meta: { backAllowed: true },
   },
   {
     path: "/login",
     name: "Login",
     component: Login,
-    meta: {isCredentialsForm:true}
+    meta: { isCredentialsForm: true },
   },
   {
     path: "/sign-up",
     name: "Sign up",
     component: SignUp,
-    meta: {isCredentialsForm:true}
+    meta: { isCredentialsForm: true },
   },
 
   {
     path: "/:catchAll(.*)",
     name: "NotFound",
     component: NotFound,
+    meta: { isCredentialsForm: true },
   },
 ];
 

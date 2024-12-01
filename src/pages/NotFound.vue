@@ -1,4 +1,27 @@
 <template>
-    <h2>404</h2>
-    <h3>Page not found</h3>
+  <h3>The page you requested couldn't be found</h3>
+  <ActionButton color="purple" size="big" class="button" @click="goBack"
+    >Go Back</ActionButton
+  >
 </template>
+<script lang="ts">
+import ActionButton from "src/components/UI/ActionButton.vue";
+
+export default {
+  components: {
+    ActionButton,
+  },
+  methods: {
+    goBack() {
+      this.$router.push("/home");
+    },
+  },
+};
+</script>
+
+<style scoped lang="scss">
+h3 {
+  grid-area: 1/1/3/4;
+  align-self: center;
+}
+</style>

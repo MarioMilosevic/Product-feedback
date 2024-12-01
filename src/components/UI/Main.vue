@@ -44,9 +44,6 @@ export default {
       this.isModalOpen = true;
     },
   },
-  mounted() {
-    //
-  },
 };
 </script>
 
