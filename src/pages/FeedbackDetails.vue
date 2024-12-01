@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { SingleFeedbackType } from "src/utils/types";
+import { CommentType, SingleFeedbackType } from "src/utils/types";
 import { fetchSingleFeedback, deleteFeedback } from "src/api/FeedbacksApi";
 import Feedback from "src/components/feedbacks/Feedback.vue";
 import Comment from "src/components/UI/Comment.vue";
@@ -63,7 +63,6 @@ export default {
   async created() {
     const data = await fetchSingleFeedback(this.feedbackId);
     if (data) {
-      console.log(data);
       this.singleFeedback = { ...data };
       this.isLoading = false;
     }
@@ -133,7 +132,7 @@ export default {
         auth_id: this.singleFeedback.userId,
         userId: this.getUser.id,
       };
-      const data = await addComment(newComment);
+      const data = await addComment(newComment as CommentType);
       data.Users = {
         auth_id: this.getUser.auth_id,
         fullName: this.getUser.fullName,

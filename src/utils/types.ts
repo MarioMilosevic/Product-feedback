@@ -27,8 +27,7 @@ export type FeedbackType = {
     name: string;
   };
   title: string;
-  Comments: {count:number};
-  // Comments?: CommentType[];
+  Comments: {count:number}[];
   userId?: string;
 };
 
@@ -57,15 +56,14 @@ export type CommentType = {
   userId: number | undefined;
   auth_id: string;
   count?: number;
-  // Users: {
-  //   auth_id: string;
-  //   created_at?: string;
-  //   fullName: string;
-  //   id?: number;
-  //   image: string;
-  //   username: string;
-  // };
-  Users?: UserType;
+  Users: {
+    auth_id: string;
+    created_at?: string;
+    fullName: string;
+    id?: number;
+    image: string;
+    username: string;
+  };
 };
 
 export type UserType = {

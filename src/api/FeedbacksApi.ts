@@ -1,5 +1,5 @@
 import supabase from "src/config/supabaseClient";
-import { FeedbackType } from "src/utils/types";
+import { FeedbackType, SingleFeedbackType } from "src/utils/types";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { fetchSingleStatusOption, fetchStatusOptions } from "src/api/StatusApi";
 import { fetchCategories, fetchSingleCategory } from "src/api/CategoriesApi";
@@ -120,6 +120,7 @@ export const fetchSingleFeedback = async (id: number) => {
 };
 
 export const addFeedback = async (feedback: FeedbackType) => {
+  console.log("novi feedback",feedback)
   try {
     const feedbackStore = useFeedbackStore();
     const [categoryData, statusData] = await Promise.all([
@@ -181,7 +182,7 @@ export const deleteFeedback = async (id: number) => {
   }
 };
 
-export const editFeedback = async (feedback: FeedbackType) => {
+export const editFeedback = async (feedback: SingleFeedbackType) => {
   try {
     const [categoryData, statusData] = await Promise.all([
       fetchSingleCategory(feedback.category.name),

@@ -143,7 +143,7 @@ import Label from "src/components/form/Label.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
 import Input from "src/components/form/Input.vue";
 import { modalFormSchema } from "src/validation/modalFormSchema";
-import { FeedbackType } from "src/utils/types";
+import { FeedbackType, SingleFeedbackType } from "src/utils/types";
 import { PropType } from "vue";
 import { emptyFeedback } from "src/utils/constants";
 import {
@@ -178,7 +178,7 @@ export default {
       required: true,
     },
     feedback: {
-      type: Object as PropType<FeedbackType>,
+      type: Object as PropType<FeedbackType | SingleFeedbackType>,
       default: null,
     },
   },
@@ -207,7 +207,6 @@ export default {
       return this.feedback ? this.submitEditFeedback : this.submitNewFeedback;
     },
   },
-  mounted() {},
   methods: {
     ...mapActions(useFeedbackStore, [
       "addFeedbackToStore",
@@ -233,7 +232,7 @@ export default {
       const validation = modalFormSchema.safeParse(this.singleFeedback);
       if (validation.success) {
         try {
-          const data = await addFeedback(this.singleFeedback);
+          const data = await addFeedback(this.singleFeedback as FeedbackType);
           if (data && data.id) {
             this.$emit("close-modal");
             this.addFeedbackToStore(data);
@@ -253,6 +252,7 @@ export default {
       }
     },
     async deleteHandler(id: number) {
+      if (!this.feedback || !this.feedback.id) return;
       const data = await deleteFeedback(id);
       if (data.id) {
         showToast("Deleted feedback successfully");
@@ -266,7 +266,7 @@ export default {
     },
     async submitEditFeedback() {
       if (this.feedback.id) {
-        const data = await editFeedback(this.singleFeedback);
+        const data = await editFeedback(this.singleFeedback as SingleFeedbackType);
         this.singleFeedback = data;
         this.$emit("update-feedback", data);
         this.$emit("close-modal");

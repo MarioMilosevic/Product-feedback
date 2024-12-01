@@ -35,9 +35,11 @@ export default {
   },
   methods: {
     reply() {
-      console.log(this.comment.Users?.username);
       this.$emit("reply-event", this.comment.Users?.username);
     },
+  },
+  mounted() {
+    console.log(this.comment)
   },
 };
 </script>

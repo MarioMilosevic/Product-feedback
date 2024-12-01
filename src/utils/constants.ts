@@ -1,4 +1,5 @@
 export const emptyFeedback = {
+  id: undefined,
   category: {
     name: "",
   },
