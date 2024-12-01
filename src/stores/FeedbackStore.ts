@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { notLoggedInUser } from "src/utils/constants";
 import {
   FeedbackType,
   CategoryType,
@@ -14,7 +15,18 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       statusOptions: [] as StatusType[],
       filterId: 0,
       sort: "Most Likes",
-      user: { is_anonymous: true } as UserType,
+      user: notLoggedInUser as UserType,
+    //   user: {
+    //     is_anonymous: true
+    // //     created_at?: string;
+    // // id?: number;
+    // // fullName: string;
+    // // image: string;
+    // // username: string;
+    // // auth_id?: string;
+    // // is_anonymous?: boolean;
+
+    //    } as UserType,
       loading: false,
     };
   },
@@ -89,10 +101,7 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       this.filterId = value;
     },
     setUser(newUser: UserType) {
-      this.user =  newUser;
-    },
-    logOutUser() {
-      this.user = { is_anonymous: true } as UserType;
+      this.user = newUser;
     },
     setLoading(value: boolean) {
       this.loading = value;

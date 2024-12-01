@@ -11,6 +11,20 @@ export const emptyFeedback = {
   title: "",
 };
 
+export const notLoggedInUser = {
+  image: "",
+  username: "",
+  is_anonymous: true,
+  
+  //     created_at?: string;
+  // id?: number;
+  // fullName: string;
+  // image: string;
+  // username: string;
+  // auth_id?: string;
+  // is_anonymous?: boolean;
+};
+
 export const navSortOptions = [
   "Most Likes",
   "Least Likes",

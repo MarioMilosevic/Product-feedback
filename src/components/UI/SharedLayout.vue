@@ -31,6 +31,8 @@ import { deleteUser } from "src/api/UsersApi";
 import LeftArrow from "src/icons/LeftArrow.vue";
 import Icon from "src/components/UI/Icon.vue";
 import HomepageLink from "src/components/UI/HomepageLink.vue";
+import { UserType } from "src/utils/types";
+import { notLoggedInUser } from "src/utils/constants";
 
 export default {
   components: {
@@ -47,13 +49,13 @@ export default {
   },
   async created() {
     const user = await retrieveUser();
-    console.log("trenutni user na stvaranju", user);
+    console.log("trenutni user na stvaranju prije setUser", user);
     if (user.id) {
       this.setUser(user);
     }
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setUser", "setLoading", "logOutUser"]),
+    ...mapActions(useFeedbackStore, ["setUser", "setLoading"]),
     goBack() {
       this.$router.push("/home");
     },
@@ -68,9 +70,9 @@ export default {
         await deleteUser(this.getUser);
       } else {
         await signOutUser();
-        this.logOutUser();
         showToast("User signed out");
       }
+      this.setUser(notLoggedInUser as UserType);
     },
   },
 };
