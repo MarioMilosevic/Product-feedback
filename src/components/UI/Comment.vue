@@ -9,7 +9,9 @@
           <h4>{{ comment.Users.fullName }}</h4>
           <h5>{{ comment.Users.username }}</h5>
         </div>
-        <button class="singleComment-information-div-button" @click="reply">Reply</button>
+        <button class="singleComment-information-div-button" @click="reply">
+          Reply
+        </button>
       </div>
       <p>{{ comment.content }}</p>
     </div>
@@ -18,7 +20,7 @@
 
 <script lang="ts">
 import { PropType } from "vue";
-import { CommentType } from "../../types/types";
+import { CommentType } from "src/utils/types";
 export default {
   components: {},
   props: {
@@ -27,19 +29,16 @@ export default {
       required: true,
     },
   },
-  emits:['reply-event'],
+  emits: ["reply-event"],
   data() {
     return {};
   },
   methods: {
     reply() {
-      console.log(this.comment.Users?.username)
-      this.$emit('reply-event', this.comment.Users?.username)
-    }
+      console.log(this.comment.Users?.username);
+      this.$emit("reply-event", this.comment.Users?.username);
+    },
   },
-  mounted() {
-    console.log(this.comment)
-  }
 };
 </script>
 

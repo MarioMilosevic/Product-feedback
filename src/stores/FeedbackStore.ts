@@ -4,8 +4,7 @@ import {
   CategoryType,
   StatusType,
   UserType,
-  CommentType,
-} from "src/types/types";
+} from "src/utils/types";
 
 export const useFeedbackStore = defineStore("feedbacksStore", {
   state: () => {
@@ -73,15 +72,6 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
         f.id === feedback.id ? { ...f, ...feedback } : f
       );
     },
-    // addCommentToFeedback(feedbackId: number, comment: CommentType) {
-    //   // console.log(feedbackId);
-    //   // console.log(comment);
-    //   // const currentFeedback = this.feedbacks.find(
-    //   //   (feedback) => feedback.id === feedbackId
-    //   // );
-    //   // currentFeedback.Comments.push(comment)
-
-    // },
     setCategories(categories: CategoryType[]) {
       this.categories = categories;
     },

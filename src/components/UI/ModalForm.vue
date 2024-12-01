@@ -32,7 +32,7 @@
             />
           </template>
           <template #error v-if="errors.title">
-              {{ errors.title }}
+            {{ errors.title }}
           </template>
         </FormBlock>
 
@@ -56,7 +56,7 @@
             </Select>
           </template>
           <template #error v-if="errors.category">
-              {{ errors.category }}
+            {{ errors.category }}
           </template>
         </FormBlock>
         <FormBlock v-if="feedback">
@@ -81,7 +81,7 @@
             </Select>
           </template>
           <template #error v-if="errors.status">
-              {{ errors.status }}
+            {{ errors.status }}
           </template>
         </FormBlock>
         <FormBlock>
@@ -101,7 +101,7 @@
             />
           </template>
           <template #error v-if="errors.description">
-              {{ errors.description }}
+            {{ errors.description }}
           </template>
         </FormBlock>
         <div
@@ -143,7 +143,7 @@ import Label from "src/components/form/Label.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
 import Input from "src/components/form/Input.vue";
 import { modalFormSchema } from "src/validation/modalFormSchema";
-import { FeedbackType } from "src/types/types.ts";
+import { FeedbackType } from "src/utils/types";
 import { PropType } from "vue";
 import { emptyFeedback } from "src/utils/constants";
 import {

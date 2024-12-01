@@ -26,14 +26,19 @@
       </Icon>
       <span class="feedback__comments-length">{{ commentsCount }}</span>
     </div>
-    <div
-      v-if="isEditing"
-      class="edit-delete"
-    >
-      <Icon size="big" @click="$emit('edit-event')" :style="{cursor:'pointer'}">
+    <div v-if="isEditing" class="edit-delete">
+      <Icon
+        size="big"
+        @click="$emit('edit-event')"
+        :style="{ cursor: 'pointer' }"
+      >
         <Edit />
       </Icon>
-      <Icon size="big" @click="$emit('delete-event')" :style="{cursor:'pointer'}">
+      <Icon
+        size="big"
+        @click="$emit('delete-event')"
+        :style="{ cursor: 'pointer' }"
+      >
         <Delete />
       </Icon>
     </div>
@@ -42,7 +47,7 @@
 
 <script lang="ts">
 import { PropType } from "vue";
-import { FeedbackType } from "src/types/types";
+import { FeedbackType, SingleFeedbackType } from "src/utils/types";
 import Icon from "src/components/UI/Icon.vue";
 import Category from "src/components/UI/Category.vue";
 import Caret from "src/icons/Caret.vue";
@@ -54,7 +59,7 @@ export default {
   name: "Feedback",
   props: {
     feedback: {
-      type: Object as PropType<FeedbackType>,
+      type: Object as PropType<FeedbackType | SingleFeedbackType>,
       required: true,
     },
     isEditing: {

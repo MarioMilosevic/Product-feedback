@@ -1,6 +1,6 @@
 <template>
   <nav class="nav">
-    <HomepageLink v-if="backButton" position=""/>
+    <HomepageLink v-if="backButton" position="" />
     <template v-if="getUser.id">
       <figure class="nav__figure">
         <img :src="getUser.image" :alt="getUser.image" />
@@ -26,7 +26,7 @@ import { retrieveUser, signOutUser } from "src/api/UsersApi";
 import { mapState, mapActions } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import ActionButton from "src/components/UI/ActionButton.vue";
-import { UserType } from "src/types/types";
+import { UserType } from "src/utils/types";
 import { showToast } from "src/utils/toastify";
 import { deleteUser } from "src/api/UsersApi";
 import LeftArrow from "src/icons/LeftArrow.vue";
@@ -51,7 +51,7 @@ export default {
   },
   async created() {
     const user = await retrieveUser();
-    console.log("trenutni user",user);
+    console.log("trenutni user", user);
     if (user.id) {
       this.setUser(user);
     }

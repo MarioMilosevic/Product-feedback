@@ -1,5 +1,5 @@
 import supabase from "src/config/supabaseClient";
-import { UserType } from "src/types/types";
+import { UserType } from "src/utils/types";
 import { showToast } from "src/utils/toastify";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 

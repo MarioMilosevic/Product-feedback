@@ -1,5 +1,5 @@
 import supabase from "src/config/supabaseClient";
-import { CommentType } from "src/types/types";
+import { CommentType } from "src/utils/types";
 
 export const addComment = async (comment: CommentType) => {
   console.log(comment);

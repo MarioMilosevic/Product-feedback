@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { SingleFeedbackType } from "src/types/types";
+import { SingleFeedbackType } from "src/utils/types";
 import { fetchSingleFeedback, deleteFeedback } from "src/api/FeedbacksApi";
 import Feedback from "src/components/feedbacks/Feedback.vue";
 import Comment from "src/components/UI/Comment.vue";
@@ -55,7 +55,7 @@ import ModalForm from "src/components/UI/ModalForm.vue";
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
 import LeftArrow from "src/icons/LeftArrow.vue";
 import { showToast } from "src/utils/toastify";
-import { mapActions, mapState } from "pinia";
+import { mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { addComment } from "src/api/CommentsApi";
 
@@ -100,7 +100,6 @@ export default {
     },
   },
   methods: {
-    // ...mapActions(useFeedbackStore, ['addCommentToFeedback']),
     editFeedback() {
       this.isModalOpen = true;
     },
@@ -145,19 +144,9 @@ export default {
       this.singleFeedback.Comments.push(data);
       this.textAreaContent = "";
     },
-    replyHandler(username:string) {
-      this.textAreaContent = `${username} `
-      this.$refs.textareaRef.focusTextarea()
-    }
-  },
-  mounted() {},
-  watch: {
-    singleFeedback: {
-      handler(newFeedback) {
-        console.log("Updated singleFeedback:", newFeedback);
-      },
-      deep: true, // Ensures the watch triggers for nested changes
-      immediate: false, // Avoids triggering the watch on component creation
+    replyHandler(username: string) {
+      (this.textAreaContent = `${username} `),
+        (this.$refs.textareaRef as typeof Textarea).focusTextarea();
     },
   },
 };

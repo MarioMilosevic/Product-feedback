@@ -1,5 +1,5 @@
 import supabase from "src/config/supabaseClient";
-import { FeedbackType } from "src/types/types";
+import { FeedbackType } from "src/utils/types";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { fetchSingleStatusOption, fetchStatusOptions } from "src/api/StatusApi";
 import { fetchCategories, fetchSingleCategory } from "src/api/CategoriesApi";
