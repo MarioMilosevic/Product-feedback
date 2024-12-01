@@ -15,7 +15,7 @@
       <br />
       We love hearing about new ideas to improve our app.
     </p>
-    <ActionButton color="purple" size="medium" @click="$emit('open-modal')"
+    <ActionButton color="purple" size="medium" @click="openModal"
       >Add Feedback</ActionButton
     >
   </section>
@@ -25,6 +25,9 @@
 import Icon from "src/components/UI/Icon.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
 import Inspector from "src/icons/Inspector.vue";
+import { mapState } from "pinia";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
+import { showToast } from "src/utils/toastify";
 
 export default {
   components: {
@@ -33,6 +36,18 @@ export default {
     Inspector,
   },
   emits: ["open-modal"],
+  computed: {
+    ...mapState(useFeedbackStore, ["getUser"]),
+  },
+  methods: {
+    openModal() {
+      if (!this.getUser.is_anonymous) {
+        this.$emit("open-modal");
+      } else {
+        showToast("You must create an account first", "error");
+      }
+    },
+  },
 };
 </script>
 

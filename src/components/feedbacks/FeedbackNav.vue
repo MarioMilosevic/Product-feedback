@@ -20,7 +20,7 @@
         </FormBlock>
       </div>
     </div>
-    <ActionButton color="purple" size="small" @click="$emit('open-modal')">
+    <ActionButton color="purple" size="small" @click="openModal">
       Add Feedback
     </ActionButton>
   </nav>
@@ -37,6 +37,7 @@ import ActionButton from "src/components/UI/ActionButton.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
 import Lightbulb from "src/icons/Lightbulb.vue";
 import { fetchFeedbacks } from "src/api/FeedbacksApi";
+import { showToast } from "src/utils/toastify";
 
 export default {
   components: {
@@ -60,19 +61,24 @@ export default {
       "getFeedbacksLength",
       "getSort",
       "getFilterId",
+      "getUser",
     ]),
-  },
-  mounted() {
-    //
   },
   methods: {
     ...mapActions(useFeedbackStore, ["setFeedbacks", "setSort", "setFilterId"]),
-
     async updateSelect(value: string) {
       this.setSort(value);
       const data = await fetchFeedbacks(this.getFilterId, value);
       if (data) {
         this.setFeedbacks(data);
+      }
+    },
+    openModal() {
+      console.log("odje me zanima", this.getUser.is_anonymous);
+      if (!this.getUser.is_anonymous) {
+        this.$emit("open-modal");
+      } else {
+        showToast("You must create an account first", "error");
       }
     },
   },

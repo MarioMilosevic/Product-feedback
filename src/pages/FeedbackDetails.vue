@@ -61,11 +61,11 @@ import { addComment } from "src/api/CommentsApi";
 
 export default {
   async created() {
-    this.setLoading(true)
+    this.setLoading(true);
     const data = await fetchSingleFeedback(this.feedbackId);
     if (data) {
       this.singleFeedback = { ...data };
-      this.setLoading(false)
+      this.setLoading(false);
     }
   },
   components: {
@@ -87,7 +87,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useFeedbackStore, ["getUser", "getFeedback", 'getLoading']),
+    ...mapState(useFeedbackStore, ["getUser", "getFeedback", "getLoading"]),
     feedbackId() {
       return Number(this.$route.params.id);
     },
@@ -99,7 +99,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(useFeedbackStore, ['setLoading']),
+    ...mapActions(useFeedbackStore, ["setLoading"]),
     editFeedback() {
       this.isModalOpen = true;
     },
@@ -127,26 +127,35 @@ export default {
     },
 
     async postComment() {
-      const newComment = {
-        content: this.textAreaContent,
-        feedbackId: this.singleFeedback.id,
-        auth_id: this.singleFeedback.userId,
-        userId: this.getUser.id,
-      };
-      const data = await addComment(newComment as CommentType);
-      data.Users = {
-        auth_id: this.getUser.auth_id,
-        fullName: this.getUser.fullName,
-        id: this.getUser.id,
-        image: this.getUser.image,
-        username: this.getUser.username,
-      };
-      this.singleFeedback.Comments.push(data);
-      this.textAreaContent = "";
+      if (!this.getUser.is_anonymous) {
+        const newComment = {
+          content: this.textAreaContent,
+          feedbackId: this.singleFeedback.id,
+          auth_id: this.singleFeedback.userId,
+          userId: this.getUser.id,
+        };
+        const data = await addComment(newComment as CommentType);
+        data.Users = {
+          auth_id: this.getUser.auth_id,
+          fullName: this.getUser.fullName,
+          id: this.getUser.id,
+          image: this.getUser.image,
+          username: this.getUser.username,
+        };
+        this.singleFeedback.Comments.push(data);
+        this.textAreaContent = "";
+      } else {
+        showToast("You must create an account first", "error");
+      }
     },
+
     replyHandler(username: string) {
-      (this.textAreaContent = `${username} `),
-        (this.$refs.textareaRef as typeof Textarea).focusTextarea();
+      if (!this.getUser.is_anonymous) {
+        (this.textAreaContent = `${username} `),
+          (this.$refs.textareaRef as typeof Textarea).focusTextarea();
+      } else {
+        showToast("You must create an account first", "error");
+      }
     },
   },
 };

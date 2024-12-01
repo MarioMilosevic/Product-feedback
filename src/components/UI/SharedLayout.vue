@@ -26,7 +26,6 @@ import { retrieveUser, signOutUser } from "src/api/UsersApi";
 import { mapState, mapActions } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import ActionButton from "src/components/UI/ActionButton.vue";
-import { UserType } from "src/utils/types";
 import { showToast } from "src/utils/toastify";
 import { deleteUser } from "src/api/UsersApi";
 import LeftArrow from "src/icons/LeftArrow.vue";
@@ -41,20 +40,20 @@ export default {
     HomepageLink,
   },
   computed: {
-    ...mapState(useFeedbackStore, ["getUser", 'getLoading']),
+    ...mapState(useFeedbackStore, ["getUser", "getLoading"]),
     backButton() {
       return this.$route.meta.backAllowed;
     },
   },
   async created() {
     const user = await retrieveUser();
-    console.log("trenutni user", user);
+    console.log("trenutni user na stvaranju", user);
     if (user.id) {
       this.setUser(user);
     }
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setUser", 'setLoading']),
+    ...mapActions(useFeedbackStore, ["setUser", "setLoading", "logOutUser"]),
     goBack() {
       this.$router.push("/home");
     },
@@ -66,11 +65,10 @@ export default {
     },
     async localSignOutUser() {
       if (this.getUser.is_anonymous) {
-        console.log("treba da izbrise");
         await deleteUser(this.getUser);
       } else {
         await signOutUser();
-        this.setUser({} as UserType);
+        this.logOutUser();
         showToast("User signed out");
       }
     },

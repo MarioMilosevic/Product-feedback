@@ -14,7 +14,7 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       statusOptions: [] as StatusType[],
       filterId: 0,
       sort: "Most Likes",
-      user: {} as UserType,
+      user: { is_anonymous: true } as UserType,
       loading: false,
     };
   },
@@ -89,7 +89,10 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       this.filterId = value;
     },
     setUser(newUser: UserType) {
-      this.user = newUser;
+      this.user =  newUser;
+    },
+    logOutUser() {
+      this.user = { is_anonymous: true } as UserType;
     },
     setLoading(value: boolean) {
       this.loading = value;
