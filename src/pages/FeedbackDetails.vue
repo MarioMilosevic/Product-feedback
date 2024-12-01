@@ -13,12 +13,14 @@
         v-for="comment in singleFeedback.Comments"
         :key="comment.id"
         :comment="comment"
+        @reply-event="replyHandler"
       />
     </div>
 
     <div class="wrapper__addComment">
       <h4>Add comment</h4>
       <Textarea
+        ref="textareaRef"
         :maxCharacters="maxCharacters"
         :content="textAreaContent"
         @update-textarea="handleUpdateTextarea"
@@ -143,6 +145,10 @@ export default {
       this.singleFeedback.Comments.push(data);
       this.textAreaContent = "";
     },
+    replyHandler(username:string) {
+      this.textAreaContent = `${username} `
+      this.$refs.textareaRef.focusTextarea()
+    }
   },
   mounted() {},
   watch: {

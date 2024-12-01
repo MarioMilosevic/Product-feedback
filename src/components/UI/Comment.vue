@@ -9,7 +9,7 @@
           <h4>{{ comment.Users.fullName }}</h4>
           <h5>{{ comment.Users.username }}</h5>
         </div>
-        <button class="singleComment-information-div-button">Reply</button>
+        <button class="singleComment-information-div-button" @click="reply">Reply</button>
       </div>
       <p>{{ comment.content }}</p>
     </div>
@@ -27,9 +27,19 @@ export default {
       required: true,
     },
   },
+  emits:['reply-event'],
   data() {
     return {};
   },
+  methods: {
+    reply() {
+      console.log(this.comment.Users?.username)
+      this.$emit('reply-event', this.comment.Users?.username)
+    }
+  },
+  mounted() {
+    console.log(this.comment)
+  }
 };
 </script>
 
