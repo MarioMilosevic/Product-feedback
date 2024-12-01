@@ -38,12 +38,11 @@ export default {
         : Infinity;
     },
   },
-  mounted() {
-    //
-  },
-  methods: {
-    //
-  },
+  watch: {
+    content(newContent) {
+      this.localContent = newContent
+    }
+  }
 };
 </script>
 
