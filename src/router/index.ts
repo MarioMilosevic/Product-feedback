@@ -4,6 +4,8 @@ import NotFound from "src/pages/NotFound.vue";
 import Home from "src/pages/Home.vue";
 import Login from "src/pages/Login.vue";
 import SignUp from "src/pages/SignUp.vue";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
+import { retrieveUser } from "src/api/UsersApi";
 
 export const routes = [
   {
@@ -38,7 +40,6 @@ export const routes = [
     path: "/:catchAll(.*)",
     name: "NotFound",
     component: NotFound,
-    meta: { isCredentialsForm: true },
   },
 ];
 
@@ -46,6 +47,17 @@ const router = createRouter({
   history: createWebHistory("/"),
   routes,
   linkActiveClass: "textDecoration:none",
+});
+
+router.beforeEach(async (to) => {
+  const feedbackStore = useFeedbackStore();
+  if (!feedbackStore.getUser.id) {
+    await retrieveUser();
+  }
+  const isAuthenticated = feedbackStore.getUser.id;
+  if (isAuthenticated && (to.path === "/login" || to.path === "/sign-up")) {
+    return { name: "Home" };
+  }
 });
 
 export default router;

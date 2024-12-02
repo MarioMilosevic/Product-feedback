@@ -16,17 +16,6 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       filterId: 0,
       sort: "Most Likes",
       user: notLoggedInUser as UserType,
-    //   user: {
-    //     is_anonymous: true
-    // //     created_at?: string;
-    // // id?: number;
-    // // fullName: string;
-    // // image: string;
-    // // username: string;
-    // // auth_id?: string;
-    // // is_anonymous?: boolean;
-
-    //    } as UserType,
       loading: false,
     };
   },

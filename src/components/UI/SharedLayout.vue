@@ -48,10 +48,12 @@ export default {
     },
   },
   async created() {
+    this.setLoading(true)
     const user = await retrieveUser();
     console.log("trenutni user na stvaranju prije setUser", user);
     if (user.id) {
       this.setUser(user);
+      this.setLoading(false)
     }
   },
   methods: {
