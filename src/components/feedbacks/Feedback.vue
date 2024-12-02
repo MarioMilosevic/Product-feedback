@@ -1,10 +1,11 @@
 <template>
   <div class="feedback">
-    <router-link
-      :to="{ name: 'FeedbackDetails', params: { id: feedbackId } }"
-      class="feedback__content"
-    >
-      <button class="feedback__content__likes">
+    <div class="feedback__content">
+      <button
+        class="feedback__content__likes"
+        :style="{ backgroundColor: isLiked }"
+        @click="likeHandler"
+      >
         <Icon class="feedback__content__likes-caret" size="small">
           <Caret />
         </Icon>
@@ -12,14 +13,18 @@
           {{ feedback.likes }}
         </span>
       </button>
-      <div class="feedback__content__div">
+
+      <router-link
+        :to="{ name: 'FeedbackDetails', params: { id: feedbackId } }"
+        class="feedback__content__link"
+      >
         <h4>{{ feedback.title }}</h4>
-        <p class="feedback__content__div-paragraph">
+        <p class="feedback__content__link-paragraph">
           {{ feedback.description }}
         </p>
         <Category :category="feedback.category.name" />
-      </div>
-    </router-link>
+      </router-link>
+    </div>
     <div v-if="commentsCount > 0" class="feedback__comments">
       <Icon class="size-24" fill="#f0f9ff" size="medium">
         <Chat />
@@ -54,6 +59,8 @@ import Caret from "src/icons/Caret.vue";
 import Chat from "src/icons/Chat.vue";
 import Edit from "src/icons/Edit.vue";
 import Delete from "src/icons/Delete.vue";
+import { mapState } from "pinia";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
 
 export default {
   name: "Feedback",
@@ -76,15 +83,23 @@ export default {
     Edit,
     Delete,
   },
-  data() {
-    return {};
-  },
   computed: {
+    ...mapState(useFeedbackStore, ["user"]),
     feedbackId() {
       return this.feedback.id;
     },
     commentsCount() {
       return this.feedback.Comments?.[0]?.count || 0;
+    },
+    isLiked() {
+      return this.user.id && this.feedback.likedUserIds.includes(this.user.id)
+        ? "#cce7ff"
+        : "#f0f9ff";
+    },
+  },
+  methods: {
+    likeHandler() {
+      console.log("radi");
     },
   },
 };
@@ -108,15 +123,16 @@ export default {
     align-items: center;
     gap: 2rem;
     flex-grow: 1;
-    color: inherit;
-    text-decoration: none;
+   
 
-    &__div {
+    &__link {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       width: 100%;
       gap: 1rem;
+       color: inherit;
+    text-decoration: none;
 
       &-paragraph {
         line-height: 1.5rem;
@@ -137,6 +153,12 @@ export default {
 
       &:hover {
         background-color: $primary-color-hover;
+      }
+
+      &:active {
+        background-color: red;
+        transform: scale(1.1);
+        transition-duration: 100ms;
       }
 
       &-caret {

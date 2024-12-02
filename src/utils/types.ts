@@ -23,11 +23,12 @@ export type FeedbackType = {
   description: string;
   id?: number;
   likes: number;
+  likedUserIds: number[];
   status: {
     name: string;
   };
   title: string;
-  Comments: {count:number}[];
+  Comments: { count: number }[];
   userId?: string;
 };
 
@@ -40,6 +41,7 @@ export type SingleFeedbackType = {
   description: string;
   id: number;
   likes: number;
+  likedUserIds:number[],
   status: {
     name: string;
   };
@@ -88,12 +90,3 @@ export type StatusType = {
   id: number;
 };
 
-export type SubmitFeedbackType = {
-  Comments: CommentType[],
-  category: string;
-  description: string;
-  likes: number;
-  status: string;
-  title: string;
-  id?:number
-}
