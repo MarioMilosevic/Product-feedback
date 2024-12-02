@@ -30,7 +30,7 @@ export default {
     ...mapState(useFeedbackStore, [
       "categories",
       "getCategoryObjects",
-      "getSort",
+      "sort",
     ]),
 
     allCategories() {
@@ -42,7 +42,7 @@ export default {
     async changeCategory(id: number) {
       this.categoryIndex = id;
       this.setFilterId(id);
-      const data = await fetchFeedbacks(id, this.getSort);
+      const data = await fetchFeedbacks(id, this.sort);
       if (data) {
         this.setFeedbacks(data);
       }

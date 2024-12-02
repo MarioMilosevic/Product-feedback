@@ -1,5 +1,5 @@
 <template>
-  <LoadingSpinner v-if="getLoading" />
+  <LoadingSpinner v-if="loading" />
   <template v-else>
     <Sidebar />
     <Main />
@@ -21,15 +21,15 @@ export default {
     LoadingSpinner,
   },
   async created() {
-    this.setLoading(true)
+    this.setLoading(true);
     await getData();
-    this.setLoading(false)
+    this.setLoading(false);
   },
   computed: {
-    ...mapState(useFeedbackStore, ['getLoading'])
+    ...mapState(useFeedbackStore, ["loading"]),
   },
   methods: {
-    ...mapActions(useFeedbackStore, ['setLoading'])
-  }
+    ...mapActions(useFeedbackStore, ["setLoading"]),
+  },
 };
 </script>

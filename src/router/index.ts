@@ -51,10 +51,10 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   const feedbackStore = useFeedbackStore();
-  if (!feedbackStore.getUser.id) {
+  if (!feedbackStore.user.id) {
     await retrieveUser();
   }
-  const isAuthenticated = feedbackStore.getUser.id;
+  const isAuthenticated = feedbackStore.user.id;
   if (isAuthenticated && (to.path === "/login" || to.path === "/sign-up")) {
     return { name: "Home" };
   }

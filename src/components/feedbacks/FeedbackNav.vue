@@ -14,7 +14,7 @@
             color="blue"
             name="sort"
             :options="navSortOptions"
-            :content="getSort"
+            :content="sort"
             @update-select="updateSelect"
           ></Select>
         </FormBlock>
@@ -59,23 +59,22 @@ export default {
     ...mapState(useFeedbackStore, [
       "feedbacks",
       "getFeedbacksLength",
-      "getSort",
-      "getFilterId",
-      "getUser",
+      "sort",
+      'filterId',
+      "user",
     ]),
   },
   methods: {
     ...mapActions(useFeedbackStore, ["setFeedbacks", "setSort", "setFilterId"]),
     async updateSelect(value: string) {
       this.setSort(value);
-      const data = await fetchFeedbacks(this.getFilterId, value);
+      const data = await fetchFeedbacks(this.filterId, value);
       if (data) {
         this.setFeedbacks(data);
       }
     },
     openModal() {
-      console.log("odje me zanima", this.getUser.is_anonymous);
-      if (!this.getUser.is_anonymous) {
+      if (!this.user.is_anonymous) {
         this.$emit("open-modal");
       } else {
         showToast("You must create an account first", "error");

@@ -1,8 +1,8 @@
 <template>
-  <LoadingSpinner v-if="getLoading" />
+  <LoadingSpinner v-if="loading" />
   <div v-else class="wrapper">
     <Feedback
-      :isEditing="singleFeedback.userId === getUser.auth_id"
+      :isEditing="singleFeedback.userId === user.auth_id"
       :feedback="singleFeedback"
       @edit-event="editFeedback"
       @delete-event="deleteHandler(singleFeedback.id)"
@@ -87,7 +87,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useFeedbackStore, ["getUser", "getFeedback", "getLoading"]),
+    ...mapState(useFeedbackStore, ["user", "getFeedback", "loading"]),
     feedbackId() {
       return Number(this.$route.params.id);
     },
@@ -127,20 +127,20 @@ export default {
     },
 
     async postComment() {
-      if (!this.getUser.is_anonymous) {
+      if (!this.user.is_anonymous) {
         const newComment = {
           content: this.textAreaContent,
           feedbackId: this.singleFeedback.id,
           auth_id: this.singleFeedback.userId,
-          userId: this.getUser.id,
+          userId: this.user.id,
         };
         const data = await addComment(newComment as CommentType);
         data.Users = {
-          auth_id: this.getUser.auth_id,
-          fullName: this.getUser.fullName,
-          id: this.getUser.id,
-          image: this.getUser.image,
-          username: this.getUser.username,
+          auth_id: this.user.auth_id,
+          fullName: this.user.fullName,
+          id: this.user.id,
+          image: this.user.image,
+          username: this.user.username,
         };
         this.singleFeedback.Comments.push(data);
         this.textAreaContent = "";
@@ -150,7 +150,7 @@ export default {
     },
 
     replyHandler(username: string) {
-      if (!this.getUser.is_anonymous) {
+      if (!this.user.is_anonymous) {
         (this.textAreaContent = `${username} `),
           (this.$refs.textareaRef as typeof Textarea).focusTextarea();
       } else {

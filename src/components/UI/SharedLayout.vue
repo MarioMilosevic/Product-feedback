@@ -1,9 +1,9 @@
 <template>
-  <nav class="nav" v-if="getLoading === false">
+  <nav class="nav" v-if="loading === false">
     <HomepageLink v-if="backButton" />
-    <template v-if="getUser.id">
+    <template v-if="user.id">
       <figure class="nav__figure">
-        <img :src="getUser.image" :alt="getUser.image" />
+        <img :src="user.image" :alt="user.image" />
       </figure>
       <div class="nav__button">
         <ActionButton size="big" color="purple" @click="localSignOutUser">
@@ -42,7 +42,7 @@ export default {
     HomepageLink,
   },
   computed: {
-    ...mapState(useFeedbackStore, ["getUser", "getLoading"]),
+    ...mapState(useFeedbackStore, ["user", "loading"]),
     backButton() {
       return this.$route.meta.backAllowed;
     },
@@ -68,8 +68,8 @@ export default {
       this.$router.push("/sign-up");
     },
     async localSignOutUser() {
-      if (this.getUser.is_anonymous) {
-        await deleteUser(this.getUser);
+      if (this.user.is_anonymous) {
+        await deleteUser(this.user);
       } else {
         await signOutUser();
         showToast("User signed out");

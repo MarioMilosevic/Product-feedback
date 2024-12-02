@@ -22,7 +22,6 @@
 import { PropType } from "vue";
 import { CommentType } from "src/utils/types";
 export default {
-  components: {},
   props: {
     comment: {
       type: Object as PropType<CommentType>,
@@ -30,16 +29,10 @@ export default {
     },
   },
   emits: ["reply-event"],
-  data() {
-    return {};
-  },
   methods: {
     reply() {
       this.$emit("reply-event", this.comment.Users?.username);
     },
-  },
-  mounted() {
-    console.log(this.comment)
   },
 };
 </script>

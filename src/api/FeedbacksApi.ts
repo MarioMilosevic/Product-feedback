@@ -132,7 +132,7 @@ export const addFeedback = async (feedback: FeedbackType) => {
       ...feedback,
       category: categoryData.id,
       status: statusData.id,
-      userId: feedbackStore.getUser.auth_id,
+      userId: feedbackStore.user.auth_id,
     };
 
     const { data, error } = await supabase

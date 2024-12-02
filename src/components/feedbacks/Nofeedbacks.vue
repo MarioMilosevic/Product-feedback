@@ -37,11 +37,11 @@ export default {
   },
   emits: ["open-modal"],
   computed: {
-    ...mapState(useFeedbackStore, ["getUser"]),
+    ...mapState(useFeedbackStore, ["user"]),
   },
   methods: {
     openModal() {
-      if (!this.getUser.is_anonymous) {
+      if (!this.user.is_anonymous) {
         this.$emit("open-modal");
       } else {
         showToast("You must create an account first", "error");

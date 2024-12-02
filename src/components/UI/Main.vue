@@ -34,7 +34,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useFeedbackStore, ["feedbacks"]),
+    ...mapState(useFeedbackStore, ["feedbacks", 'sort', 'sort']),
   },
   methods: {
     closeModal() {

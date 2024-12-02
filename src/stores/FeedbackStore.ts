@@ -49,18 +49,6 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     getFeedbacksLength: (state) => {
       return state.feedbacks.length;
     },
-    getSort: (state) => {
-      return state.sort;
-    },
-    getFilterId: (state) => {
-      return state.filterId;
-    },
-    getUser: (state) => {
-      return state.user;
-    },
-    getLoading: (state) => {
-      return state.loading;
-    },
   },
   actions: {
     setFeedbacks(feedbacks: FeedbackType[]) {
