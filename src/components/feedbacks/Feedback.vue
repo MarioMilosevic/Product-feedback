@@ -55,7 +55,7 @@ import Caret from "src/icons/Caret.vue";
 import Chat from "src/icons/Chat.vue";
 import Edit from "src/icons/Edit.vue";
 import Delete from "src/icons/Delete.vue";
-import { mapState } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { toggleLike } from "src/api/FeedbacksApi";
 
@@ -95,11 +95,15 @@ export default {
     },
   },
   methods: {
+    ...mapActions(useFeedbackStore, ['setFeedbacksLikedIds']),
     async likeHandler() {
       console.log("radi");
       console.log(this.isLiked);
       if (this.feedback.id && this.user.id) {
-        await toggleLike(this.feedback.id, this.user.id);
+        const updatedFeedbackLikedIds = await toggleLike(this.feedback.id, this.user.id);
+        // vrati mi novi array
+        console.log("ovo me zanima",updatedFeedbackLikedIds)
+        this.setFeedbacksLikedIds(this.feedback.id, updatedFeedbackLikedIds)
       }
     },
   },

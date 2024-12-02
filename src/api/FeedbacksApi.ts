@@ -215,92 +215,8 @@ export const editFeedback = async (feedback: SingleFeedbackType) => {
   }
 };
 
-// export const like = async (feedbackId: number, userId: number) => {
-//   console.log(feedbackId);
-//   console.log(userId);
-//   try {
-//     const { data, error } = await supabase
-//       .from("Feedbacks")
-//       .select("likedUserIds")
-//     .contains('likedUserIds',userId)
-//       // .eq("id", feedbackId)
-//       // .single();
-
-//     if (error) {
-//       console.error("Error updating array:", error);
-//       return;
-//     }
-//     console.log(data);
-//   } catch (error) {
-//     console.error("Unexpected error occured", error);
-//   }
-// };
-
-// export const like = async (feedbackId: number, userId: number) => {
-//   console.log("Feedback ID:", feedbackId);
-//   console.log("User ID:", userId);
-
-//   try {
-//     // Fetch the current likedUserIds for the feedback
-//     const { data, error } = await supabase
-//       .from("Feedbacks")
-//       .select("likedUserIds")
-//       .eq("id", feedbackId)
-//       .single();
-
-//     if (error) {
-//       console.error("Error fetching likedUserIds:", error);
-//       return;
-//     }
-
-//     if (data) {
-//       const likedUserIds = data.likedUserIds || [];
-//       const userHasLiked = likedUserIds.includes(userId);
-//       console.log(likedUserIds);
-//       console.log(userHasLiked);
-
-//       if (userHasLiked) {
-//         console.log("User has already liked this feedback.");
-//         const updatedLikedUserIds = likedUserIds.filter(
-//           (id: number) => id !== userId
-//         );
-//         console.log("updateLikedUserIds", updatedLikedUserIds);
-
-//         const { error: updateError } = await supabase
-//           .from("Feedbacks")
-//           .update({ likedUserIds: updatedLikedUserIds })
-//           .eq("id", feedbackId);
-        
-//         if (updateError) {
-//           console.error("Error removing userId, from likedUserIds", updateError)
-//         }
-//         return up
-//       }
-
-//       // Update the array to include the new userId
-//       const { error: updateError } = await supabase
-//         .from("Feedbacks")
-//         .update({ likedUserIds: [...likedUserIds, userId] })
-//         .eq("id", feedbackId);
-
-//       if (updateError) {
-//         console.error("Error updating likedUserIds:", updateError);
-//       } else {
-//         console.log("Feedback successfully liked!");
-//       }
-//     }
-//   } catch (error) {
-//     console.error("Unexpected error occurred:", error);
-//   }
-// };
-
-
 export const toggleLike = async (feedbackId: number, userId: number) => {
-  console.log("Feedback ID:", feedbackId);
-  console.log("User ID:", userId);
-
   try {
-    // Fetch the current likedUserIds for the feedback
     const { data, error } = await supabase
       .from("Feedbacks")
       .select("likedUserIds")
@@ -311,44 +227,38 @@ export const toggleLike = async (feedbackId: number, userId: number) => {
       console.error("Error fetching likedUserIds:", error);
       return;
     }
+    const likedUserIds = data.likedUserIds || [];
+    const userHasLiked = likedUserIds.includes(userId);
 
-    if (data) {
-      const likedUserIds = data.likedUserIds || [];
-      const userHasLiked = likedUserIds.includes(userId);
+    if (userHasLiked) {
+      const updatedLikedUserIds = likedUserIds.filter(
+        (id: number) => id !== userId
+      );
 
-      if (userHasLiked) {
-        const updatedLikedUserIds = likedUserIds.filter(
-          (id: number) => id !== userId
-        );
+      const { error: updateError } = await supabase
+        .from("Feedbacks")
+        .update({ likedUserIds: updatedLikedUserIds })
+        .eq("id", feedbackId);
 
-        const { error: updateError } = await supabase
-          .from("Feedbacks")
-          .update({ likedUserIds: updatedLikedUserIds })
-          .eq("id", feedbackId);
-
-        if (updateError) {
-          console.error(
-            "Error removing userId from likedUserIds:",
-            updateError
-          );
-        } else {
-          console.log("User removed from likedUserIds:", updatedLikedUserIds);
-          return updatedLikedUserIds;
-        }
+      if (updateError) {
+        console.error("Error removing userId from likedUserIds:", updateError);
       } else {
-        const updatedLikedUserIds = [...likedUserIds, userId];
+        console.log("User removed from likedUserIds:", updatedLikedUserIds);
+        return updatedLikedUserIds;
+      }
+    } else {
+      const updatedLikedUserIds = [...likedUserIds, userId];
 
-        const { error: addError } = await supabase
-          .from("Feedbacks")
-          .update({ likedUserIds: updatedLikedUserIds })
-          .eq("id", feedbackId);
+      const { error: addError } = await supabase
+        .from("Feedbacks")
+        .update({ likedUserIds: updatedLikedUserIds })
+        .eq("id", feedbackId);
 
-        if (addError) {
-          console.error("Error adding userId to likedUserIds:", addError);
-        } else {
-          console.log("User added to likedUserIds:", updatedLikedUserIds);
-          return updatedLikedUserIds;
-        }
+      if (addError) {
+        console.error("Error adding userId to likedUserIds:", addError);
+      } else {
+        console.log("User added to likedUserIds:", updatedLikedUserIds);
+        return updatedLikedUserIds;
       }
     }
   } catch (error) {

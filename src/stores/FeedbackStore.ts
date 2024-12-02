@@ -54,6 +54,17 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     setFeedbacks(feedbacks: FeedbackType[]) {
       this.feedbacks = feedbacks;
     },
+    setFeedbacksLikedIds(feedbackId: number, feedbackLikedIds: number[]) {
+      this.feedbacks = this.feedbacks.map((feedback) => {
+        if (feedback.id === feedbackId) {
+          return {
+            ...feedback,
+            likedUserIds: feedbackLikedIds,
+          };
+        }
+        return feedback;
+      });
+    },
     addFeedbackToStore(feedback: FeedbackType) {
       this.feedbacks.push(feedback);
     },
