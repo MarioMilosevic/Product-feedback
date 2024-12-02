@@ -57,7 +57,7 @@ import Edit from "src/icons/Edit.vue";
 import Delete from "src/icons/Delete.vue";
 import { mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
-import { like } from "src/api/FeedbacksApi";
+import { toggleLike } from "src/api/FeedbacksApi";
 
 export default {
   name: "Feedback",
@@ -99,7 +99,7 @@ export default {
       console.log("radi");
       console.log(this.isLiked);
       if (this.feedback.id && this.user.id) {
-        await like(this.feedback.id, this.user.id);
+        await toggleLike(this.feedback.id, this.user.id);
       }
     },
   },

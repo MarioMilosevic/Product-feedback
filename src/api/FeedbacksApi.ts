@@ -236,8 +236,66 @@ export const editFeedback = async (feedback: SingleFeedbackType) => {
 //   }
 // };
 
+// export const like = async (feedbackId: number, userId: number) => {
+//   console.log("Feedback ID:", feedbackId);
+//   console.log("User ID:", userId);
 
-export const like = async (feedbackId: number, userId: number) => {
+//   try {
+//     // Fetch the current likedUserIds for the feedback
+//     const { data, error } = await supabase
+//       .from("Feedbacks")
+//       .select("likedUserIds")
+//       .eq("id", feedbackId)
+//       .single();
+
+//     if (error) {
+//       console.error("Error fetching likedUserIds:", error);
+//       return;
+//     }
+
+//     if (data) {
+//       const likedUserIds = data.likedUserIds || [];
+//       const userHasLiked = likedUserIds.includes(userId);
+//       console.log(likedUserIds);
+//       console.log(userHasLiked);
+
+//       if (userHasLiked) {
+//         console.log("User has already liked this feedback.");
+//         const updatedLikedUserIds = likedUserIds.filter(
+//           (id: number) => id !== userId
+//         );
+//         console.log("updateLikedUserIds", updatedLikedUserIds);
+
+//         const { error: updateError } = await supabase
+//           .from("Feedbacks")
+//           .update({ likedUserIds: updatedLikedUserIds })
+//           .eq("id", feedbackId);
+        
+//         if (updateError) {
+//           console.error("Error removing userId, from likedUserIds", updateError)
+//         }
+//         return up
+//       }
+
+//       // Update the array to include the new userId
+//       const { error: updateError } = await supabase
+//         .from("Feedbacks")
+//         .update({ likedUserIds: [...likedUserIds, userId] })
+//         .eq("id", feedbackId);
+
+//       if (updateError) {
+//         console.error("Error updating likedUserIds:", updateError);
+//       } else {
+//         console.log("Feedback successfully liked!");
+//       }
+//     }
+//   } catch (error) {
+//     console.error("Unexpected error occurred:", error);
+//   }
+// };
+
+
+export const toggleLike = async (feedbackId: number, userId: number) => {
   console.log("Feedback ID:", feedbackId);
   console.log("User ID:", userId);
 
@@ -257,24 +315,40 @@ export const like = async (feedbackId: number, userId: number) => {
     if (data) {
       const likedUserIds = data.likedUserIds || [];
       const userHasLiked = likedUserIds.includes(userId);
-      console.log(likedUserIds)
-      console.log(userHasLiked)
 
       if (userHasLiked) {
-        console.log("User has already liked this feedback.");
-        return;
-      }
+        const updatedLikedUserIds = likedUserIds.filter(
+          (id: number) => id !== userId
+        );
 
-      // Update the array to include the new userId
-      const { error: updateError } = await supabase
-        .from("Feedbacks")
-        .update({ likedUserIds: [...likedUserIds, userId] })
-        .eq("id", feedbackId);
+        const { error: updateError } = await supabase
+          .from("Feedbacks")
+          .update({ likedUserIds: updatedLikedUserIds })
+          .eq("id", feedbackId);
 
-      if (updateError) {
-        console.error("Error updating likedUserIds:", updateError);
+        if (updateError) {
+          console.error(
+            "Error removing userId from likedUserIds:",
+            updateError
+          );
+        } else {
+          console.log("User removed from likedUserIds:", updatedLikedUserIds);
+          return updatedLikedUserIds;
+        }
       } else {
-        console.log("Feedback successfully liked!");
+        const updatedLikedUserIds = [...likedUserIds, userId];
+
+        const { error: addError } = await supabase
+          .from("Feedbacks")
+          .update({ likedUserIds: updatedLikedUserIds })
+          .eq("id", feedbackId);
+
+        if (addError) {
+          console.error("Error adding userId to likedUserIds:", addError);
+        } else {
+          console.log("User added to likedUserIds:", updatedLikedUserIds);
+          return updatedLikedUserIds;
+        }
       }
     }
   } catch (error) {
