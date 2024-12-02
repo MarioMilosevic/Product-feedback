@@ -120,7 +120,7 @@ export const fetchSingleFeedback = async (id: number) => {
 };
 
 export const addFeedback = async (feedback: FeedbackType) => {
-  console.log("novi feedback",feedback)
+  console.log("novi feedback", feedback);
   try {
     const feedbackStore = useFeedbackStore();
     const [categoryData, statusData] = await Promise.all([
@@ -212,5 +212,72 @@ export const editFeedback = async (feedback: SingleFeedbackType) => {
     return feedbackUI;
   } catch (error) {
     console.error("Unexpected error occured", error);
+  }
+};
+
+// export const like = async (feedbackId: number, userId: number) => {
+//   console.log(feedbackId);
+//   console.log(userId);
+//   try {
+//     const { data, error } = await supabase
+//       .from("Feedbacks")
+//       .select("likedUserIds")
+//     .contains('likedUserIds',userId)
+//       // .eq("id", feedbackId)
+//       // .single();
+
+//     if (error) {
+//       console.error("Error updating array:", error);
+//       return;
+//     }
+//     console.log(data);
+//   } catch (error) {
+//     console.error("Unexpected error occured", error);
+//   }
+// };
+
+
+export const like = async (feedbackId: number, userId: number) => {
+  console.log("Feedback ID:", feedbackId);
+  console.log("User ID:", userId);
+
+  try {
+    // Fetch the current likedUserIds for the feedback
+    const { data, error } = await supabase
+      .from("Feedbacks")
+      .select("likedUserIds")
+      .eq("id", feedbackId)
+      .single();
+
+    if (error) {
+      console.error("Error fetching likedUserIds:", error);
+      return;
+    }
+
+    if (data) {
+      const likedUserIds = data.likedUserIds || [];
+      const userHasLiked = likedUserIds.includes(userId);
+      console.log(likedUserIds)
+      console.log(userHasLiked)
+
+      if (userHasLiked) {
+        console.log("User has already liked this feedback.");
+        return;
+      }
+
+      // Update the array to include the new userId
+      const { error: updateError } = await supabase
+        .from("Feedbacks")
+        .update({ likedUserIds: [...likedUserIds, userId] })
+        .eq("id", feedbackId);
+
+      if (updateError) {
+        console.error("Error updating likedUserIds:", updateError);
+      } else {
+        console.log("Feedback successfully liked!");
+      }
+    }
+  } catch (error) {
+    console.error("Unexpected error occurred:", error);
   }
 };

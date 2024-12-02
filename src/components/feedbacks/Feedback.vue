@@ -1,11 +1,7 @@
 <template>
   <div class="feedback">
     <div class="feedback__content">
-      <button
-        class="feedback__content__likes"
-        :style="{ backgroundColor: isLiked }"
-        @click="likeHandler"
-      >
+      <button class="feedback__content__likes" :style="{backgroundColor: isLiked}" @click="likeHandler">
         <Icon class="feedback__content__likes-caret" size="small">
           <Caret />
         </Icon>
@@ -61,6 +57,7 @@ import Edit from "src/icons/Edit.vue";
 import Delete from "src/icons/Delete.vue";
 import { mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
+import { like } from "src/api/FeedbacksApi";
 
 export default {
   name: "Feedback",
@@ -93,13 +90,17 @@ export default {
     },
     isLiked() {
       return this.user.id && this.feedback.likedUserIds.includes(this.user.id)
-        ? "#cce7ff"
-        : "#f0f9ff";
+      ? "#cce7ff"
+      : "#f0f9ff";
     },
   },
   methods: {
-    likeHandler() {
+    async likeHandler() {
       console.log("radi");
+      console.log(this.isLiked);
+      if (this.feedback.id && this.user.id) {
+        await like(this.feedback.id, this.user.id);
+      }
     },
   },
 };
@@ -123,7 +124,6 @@ export default {
     align-items: center;
     gap: 2rem;
     flex-grow: 1;
-   
 
     &__link {
       display: flex;
@@ -131,8 +131,8 @@ export default {
       align-items: flex-start;
       width: 100%;
       gap: 1rem;
-       color: inherit;
-    text-decoration: none;
+      color: inherit;
+      text-decoration: none;
 
       &-paragraph {
         line-height: 1.5rem;
@@ -156,7 +156,6 @@ export default {
       }
 
       &:active {
-        background-color: red;
         transform: scale(1.1);
         transition-duration: 100ms;
       }
