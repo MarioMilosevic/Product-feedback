@@ -90,9 +90,14 @@ export default {
             this.loginCredentials.email,
             this.loginCredentials.password
           );
-          console.log('user nakon logina', user)
+          console.log("user nakon logina", user);
           if (user) {
             this.$router.push("/home");
+            const fullName = user.user_metadata.fullName.split(" ");
+            const firstName = fullName[0];
+            setTimeout(() => {
+              showToast(`Welcome back ${firstName}`);
+            }, 1000);
           }
         } else {
           this.errors = validation.error.errors.reduce((acc, err) => {
@@ -103,11 +108,11 @@ export default {
         }
       } catch (error) {
         console.error("Unexpected error occured", error);
-        showToast("Unexpected error occured", 'error')
+        showToast("Unexpected error occured", "error");
       }
     },
   },
-    watch: {
+  watch: {
     loginCredentials: {
       deep: true,
       handler() {

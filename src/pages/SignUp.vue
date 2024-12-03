@@ -162,10 +162,9 @@ export default {
         if (validation.success) {
           await createNewUser(this.signUpCredentials);
           this.$router.push("/login");
-          this.$nextTick(() => {
+          setTimeout(() => {
             showToast("Account created successfully");
-            console.log("ne radi");
-          });
+          }, 1000);
         } else {
           this.errors = validation.error.errors.reduce((acc, err) => {
             const key = err.path.length > 0 ? err.path[0] : "";

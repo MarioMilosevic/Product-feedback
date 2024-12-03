@@ -158,7 +158,6 @@ const createTableUser = async (user: UserType) => {
     console.error("Unable to add new user", userError);
     return;
   }
-  showToast("Account created successfully!");
 };
 
 export const deleteUser = async (user: UserType) => {
