@@ -10,7 +10,7 @@ body {
 }
 #app {
   max-width: 1200px;
-  margin: 5rem auto;
+  margin: 2.5rem auto;
   gap: 1.5rem;
   display: grid;
   grid-template-columns: repeat(8, 1fr);

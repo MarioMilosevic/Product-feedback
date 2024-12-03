@@ -60,7 +60,6 @@ export default {
     AuthenticationForm,
     AuthenticationWrapper,
   },
-  props: {},
   data() {
     return {
       loginCredentials: {
@@ -70,8 +69,6 @@ export default {
       errors: {} as Record<string, string>,
     };
   },
-  computed: {},
-  mounted() {},
   methods: {
     goToHomepage() {
       this.$router.push("/home");
@@ -92,11 +89,6 @@ export default {
           );
           if (user) {
             this.$router.push("/home");
-            // const fullName = user.user_metadata.fullName.split(" ");
-            // const firstName = fullName[0];
-            // setTimeout(() => {
-            //   showToast(`Welcome back ${firstName}`);
-            // }, 1000);
           }
         } else {
           this.errors = validation.error.errors.reduce((acc, err) => {
