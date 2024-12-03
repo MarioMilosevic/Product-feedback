@@ -134,8 +134,6 @@ export default {
       errors: {} as Record<string, string>,
     };
   },
-  computed: {},
-  mounted() {},
   methods: {
     goToHomepage() {
       this.$router.push("/home");
@@ -156,7 +154,6 @@ export default {
       this.signUpCredentials.confirmPassword = confirmPassword;
     },
     updateImage(imageUrl: string) {
-      console.log("valjda sam dobio sta sam trebao", imageUrl);
       this.signUpCredentials.image = imageUrl;
     },
     async signUpNewUser() {
@@ -167,7 +164,7 @@ export default {
           this.$router.push("/login");
           this.$nextTick(() => {
             showToast("Account created successfully");
-            // console.log('ne radi')
+            console.log("ne radi");
           });
         } else {
           this.errors = validation.error.errors.reduce((acc, err) => {
@@ -179,6 +176,14 @@ export default {
       } catch (error) {
         console.error("Unexpected error occured", error);
       }
+    },
+  },
+  watch: {
+    signUpCredentials: {
+      deep: true,
+      handler() {
+        this.errors = {};
+      },
     },
   },
 };

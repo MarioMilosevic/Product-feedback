@@ -5,6 +5,7 @@ export const emptyFeedback = {
   },
   description: "",
   likes: 0,
+  likedUserIds:[],
   status: {
     name: "Planned",
   },
@@ -14,15 +15,7 @@ export const emptyFeedback = {
 export const notLoggedInUser = {
   image: "",
   username: "",
-  is_anonymous: true,
-  
-  //     created_at?: string;
-  // id?: number;
-  // fullName: string;
-  // image: string;
-  // username: string;
-  // auth_id?: string;
-  // is_anonymous?: boolean;
+  is_anonymous: true
 };
 
 export const navSortOptions = [

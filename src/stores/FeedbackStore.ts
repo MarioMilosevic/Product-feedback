@@ -66,18 +66,6 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
         return feedback;
       });
     },
-    // setFeedbacksLikedIds(feedbackId: number, feedbackLikedIds: number[]) {
-    //   this.feedbacks = this.feedbacks.map((feedback) => {
-    //     if (feedback.id === feedbackId) {
-    //       return {
-    //         ...feedback,
-    //         likes: feedback.likes + 1,
-    //         likedUserIds: feedbackLikedIds,
-    //       };
-    //     }
-    //     return feedback;
-    //   });
-    // },
     addFeedbackToStore(feedback: FeedbackType) {
       this.feedbacks.push(feedback);
     },

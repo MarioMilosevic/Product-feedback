@@ -27,15 +27,15 @@
 </template>
 
 <script lang="ts">
-import { useFeedbackStore } from "src/stores/FeedbackStore";
-import { mapActions, mapState } from "pinia";
 import Select from "src/components/form/Select.vue";
 import Label from "src/components/form/Label.vue";
-import { navSortOptions } from "src/utils/constants";
 import Icon from "src/components/UI/Icon.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
 import Lightbulb from "src/icons/Lightbulb.vue";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
+import { mapActions, mapState } from "pinia";
+import { navSortOptions } from "src/utils/constants";
 import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import { showToast } from "src/utils/toastify";
 
@@ -104,7 +104,7 @@ export default {
       &-select {
         background-color: $terniary-color;
         color: $secondary-color;
-        padding: 8px 4px; // dodaj rem
+        padding: 0.5rem 0.25rem; 
         border: none;
         outline: none;
         cursor: pointer;

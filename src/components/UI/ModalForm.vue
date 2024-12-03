@@ -265,13 +265,32 @@ export default {
       }
     },
     async submitEditFeedback() {
-      if (this.feedback.id) {
-        const data = await editFeedback(this.singleFeedback as SingleFeedbackType);
-        this.singleFeedback = data;
-        this.$emit("update-feedback", data);
-        this.$emit("close-modal");
-        showToast("Feedback updated sucessfully");
+      const validation = modalFormSchema.safeParse(this.singleFeedback);
+      if (validation.success) {
+        if (this.feedback.id) {
+          const data = await editFeedback(
+            this.singleFeedback as SingleFeedbackType
+          );
+          this.singleFeedback = data;
+          this.$emit("update-feedback", data);
+          this.$emit("close-modal");
+          showToast("Feedback updated sucessfully");
+        }
+      } else {
+        this.errors = validation.error.errors.reduce((acc, err) => {
+          const key = err.path.length > 0 ? err.path[0] : "";
+          acc[key] = err.message;
+          return acc;
+        }, {} as Record<string, string>);
       }
+    },
+  },
+  watch: {
+    singleFeedback: {
+      deep: true,
+      handler() {
+        this.errors = {};
+      },
     },
   },
 };

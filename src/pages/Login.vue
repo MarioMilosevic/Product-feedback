@@ -49,6 +49,7 @@ import AuthenticationWrapper from "src/components/auth/AuthenticationWrapper.vue
 import FormBlock from "src/components/form/FormBlock.vue";
 import { signInUser } from "src/api/UsersApi";
 import { loginFormSchema } from "src/validation/loginFormSchema";
+import { showToast } from "src/utils/toastify";
 
 export default {
   components: {
@@ -102,7 +103,16 @@ export default {
         }
       } catch (error) {
         console.error("Unexpected error occured", error);
+        showToast("Unexpected error occured", 'error')
       }
+    },
+  },
+    watch: {
+    loginCredentials: {
+      deep: true,
+      handler() {
+        this.errors = {};
+      },
     },
   },
 };
