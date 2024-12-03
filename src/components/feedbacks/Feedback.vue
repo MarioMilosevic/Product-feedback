@@ -75,7 +75,7 @@ export default {
       default: false,
     },
   },
-  emits: ["edit-event", "delete-event"],
+  emits: ["edit-event", "delete-event", "update-event"],
   components: {
     Category,
     Icon,
@@ -101,14 +101,18 @@ export default {
   methods: {
     ...mapActions(useFeedbackStore, ["setFeedbacksLikes"]),
     async likeHandler() {
-      if (this.feedback.id && this.user.id && !this.user.is_anonymous) {
-        const updatedFeedback = await toggleLike(
-          this.feedback.id,
-          this.user.id
-        );
-        this.setFeedbacksLikes(updatedFeedback);
-      } else {
+      if (this.user.is_anonymous) {
         showToast("You must create an account first", "error");
+        return;
+      }
+      if (!this.feedback.id || !this.user.id) {
+        return;
+      }
+      const updatedFeedback = await toggleLike(this.feedback.id, this.user.id);
+      if (this.$router.currentRoute.value.fullPath.includes("details")) {
+        this.$emit("update-event", updatedFeedback);
+      } else {
+        this.setFeedbacksLikes(updatedFeedback);
       }
     },
   },
@@ -154,15 +158,10 @@ export default {
       align-items: center;
       justify-content: center;
       gap: 0.6rem;
-      /* background-color: $primary-color; */
       border-radius: $border-radius-medium;
       border: none;
       padding: 10px;
       cursor: pointer;
-
-      /* &:hover {
-        background-color: $primary-color-hover;
-      } */
 
       &:active {
         transform: scale(1.1);

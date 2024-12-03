@@ -6,6 +6,7 @@
       :feedback="singleFeedback"
       @edit-event="editFeedback"
       @delete-event="deleteHandler(singleFeedback.id)"
+      @update-event="updateSingleFeedback"
     />
     <div class="wrapper__comments">
       <h3>{{ commentCount }} <span>Comments</span></h3>
@@ -156,6 +157,13 @@ export default {
       } else {
         showToast("You must create an account first", "error");
       }
+    },
+    updateSingleFeedback(newFeedback: SingleFeedbackType) {
+      this.singleFeedback = {
+        ...this.singleFeedback,
+        likes: newFeedback.likes,
+        likedUserIds: newFeedback.likedUserIds,
+      };
     },
   },
 };
