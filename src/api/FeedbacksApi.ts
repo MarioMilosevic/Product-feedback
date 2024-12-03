@@ -219,49 +219,48 @@ export const toggleLike = async (feedbackId: number, userId: number) => {
   try {
     const { data, error } = await supabase
       .from("Feedbacks")
-      .select("likedUserIds")
+      .select("likedUserIds, likes")
       .eq("id", feedbackId)
       .single();
-
     if (error) {
       console.error("Error fetching likedUserIds:", error);
       return;
     }
-    const likedUserIds = data.likedUserIds || [];
-    const userHasLiked = likedUserIds.includes(userId);
-
-    if (userHasLiked) {
-      const updatedLikedUserIds = likedUserIds.filter(
+    if (data.likedUserIds.includes(userId)) {
+      const updatedLikedUserIds = data.likedUserIds.filter(
         (id: number) => id !== userId
       );
 
-      const { error: updateError } = await supabase
+      const { data: updateData, error: updateError } = await supabase
         .from("Feedbacks")
-        .update({ likedUserIds: updatedLikedUserIds })
-        .eq("id", feedbackId);
-
+        .update({
+          likedUserIds: updatedLikedUserIds,
+          likes: data.likes - 1,
+        })
+        .eq("id", feedbackId)
+        .select()
+        .single();
       if (updateError) {
-        console.error("Error removing userId from likedUserIds:", updateError);
-      } else {
-        console.log("User removed from likedUserIds:", updatedLikedUserIds);
-        return updatedLikedUserIds;
+        console.error("Unable to dislike", error);
+        return;
       }
+      return updateData;
     } else {
-      const updatedLikedUserIds = [...likedUserIds, userId];
-
-      const { error: addError } = await supabase
+      console.log("treba da da lajk");
+      const updatedLikedUserIds = [...data.likedUserIds, userId];
+      const { data: updatedData, error: updatedError } = await supabase
         .from("Feedbacks")
-        .update({ likedUserIds: updatedLikedUserIds })
-        .eq("id", feedbackId);
+        .update({ likedUserIds: updatedLikedUserIds, likes: data.likes + 1 })
+        .eq("id", feedbackId)
+        .select()
+        .single();
 
-      if (addError) {
-        console.error("Error adding userId to likedUserIds:", addError);
-      } else {
-        console.log("User added to likedUserIds:", updatedLikedUserIds);
-        return updatedLikedUserIds;
+      if (updatedError) {
+        console.error("Unable to like", updatedError);
       }
+      return updatedData;
     }
   } catch (error) {
-    console.error("Unexpected error occurred:", error);
+    console.error("Unexpected error occured", error);
   }
 };

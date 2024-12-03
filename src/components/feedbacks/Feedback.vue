@@ -1,7 +1,10 @@
 <template>
   <div class="feedback">
     <div class="feedback__content">
-      <button :class="['feedback__content__likes',isLiked]" @click="likeHandler">
+      <button
+        :class="['feedback__content__likes', isLiked]"
+        @click="likeHandler"
+      >
         <Icon class="feedback__content__likes-caret" size="small">
           <Caret />
         </Icon>
@@ -91,18 +94,21 @@ export default {
     },
     isLiked() {
       return this.user.id && this.feedback.likedUserIds.includes(this.user.id)
-      ? "liked"
-      : "notLiked";
+        ? "liked"
+        : "notLiked";
     },
   },
   methods: {
-    ...mapActions(useFeedbackStore, ['setFeedbacksLikedIds']),
+    ...mapActions(useFeedbackStore, ["setFeedbacksLikes"]),
     async likeHandler() {
       if (this.feedback.id && this.user.id && !this.user.is_anonymous) {
-        const updatedFeedbackLikedIds = await toggleLike(this.feedback.id, this.user.id);
-        this.setFeedbacksLikedIds(this.feedback.id, updatedFeedbackLikedIds)
+        const updatedFeedback = await toggleLike(
+          this.feedback.id,
+          this.user.id
+        );
+        this.setFeedbacksLikes(updatedFeedback);
       } else {
-        showToast("You must create an account first", 'error')
+        showToast("You must create an account first", "error");
       }
     },
   },
@@ -154,9 +160,9 @@ export default {
       padding: 10px;
       cursor: pointer;
 
-      &:hover {
+      /* &:hover {
         background-color: $primary-color-hover;
-      }
+      } */
 
       &:active {
         transform: scale(1.1);
@@ -187,13 +193,13 @@ export default {
 
 .liked {
   background-color: $primary-color-hover;
-  &:hover {
-    background-color: $primary-color;
-  }
 }
 
 .notLiked {
   background-color: $primary-color;
+  &:hover {
+    background-color: $primary-color-hover;
+  }
 }
 
 .edit-delete {

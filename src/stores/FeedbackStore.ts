@@ -54,17 +54,30 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     setFeedbacks(feedbacks: FeedbackType[]) {
       this.feedbacks = feedbacks;
     },
-    setFeedbacksLikedIds(feedbackId: number, feedbackLikedIds: number[]) {
+    setFeedbacksLikes(updatedFeedback:FeedbackType) {
       this.feedbacks = this.feedbacks.map((feedback) => {
-        if (feedback.id === feedbackId) {
+        if (feedback.id === updatedFeedback.id) {
           return {
             ...feedback,
-            likedUserIds: feedbackLikedIds,
+            likes: updatedFeedback.likes,
+            likedUserIds: updatedFeedback.likedUserIds,
           };
         }
         return feedback;
       });
     },
+    // setFeedbacksLikedIds(feedbackId: number, feedbackLikedIds: number[]) {
+    //   this.feedbacks = this.feedbacks.map((feedback) => {
+    //     if (feedback.id === feedbackId) {
+    //       return {
+    //         ...feedback,
+    //         likes: feedback.likes + 1,
+    //         likedUserIds: feedbackLikedIds,
+    //       };
+    //     }
+    //     return feedback;
+    //   });
+    // },
     addFeedbackToStore(feedback: FeedbackType) {
       this.feedbacks.push(feedback);
     },
