@@ -1,14 +1,13 @@
 <template>
   <div class="status">
     <p>{{ status }}</p>
-    <h4>{{ count }}</h4>
+    <h4 v-if="count">{{ count }}</h4>
     <span :class="spanColor"></span>
   </div>
 </template>
 
 <script lang="ts">
 export default {
-  components: {},
   props: {
     status: {
       type: String,
@@ -16,26 +15,18 @@ export default {
     },
     count: {
       type: Number,
-      required: true,
+      required: false,
     },
-  },
-  data() {
-    return {};
   },
   computed: {
     spanColor() {
-      return `${this.status}`
+      return `${this.status.toLowerCase()}`
     },
-  },
-  mounted() {
-    //
-  },
-  methods: {
-    //
   },
 };
 </script>
-<style lang="scss" scoped>
+
+<style scoped lang="scss">
 @import "src/scss/_variables.scss";
 
 .status {
@@ -56,18 +47,18 @@ export default {
     border-radius: 9999px;
   }
 
-  .Planned {
+  .planned {
     background-color: $error-color;
   }
-  .In-progress {
+  .in-progress {
     background-color: $terniary-color;
   }
 
-  .Live {
+  .live {
     background-color: $forthiary-color;
   }
 
-  .Suggestion {
+  .suggestion {
     background-color: $cancel-color;
   }
 }

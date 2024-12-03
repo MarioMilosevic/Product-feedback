@@ -38,8 +38,9 @@ export default {
 
 .category {
   transition: all 300ms;
-  padding: 10px 15px;
+  padding: 0.5rem 1rem;
   border: none;
+
   cursor: pointer;
   background-color: $primary-color;
   color: $terniary-color;

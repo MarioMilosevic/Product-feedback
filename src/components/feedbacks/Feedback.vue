@@ -1,18 +1,11 @@
 <template>
   <div class="feedback">
     <div class="feedback__content">
-      <button
-        :class="['feedback__content__likes', isLiked]"
+      <LikeButton
+        :isLiked="isLiked"
+        :likes="feedback.likes"
         @click="likeHandler"
-      >
-        <Icon class="feedback__content__likes-caret" size="small">
-          <Caret />
-        </Icon>
-        <span class="feedback__content__likes-number">
-          {{ feedback.likes }}
-        </span>
-      </button>
-
+      />
       <router-link
         :to="{ name: 'FeedbackDetails', params: { id: feedbackId } }"
         class="feedback__content__link"
@@ -62,6 +55,7 @@ import { mapActions, mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { toggleLike } from "src/api/FeedbacksApi";
 import { showToast } from "src/utils/toastify";
+import LikeButton from "../UI/LikeButton.vue";
 
 export default {
   name: "Feedback",
@@ -83,6 +77,7 @@ export default {
     Chat,
     Edit,
     Delete,
+    LikeButton,
   },
   computed: {
     ...mapState(useFeedbackStore, ["user"]),
@@ -147,32 +142,6 @@ export default {
         line-height: 1.5rem;
       }
     }
-
-    &__likes {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-      border-radius: $border-radius-medium;
-      border: none;
-      padding: 10px;
-      cursor: pointer;
-
-      &:active {
-        transform: scale(1.1);
-        transition-duration: 100ms;
-      }
-
-      &-caret {
-        color: $terniary-color;
-      }
-
-      &-number {
-        font-weight: 600;
-        font-size: 0.9rem;
-      }
-    }
   }
   &__comments {
     display: flex;
@@ -183,17 +152,6 @@ export default {
       font-weight: 600;
       font-size: 1rem;
     }
-  }
-}
-
-.liked {
-  background-color: $primary-color-hover;
-}
-
-.notLiked {
-  background-color: $primary-color;
-  &:hover {
-    background-color: $primary-color-hover;
   }
 }
 

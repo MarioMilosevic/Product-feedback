@@ -1,0 +1,72 @@
+<template>
+  <button :class="['likeButton', isLiked]">
+    <Icon class="likeButton-caret" size="small">
+      <Caret />
+    </Icon>
+    <span class="likeButton-number">
+      {{ likes }}
+    </span>
+  </button>
+</template>
+
+<script lang="ts">
+import Icon from "src/components/UI/Icon.vue";
+import Caret from "src/icons/Caret.vue";
+export default {
+  components: {
+    Icon,
+    Caret,
+  },
+  props: {
+    likes: {
+      type: Number,
+      required: true,
+    },
+    isLiked: {
+      type: String,
+      required: true,
+    },
+  },
+};
+</script>
+
+<style scoped lang="scss">
+@import "src/scss/_variables.scss";
+
+.likeButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: $border-radius-medium;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+
+  &:active {
+    transform: scale(1.1);
+    transition-duration: 100ms;
+  }
+
+  &-caret {
+    color: $terniary-color;
+  }
+
+  &-number {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+}
+
+.liked {
+  background-color: $primary-color-hover;
+}
+
+.notLiked {
+  background-color: $primary-color;
+  &:hover {
+    background-color: $primary-color-hover;
+  }
+}
+</style>
