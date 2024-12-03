@@ -90,7 +90,6 @@ export default {
             this.loginCredentials.email,
             this.loginCredentials.password
           );
-          console.log("user nakon logina", user);
           if (user) {
             this.$router.push("/home");
             const fullName = user.user_metadata.fullName.split(" ");

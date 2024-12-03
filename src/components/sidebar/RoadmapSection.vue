@@ -2,7 +2,7 @@
   <section class="section">
     <div class="section__header">
       <h4>Roadmap</h4>
-      <button class="section__header-button">View</button>
+      <router-link :to="{name:'Roadmap'}" class="section__header-button">View</router-link>
     </div>
     <div class="section__counts">
       <Status
@@ -23,18 +23,8 @@ import { mapState } from "pinia";
 
 export default {
   components: { Status, Category },
-  props: {},
-  data() {
-    return {};
-  },
   computed: {
     ...mapState(useFeedbackStore, ["getStatusCount"]),
-  },
-  mounted() {
-    //
-  },
-  methods: {
-    //
   },
 };
 </script>
