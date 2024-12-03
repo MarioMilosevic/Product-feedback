@@ -288,6 +288,7 @@ export default {
   watch: {
     singleFeedback: {
       deep: true,
+      // ako errora ima
       handler() {
         this.errors = {};
       },

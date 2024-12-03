@@ -28,8 +28,8 @@ import router from "./router";
 // init();
 
 createApp(App)
-  .use(router)
-  .use(createPinia())
+.use(router)
+.use(createPinia())
   .use(Vue3Toastify, {
     autoClose: 3000,
   } as ToastContainerOptions)

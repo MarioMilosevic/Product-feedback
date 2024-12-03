@@ -75,7 +75,7 @@ export default {
       default: false,
     },
   },
-  emits: ["edit-event", "delete-event", "update-event"],
+  emits: ["edit-event", "delete-event", "update-like"],
   components: {
     Category,
     Icon,
@@ -109,11 +109,7 @@ export default {
         return;
       }
       const updatedFeedback = await toggleLike(this.feedback.id, this.user.id);
-      if (this.$router.currentRoute.value.fullPath.includes("details")) {
-        this.$emit("update-event", updatedFeedback);
-      } else {
-        this.setFeedbacksLikes(updatedFeedback);
-      }
+      this.$emit("update-like", updatedFeedback);
     },
   },
 };

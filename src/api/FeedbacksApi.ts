@@ -3,7 +3,6 @@ import { FeedbackType, SingleFeedbackType } from "src/utils/types";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { fetchSingleStatusOption, fetchStatusOptions } from "src/api/StatusApi";
 import { fetchCategories, fetchSingleCategory } from "src/api/CategoriesApi";
-import { showToast } from "src/utils/toastify";
 
 export const getData = async () => {
   try {
@@ -245,7 +244,6 @@ export const toggleLike = async (feedbackId: number, userId: number) => {
         console.error("Unable to dislike", error);
         return;
       }
-      showToast("Feedback unliked", "error");
       return updateData;
     } else {
       const updatedLikedUserIds = [...data.likedUserIds, userId];
@@ -259,7 +257,6 @@ export const toggleLike = async (feedbackId: number, userId: number) => {
       if (updatedError) {
         console.error("Unable to like", updatedError);
       }
-      showToast("Feedback liked");
       return updatedData;
     }
   } catch (error) {

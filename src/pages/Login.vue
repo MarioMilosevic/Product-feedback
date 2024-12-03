@@ -32,7 +32,7 @@
         </template>
         <template #submit>
           <ActionButton color="blue" size="big" @click="localSignInUser">
-            <h3>Login</h3>
+            <h3>Log in</h3>
           </ActionButton>
         </template>
       </AuthenticationForm>
@@ -92,11 +92,11 @@ export default {
           );
           if (user) {
             this.$router.push("/home");
-            const fullName = user.user_metadata.fullName.split(" ");
-            const firstName = fullName[0];
-            setTimeout(() => {
-              showToast(`Welcome back ${firstName}`);
-            }, 1000);
+            // const fullName = user.user_metadata.fullName.split(" ");
+            // const firstName = fullName[0];
+            // setTimeout(() => {
+            //   showToast(`Welcome back ${firstName}`);
+            // }, 1000);
           }
         } else {
           this.errors = validation.error.errors.reduce((acc, err) => {

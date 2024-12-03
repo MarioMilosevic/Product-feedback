@@ -28,6 +28,7 @@ export const routes = [
     path: "/roadmap",
     name: "Roadmap",
     component: Roadmap,
+    meta: { backAllowed: true },
   },
   {
     path: "/login",
@@ -50,9 +51,8 @@ export const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory("/"),
+  history: createWebHistory(),
   routes,
-  linkActiveClass: "textDecoration:none",
 });
 
 router.beforeEach(async (to) => {

@@ -6,7 +6,7 @@
       :feedback="singleFeedback"
       @edit-event="editFeedback"
       @delete-event="deleteHandler(singleFeedback.id)"
-      @update-event="updateSingleFeedback"
+      @update-like="updateSingleFeedback"
     />
     <div class="wrapper__comments">
       <h3>{{ commentCount }} <span>Comments</span></h3>
@@ -128,6 +128,11 @@ export default {
     },
 
     async postComment() {
+      if (this.textAreaContent.length === 0) {
+        showToast("Comment can't be empty", "error");
+        return;
+      }
+
       if (!this.user.is_anonymous) {
         const newComment = {
           content: this.textAreaContent,

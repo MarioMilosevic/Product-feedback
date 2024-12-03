@@ -2,6 +2,9 @@
   <nav class="nav" v-if="loading === false">
     <HomepageLink v-if="backButton" />
     <template v-if="user.id">
+      <h3 v-if="!backButton" class="nav__heading">
+        Welcome back: {{ userFirstName }}
+      </h3>
       <figure class="nav__figure">
         <img :src="user.image" :alt="user.image" />
       </figure>
@@ -46,14 +49,19 @@ export default {
     backButton() {
       return this.$route.meta.backAllowed;
     },
+    userFirstName() {
+      const fullName = this.user.fullName;
+      const firstName = fullName.split(" ")[0];
+      return firstName;
+    },
   },
   async created() {
-    this.setLoading(true)
+    this.setLoading(true);
     const user = await retrieveUser();
     console.log("trenutni user na stvaranju prije setUser", user);
     if (user.id) {
       this.setUser(user);
-      this.setLoading(false)
+      this.setLoading(false);
     }
   },
   methods: {
@@ -88,6 +96,12 @@ export default {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   gap: 1.5rem;
+
+  &__heading {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    align-self: center;
+  }
 
   &__button {
     grid-column: 8 / 9;
