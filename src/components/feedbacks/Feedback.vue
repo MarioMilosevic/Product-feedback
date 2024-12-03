@@ -1,7 +1,7 @@
 <template>
   <div class="feedback">
     <div class="feedback__content">
-      <button class="feedback__content__likes" :style="{backgroundColor: isLiked}" @click="likeHandler">
+      <button :class="['feedback__content__likes',isLiked]" @click="likeHandler">
         <Icon class="feedback__content__likes-caret" size="small">
           <Caret />
         </Icon>
@@ -58,6 +58,7 @@ import Delete from "src/icons/Delete.vue";
 import { mapActions, mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { toggleLike } from "src/api/FeedbacksApi";
+import { showToast } from "src/utils/toastify";
 
 export default {
   name: "Feedback",
@@ -90,20 +91,18 @@ export default {
     },
     isLiked() {
       return this.user.id && this.feedback.likedUserIds.includes(this.user.id)
-      ? "#cce7ff"
-      : "#f0f9ff";
+      ? "liked"
+      : "notLiked";
     },
   },
   methods: {
     ...mapActions(useFeedbackStore, ['setFeedbacksLikedIds']),
     async likeHandler() {
-      console.log("radi");
-      console.log(this.isLiked);
-      if (this.feedback.id && this.user.id) {
+      if (this.feedback.id && this.user.id && !this.user.is_anonymous) {
         const updatedFeedbackLikedIds = await toggleLike(this.feedback.id, this.user.id);
-        // vrati mi novi array
-        console.log("ovo me zanima",updatedFeedbackLikedIds)
         this.setFeedbacksLikedIds(this.feedback.id, updatedFeedbackLikedIds)
+      } else {
+        showToast("You must create an account first", 'error')
       }
     },
   },
@@ -149,7 +148,7 @@ export default {
       align-items: center;
       justify-content: center;
       gap: 0.6rem;
-      background-color: $primary-color;
+      /* background-color: $primary-color; */
       border-radius: $border-radius-medium;
       border: none;
       padding: 10px;
@@ -184,6 +183,17 @@ export default {
       font-size: 1rem;
     }
   }
+}
+
+.liked {
+  background-color: $primary-color-hover;
+  &:hover {
+    background-color: $primary-color;
+  }
+}
+
+.notLiked {
+  background-color: $primary-color;
 }
 
 .edit-delete {
