@@ -1,11 +1,12 @@
 <template>
-  <div class="comment">
-    <Icon class="size-24" fill="#f0f9ff" size="medium">
+  <div :class="['comment', gapSize]">
+    <Icon>
       <Chat />
     </Icon>
     <span class="comment-length">{{ commentsCount }}</span>
   </div>
 </template>
+
 <script lang="ts">
 import Icon from "src/components/UI/Icon.vue";
 import Chat from "src/icons/Chat.vue";
@@ -19,6 +20,15 @@ export default {
     commentsCount: {
       type: Number,
       required: true,
+    },
+    gap: {
+      type: String,
+      default: "medium",
+    },
+  },
+  computed: {
+    gapSize() {
+      return `${this.gap}`;
     },
   },
 };
@@ -34,5 +44,13 @@ export default {
     font-weight: 600;
     font-size: 1rem;
   }
+}
+
+.small {
+  gap: 0.5rem;
+}
+
+.medium {
+  gap: 1rem;
 }
 </style>

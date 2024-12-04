@@ -52,7 +52,7 @@ export default {
   gap: 0.6rem;
   border-radius: $border-radius-medium;
   border: none;
-  padding: 10px;
+  padding: 0.625rem;
   cursor: pointer;
 
   &:active {

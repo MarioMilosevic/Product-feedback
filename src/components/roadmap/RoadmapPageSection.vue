@@ -59,7 +59,7 @@ export default {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
   }
 }
 </style>

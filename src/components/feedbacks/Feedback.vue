@@ -18,7 +18,7 @@
         <Category :category="feedback.category.name" />
       </router-link>
     </div>
-    <FeedbackCommentIcon v-if="commentsCount > 0" :commentsCount="commentsCount"/>
+    <CommentIcon v-if="commentsCount > 0" :commentsCount="commentsCount"/>
     <!-- <div v-if="commentsCount > 0" class="feedback__comments">
       <Icon class="size-24" fill="#f0f9ff" size="medium">
         <Chat />
@@ -57,8 +57,8 @@ import { mapActions, mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { toggleLike } from "src/api/FeedbacksApi";
 import { showToast } from "src/utils/toastify";
-import LikeButton from "../UI/LikeButton.vue";
-import FeedbackCommentIcon from "./FeedbackCommentIcon.vue";
+import LikeButton from "src/components/UI/LikeButton.vue";
+import CommentIcon from "src/components/UI/CommentIcon.vue";
 
 export default {
   name: "Feedback",
@@ -81,7 +81,7 @@ export default {
     Edit,
     Delete,
     LikeButton,
-    FeedbackCommentIcon
+    CommentIcon
   },
   computed: {
     ...mapState(useFeedbackStore, ["user"]),
