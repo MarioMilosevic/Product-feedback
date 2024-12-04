@@ -1,15 +1,15 @@
 <template>
-  <li class="li">
-    <Status status="Planned" />
+  <li :class="['li', borderColor]">
+    <Status :status="feedback.status.name" />
     <div class="li__textContainer">
-      <h3>More comprehensive reports</h3>
-      <p>It would be great to see a more detailed breakdown of solutions</p>
+      <h3>{{ feedback.title }}</h3>
+      <p>{{ feedback.description }}</p>
     </div>
     <div class="li__icons">
-      <Category category="Bug" class="li__icons-category" />
+      <Category :category="feedback.category.name" class="li__icons-category" />
       <div class="li__icons-buttons">
-        <LikeButton direction="row" :isLiked="false" :likes="5" />
-        <CommentIcon :commentsCount="5" gap="small" />
+        <LikeButton direction="row" :isLiked="false" :likes="feedback.likes" />
+        <CommentIcon :commentsCount="feedback.Comments[0].count" gap="small" />
       </div>
     </div>
   </li>
@@ -20,6 +20,8 @@ import Status from "src/components/UI/Status.vue";
 import Category from "src/components/UI/Category.vue";
 import LikeButton from "src/components/UI/LikeButton.vue";
 import CommentIcon from "src/components/UI/CommentIcon.vue";
+import { PropType } from "vue";
+import { FeedbackType } from "src/utils/types";
 
 export default {
   components: {
@@ -28,14 +30,23 @@ export default {
     LikeButton,
     CommentIcon,
   },
-  props: {},
+  props: {
+    feedback: {
+      type: Object as PropType<FeedbackType>,
+      required: true,
+    },
+  },
   data() {
     return {};
   },
   computed: {
+    borderColor() {
+      return `${this.feedback.status.name}`.toLowerCase();
+    },
     //
   },
   mounted() {
+    console.log(this.feedback);
     //
   },
   methods: {
@@ -54,7 +65,8 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  border-top: 0.5rem solid black;
+  border-top-width: 0.3rem;
+  border-top-style: solid;
 
   &__category {
     align-self: start;
@@ -66,7 +78,7 @@ export default {
     gap: 0.5rem;
 
     p {
-      font-size:1rem;
+      font-size: 1rem;
     }
   }
 
@@ -85,5 +97,15 @@ export default {
       align-items: center;
     }
   }
+}
+
+.planned {
+  border-color: $error-color;
+}
+.in-progress {
+  border-color: $terniary-color;
+}
+.live {
+  border-color: $forthiary-color;
 }
 </style>

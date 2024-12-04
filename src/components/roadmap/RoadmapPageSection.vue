@@ -1,14 +1,12 @@
 <template>
   <section class="section">
     <div class="section__titleContainer">
-      <h4>Planned (2)</h4>
-      <p>Ideas prioritized for research</p>
+      <h4>{{ title }} ({{ feedebackCount }})</h4>
+      <p>{{ descripton }}</p>
     </div>
 
     <ul class="section__list">
-      <RoadmapFeedback />
-      <RoadmapFeedback />
-      <RoadmapFeedback />
+      <RoadmapFeedback v-for="feedback in filteredFeedbacks" :feedback="feedback" :key="feedback.id"/>
     </ul>
   </section>
 </template>
@@ -23,11 +21,11 @@ export default {
   },
   props: {
     filteredFeedbacks: {
-      type: Array<PropType<FeedbackType>>,
+      type: Array as PropType<FeedbackType[]>,
       required: true,
     },
     status: {
-      type: Array<PropType<StatusType>>,
+      type: Object as PropType<StatusType>,
       required: true,
     },
   },
@@ -36,10 +34,20 @@ export default {
     return {};
   },
   computed: {
+    title() {
+      return this.status.name
+    },
+    descripton() {
+      return this.status.description
+    },
+    feedebackCount() {
+      return this.filteredFeedbacks.length
+    }
     //
   },
   mounted() {
     console.log(this.filteredFeedbacks);
+    console.log(this.status)
     //
   },
   methods: {

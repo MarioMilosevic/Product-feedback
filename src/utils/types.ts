@@ -86,7 +86,8 @@ export type CategoryType = {
 
 export type StatusType = {
   name: string;
-  created_at: string;
-  id: number;
+  description: string;
+  created_at?: string;
+  id?: number;
 };
 

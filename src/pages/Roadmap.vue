@@ -34,8 +34,13 @@ export default {
     LoadingSpinner,
   },
   async created() {
-    const { statusData, feedbacksData } = await fetchRoadmapData();
-    (this.statusOptions = statusData), (this.allFeedbacks = feedbacksData);
+    try {
+      const roadmapData = await fetchRoadmapData();
+      this.statusOptions = roadmapData?.statusData || [];
+      this.allFeedbacks = roadmapData?.feedbacksData || [];
+    } catch (error) {
+      console.error("Unable to fetch data", error);
+    }
   },
   props: {},
   data() {

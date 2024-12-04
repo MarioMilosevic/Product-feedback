@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     spanColor() {
-      return `${this.status.toLowerCase()}`
+      return `${this.status.toLowerCase()}`;
     },
   },
 };
@@ -46,20 +46,15 @@ export default {
     height: 5px;
     border-radius: 9999px;
   }
-
+  
   .planned {
     background-color: $error-color;
   }
   .in-progress {
     background-color: $terniary-color;
   }
-
   .live {
     background-color: $forthiary-color;
-  }
-
-  .suggestion {
-    background-color: $cancel-color;
   }
 }
 </style>
