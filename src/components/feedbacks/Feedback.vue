@@ -8,7 +8,7 @@
         @click="likeHandler"
       />
       <router-link
-        :to="{ name: 'FeedbackDetails', params: { id: feedbackId } }"
+        :to="{ name: 'FeedbackDetails', params: { id: feedback.id } }"
         class="feedback__content__link"
       >
         <h4>{{ feedback.title }}</h4>
@@ -19,12 +19,6 @@
       </router-link>
     </div>
     <CommentIcon v-if="commentsCount > 0" :commentsCount="commentsCount"/>
-    <!-- <div v-if="commentsCount > 0" class="feedback__comments">
-      <Icon class="size-24" fill="#f0f9ff" size="medium">
-        <Chat />
-      </Icon>
-      <span class="feedback__comments-length">{{ commentsCount }}</span>
-    </div> -->
     <div v-if="isEditing" class="edit-delete">
       <Icon
         size="big"
@@ -85,9 +79,6 @@ export default {
   },
   computed: {
     ...mapState(useFeedbackStore, ["user"]),
-    feedbackId() {
-      return this.feedback.id;
-    },
     commentsCount() {
       return this.feedback.Comments?.[0]?.count || 0;
     },

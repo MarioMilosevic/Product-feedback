@@ -1,10 +1,10 @@
 <template>
   <li :class="['li', borderColor]">
     <Status :status="feedback.status.name" />
-    <div class="li__textContainer">
+    <router-link :to="{name:'FeedbackDetails', params:{id:feedback.id}}" class="li__textContainer">
       <h3>{{ feedback.title }}</h3>
       <p>{{ feedback.description }}</p>
-    </div>
+    </router-link>
     <div class="li__icons">
       <Category :category="feedback.category.name" class="li__icons-category" />
       <div class="li__icons-buttons">
@@ -73,6 +73,8 @@ export default {
   }
 
   &__textContainer {
+    color: inherit;
+    text-decoration: none;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
