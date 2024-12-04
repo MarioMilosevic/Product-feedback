@@ -36,7 +36,7 @@ import Lightbulb from "src/icons/Lightbulb.vue";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapActions, mapState } from "pinia";
 import { navSortOptions } from "src/utils/constants";
-import { fetchFeedbacks } from "src/api/FeedbacksApi";
+import { fetchFilteredFeedbacks } from "src/api/FeedbacksApi";
 import { showToast } from "src/utils/toastify";
 
 export default {
@@ -68,7 +68,7 @@ export default {
     ...mapActions(useFeedbackStore, ["setFeedbacks", "setSort", "setFilterId"]),
     async updateSelect(value: string) {
       this.setSort(value);
-      const data = await fetchFeedbacks(this.filterId, value);
+      const data = await fetchFilteredFeedbacks(this.filterId, value);
       if (data) {
         this.setFeedbacks(data);
       }

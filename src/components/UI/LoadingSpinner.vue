@@ -4,8 +4,8 @@
 
 <style lang="scss" scoped>
 .loader {
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
   border: 5px solid #fff;
   border-bottom-color: #ff3d00;
   border-radius: 50%;
@@ -14,7 +14,6 @@
   animation: rotation 1s linear infinite;
   grid-column: span 4;
   margin: 10rem auto;
-  grid-area: 2 / 4 / 3 / 5;
 }
 
 @keyframes rotation {

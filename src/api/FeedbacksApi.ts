@@ -44,7 +44,7 @@ export const fetchAllFeedbacks = async () => {
   }
 };
 
-export const fetchFeedbacks = async (id: number, sort: string) => {
+export const fetchFilteredFeedbacks = async (id: number, sort: string) => {
   try {
     let query = supabase.from("Feedbacks").select(
       `*, Comments(count), 

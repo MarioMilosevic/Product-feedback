@@ -14,7 +14,7 @@
 <script lang="ts">
 import Category from "src/components/UI/Category.vue";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
-import { fetchFeedbacks } from "src/api/FeedbacksApi";
+import { fetchFilteredFeedbacks } from "src/api/FeedbacksApi";
 import { mapActions, mapState } from "pinia";
 
 export default {
@@ -42,7 +42,7 @@ export default {
     async changeCategory(id: number) {
       this.categoryIndex = id;
       this.setFilterId(id);
-      const data = await fetchFeedbacks(id, this.sort);
+      const data = await fetchFilteredFeedbacks(id, this.sort);
       if (data) {
         this.setFeedbacks(data);
       }

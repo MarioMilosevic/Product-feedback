@@ -14,12 +14,24 @@
 </template>
 <script lang="ts">
 import RoadmapFeedback from "src/components/roadmap/RoadmapFeedback.vue";
+import { FeedbackType, StatusType } from "src/utils/types";
+import { PropType } from "vue";
 
 export default {
   components: {
     RoadmapFeedback,
   },
-  props: {},
+  props: {
+    filteredFeedbacks: {
+      type: Array<PropType<FeedbackType>>,
+      required: true,
+    },
+    status: {
+      type: Array<PropType<StatusType>>,
+      required: true,
+    },
+  },
+
   data() {
     return {};
   },
@@ -27,6 +39,7 @@ export default {
     //
   },
   mounted() {
+    console.log(this.filteredFeedbacks);
     //
   },
   methods: {

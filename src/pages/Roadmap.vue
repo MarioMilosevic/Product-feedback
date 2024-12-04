@@ -6,9 +6,16 @@
         <ActionButton color="purple" size="big">Add Feedback</ActionButton>
       </template>
     </Header>
-    <RoadmapPageSection/>
-    <RoadmapPageSection/>
-    <RoadmapPageSection/>
+    <LoadingSpinner
+      v-if="statusOptions.length === 0 || allFeedbacks.length === 0"
+    />
+    <RoadmapPageSection
+      v-else
+      v-for="status in statusOptions"
+      :key="status.id"
+      :status="status"
+      :filteredFeedbacks="filterFeedbackByStatus(status.name)"
+    />
   </main>
 </template>
 
@@ -16,24 +23,36 @@
 import Header from "src/components/roadmap/Header.vue";
 import RoadmapPageSection from "src/components/roadmap/RoadmapPageSection.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
+import { fetchRoadmapData } from "src/api/RoadmapApi";
+import { FeedbackType, StatusType } from "src/utils/types";
+import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
 export default {
   components: {
     ActionButton,
     Header,
-    RoadmapPageSection
+    RoadmapPageSection,
+    LoadingSpinner,
+  },
+  async created() {
+    const { statusData, feedbacksData } = await fetchRoadmapData();
+    (this.statusOptions = statusData), (this.allFeedbacks = feedbacksData);
   },
   props: {},
   data() {
-    return {};
+    return {
+      statusOptions: [] as StatusType[],
+      allFeedbacks: [] as FeedbackType[],
+    };
   },
   computed: {
     //
   },
-  mounted() {
-    //
-  },
   methods: {
-    //
+    filterFeedbackByStatus(statusName: string) {
+      return this.allFeedbacks.filter(
+        (feedback) => feedback.status.name === statusName
+      );
+    },
   },
 };
 </script>
