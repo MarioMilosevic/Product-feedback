@@ -6,7 +6,8 @@
       <p>It would be great to see a more detailed breakdown of solutions</p>
     </div>
     <div class="li__icons">
-        <Category category="Bug" />
+      <Category category="Bug" />
+      <LikeButton direction="row" :isLiked="false" :likes="5" />
     </div>
   </li>
 </template>
@@ -14,10 +15,12 @@
 <script lang="ts">
 import Status from "src/components/UI/Status.vue";
 import Category from "src/components/UI/Category.vue";
+import LikeButton from "src/components/UI/LikeButton.vue";
 export default {
   components: {
     Status,
     Category,
+    LikeButton,
   },
   props: {},
   data() {
@@ -51,5 +54,14 @@ export default {
     flex-direction: column;
     gap: 0.5rem;
   }
+
+  &__icons {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: start;
+  }
+
 }
 </style>

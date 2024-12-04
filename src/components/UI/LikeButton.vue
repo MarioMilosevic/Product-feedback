@@ -1,5 +1,5 @@
 <template>
-  <button :class="['likeButton', isLiked]">
+  <button :class="['likeButton', likeClass, displayClass]">
     <Icon class="likeButton-caret" size="small">
       <Caret />
     </Icon>
@@ -23,8 +23,20 @@ export default {
       required: true,
     },
     isLiked: {
+      type: Boolean,
+      required: true,
+    },
+    direction: {
       type: String,
       required: true,
+    },
+  },
+  computed: {
+    displayClass() {
+      return `${this.direction}`;
+    },
+    likeClass() {
+      return this.isLiked ? "liked" : "notLiked";
     },
   },
 };
@@ -35,7 +47,6 @@ export default {
 
 .likeButton {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
@@ -68,5 +79,13 @@ export default {
   &:hover {
     background-color: $primary-color-hover;
   }
+}
+
+.column {
+  flex-direction: column;
+}
+
+.row {
+  flex-direction: row;
 }
 </style>

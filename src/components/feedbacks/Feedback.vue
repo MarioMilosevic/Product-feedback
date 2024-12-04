@@ -2,6 +2,7 @@
   <div class="feedback">
     <div class="feedback__content">
       <LikeButton
+        direction="column"
         :isLiked="isLiked"
         :likes="feedback.likes"
         @click="likeHandler"
@@ -17,12 +18,13 @@
         <Category :category="feedback.category.name" />
       </router-link>
     </div>
-    <div v-if="commentsCount > 0" class="feedback__comments">
+    <FeedbackCommentIcon v-if="commentsCount > 0" :commentsCount="commentsCount"/>
+    <!-- <div v-if="commentsCount > 0" class="feedback__comments">
       <Icon class="size-24" fill="#f0f9ff" size="medium">
         <Chat />
       </Icon>
       <span class="feedback__comments-length">{{ commentsCount }}</span>
-    </div>
+    </div> -->
     <div v-if="isEditing" class="edit-delete">
       <Icon
         size="big"
@@ -56,6 +58,7 @@ import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { toggleLike } from "src/api/FeedbacksApi";
 import { showToast } from "src/utils/toastify";
 import LikeButton from "../UI/LikeButton.vue";
+import FeedbackCommentIcon from "./FeedbackCommentIcon.vue";
 
 export default {
   name: "Feedback",
@@ -78,6 +81,7 @@ export default {
     Edit,
     Delete,
     LikeButton,
+    FeedbackCommentIcon
   },
   computed: {
     ...mapState(useFeedbackStore, ["user"]),
@@ -88,9 +92,13 @@ export default {
       return this.feedback.Comments?.[0]?.count || 0;
     },
     isLiked() {
-      return this.user.id && this.feedback.likedUserIds.includes(this.user.id)
-        ? "liked"
-        : "notLiked";
+      if (this.user.id) {
+        return !!(
+          this.user.id && this.feedback.likedUserIds.includes(this.user.id)
+        );
+      } else {
+        return false;
+      }
     },
   },
   methods: {
@@ -141,16 +149,6 @@ export default {
       &-paragraph {
         line-height: 1.5rem;
       }
-    }
-  }
-  &__comments {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-
-    &-length {
-      font-weight: 600;
-      font-size: 1rem;
     }
   }
 }
