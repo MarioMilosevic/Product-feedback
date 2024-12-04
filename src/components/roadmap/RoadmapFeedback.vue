@@ -13,7 +13,7 @@
       <div class="li__icons-buttons">
         <LikeButton
           direction="row"
-          :isLiked="false"
+          :isLiked="isLiked"
           :likes="feedback.likes"
           @click="updateRoadmapFeedback"
         />
@@ -28,12 +28,11 @@ import Status from "src/components/UI/Status.vue";
 import Category from "src/components/UI/Category.vue";
 import LikeButton from "src/components/UI/LikeButton.vue";
 import CommentIcon from "src/components/UI/CommentIcon.vue";
-import { toggleLike } from "src/api/FeedbacksApi";
+import { checkLikeValidation, isLikedClass } from "src/api/FeedbacksApi";
 import { PropType } from "vue";
 import { FeedbackType } from "src/utils/types";
 import { mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
-import { showToast } from "src/utils/toastify";
 
 export default {
   components: {
@@ -57,22 +56,16 @@ export default {
     borderColor() {
       return `${this.feedback.status.name}`.toLowerCase();
     },
-    //
+    isLiked() {
+      return isLikedClass(this.feedback)
+    }
   },
   mounted() {
     console.log(this.feedback);
-    //
   },
   methods: {
     async updateRoadmapFeedback() {
-       if (this.user.is_anonymous) {
-        showToast("You must create an account first", "error");
-        return;
-      }
-      if (!this.feedback.id || !this.user.id) {
-        return;
-      }
-      const updatedFeedback = await toggleLike(this.feedback.id, this.user.id);
+      const updatedFeedback = await checkLikeValidation(this.feedback)
       this.$emit("update-like", updatedFeedback);
     },
   },

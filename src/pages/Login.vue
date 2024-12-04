@@ -47,7 +47,7 @@ import Label from "src/components/form/Label.vue";
 import AuthenticationForm from "src/components/auth/AuthenticationForm.vue";
 import AuthenticationWrapper from "src/components/auth/AuthenticationWrapper.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
-import { signInUser } from "src/api/UsersApi";
+import { formWatch, signInUser } from "src/api/UsersApi";
 import { loginFormSchema } from "src/validation/loginFormSchema";
 import { showToast } from "src/utils/toastify";
 
@@ -107,7 +107,7 @@ export default {
     loginCredentials: {
       deep: true,
       handler() {
-        this.errors = {};
+        formWatch(this.errors);
       },
     },
   },

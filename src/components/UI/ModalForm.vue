@@ -157,6 +157,7 @@ import { showToast } from "src/utils/toastify";
 import Add from "src/icons/Add.vue";
 import Edit from "src/icons/Edit.vue";
 import Close from "src/icons/Close.vue";
+import { formWatch } from "src/api/UsersApi";
 
 export default {
   name: "Modal",
@@ -288,9 +289,8 @@ export default {
   watch: {
     singleFeedback: {
       deep: true,
-      // ako errora ima
       handler() {
-        this.errors = {};
+        formWatch(this.errors);
       },
     },
   },

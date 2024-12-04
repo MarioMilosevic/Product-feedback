@@ -3,6 +3,7 @@ import { FeedbackType, SingleFeedbackType } from "src/utils/types";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { fetchSingleStatusOption, fetchStatusOptions } from "src/api/StatusApi";
 import { fetchCategories, fetchSingleCategory } from "src/api/CategoriesApi";
+import { showToast } from "src/utils/toastify";
 
 export const getData = async () => {
   try {
@@ -261,5 +262,34 @@ export const toggleLike = async (feedbackId: number, userId: number) => {
     }
   } catch (error) {
     console.error("Unexpected error occured", error);
+  }
+};
+
+export const checkLikeValidation = async (
+  feedback: FeedbackType | SingleFeedbackType
+) => {
+  try {
+    const store = useFeedbackStore();
+    if (store.user.is_anonymous) {
+      showToast("You must create an account first", "error");
+      return;
+    }
+    if (!feedback.id || !store.user.id) {
+      return;
+    }
+    const updatedFeedback = await toggleLike(feedback.id, store.user.id);
+    return updatedFeedback;
+  } catch (error) {
+    console.error("Unexpected error occured", error);
+  }
+};
+
+export const isLikedClass = (feedback: FeedbackType | SingleFeedbackType) => {
+  const { user } = useFeedbackStore();
+
+  if (user.id) {
+    return !!(user.id && feedback.likedUserIds.includes(user.id));
+  } else {
+    return false;
   }
 };

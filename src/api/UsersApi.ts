@@ -177,3 +177,10 @@ export const deleteUser = async (user: UserType) => {
     console.error("Unexpected error occured", error);
   }
 };
+
+
+export const formWatch = (errorsObj: Record<string, string>) => {
+  if (Object.keys(errorsObj).length > 0) {
+    errorsObj = {}
+  }
+};

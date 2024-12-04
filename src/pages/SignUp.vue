@@ -107,7 +107,7 @@ import AuthenticationForm from "src/components/auth/AuthenticationForm.vue";
 import AuthenticationWrapper from "src/components/auth/AuthenticationWrapper.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
-import { createNewUser } from "src/api/UsersApi";
+import { createNewUser, formWatch } from "src/api/UsersApi";
 import { showToast } from "src/utils/toastify";
 import { signUpFormSchema } from "src/validation/signUpFormSchema";
 
@@ -181,7 +181,7 @@ export default {
     signUpCredentials: {
       deep: true,
       handler() {
-        this.errors = {};
+        formWatch(this.errors)
       },
     },
   },

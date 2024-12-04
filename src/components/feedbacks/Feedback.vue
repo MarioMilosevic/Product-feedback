@@ -18,7 +18,7 @@
         <Category :category="feedback.category.name" />
       </router-link>
     </div>
-    <CommentIcon v-if="commentsCount > 0" :commentsCount="commentsCount"/>
+    <CommentIcon v-if="commentsCount > 0" :commentsCount="commentsCount" />
     <div v-if="isEditing" class="edit-delete">
       <Icon
         size="big"
@@ -47,10 +47,9 @@ import Caret from "src/icons/Caret.vue";
 import Chat from "src/icons/Chat.vue";
 import Edit from "src/icons/Edit.vue";
 import Delete from "src/icons/Delete.vue";
-import { mapActions, mapState } from "pinia";
+import { mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
-import { toggleLike } from "src/api/FeedbacksApi";
-import { showToast } from "src/utils/toastify";
+import { checkLikeValidation, isLikedClass } from "src/api/FeedbacksApi";
 import LikeButton from "src/components/UI/LikeButton.vue";
 import CommentIcon from "src/components/UI/CommentIcon.vue";
 
@@ -75,7 +74,7 @@ export default {
     Edit,
     Delete,
     LikeButton,
-    CommentIcon
+    CommentIcon,
   },
   computed: {
     ...mapState(useFeedbackStore, ["user"]),
@@ -83,26 +82,12 @@ export default {
       return this.feedback.Comments?.[0]?.count || 0;
     },
     isLiked() {
-      if (this.user.id) {
-        return !!(
-          this.user.id && this.feedback.likedUserIds.includes(this.user.id)
-        );
-      } else {
-        return false;
-      }
+      return isLikedClass(this.feedback);
     },
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setFeedbacksLikes"]),
     async likeHandler() {
-      if (this.user.is_anonymous) {
-        showToast("You must create an account first", "error");
-        return;
-      }
-      if (!this.feedback.id || !this.user.id) {
-        return;
-      }
-      const updatedFeedback = await toggleLike(this.feedback.id, this.user.id);
+      const updatedFeedback = await checkLikeValidation(this.feedback);
       this.$emit("update-like", updatedFeedback);
     },
   },
