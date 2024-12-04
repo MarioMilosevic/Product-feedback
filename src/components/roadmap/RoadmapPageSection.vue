@@ -6,12 +6,19 @@
     </div>
 
     <ul class="section__list">
-      <RoadmapFeedback v-for="feedback in filteredFeedbacks" :feedback="feedback" :key="feedback.id"/>
+      <RoadmapFeedback
+        v-for="feedback in filteredFeedbacks"
+        :feedback="feedback"
+        :key="feedback.id"
+        @update-like="updateLikedIds"
+      />
     </ul>
   </section>
 </template>
 <script lang="ts">
+import { mapActions } from "pinia";
 import RoadmapFeedback from "src/components/roadmap/RoadmapFeedback.vue";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { FeedbackType, StatusType } from "src/utils/types";
 import { PropType } from "vue";
 
@@ -35,22 +42,25 @@ export default {
   },
   computed: {
     title() {
-      return this.status.name
+      return this.status.name;
     },
     descripton() {
-      return this.status.description
+      return this.status.description;
     },
     feedebackCount() {
-      return this.filteredFeedbacks.length
-    }
-    //
-  },
-  mounted() {
-    console.log(this.filteredFeedbacks);
-    console.log(this.status)
+      return this.filteredFeedbacks.length;
+    },
     //
   },
   methods: {
+    ...mapActions(useFeedbackStore, ["setFeedbacksLikes"]),
+    updateLikedIds(updatedFeedback: FeedbackType) {
+      this.setFeedbacksLikes(updatedFeedback);
+    },
+  },
+  mounted() {
+    console.log(this.filteredFeedbacks);
+    console.log(this.status);
     //
   },
 };

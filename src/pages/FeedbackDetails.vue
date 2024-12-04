@@ -1,5 +1,5 @@
 <template>
-  <LoadingSpinner v-if="loading" />
+  <LoadingSpinner v-if="loading" style="grid-area: 2 / 4 / 3 / 5" />
   <div v-else class="wrapper">
     <Feedback
       :isEditing="singleFeedback.userId === user.auth_id"

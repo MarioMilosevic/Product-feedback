@@ -7,7 +7,7 @@
       </template>
     </Header>
     <LoadingSpinner
-      v-if="statusOptions.length === 0 || allFeedbacks.length === 0"
+      v-if="statusOptions.length === 0 || feedbacks.length === 0"
     />
     <RoadmapPageSection
       v-else
@@ -23,9 +23,10 @@
 import Header from "src/components/roadmap/Header.vue";
 import RoadmapPageSection from "src/components/roadmap/RoadmapPageSection.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
-import { fetchRoadmapData } from "src/api/RoadmapApi";
-import { FeedbackType, StatusType } from "src/utils/types";
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
+import { fetchRoadmapData } from "src/api/RoadmapApi";
+import { mapActions, mapState } from "pinia";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
 export default {
   components: {
     ActionButton,
@@ -36,25 +37,19 @@ export default {
   async created() {
     try {
       const roadmapData = await fetchRoadmapData();
-      this.statusOptions = roadmapData?.statusData || [];
-      this.allFeedbacks = roadmapData?.feedbacksData || [];
+      this.setStatusOptions(roadmapData?.statusData ?? []);
+      this.setFeedbacks(roadmapData?.feedbacksData ?? []);
     } catch (error) {
       console.error("Unable to fetch data", error);
     }
   },
-  props: {},
-  data() {
-    return {
-      statusOptions: [] as StatusType[],
-      allFeedbacks: [] as FeedbackType[],
-    };
-  },
   computed: {
-    //
+    ...mapState(useFeedbackStore, ["statusOptions", "feedbacks"]),
   },
   methods: {
+    ...mapActions(useFeedbackStore, ["setFeedbacks", "setStatusOptions"]),
     filterFeedbackByStatus(statusName: string) {
-      return this.allFeedbacks.filter(
+      return this.feedbacks.filter(
         (feedback) => feedback.status.name === statusName
       );
     },

@@ -1,14 +1,22 @@
 <template>
   <li :class="['li', borderColor]">
     <Status :status="feedback.status.name" />
-    <router-link :to="{name:'FeedbackDetails', params:{id:feedback.id}}" class="li__textContainer">
+    <router-link
+      :to="{ name: 'FeedbackDetails', params: { id: feedback.id } }"
+      class="li__textContainer"
+    >
       <h3>{{ feedback.title }}</h3>
       <p>{{ feedback.description }}</p>
     </router-link>
     <div class="li__icons">
       <Category :category="feedback.category.name" class="li__icons-category" />
       <div class="li__icons-buttons">
-        <LikeButton direction="row" :isLiked="false" :likes="feedback.likes" />
+        <LikeButton
+          direction="row"
+          :isLiked="false"
+          :likes="feedback.likes"
+          @click="updateRoadmapFeedback"
+        />
         <CommentIcon :commentsCount="feedback.Comments[0].count" gap="small" />
       </div>
     </div>
@@ -20,8 +28,12 @@ import Status from "src/components/UI/Status.vue";
 import Category from "src/components/UI/Category.vue";
 import LikeButton from "src/components/UI/LikeButton.vue";
 import CommentIcon from "src/components/UI/CommentIcon.vue";
+import { toggleLike } from "src/api/FeedbacksApi";
 import { PropType } from "vue";
 import { FeedbackType } from "src/utils/types";
+import { mapState } from "pinia";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
+import { showToast } from "src/utils/toastify";
 
 export default {
   components: {
@@ -36,10 +48,12 @@ export default {
       required: true,
     },
   },
+  emits:['update-like'],
   data() {
     return {};
   },
   computed: {
+    ...mapState(useFeedbackStore, ["user"]),
     borderColor() {
       return `${this.feedback.status.name}`.toLowerCase();
     },
@@ -50,7 +64,17 @@ export default {
     //
   },
   methods: {
-    //
+    async updateRoadmapFeedback() {
+       if (this.user.is_anonymous) {
+        showToast("You must create an account first", "error");
+        return;
+      }
+      if (!this.feedback.id || !this.user.id) {
+        return;
+      }
+      const updatedFeedback = await toggleLike(this.feedback.id, this.user.id);
+      this.$emit("update-like", updatedFeedback);
+    },
   },
 };
 </script>
@@ -77,7 +101,7 @@ export default {
     text-decoration: none;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
 
     p {
       font-size: 1rem;
