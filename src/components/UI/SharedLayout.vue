@@ -1,6 +1,7 @@
 <template>
   <nav class="nav" v-if="loading === false">
     <HomepageLink v-if="backButton" />
+
     <template v-if="user.id">
       <h3 v-if="!backButton" class="nav__heading">
         Welcome back: {{ userFirstName }}
@@ -14,6 +15,7 @@
         </ActionButton>
       </div>
     </template>
+
     <template v-else>
       <div class="nav__button">
         <ActionButton size="big" color="blue" @click="goToLoginPage"
@@ -25,15 +27,15 @@
 </template>
 
 <script lang="ts">
+import HomepageLink from "src/components/UI/HomepageLink.vue";
+import ActionButton from "src/components/UI/ActionButton.vue";
+import LeftArrow from "src/icons/LeftArrow.vue";
+import Icon from "src/components/UI/Icon.vue";
 import { retrieveUser, signOutUser } from "src/api/UsersApi";
 import { mapState, mapActions } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
-import ActionButton from "src/components/UI/ActionButton.vue";
 import { showToast } from "src/utils/toastify";
 import { deleteUser } from "src/api/UsersApi";
-import LeftArrow from "src/icons/LeftArrow.vue";
-import Icon from "src/components/UI/Icon.vue";
-import HomepageLink from "src/components/UI/HomepageLink.vue";
 import { UserType } from "src/utils/types";
 import { notLoggedInUser } from "src/utils/constants";
 
@@ -59,10 +61,8 @@ export default {
     this.setLoading(true);
     const user = await retrieveUser();
     console.log("trenutni user na stvaranju prije setUser", user);
-    if (user.id) {
-      this.setUser(user);
-      this.setLoading(false);
-    }
+    this.setUser(user);
+    this.setLoading(false);
   },
   methods: {
     ...mapActions(useFeedbackStore, ["setUser", "setLoading"]),

@@ -50,7 +50,6 @@ export default {
     feedebackCount() {
       return this.filteredFeedbacks.length;
     },
-    //
   },
   methods: {
     ...mapActions(useFeedbackStore, ["setFeedbacksLikes"]),
@@ -59,9 +58,8 @@ export default {
     },
   },
   mounted() {
-    console.log(this.filteredFeedbacks);
-    console.log(this.status);
-    //
+    // console.log(this.filteredFeedbacks);
+    // console.log(this.status);
   },
 };
 </script>

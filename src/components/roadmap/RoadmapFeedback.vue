@@ -61,7 +61,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.feedback);
+    // console.log(this.feedback);
   },
   methods: {
     async updateRoadmapFeedback() {
