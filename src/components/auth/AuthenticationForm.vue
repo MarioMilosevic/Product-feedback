@@ -1,5 +1,5 @@
 <template>
-  <div :class="divClass">
+  <form :class="divClass" @submit.prevent @submit-event.prevent="handleSubmit">
     <slot name="fullName" />
     <slot name="username" />
     <slot name="email" />
@@ -9,7 +9,7 @@
     <div :class="buttonClass">
       <slot name="submit" />
     </div>
-  </div>
+  </form>
 </template>
 
 <script lang="ts">
@@ -21,6 +21,7 @@ export default {
       required: true,
     },
   },
+  emits:['submit-event'],
   data() {
     return {};
   },
@@ -33,12 +34,18 @@ export default {
     },
   },
   mounted() {},
-  methods: {},
+  methods: {
+    handleSubmit(payload) {
+      console.log(payload)
+      console.log('radi')
+    }
+  },
 };
 </script>
 
 <style scoped lang="scss">
 .flex {
+  border: 1px solid black;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;

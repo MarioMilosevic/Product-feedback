@@ -1,12 +1,14 @@
 <template>
-  <form class="wrapper">
+  <div class="wrapper">
     <h1>{{ title }} Form</h1>
     <HomepageLink position="absolute"/>
  
     <slot name="form" />
+
     <div class="wrapper__links">
       <p>
         {{ haveAccount }} have an account ?
+
         <router-link :to="{ name: link }" class="wrapper__links-link">
           {{ link }}
         </router-link>
@@ -18,7 +20,7 @@
         </span>
       </p>
     </div>
-  </form>
+  </div>
 </template>
 
 <script lang="ts">
