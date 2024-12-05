@@ -2,7 +2,7 @@
   <LoadingSpinner v-if="loading" />
   <template v-else>
     <Sidebar />
-    <Main />
+    <Main page="home" :data="feedbacks"/>
   </template>
 </template>
 
@@ -26,7 +26,7 @@ export default {
     this.setLoading(false);
   },
   computed: {
-    ...mapState(useFeedbackStore, ["loading"]),
+    ...mapState(useFeedbackStore, ["loading", 'feedbacks']),
   },
   methods: {
     ...mapActions(useFeedbackStore, ["setLoading"]),

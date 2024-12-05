@@ -61,8 +61,7 @@ export default {
   },
   computed: {
     propClass() {
-      return `${this.name}`;
-      // return this.name ? {} : { gridColumn: "1 / 4" };
+      return `${this.name}Nav`;
     },
     ...mapState(useFeedbackStore, [
       "feedbacks",
@@ -99,6 +98,7 @@ export default {
   background-color: $terniary-color;
   border-radius: $border-radius-medium;
   color: $secondary-color;
+  flex-direction: row;
   display: flex;
   justify-content: space-between;
   
@@ -109,13 +109,12 @@ export default {
   }
 }
 
-.home {
-  display: flex;
+.homeNav {
   justify-content: space-between;
   padding: 1rem 2rem;
 }
 
-.roadmap {
+.roadmapNav {
   padding: 1.5rem;
   align-items: center;
   grid-column: 1/4;
