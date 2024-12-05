@@ -36,10 +36,6 @@ export default {
       required: true,
     },
   },
-
-  data() {
-    return {};
-  },
   computed: {
     title() {
       return this.status.name;
@@ -57,10 +53,6 @@ export default {
       this.setFeedbacksLikes(updatedFeedback);
     },
   },
-  mounted() {
-    // console.log(this.filteredFeedbacks);
-    // console.log(this.status);
-  },
 };
 </script>
 
@@ -68,7 +60,6 @@ export default {
 @import "src/scss/_variables.scss";
 
 .section {
-  /* border: 1px solid black; */
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -84,7 +75,6 @@ export default {
   }
 
   &__list {
-    /* border: 1px solid black; */
     list-style: none;
     display: flex;
     flex-direction: column;

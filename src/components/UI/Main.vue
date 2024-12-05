@@ -42,11 +42,6 @@ export default {
     Nofeedbacks,
     RoadmapPageSection,
   },
-  data() {
-    return {
-      isModalOpen: false,
-    };
-  },
   props: {
     page: {
       type: String,
@@ -63,6 +58,7 @@ export default {
       "sort",
       "feedbacks",
       "statusOptions",
+      "isModalOpen",
     ]),
     mainClass() {
       return `${this.page}Main`;
@@ -74,12 +70,12 @@ export default {
         (feedback) => feedback.status.name === statusName
       );
     },
-    ...mapActions(useFeedbackStore, ["setFeedbacksLikes"]),
+    ...mapActions(useFeedbackStore, ["setFeedbacksLikes", "setIsModalOpen"]),
     closeModal() {
-      this.isModalOpen = false;
+      this.setIsModalOpen(false);
     },
     openModal() {
-      this.isModalOpen = true;
+      this.setIsModalOpen(true);
     },
     updateLikedIds(updatedFeedback: FeedbackType) {
       this.setFeedbacksLikes(updatedFeedback);

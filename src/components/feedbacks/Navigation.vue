@@ -101,7 +101,7 @@ export default {
   flex-direction: row;
   display: flex;
   justify-content: space-between;
-  
+
   &__wrapper {
     display: flex;
     align-items: center;

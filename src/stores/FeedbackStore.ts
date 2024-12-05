@@ -17,6 +17,7 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       sort: "Most Likes",
       user: notLoggedInUser as UserType,
       loading: false,
+      isModalOpen:false,
     };
   },
   getters: {
@@ -95,5 +96,8 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     setLoading(value: boolean) {
       this.loading = value;
     },
+    setIsModalOpen(value: boolean) {
+      this.isModalOpen = value
+    }
   },
 });

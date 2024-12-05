@@ -121,7 +121,6 @@ export const fetchSingleFeedback = async (id: number) => {
 };
 
 export const addFeedback = async (feedback: FeedbackType) => {
-  console.log("novi feedback", feedback);
   try {
     const feedbackStore = useFeedbackStore();
     const [categoryData, statusData] = await Promise.all([

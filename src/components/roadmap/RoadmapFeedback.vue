@@ -17,7 +17,7 @@
           :likes="feedback.likes"
           @click="updateRoadmapFeedback"
         />
-        <CommentIcon :commentsCount="feedback.Comments[0].count" gap="small" />
+        <CommentIcon v-if="feedback.Comments" :commentsCount="feedback.Comments[0].count" gap="small" />
       </div>
     </div>
   </li>

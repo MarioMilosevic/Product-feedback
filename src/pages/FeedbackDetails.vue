@@ -82,13 +82,12 @@ export default {
   data() {
     return {
       singleFeedback: {} as SingleFeedbackType,
-      isModalOpen: false,
       textAreaContent: "",
       maxCharacters: 225,
     };
   },
   computed: {
-    ...mapState(useFeedbackStore, ["user", "getFeedback", "loading"]),
+    ...mapState(useFeedbackStore, ["user", "getFeedback", "loading", "isModalOpen"]),
     feedbackId() {
       return Number(this.$route.params.id);
     },
@@ -100,12 +99,12 @@ export default {
     },
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setLoading"]),
+    ...mapActions(useFeedbackStore, ["setLoading", 'setIsModalOpen']),
     editFeedback() {
-      this.isModalOpen = true;
+      this.setIsModalOpen(true)
     },
     closeModal() {
-      this.isModalOpen = false;
+      this.setIsModalOpen(false);
     },
     handleUpdateTextarea(newContent: string) {
       this.textAreaContent = newContent;
