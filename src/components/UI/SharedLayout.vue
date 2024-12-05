@@ -61,8 +61,10 @@ export default {
     this.setLoading(true);
     const user = await retrieveUser();
     console.log("trenutni user na stvaranju prije setUser", user);
-    this.setUser(user);
-    this.setLoading(false);
+    if (user.id) {
+      this.setUser(user);
+      this.setLoading(false);
+    }
   },
   methods: {
     ...mapActions(useFeedbackStore, ["setUser", "setLoading"]),

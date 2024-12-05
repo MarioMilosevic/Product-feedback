@@ -1,26 +1,25 @@
 <template>
-  <nav class="navigation">
-    <div class="navigation__parentDiv">
+  <nav :class="['navigation', propClass]">
+    <div class="navigation__wrapper" v-if="name === 'home'">
       <Icon>
         <Lightbulb />
       </Icon>
       <h3>{{ getFeedbacksLength }} Suggestions</h3>
-      <div class="navigation__parentDiv__childDiv">
-        <FormBlock direction="row" color="blue">
-          <Label name="sort">
-            <template #title>Sort By:</template>
-          </Label>
-          <Select
-            color="blue"
-            name="sort"
-            :options="navSortOptions"
-            :content="sort"
-            @update-select="updateSelect"
-          ></Select>
-        </FormBlock>
-      </div>
+      <FormBlock direction="row" color="blue">
+        <Label name="sort">
+          <template #title>Sort By:</template>
+        </Label>
+        <Select
+          color="blue"
+          name="sort"
+          :options="navSortOptions"
+          :content="sort"
+          @update-select="updateSelect"
+        ></Select>
+      </FormBlock>
     </div>
-    <ActionButton color="purple" size="small" @click="openModal">
+    <h1 v-else>Roadmap</h1>
+    <ActionButton color="purple" size="medium" @click="openModal">
       Add Feedback
     </ActionButton>
   </nav>
@@ -48,7 +47,12 @@ export default {
     FormBlock,
     Lightbulb,
   },
-  props: {},
+  props: {
+    name: {
+      type: String,
+      required: true,
+    },
+  },
   emits: ["open-modal"],
   data() {
     return {
@@ -56,11 +60,15 @@ export default {
     };
   },
   computed: {
+    propClass() {
+      return `${this.name}`;
+      // return this.name ? {} : { gridColumn: "1 / 4" };
+    },
     ...mapState(useFeedbackStore, [
       "feedbacks",
       "getFeedbacksLength",
       "sort",
-      'filterId',
+      "filterId",
       "user",
     ]),
   },
@@ -89,28 +97,27 @@ export default {
 
 .navigation {
   background-color: $terniary-color;
-  padding: 1rem 2rem;
   border-radius: $border-radius-medium;
   color: $secondary-color;
   display: flex;
   justify-content: space-between;
-
-  &__parentDiv {
+  
+  &__wrapper {
     display: flex;
     align-items: center;
     gap: 1rem;
-
-    &__childDiv {
-      &-select {
-        background-color: $terniary-color;
-        color: $secondary-color;
-        padding: 0.5rem 0.25rem; 
-        border: none;
-        outline: none;
-        cursor: pointer;
-        font-size: 1rem;
-      }
-    }
   }
+}
+
+.home {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+}
+
+.roadmap {
+  padding: 1.5rem;
+  align-items: center;
+  grid-column: 1/4;
 }
 </style>

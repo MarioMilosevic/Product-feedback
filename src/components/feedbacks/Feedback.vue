@@ -52,6 +52,7 @@ import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { checkLikeValidation, isLikedClass } from "src/api/FeedbacksApi";
 import LikeButton from "src/components/UI/LikeButton.vue";
 import CommentIcon from "src/components/UI/CommentIcon.vue";
+import { showToast } from "src/utils/toastify";
 
 export default {
   name: "Feedback",
@@ -87,8 +88,12 @@ export default {
   },
   methods: {
     async likeHandler() {
-      const updatedFeedback = await checkLikeValidation(this.feedback);
-      this.$emit("update-like", updatedFeedback);
+      if (this.user.id) {
+        const updatedFeedback = await checkLikeValidation(this.feedback);
+        this.$emit("update-like", updatedFeedback);
+      } else {
+        showToast("You must login first", 'error')
+      }
     },
   },
 };

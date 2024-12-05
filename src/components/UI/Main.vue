@@ -1,6 +1,6 @@
 <template>
   <main>
-    <FeedbackNav @open-modal="openModal" />
+    <Navigation @open-modal="openModal" name="home"/>
     <Feedback
       v-if="feedbacks.length > 0"
       v-for="feedback in feedbacks"
@@ -17,7 +17,7 @@
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapActions, mapState } from "pinia";
 import Feedback from "src/components/feedbacks/Feedback.vue";
-import FeedbackNav from "src/components/feedbacks/FeedbackNav.vue";
+import Navigation from "src/components/feedbacks/Navigation.vue";
 import ModalForm from "src/components/UI/ModalForm.vue";
 import Nofeedbacks from "src/components/feedbacks/Nofeedbacks.vue";
 import { FeedbackType } from "src/utils/types";
@@ -26,7 +26,7 @@ export default {
   name: "Main",
   components: {
     Feedback,
-    FeedbackNav,
+    Navigation,
     ModalForm,
     Nofeedbacks,
   },
