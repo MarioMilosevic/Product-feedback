@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <form :class="divClass" @submit.prevent @submit-event.prevent="handleSubmit">
     <slot name="fullName" />
     <slot name="username" />
@@ -75,4 +75,4 @@ export default {
     }
   }
 }
-</style>
+</style> -->

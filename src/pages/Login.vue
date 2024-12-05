@@ -55,8 +55,8 @@
 import ActionButton from "src/components/UI/ActionButton.vue";
 import Input from "src/components/form/Input.vue";
 import Label from "src/components/form/Label.vue";
-import AuthenticationForm from "src/components/auth/AuthenticationForm.vue";
-import AuthenticationWrapper from "src/components/auth/AuthenticationWrapper.vue";
+// import AuthenticationForm from "src/components/auth/AuthenticationForm.vue";
+// import AuthenticationWrapper from "src/components/auth/AuthenticationWrapper.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
 import { formWatch, signInUser, signInGuest } from "src/api/UsersApi";
 import { loginFormSchema } from "src/validation/loginFormSchema";
@@ -69,8 +69,8 @@ export default {
     FormBlock,
     Input,
     Label,
-    AuthenticationForm,
-    AuthenticationWrapper,
+    // AuthenticationForm,
+    // AuthenticationWrapper,
     HomepageLink,
   },
   data() {

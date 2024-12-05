@@ -8,6 +8,7 @@
     </Header>
     <LoadingSpinner
       v-if="statusOptions.length === 0 || feedbacks.length === 0"
+      :style="'grid-column: 2 / 3'"
     />
     <RoadmapPageSection
       v-else

@@ -14,7 +14,7 @@
   animation: rotation 1s linear infinite;
   grid-column: span 4;
   margin: 10rem auto;
-  /* grid-area: 2 / 4 / 3 / 5; */
+  grid-area: 2 / 4 / 3 / 5;
 }
 
 @keyframes rotation {
