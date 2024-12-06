@@ -1,5 +1,5 @@
 <template>
-  <div class="feedback">
+  <div class="feedback" ref="lastFeedbackRef">
     <div class="feedback__content">
       <LikeButton
         direction="column"

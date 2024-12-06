@@ -8,7 +8,7 @@
         :key="feedback.id"
         :feedback="feedback"
         @update-like="updateLikedIds"
-        :ref="index === feedbacks.length - 1 ? 'lastFeedback' : null"
+        :ref="index === feedbacks.length - 1 ? 'lastFeedbackRef' : undefined"
       />
       <RoadmapPageSection
         v-else-if="page === 'roadmap'"
@@ -32,7 +32,7 @@ import ModalForm from "src/components/UI/ModalForm.vue";
 import Nofeedbacks from "src/components/feedbacks/Nofeedbacks.vue";
 import { FeedbackType, StatusType } from "src/utils/types";
 import RoadmapPageSection from "../roadmap/RoadmapPageSection.vue";
-import { PropType } from "vue";
+import { PropType, toRaw } from "vue";
 
 export default {
   name: "Main",
@@ -51,6 +51,7 @@ export default {
     data: {
       type: Array as PropType<FeedbackType[] | StatusType[]>,
       required: true,
+      lastFeedbackRef: null
     },
   },
   computed: {
@@ -82,11 +83,47 @@ export default {
       this.setFeedbacksLikes(updatedFeedback);
     },
   },
- mounted() {
-  if (this.$refs.lastFeedback) {
-    console.log(this.$refs.lastFeedback); // Logs the last feedback component
-  }
-},
+  mounted() {
+    const targetProxy = this.$refs.lastFeedbackRef
+    console.log(targetProxy)
+    const mario = toRaw(targetProxy[0])
+    console.log("mario", mario.$refs.lastFeedbackRef)
+    
+    // console.log(targetElement)
+    
+    // if (!targetElement) {
+    //   console.log("NO element");
+    //   return;
+    // }
+    // console.log(targetElement.value)
+
+    // const lastElement = Array.isArray(targetElement)
+    //   ? targetElement[targetElement.length - 1]
+    //   : targetElement;
+
+    // if (!lastElement) {
+    //   console.log("No valid last feedback element");
+    //   return;
+    // }
+
+    // const observer = new IntersectionObserver(
+    //   (entries) => {
+    //     entries.forEach((entry) => {
+    //       if (entry.isIntersecting) {
+    //         console.log("Last feedback is visible");
+    //         // Trigger your fetch or any other action here
+    //       }
+    //     });
+    //   },
+    //   {
+    //     root: null,
+    //     threshold: 0.5,
+    //   }
+    // );
+    // // console.log(observer)
+
+    // // observer.observe(mario);
+  },
 };
 </script>
 

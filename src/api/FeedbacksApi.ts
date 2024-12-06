@@ -35,7 +35,7 @@ export const fetchAllFeedbacks = async (page: number, limit: number) => {
         category:Categories(name)`
       )
       .order("likes", { ascending: false })
-      .range((page - 1) * limit, page * limit - 1);
+      // .range((page - 1) * limit, page * limit - 1);
     if (error) {
       console.error("Unable to fetch feedbacks", error);
       return;
