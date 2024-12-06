@@ -4,10 +4,11 @@
     <template v-if="feedbacks.length > 0">
       <Feedback
         v-if="page === 'home'"
-        v-for="feedback in feedbacks"
+        v-for="(feedback, index) in feedbacks"
         :key="feedback.id"
         :feedback="feedback"
         @update-like="updateLikedIds"
+        :ref="index === feedbacks.length - 1 ? 'lastFeedback' : null"
       />
       <RoadmapPageSection
         v-else-if="page === 'roadmap'"
@@ -81,6 +82,11 @@ export default {
       this.setFeedbacksLikes(updatedFeedback);
     },
   },
+ mounted() {
+  if (this.$refs.lastFeedback) {
+    console.log(this.$refs.lastFeedback); // Logs the last feedback component
+  }
+},
 };
 </script>
 

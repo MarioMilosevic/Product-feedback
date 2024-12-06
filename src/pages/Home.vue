@@ -22,8 +22,14 @@ export default {
   },
   async created() {
     this.setLoading(true);
-    await getData();
+    await getData(this.page, this.limit);
     this.setLoading(false);
+  },
+  data() {
+    return {
+      page: 1,
+      limit:3
+    }
   },
   computed: {
     ...mapState(useFeedbackStore, ["loading", 'feedbacks']),

@@ -5,12 +5,12 @@ import { fetchSingleStatusOption, fetchStatusOptions } from "src/api/StatusApi";
 import { fetchCategories, fetchSingleCategory } from "src/api/CategoriesApi";
 import { showToast } from "src/utils/toastify";
 
-export const getData = async () => {
+export const getData = async (page:number, limit:number) => {
   try {
     const store = useFeedbackStore();
 
     const [feedbacksData, categoriesData, statusData] = await Promise.all([
-      fetchAllFeedbacks(),
+      fetchAllFeedbacks(page, limit),
       fetchCategories(),
       fetchStatusOptions(),
     ]);
@@ -25,7 +25,7 @@ export const getData = async () => {
   }
 };
 
-export const fetchAllFeedbacks = async () => {
+export const fetchAllFeedbacks = async (page: number, limit: number) => {
   try {
     const { data, error } = await supabase
       .from("Feedbacks")
@@ -34,7 +34,8 @@ export const fetchAllFeedbacks = async () => {
         status:Status(name),
         category:Categories(name)`
       )
-      .order("likes", { ascending: false });
+      .order("likes", { ascending: false })
+      .range((page - 1) * limit, page * limit - 1);
     if (error) {
       console.error("Unable to fetch feedbacks", error);
       return;
@@ -44,6 +45,25 @@ export const fetchAllFeedbacks = async () => {
     console.error("Unexpected error occured", error);
   }
 };
+// export const fetchAllFeedbacks = async () => {
+//   try {
+//     const { data, error } = await supabase
+//       .from("Feedbacks")
+//       .select(
+//         `*, Comments(count),
+//         status:Status(name),
+//         category:Categories(name)`
+//       )
+//       .order("likes", { ascending: false });
+//     if (error) {
+//       console.error("Unable to fetch feedbacks", error);
+//       return;
+//     }
+//     return data;
+//   } catch (error) {
+//     console.error("Unexpected error occured", error);
+//   }
+// };
 
 export const fetchFilteredFeedbacks = async (id: number, sort: string) => {
   try {
