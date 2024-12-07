@@ -5,12 +5,12 @@ import { fetchSingleStatusOption, fetchStatusOptions } from "src/api/StatusApi";
 import { fetchCategories, fetchSingleCategory } from "src/api/CategoriesApi";
 import { showToast } from "src/utils/toastify";
 
-export const getData = async (page:number, limit:number) => {
+export const getData = async () => {
   try {
     const store = useFeedbackStore();
 
     const [feedbacksData, categoriesData, statusData] = await Promise.all([
-      fetchAllFeedbacks(page, limit),
+      fetchAllFeedbacks(),
       fetchCategories(),
       fetchStatusOptions(),
     ]);
@@ -25,7 +25,7 @@ export const getData = async (page:number, limit:number) => {
   }
 };
 
-export const fetchAllFeedbacks = async (page: number, limit: number) => {
+export const fetchAllFeedbacks = async () => {
   try {
     const { data, error } = await supabase
       .from("Feedbacks")

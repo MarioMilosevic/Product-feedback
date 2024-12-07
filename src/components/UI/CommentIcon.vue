@@ -35,22 +35,24 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "src/scss/_variables.scss";
+
 .comment {
   display: flex;
-  gap: 1rem;
+  gap: $medium-gap;
   align-items: center;
 
   &-length {
     font-weight: 600;
-    font-size: 1rem;
+    font-size: $medium-gap;
   }
 }
 
 .small {
-  gap: 0.5rem;
+  gap: $small-gap;
 }
 
 .medium {
-  gap: 1rem;
+  gap: $medium-gap;
 }
 </style>

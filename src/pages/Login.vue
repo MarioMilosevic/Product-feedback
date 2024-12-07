@@ -55,8 +55,6 @@
 import ActionButton from "src/components/UI/ActionButton.vue";
 import Input from "src/components/form/Input.vue";
 import Label from "src/components/form/Label.vue";
-// import AuthenticationForm from "src/components/auth/AuthenticationForm.vue";
-// import AuthenticationWrapper from "src/components/auth/AuthenticationWrapper.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
 import { formWatch, signInUser, signInGuest } from "src/api/UsersApi";
 import { loginFormSchema } from "src/validation/loginFormSchema";
@@ -69,8 +67,6 @@ export default {
     FormBlock,
     Input,
     Label,
-    // AuthenticationForm,
-    // AuthenticationWrapper,
     HomepageLink,
   },
   data() {
@@ -146,13 +142,13 @@ export default {
 @import "src/scss/_variables.scss";
 
 .wrapper {
-  padding: 1.5rem 0;
+  padding: $big-gap 0;
   border-radius: 10px;
   grid-area: 2 / 3/ 3 / 7;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: $very-big-gap;
   background-color: $primary-color-hover;
   position: relative;
 
@@ -160,7 +156,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: $small-gap;
 
     &-link {
       color: $terniary-color;
@@ -176,7 +172,7 @@ export default {
   &__form {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: $big-gap;
 
     &__button {
       width: 100%;
@@ -190,7 +186,7 @@ export default {
     &__title {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: $small-gap;
     }
     &__buttons {
       display: flex;

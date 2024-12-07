@@ -1,21 +1,21 @@
 <template>
   <nav class="nav" v-if="loading === false">
     <HomepageLink v-if="backButton" />
-
     <template v-if="user.id">
       <h3 v-if="!backButton" class="nav__heading">
         Welcome back: {{ userFirstName }}
       </h3>
-      <figure class="nav__figure">
-        <img :src="user.image" :alt="user.image" />
-      </figure>
-      <div class="nav__button">
-        <ActionButton size="big" color="purple" @click="localSignOutUser">
-          Sign Out
-        </ActionButton>
+      <div class="nav__buttons">
+        <figure class="nav__buttons-figure">
+          <img :src="user.image" :alt="user.image" />
+        </figure>
+        <div class="nav__button">
+          <ActionButton size="big" color="purple" @click="localSignOutUser">
+            Sign Out
+          </ActionButton>
+        </div>
       </div>
     </template>
-
     <template v-else>
       <div class="nav__button">
         <ActionButton size="big" color="blue" @click="goToLoginPage"
@@ -29,7 +29,6 @@
 <script lang="ts">
 import HomepageLink from "src/components/UI/HomepageLink.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
-import LeftArrow from "src/icons/LeftArrow.vue";
 import Icon from "src/components/UI/Icon.vue";
 import { retrieveUser, signOutUser } from "src/api/UsersApi";
 import { mapState, mapActions } from "pinia";
@@ -42,7 +41,6 @@ import { notLoggedInUser } from "src/utils/constants";
 export default {
   components: {
     ActionButton,
-    LeftArrow,
     Icon,
     HomepageLink,
   },
@@ -60,7 +58,7 @@ export default {
   async created() {
     this.setLoading(true);
     const user = await retrieveUser();
-    console.log("trenutni user na stvaranju prije setUser", user);
+    // console.log("trenutni user na stvaranju prije setUser", user);
     if (user.id) {
       this.setUser(user);
       this.setLoading(false);
@@ -95,9 +93,29 @@ export default {
 
 .nav {
   grid-column: span 8;
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: $big-gap;
+
+  &__buttons {
+    display: flex;
+    gap: $medium-gap;
+
+    &-figure {
+      width: 3.125rem;
+      height: 3.125rem;
+      grid-column: 7 / 8;
+      display: flex;
+      justify-self: flex-end;
+
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: $border-radius-full;
+        object-fit: cover;
+      }
+    }
+  }
 
   &__heading {
     grid-column-start: 1;
@@ -106,24 +124,9 @@ export default {
   }
 
   &__button {
-    grid-column: 8 / 9;
+    margin-left: auto;
     & > * {
       width: 100%;
-    }
-  }
-
-  &__figure {
-    width: 3.125rem;
-    height: 3.125rem;
-    grid-column: 7 / 8;
-    display: flex;
-    justify-self: flex-end;
-
-    img {
-      width: 100%;
-      height: 100%;
-      border-radius: $border-radius-full;
-      object-fit: cover;
     }
   }
 }

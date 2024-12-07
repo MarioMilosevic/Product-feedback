@@ -77,11 +77,11 @@ export default {
 
 .li {
   background-color: $secondary-color;
-  padding: 1rem 1.5rem;
+  padding: $medium-gap $big-gap;
   border-radius: $border-radius-medium;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: $big-gap;
   border-top-width: 0.3rem;
   border-top-style: solid;
 
@@ -94,17 +94,17 @@ export default {
     text-decoration: none;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: $medium-gap;
 
     p {
-      font-size: 1rem;
+      font-size: $medium-gap;
     }
   }
 
   &__icons {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: $medium-gap;
 
     &-category {
       align-self: start;

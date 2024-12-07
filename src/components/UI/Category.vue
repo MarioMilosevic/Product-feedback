@@ -14,9 +14,8 @@ export default {
       default: false,
     },
   },
-  emits: ['category-event'],
-  mounted() {
-  }
+  emits: ["category-event"],
+  mounted() {},
 };
 </script>
 
@@ -38,7 +37,7 @@ export default {
 
 .category {
   transition: all 300ms;
-  padding: 0.5rem 1rem;
+  padding: $small-gap $medium-gap;
   border: none;
 
   cursor: pointer;

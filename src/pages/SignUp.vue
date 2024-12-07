@@ -90,8 +90,6 @@
 <script lang="ts">
 import UploadWidget from "src/cloudinary/UploadWidget.vue";
 import Input from "src/components/form/Input.vue";
-// import AuthenticationForm from "src/components/auth/AuthenticationForm.vue";
-// import AuthenticationWrapper from "src/components/auth/AuthenticationWrapper.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
 import { createNewUser, formWatch } from "src/api/UsersApi";
@@ -103,8 +101,6 @@ export default {
   components: {
     Input,
     UploadWidget,
-    // AuthenticationForm,
-    // AuthenticationWrapper,
     ActionButton,
     FormBlock,
     HomepageLink,
@@ -181,13 +177,13 @@ export default {
 @import "src/scss/_variables.scss";
 
 .wrapper {
-  padding: 1.5rem 0;
+  padding: $big-gap 0;
   border-radius: 10px;
   grid-area: 2 / 3/ 3 / 7;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: $very-big-gap;
   background-color: $primary-color-hover;
   position: relative;
 
@@ -195,7 +191,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: $small-gap;
 
     &-link {
       color: $terniary-color;
@@ -211,7 +207,7 @@ export default {
   &__form {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    gap: $big-gap;
 
     &__button {
       grid-column: span 2;

@@ -1,5 +1,5 @@
 <template>
-  <div class="feedback" ref="lastFeedbackRef">
+  <div class="feedback">
     <div class="feedback__content">
       <LikeButton
         direction="column"
@@ -128,7 +128,7 @@ export default {
       text-decoration: none;
 
       &-paragraph {
-        line-height: 1.5rem;
+        line-height: $paragraph-lineHeight;
       }
     }
   }

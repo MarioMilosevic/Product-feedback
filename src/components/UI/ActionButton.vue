@@ -35,24 +35,24 @@ export default {
   border-radius: $border-radius-medium;
   color: $secondary-color;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: $medium-gap;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: $medium-gap;
   transition: all 0.3s;
 }
 
 .small {
-  padding: 0.5rem 1rem;
+  padding: $small-gap $medium-gap;
 }
 
 .medium {
-  padding: 0.75rem 1rem;
+  padding: 0.75rem $medium-gap;
 }
 
 .big {
-  padding: 1rem 2rem;
+  padding: $medium-gap $very-big-gap;
 }
 
 .blue {

@@ -115,7 +115,7 @@ export default {
 }
 
 .roadmapNav {
-  padding: 1.5rem;
+  padding: $big-gap;
   align-items: center;
   grid-column: 1/4;
 }

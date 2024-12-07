@@ -51,13 +51,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "src/scss/_variables.scss";
+
 .small {
-  width: 1rem;
-  height: 1rem;
+  width: $small-gap;
+  height: $small-gap;
 }
 .medium {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: $medium-gap;
+  height: $medium-gap;
 }
 .big {
   width: 2rem;

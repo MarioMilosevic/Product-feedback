@@ -32,7 +32,7 @@ import ModalForm from "src/components/UI/ModalForm.vue";
 import Nofeedbacks from "src/components/feedbacks/Nofeedbacks.vue";
 import { FeedbackType, StatusType } from "src/utils/types";
 import RoadmapPageSection from "../roadmap/RoadmapPageSection.vue";
-import { PropType, toRaw } from "vue";
+import { PropType } from "vue";
 
 export default {
   name: "Main",
@@ -84,10 +84,11 @@ export default {
     },
   },
   mounted() {
-    const targetProxy = this.$refs.lastFeedbackRef
-    console.log(targetProxy)
-    const mario = toRaw(targetProxy[0])
-    console.log("mario", mario.$refs.lastFeedbackRef)
+    // const targetProxy = this.$refs.lastFeedbackRef
+    // console.log(targetProxy)
+    // console.log(targetProxy[0].$refs.lastFeedbackRef)
+    // const mario = toRaw(targetProxy[0])
+    // console.log("mario", mario.$refs.lastFeedbackRef)
     
     // console.log(targetElement)
     

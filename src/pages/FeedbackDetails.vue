@@ -54,7 +54,6 @@ import Textarea from "src/components/form/Textarea.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
 import ModalForm from "src/components/UI/ModalForm.vue";
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
-import LeftArrow from "src/icons/LeftArrow.vue";
 import { showToast } from "src/utils/toastify";
 import { mapActions, mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
@@ -77,7 +76,6 @@ export default {
     ActionButton,
     ModalForm,
     LoadingSpinner,
-    LeftArrow,
   },
   data() {
     return {
@@ -182,12 +180,12 @@ export default {
   grid-column: span 8;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: $big-gap;
 
   &__comments {
     background-color: $secondary-color;
     border-radius: $border-radius-big;
-    padding: 2rem;
+    padding: $very-big-gap;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -196,10 +194,10 @@ export default {
   &__addComment {
     background-color: $secondary-color;
     border-radius: $border-radius-big;
-    padding: 2rem;
+    padding: $very-big-gap;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: $big-gap;
 
     &-div {
       display: flex;

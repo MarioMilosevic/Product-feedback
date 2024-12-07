@@ -1,18 +1,14 @@
 <template>
-  <router-link :to="{ name: 'Home' }" :class="['link', positionClass]">
+  <a @click="goBack" :class="['link', positionClass]">
     <span> Back </span>
-    <Icon size="small">
-      <ArrowDown />
-    </Icon>
-  </router-link>
+    <span> &#x2193; </span>
+  </a>
 </template>
 
 <script lang="ts">
-import ArrowDown from "src/icons/ArrowDown.vue";
 import Icon from "src/components/UI/Icon.vue";
 export default {
   components: {
-    ArrowDown,
     Icon,
   },
   props: {
@@ -24,6 +20,11 @@ export default {
   computed: {
     positionClass() {
       return this.position;
+    },
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1);
     },
   },
 };
@@ -39,12 +40,7 @@ export default {
   display: flex;
   align-items: center;
   gap: 1rem;
-  justify-content: space-between;
-
-  &:hover {
-    border-bottom: 1px solid $cancel-color;
-    padding-bottom: 0.1rem;
-  }
+  border-bottom: 1px solid $heading-color;
 
   &.absolute {
     position: absolute;

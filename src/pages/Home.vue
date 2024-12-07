@@ -22,7 +22,7 @@ export default {
   },
   async created() {
     this.setLoading(true);
-    await getData(this.page, this.limit);
+    await getData();
     this.setLoading(false);
   },
   data() {
