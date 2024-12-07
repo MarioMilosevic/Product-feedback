@@ -1,7 +1,7 @@
 <template>
   <label :for="name" class="label">
     <h4>
-      <slot name="title"/>
+      <slot name="title" />
     </h4>
     <p v-if="$slots.description" class="label__paragraph">
       <slot name="description" />
@@ -34,13 +34,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "src/scss/_variables.scss";
+
 .label {
   display: flex;
   flex-direction: column;
   gap: 4px;
 
-  &__title {
-    font-weight: 700;
+  h4 {
+    color: $secondary-color;
   }
 
   &__paragraph {

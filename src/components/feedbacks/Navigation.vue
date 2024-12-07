@@ -106,6 +106,14 @@ export default {
     display: flex;
     align-items: center;
     gap: 1rem;
+
+    h3 {
+      color: $secondary-color;
+    }
+  }
+
+  h1 {
+    color: $secondary-color;
   }
 }
 

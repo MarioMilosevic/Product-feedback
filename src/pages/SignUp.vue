@@ -218,6 +218,10 @@ export default {
         width: 50%;
       }
     }
+
+    h3 {
+      color: $secondary-color;
+    }
   }
 }
 </style>

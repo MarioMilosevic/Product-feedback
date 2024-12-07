@@ -109,7 +109,6 @@ export default {
 
 <style lang="scss" scoped>
 .homeMain {
-  border: 1px solid black;
   display: flex;
   flex-direction: column;
   grid-column: span 7;

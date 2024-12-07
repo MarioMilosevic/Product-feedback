@@ -12,7 +12,7 @@
         class="feedback__content__link"
       >
         <h4>{{ feedback.title }}</h4>
-        <p class="feedback__content__link-paragraph">
+        <p>
           {{ feedback.description }}
         </p>
         <Category :category="feedback.category.name" />
@@ -127,9 +127,15 @@ export default {
       color: inherit;
       text-decoration: none;
 
-      &-paragraph {
-        line-height: $paragraph-lineHeight;
+      h4 {
+        color: $heading-color;
       }
+
+      p {
+        line-height: $paragraph-lineHeight;
+        color: $paragraph-color;
+      }
+
     }
   }
 }

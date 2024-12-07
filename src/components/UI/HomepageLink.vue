@@ -41,6 +41,7 @@ export default {
   align-items: center;
   gap: 1rem;
   border-bottom: 1px solid $heading-color;
+  padding-bottom: $small-gap;
 
   &.absolute {
     position: absolute;

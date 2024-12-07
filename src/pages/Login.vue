@@ -78,14 +78,6 @@ export default {
       errors: {} as Record<string, string>,
     };
   },
-  computed: {
-    // haveAccount() {
-    //   return this.type === "Login" ? "Don't" : "Already";
-    // },
-    // link() {
-    //   return this.type === "Login" ? "Sign up" : "Login";
-    // },
-  },
   methods: {
     goToHomepage() {
       this.$router.push("/home");
@@ -193,6 +185,11 @@ export default {
       gap: 1rem;
       flex-direction: column;
     }
+
+    h3 {
+      color: $secondary-color;
+    }
+
   }
 }
 </style>
