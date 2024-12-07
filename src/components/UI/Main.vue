@@ -1,5 +1,5 @@
 <template>
-  <main :class="mainClass">
+  <main :class="mainClass" ref="mainRef">
     <Navigation @open-modal="openModal" :name="page" />
     <template v-if="feedbacks.length > 0">
       <Feedback
@@ -51,7 +51,7 @@ export default {
     data: {
       type: Array as PropType<FeedbackType[] | StatusType[]>,
       required: true,
-      lastFeedbackRef: null
+      lastFeedbackRef: null,
     },
   },
   computed: {
@@ -84,52 +84,32 @@ export default {
     },
   },
   mounted() {
-    // const targetProxy = this.$refs.lastFeedbackRef
-    // console.log(targetProxy)
-    // console.log(targetProxy[0].$refs.lastFeedbackRef)
-    // const mario = toRaw(targetProxy[0])
-    // console.log("mario", mario.$refs.lastFeedbackRef)
-    
-    // console.log(targetElement)
-    
-    // if (!targetElement) {
-    //   console.log("NO element");
-    //   return;
-    // }
-    // console.log(targetElement.value)
-
-    // const lastElement = Array.isArray(targetElement)
-    //   ? targetElement[targetElement.length - 1]
-    //   : targetElement;
-
-    // if (!lastElement) {
-    //   console.log("No valid last feedback element");
-    //   return;
-    // }
-
-    // const observer = new IntersectionObserver(
-    //   (entries) => {
-    //     entries.forEach((entry) => {
-    //       if (entry.isIntersecting) {
-    //         console.log("Last feedback is visible");
-    //         // Trigger your fetch or any other action here
-    //       }
-    //     });
-    //   },
-    //   {
-    //     root: null,
-    //     threshold: 0.5,
-    //   }
-    // );
-    // // console.log(observer)
-
-    // // observer.observe(mario);
+    const mainRef = this.$refs.mainRef;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          console.log(entry)
+          console.log(window.innerHeight)
+          if (entry.isIntersecting) {
+            console.log('radi')
+            // alert('radi')
+          }
+        })
+      }
+,      {
+        root: null,
+        rootMargin:"0px 0px 280px 0px",
+        threshold: 1,
+      }
+    );
+    observer.observe(mainRef as HTMLElement);
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .homeMain {
+  border: 1px solid black;
   display: flex;
   flex-direction: column;
   grid-column: span 7;
