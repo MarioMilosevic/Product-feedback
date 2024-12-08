@@ -17,7 +17,11 @@
           :likes="feedback.likes"
           @click="updateRoadmapFeedback"
         />
-        <CommentIcon v-if="feedback.Comments" :commentsCount="feedback.Comments[0].count" gap="small" />
+        <CommentIcon
+          v-if="feedback.Comments"
+          :commentsCount="feedback.Comments[0].count"
+          gap="small"
+        />
       </div>
     </div>
   </li>
@@ -47,25 +51,19 @@ export default {
       required: true,
     },
   },
-  emits:['update-like'],
-  data() {
-    return {};
-  },
+  emits: ["update-like"],
   computed: {
     ...mapState(useFeedbackStore, ["user"]),
     borderColor() {
       return `${this.feedback.status.name}`.toLowerCase();
     },
     isLiked() {
-      return isLikedClass(this.feedback)
-    }
-  },
-  mounted() {
-    // console.log(this.feedback);
+      return isLikedClass(this.feedback);
+    },
   },
   methods: {
     async updateRoadmapFeedback() {
-      const updatedFeedback = await checkLikeValidation(this.feedback)
+      const updatedFeedback = await checkLikeValidation(this.feedback);
       this.$emit("update-like", updatedFeedback);
     },
   },
@@ -75,16 +73,17 @@ export default {
 <style scoped lang="scss">
 @use "src/scss/_variables.scss" as *;
 
-
 .li {
   background-color: $secondary-color;
   padding: $medium-gap $big-gap;
-  border-radius: $border-radius-medium;
   display: flex;
   flex-direction: column;
   gap: $big-gap;
+  justify-content: space-between;
+  border-radius: $border-radius-medium;
   border-top-width: 0.3rem;
   border-top-style: solid;
+  min-height: 20rem;
 
   &__category {
     align-self: start;

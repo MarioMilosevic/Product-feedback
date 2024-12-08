@@ -16,8 +16,8 @@
   </section>
 </template>
 <script lang="ts">
-import { mapActions } from "pinia";
 import RoadmapFeedback from "src/components/roadmap/RoadmapFeedback.vue";
+import { mapActions } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { FeedbackType, StatusType } from "src/utils/types";
 import { PropType } from "vue";

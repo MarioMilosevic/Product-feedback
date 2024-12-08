@@ -20,9 +20,9 @@
       />
     </template>
     <Nofeedbacks v-else @open-modal="openModal" />
-    <div class="loading" ref="loadingRef">
+    <div :class="['loading', loadingPosition]" ref="loadingRef">
       <LoadingSpinner v-if="isObserving" :style="{ margin: '0 auto' }" />
-      <Footer v-if="!isObserving" :position="footerPosition" />
+      <Footer v-if="!isObserving" />
     </div>
     <ModalForm :isModalOpen="isModalOpen" @close-modal="closeModal" />
   </main>
@@ -81,8 +81,8 @@ export default {
     mainClass() {
       return `${this.page}Main`;
     },
-    footerPosition() {
-      return `${this.page}Footer`;
+    loadingPosition() {
+      return `${this.page}Loading`;
     },
   },
   methods: {
@@ -158,9 +158,18 @@ export default {
 }
 
 .loading {
-  /* border: 1px solid black; */
   display: flex;
   flex-direction: column;
   gap: $very-big-gap;
+}
+
+.homeLoading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.roadmapLoading {
+  grid-column: 2/3;
 }
 </style>
