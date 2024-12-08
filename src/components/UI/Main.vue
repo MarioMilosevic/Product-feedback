@@ -19,7 +19,12 @@
       />
     </template>
     <Nofeedbacks v-else @open-modal="openModal" />
-    <Footer ref="footerRef" :position="footerPosition"/>
+    <Footer
+      @intersecting-event="intersect"
+      :position="footerPosition"
+      :isObserving="isObserving"
+    />
+    <!-- <Footer ref="footerRef" :position="footerPosition"/> -->
     <ModalForm :isModalOpen="isModalOpen" @close-modal="closeModal" />
   </main>
 </template>
@@ -60,7 +65,7 @@ export default {
   },
   data() {
     return {
-      footerRef: null as HTMLElement | null,
+      isObserving: true,
     };
   },
   computed: {
@@ -77,8 +82,8 @@ export default {
       return `${this.page}Main`;
     },
     footerPosition() {
-      return `${this.page}Footer`
-    }
+      return `${this.page}Footer`;
+    },
   },
   methods: {
     ...mapActions(useFeedbackStore, [
@@ -86,7 +91,7 @@ export default {
       "setIsModalOpen",
       "setCurrentPage",
       "addMultipleFeedbacksToStore",
-      'setLoading'
+      "setLoading",
     ]),
     filterFeedbackByStatus(statusName: string) {
       return this.feedbacks.filter(
@@ -102,37 +107,20 @@ export default {
     updateLikedIds(updatedFeedback: FeedbackType) {
       this.setFeedbacksLikes(updatedFeedback);
     },
-  },
-  mounted() {
-    if (this.page === "home") {
-      
-      const footerRef = this.$refs.footerRef.$el;
-      console.log(footerRef);
-      
-      const footerObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(async (entry) => {
-            if (entry.isIntersecting) {
-              const nextFeedbacksData = await fetchAllFeedbacks(
-                this.currentPage,
-                this.limit
-              );
-              if (nextFeedbacksData && nextFeedbacksData.length > 0) {
-                this.setCurrentPage(this.currentPage + 1);
-                this.addMultipleFeedbacksToStore(nextFeedbacksData);
-              } else {
-                footerObserver.unobserve(footerRef);
-              }
-            }
-          });
-        },
-        {
-          root: null,
-          threshold: 0.1,
+    async intersect() {
+      if (this.isObserving) {
+        const nextFeedbacksData = await fetchAllFeedbacks(
+          this.currentPage,
+          this.limit
+        );
+        if (nextFeedbacksData && nextFeedbacksData.length > 0) {
+          this.setCurrentPage(this.currentPage + 1);
+          this.addMultipleFeedbacksToStore(nextFeedbacksData);
+        } else {
+          this.isObserving = false;
         }
-      );
-      footerObserver.observe(footerRef);
-    } 
+      }
+    },
   },
 };
 </script>

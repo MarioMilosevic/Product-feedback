@@ -23,10 +23,48 @@ export default {
       type: String,
       required: true,
     },
+    isObserving: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  emits: ["intersecting-event"],
+  data() {
+    return {
+      footerObserver: null as IntersectionObserver | null,
+    };
   },
   computed: {
     footerPositioning() {
       return `${this.position}`;
+    },
+    footerRef() {
+      return this.$refs.footerRef as HTMLElement;
+    },
+  },
+  mounted() {
+    this.footerObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(async (entry) => {
+          if (entry.isIntersecting) {
+            this.$emit("intersecting-event");
+          }
+        });
+      },
+      {
+        root: null,
+        threshold: 0.1,
+      }
+    );
+    if (this.isObserving) {
+      this.footerObserver.observe(this.footerRef);
+    }
+  },
+  watch: {
+    isObserving(newValue) {
+      if (!newValue && this.footerObserver) {
+        this.footerObserver.unobserve(this.footerRef);
+      }
     },
   },
 };
