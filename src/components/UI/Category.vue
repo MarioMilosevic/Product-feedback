@@ -33,7 +33,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import "src/scss/variables";
+@use "src/scss/_variables.scss" as *;
+
 
 .category {
   transition: all 300ms;

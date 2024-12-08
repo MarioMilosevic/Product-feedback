@@ -30,7 +30,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "src/scss/_variables.scss";
+@use "src/scss/_variables.scss" as *;
+
 
 .section {
   background-color: $secondary-color;

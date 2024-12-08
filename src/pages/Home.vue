@@ -2,7 +2,7 @@
   <LoadingSpinner v-if="loading" />
   <template v-else>
     <Sidebar />
-    <Main page="home" :data="feedbacks"/>
+    <Main page="home" :data="feedbacks" />
   </template>
 </template>
 
@@ -22,22 +22,15 @@ export default {
   },
   async created() {
     this.setLoading(true);
-    await getData();
+    await getData(this.currentPage, this.limit);
+    this.setCurrentPage(this.currentPage + 1)
     this.setLoading(false);
   },
-  data() {
-    return {
-      page: 1,
-      limit:3
-    }
-  },
   computed: {
-    ...mapState(useFeedbackStore, ["loading", 'feedbacks']),
+    ...mapState(useFeedbackStore, ["loading", "feedbacks", "currentPage", 'limit']),
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setLoading"]),
+    ...mapActions(useFeedbackStore, ["setLoading", 'setCurrentPage']),
   },
 };
 </script>
-
-

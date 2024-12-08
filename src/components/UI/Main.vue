@@ -19,6 +19,7 @@
       />
     </template>
     <Nofeedbacks v-else @open-modal="openModal" />
+    <Footer ref="footerRef" />
     <ModalForm :isModalOpen="isModalOpen" @close-modal="closeModal" />
   </main>
 </template>
@@ -33,6 +34,8 @@ import Nofeedbacks from "src/components/feedbacks/Nofeedbacks.vue";
 import { FeedbackType, StatusType } from "src/utils/types";
 import RoadmapPageSection from "../roadmap/RoadmapPageSection.vue";
 import { PropType } from "vue";
+import { fetchAllFeedbacks } from "src/api/FeedbacksApi";
+import Footer from "src/components/UI/Footer.vue";
 
 export default {
   name: "Main",
@@ -42,6 +45,7 @@ export default {
     ModalForm,
     Nofeedbacks,
     RoadmapPageSection,
+    Footer,
   },
   props: {
     page: {
@@ -54,6 +58,12 @@ export default {
       lastFeedbackRef: null,
     },
   },
+  data() {
+    return {
+      observer: null as IntersectionObserver | null,
+      rootMarginHeight: 335,
+    };
+  },
   computed: {
     ...mapState(useFeedbackStore, [
       "sort",
@@ -61,18 +71,25 @@ export default {
       "feedbacks",
       "statusOptions",
       "isModalOpen",
+      "currentPage",
+      "limit",
     ]),
     mainClass() {
       return `${this.page}Main`;
     },
   },
   methods: {
+    ...mapActions(useFeedbackStore, [
+      "setFeedbacksLikes",
+      "setIsModalOpen",
+      "setCurrentPage",
+      "addMultipleFeedbacksToStore",
+    ]),
     filterFeedbackByStatus(statusName: string) {
       return this.feedbacks.filter(
         (feedback) => feedback.status.name === statusName
       );
     },
-    ...mapActions(useFeedbackStore, ["setFeedbacksLikes", "setIsModalOpen"]),
     closeModal() {
       this.setIsModalOpen(false);
     },
@@ -82,27 +99,118 @@ export default {
     updateLikedIds(updatedFeedback: FeedbackType) {
       this.setFeedbacksLikes(updatedFeedback);
     },
+    // setupIntersectionObserver() {
+    //   const mainRef = this.$refs.mainRef as HTMLElement;
+    //   // console.log(this.$refs.mainRef.clientHeight)
+    //   let heightDifference = Math.abs(mainRef.clientHeight - window.innerHeight);
+    //   if (heightDifference) {
+    //     console.log('uslo')
+    //   }
+    //   console.log(heightDifference);
+    //   if (this.observer) {
+    //     this.observer.disconnect();
+    //     this.observer = null;
+    //   }
+    //   this.observer = new IntersectionObserver(
+    //     (entries) => {
+    //       entries.forEach(async (entry) => {
+    //         // const heightDifference =
+    //         //   entry.boundingClientRect.height - window.innerHeight;
+    //         // this.rootMarginHeight = heightDifference;
+    //         console.log("razlika", heightDifference);
+    //         console.log("main visina", entry.boundingClientRect.height);
+    //         console.log("window visina", window.innerHeight);
+    //         if (entry.isIntersecting) {
+    //           console.log("Intersecting");
+    //           const nextFeedbacksData = await fetchAllFeedbacks(
+    //             this.currentPage,
+    //             this.limit
+    //           );
+    //           if (nextFeedbacksData) {
+    //             this.setCurrentPage(this.currentPage + 1);
+    //             this.addMultipleFeedbacksToStore(nextFeedbacksData);
+    //             this.rootMarginHeight = heightDifference;
+    //             // this.observer?.unobserve(mainRef)
+    //             console.log("trebalo bi da unobserve");
+    //             // console.log(this.observer)
+    //             this.reinitializeObserver();
+    //           }
+    //         }
+    //       });
+    //     },
+    //     {
+    //       root: null,
+    //       rootMargin: `0px 0px ${heightDifference}px 0px`,
+    //       threshold: 1,
+    //     }
+    //   );
+    //   this.observer.observe(mainRef);
+    //   console.log(this.observer);
+    //   console.log("visina rootMarginHeigh state", this.rootMarginHeight);
+    // },
+    // reinitializeObserver() {
+    //   // const mainRef = this.$refs.mainRef as HTMLElement;
+    //   if (this.observer) {
+    //     this.observer.disconnect();
+    //     this.observer = null;
+    //     console.log("unobserve");
+    //     // this.observer.observe(mainRef);
+    //   }
+    //   console.log("Reinitializing");
+    //   this.setupIntersectionObserver();
+    // },
   },
   mounted() {
-    const mainRef = this.$refs.mainRef;
-    const observer = new IntersectionObserver(
+    const footerRef = this.$refs.footerRef.$el;
+    console.log(footerRef);
+
+    const footerObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          console.log(entry)
-          console.log(window.innerHeight)
           if (entry.isIntersecting) {
-            console.log('radi')
-            // alert('radi')
+            console.log("intersecting");
           }
-        })
-      }
-,      {
+        });
+      },
+      {
         root: null,
-        rootMargin:"0px 0px 280px 0px",
-        threshold: 1,
+        // rootMargin,
+        threshold: 0.5,
       }
     );
-    observer.observe(mainRef as HTMLElement);
+
+    footerObserver.observe(footerRef);
+    // console.log("mount");
+    // this.setupIntersectionObserver();
+    // if (this.observer) {
+    //   this.observer.disconnect()
+    // }
+    //   const mainRef = this.$refs.mainRef;
+    //   const observer = new IntersectionObserver(
+    //     (entries) => {
+    //       entries.forEach(async (entry) => {
+    //         console.log("klient rect visina", entry.boundingClientRect.height);
+    //         console.log("window visina", window.innerHeight);
+    //         if (entry.isIntersecting) {
+    //           console.log("radi");
+    //           const nextFeedbacksData = await fetchAllFeedbacks(
+    //             this.currentPage,
+    //             this.limit
+    //           );
+    //           if (nextFeedbacksData) {
+    //             this.setCurrentPage(this.currentPage + 1);
+    //             this.addMultipleFeedbacksToStore(nextFeedbacksData);
+    //           }
+    //         }
+    //       });
+    //     },
+    //     {
+    //       root: null,
+    //       rootMargin: "0px 0px 335px 0px",
+    //       threshold: 1,
+    //     }
+    //   );
+    //   observer.observe(mainRef as HTMLElement);
   },
 };
 </script>

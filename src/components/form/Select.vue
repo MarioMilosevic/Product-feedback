@@ -13,7 +13,6 @@
 </template>
 
 <script lang="ts">
-// import { useFeedbackStore } from "src/stores/FeedbackStore";
 
 export default {
   props: {
@@ -38,24 +37,13 @@ export default {
   data() {
     return {
       localContent: this.content,
-      // feedbackStore: useFeedbackStore(),
     };
   },
-  computed: {},
-  methods: {},
-  mounted() {
-    // console.log("select prop opcije",this.options)
-  },
-  // watch: {
-  //   newSelect() {
-  //     console.log("novi lokal kontent",this.localContent)
-  //   }
-  // }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "src/scss/_variables.scss";
+@use "src/scss/_variables.scss" as *;
 .select {
   padding: 1rem;
   border-radius: $border-radius-medium;

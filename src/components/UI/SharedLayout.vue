@@ -89,7 +89,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "src/scss/_variables.scss";
+@use "src/scss/_variables.scss" as *;
+
 
 .nav {
   grid-column: span 8;

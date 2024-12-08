@@ -17,7 +17,9 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       sort: "Most Likes",
       user: notLoggedInUser as UserType,
       loading: false,
-      isModalOpen:false,
+      isModalOpen: false,
+      currentPage: 1,
+      limit:5
     };
   },
   getters: {
@@ -55,7 +57,7 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     setFeedbacks(feedbacks: FeedbackType[]) {
       this.feedbacks = feedbacks;
     },
-    setFeedbacksLikes(updatedFeedback:FeedbackType) {
+    setFeedbacksLikes(updatedFeedback: FeedbackType) {
       this.feedbacks = this.feedbacks.map((feedback) => {
         if (feedback.id === updatedFeedback.id) {
           return {
@@ -66,6 +68,9 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
         }
         return feedback;
       });
+    },
+    addMultipleFeedbacksToStore(feedbacks: FeedbackType[]) {
+      this.feedbacks.push(...feedbacks);
     },
     addFeedbackToStore(feedback: FeedbackType) {
       this.feedbacks.push(feedback);
@@ -97,7 +102,10 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       this.loading = value;
     },
     setIsModalOpen(value: boolean) {
-      this.isModalOpen = value
-    }
+      this.isModalOpen = value;
+    },
+    setCurrentPage(value: number) {
+      this.currentPage = value;
+    },
   },
 });

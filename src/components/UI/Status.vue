@@ -27,7 +27,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "src/scss/_variables.scss";
+@use "src/scss/_variables.scss" as *;
+
 
 .status {
   display: flex;
