@@ -5,10 +5,10 @@ import { fetchSingleStatusOption, fetchStatusOptions } from "src/api/StatusApi";
 import { fetchCategories, fetchSingleCategory } from "src/api/CategoriesApi";
 import { showToast } from "src/utils/toastify";
 
-export const getData = async (page:number, limit:number) => {
+export const getData = async (page?:number, limit?:number) => {
   try {
     const store = useFeedbackStore();
-
+    
     const [feedbacksData, categoriesData, statusData] = await Promise.all([
       fetchAllFeedbacks(page, limit),
       fetchCategories(),
@@ -25,26 +25,54 @@ export const getData = async (page:number, limit:number) => {
   }
 };
 
-export const fetchAllFeedbacks = async (page:number, limit:number) => {
+export const fetchAllFeedbacks = async (page?: number, limit?: number) => {
   try {
-    const { data, error } = await supabase
+    const query = supabase
       .from("Feedbacks")
       .select(
         `*, Comments(count), 
-        status:Status(name),
-        category:Categories(name)`
+      status:Status(name),
+      category:Categories(name)`
       )
-      .order("likes", { ascending: false })
-      .range((page - 1) * limit, page * limit - 1);
+      .order("likes", { ascending: false });
+
+    // Apply range only if page and limit are provided
+    if (page && limit) {
+      query.range((page - 1) * limit, page * limit - 1);
+    }
+
+    const { data, error } = await query;
     if (error) {
       console.error("Unable to fetch feedbacks", error);
       return;
     }
     return data;
   } catch (error) {
-    console.error("Unexpected error occured", error);
+    console.error("Unexpected error occurred", error);
   }
 };
+
+
+// export const fetchAllFeedbacks = async (page?:number, limit?:number) => {
+//   try {
+//     const { data, error } = await supabase
+//       .from("Feedbacks")
+//       .select(
+//         `*, Comments(count), 
+//         status:Status(name),
+//         category:Categories(name)`
+//       )
+//       .order("likes", { ascending: false })
+//       .range((page - 1) * limit, page * limit - 1);
+//     if (error) {
+//       console.error("Unable to fetch feedbacks", error);
+//       return;
+//     }
+//     return data;
+//   } catch (error) {
+//     console.error("Unexpected error occured", error);
+//   }
+// };
 // export const fetchAllFeedbacks = async () => {
 //   try {
 //     const { data, error } = await supabase

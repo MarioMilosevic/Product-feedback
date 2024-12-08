@@ -20,7 +20,7 @@ export default {
     this.setLoading(false);
   },
   computed: {
-      ...mapState(useFeedbackStore, ["loading", 'feedbacks', 'statusOptions']),
+      ...mapState(useFeedbackStore, ["loading", 'feedbacks', 'statusOptions', 'currentPage', 'limit']),
   },
   methods: {
     ...mapActions(useFeedbackStore, ["setLoading", 'setStatusOptions', 'setFeedbacks', 'setLoading']),

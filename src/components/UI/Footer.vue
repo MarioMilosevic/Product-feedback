@@ -1,5 +1,5 @@
 <template>
-  <footer ref="footerRef">
+  <footer ref="footerRef" :class="footerPositioning">
     <small>Copyright &copy; Mario Milošević</small>
     <a href="https://github.com/MarioMilosevic" target="_blank">
       <svg
@@ -15,6 +15,22 @@
     </a>
   </footer>
 </template>
+
+<script lang="ts">
+export default {
+  props: {
+    position: {
+      type: String,
+      required: true,
+    },
+  },
+  computed: {
+    footerPositioning() {
+      return `${this.position}`;
+    },
+  },
+};
+</script>
 
 <style scoped lang="scss">
 @use "src/scss/_variables" as *;
@@ -33,5 +49,15 @@ footer {
       transform: rotate(360deg);
     }
   }
+}
+
+.homeFooter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.roadmapFooter {
+  grid-column: 2 / 3;
 }
 </style>

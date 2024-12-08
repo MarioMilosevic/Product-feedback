@@ -19,23 +19,23 @@
       />
     </template>
     <Nofeedbacks v-else @open-modal="openModal" />
-    <Footer ref="footerRef" />
+    <Footer ref="footerRef" :position="footerPosition"/>
     <ModalForm :isModalOpen="isModalOpen" @close-modal="closeModal" />
   </main>
 </template>
 
 <script lang="ts">
-import { useFeedbackStore } from "src/stores/FeedbackStore";
-import { mapActions, mapState } from "pinia";
 import Feedback from "src/components/feedbacks/Feedback.vue";
 import Navigation from "src/components/feedbacks/Navigation.vue";
 import ModalForm from "src/components/UI/ModalForm.vue";
 import Nofeedbacks from "src/components/feedbacks/Nofeedbacks.vue";
-import { FeedbackType, StatusType } from "src/utils/types";
-import RoadmapPageSection from "../roadmap/RoadmapPageSection.vue";
-import { PropType } from "vue";
-import { fetchAllFeedbacks } from "src/api/FeedbacksApi";
+import RoadmapPageSection from "src/components/roadmap/RoadmapPageSection.vue";
 import Footer from "src/components/UI/Footer.vue";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
+import { PropType } from "vue";
+import { FeedbackType, StatusType } from "src/utils/types";
+import { fetchAllFeedbacks } from "src/api/FeedbacksApi";
+import { mapActions, mapState } from "pinia";
 
 export default {
   name: "Main",
@@ -60,8 +60,7 @@ export default {
   },
   data() {
     return {
-      observer: null as IntersectionObserver | null,
-      rootMarginHeight: 335,
+      footerRef: null as HTMLElement | null,
     };
   },
   computed: {
@@ -77,6 +76,9 @@ export default {
     mainClass() {
       return `${this.page}Main`;
     },
+    footerPosition() {
+      return `${this.page}Footer`
+    }
   },
   methods: {
     ...mapActions(useFeedbackStore, [
@@ -84,6 +86,7 @@ export default {
       "setIsModalOpen",
       "setCurrentPage",
       "addMultipleFeedbacksToStore",
+      'setLoading'
     ]),
     filterFeedbackByStatus(statusName: string) {
       return this.feedbacks.filter(
@@ -101,32 +104,35 @@ export default {
     },
   },
   mounted() {
-    const footerRef = this.$refs.footerRef.$el;
-
-    const footerObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(async (entry) => {
-          if (entry.isIntersecting) {
-            const nextFeedbacksData = await fetchAllFeedbacks(
-              this.currentPage,
-              this.limit
-            );
-            if (nextFeedbacksData && nextFeedbacksData.length > 0) {
-              this.setCurrentPage(this.currentPage + 1);
-              this.addMultipleFeedbacksToStore(nextFeedbacksData);
-            } else {
-              footerObserver.unobserve(footerRef);
+    if (this.page === "home") {
+      
+      const footerRef = this.$refs.footerRef.$el;
+      console.log(footerRef);
+      
+      const footerObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(async (entry) => {
+            if (entry.isIntersecting) {
+              const nextFeedbacksData = await fetchAllFeedbacks(
+                this.currentPage,
+                this.limit
+              );
+              if (nextFeedbacksData && nextFeedbacksData.length > 0) {
+                this.setCurrentPage(this.currentPage + 1);
+                this.addMultipleFeedbacksToStore(nextFeedbacksData);
+              } else {
+                footerObserver.unobserve(footerRef);
+              }
             }
-          }
-        });
-      },
-      {
-        root: null,
-        threshold: 0.1,
-      }
-    );
-
-    footerObserver.observe(footerRef);
+          });
+        },
+        {
+          root: null,
+          threshold: 0.1,
+        }
+      );
+      footerObserver.observe(footerRef);
+    } 
   },
 };
 </script>
