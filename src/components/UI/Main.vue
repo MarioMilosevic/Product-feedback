@@ -99,118 +99,34 @@ export default {
     updateLikedIds(updatedFeedback: FeedbackType) {
       this.setFeedbacksLikes(updatedFeedback);
     },
-    // setupIntersectionObserver() {
-    //   const mainRef = this.$refs.mainRef as HTMLElement;
-    //   // console.log(this.$refs.mainRef.clientHeight)
-    //   let heightDifference = Math.abs(mainRef.clientHeight - window.innerHeight);
-    //   if (heightDifference) {
-    //     console.log('uslo')
-    //   }
-    //   console.log(heightDifference);
-    //   if (this.observer) {
-    //     this.observer.disconnect();
-    //     this.observer = null;
-    //   }
-    //   this.observer = new IntersectionObserver(
-    //     (entries) => {
-    //       entries.forEach(async (entry) => {
-    //         // const heightDifference =
-    //         //   entry.boundingClientRect.height - window.innerHeight;
-    //         // this.rootMarginHeight = heightDifference;
-    //         console.log("razlika", heightDifference);
-    //         console.log("main visina", entry.boundingClientRect.height);
-    //         console.log("window visina", window.innerHeight);
-    //         if (entry.isIntersecting) {
-    //           console.log("Intersecting");
-    //           const nextFeedbacksData = await fetchAllFeedbacks(
-    //             this.currentPage,
-    //             this.limit
-    //           );
-    //           if (nextFeedbacksData) {
-    //             this.setCurrentPage(this.currentPage + 1);
-    //             this.addMultipleFeedbacksToStore(nextFeedbacksData);
-    //             this.rootMarginHeight = heightDifference;
-    //             // this.observer?.unobserve(mainRef)
-    //             console.log("trebalo bi da unobserve");
-    //             // console.log(this.observer)
-    //             this.reinitializeObserver();
-    //           }
-    //         }
-    //       });
-    //     },
-    //     {
-    //       root: null,
-    //       rootMargin: `0px 0px ${heightDifference}px 0px`,
-    //       threshold: 1,
-    //     }
-    //   );
-    //   this.observer.observe(mainRef);
-    //   console.log(this.observer);
-    //   console.log("visina rootMarginHeigh state", this.rootMarginHeight);
-    // },
-    // reinitializeObserver() {
-    //   // const mainRef = this.$refs.mainRef as HTMLElement;
-    //   if (this.observer) {
-    //     this.observer.disconnect();
-    //     this.observer = null;
-    //     console.log("unobserve");
-    //     // this.observer.observe(mainRef);
-    //   }
-    //   console.log("Reinitializing");
-    //   this.setupIntersectionObserver();
-    // },
   },
   mounted() {
     const footerRef = this.$refs.footerRef.$el;
-    console.log(footerRef);
 
     const footerObserver = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
+        entries.forEach(async (entry) => {
           if (entry.isIntersecting) {
-            console.log("intersecting");
+            const nextFeedbacksData = await fetchAllFeedbacks(
+              this.currentPage,
+              this.limit
+            );
+            if (nextFeedbacksData && nextFeedbacksData.length > 0) {
+              this.setCurrentPage(this.currentPage + 1);
+              this.addMultipleFeedbacksToStore(nextFeedbacksData);
+            } else {
+              footerObserver.unobserve(footerRef);
+            }
           }
         });
       },
       {
         root: null,
-        // rootMargin,
-        threshold: 0.5,
+        threshold: 0.1,
       }
     );
 
     footerObserver.observe(footerRef);
-    // console.log("mount");
-    // this.setupIntersectionObserver();
-    // if (this.observer) {
-    //   this.observer.disconnect()
-    // }
-    //   const mainRef = this.$refs.mainRef;
-    //   const observer = new IntersectionObserver(
-    //     (entries) => {
-    //       entries.forEach(async (entry) => {
-    //         console.log("klient rect visina", entry.boundingClientRect.height);
-    //         console.log("window visina", window.innerHeight);
-    //         if (entry.isIntersecting) {
-    //           console.log("radi");
-    //           const nextFeedbacksData = await fetchAllFeedbacks(
-    //             this.currentPage,
-    //             this.limit
-    //           );
-    //           if (nextFeedbacksData) {
-    //             this.setCurrentPage(this.currentPage + 1);
-    //             this.addMultipleFeedbacksToStore(nextFeedbacksData);
-    //           }
-    //         }
-    //       });
-    //     },
-    //     {
-    //       root: null,
-    //       rootMargin: "0px 0px 335px 0px",
-    //       threshold: 1,
-    //     }
-    //   );
-    //   observer.observe(mainRef as HTMLElement);
   },
 };
 </script>
