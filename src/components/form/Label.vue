@@ -11,31 +11,18 @@
 
 <script lang="ts">
 export default {
-  components: {},
   props: {
     name: {
       type: String,
       required: true,
     },
   },
-  data() {
-    return {};
-  },
-  computed: {
-    //
-  },
-  mounted() {
-    //
-  },
-  methods: {
-    //
-  },
 };
 </script>
 
 <style lang="scss" scoped>
 @use "src/scss/_variables.scss" as *;
-
+@use "src/scss/_mixins.scss" as mixins;
 
 .label {
   display: flex;
@@ -44,10 +31,14 @@ export default {
 
   h4 {
     color: $secondary-color;
-  }
 
+    @include mixins.respond(small) {
+      font-size: $small-font;
+    }
+  }
+  
   &__paragraph {
-    font-size: 12px;
+    font-size: $medium-small-gap;
   }
 }
 </style>

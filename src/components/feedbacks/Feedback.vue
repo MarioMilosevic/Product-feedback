@@ -92,7 +92,7 @@ export default {
         const updatedFeedback = await checkLikeValidation(this.feedback);
         this.$emit("update-like", updatedFeedback);
       } else {
-        showToast("You must login first", 'error')
+        showToast("You must login first", "error");
       }
     },
   },
@@ -101,17 +101,23 @@ export default {
 
 <style lang="scss" scoped>
 @use "src/scss/_variables.scss" as *;
-
+@use "src/scss/_mixins.scss" as mixins;
 
 .feedback {
   width: 100%;
   background-color: $secondary-color;
   border-radius: $border-radius-big;
-  padding: 2rem;
+  padding: $very-big-gap;
   display: flex;
-  gap: 1rem;
+  gap: $medium-gap;
   justify-content: space-between;
   align-items: center;
+
+
+    @include mixins.respond(small) {
+      padding: $medium-gap;
+    }
+
 
   &__content {
     display: flex;
@@ -136,7 +142,6 @@ export default {
         line-height: $paragraph-lineHeight;
         color: $paragraph-color;
       }
-
     }
   }
 }

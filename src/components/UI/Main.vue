@@ -110,7 +110,6 @@ export default {
   },
   mounted() {
     const loadingRef = this.$refs.loadingRef as HTMLElement;
-
     const loadingObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach(async (entry) => {
@@ -141,12 +140,20 @@ export default {
 
 <style lang="scss" scoped>
 @use "src/scss/_variables.scss" as *;
+@use "src/scss/_mixins.scss" as mixins;
 
 .homeMain {
   display: flex;
   flex-direction: column;
   grid-column: span 7;
   gap: 1rem;
+
+    @include mixins.respond(medium) {
+      grid-column: span 9;
+  }
+    @include mixins.respond(small) {
+      grid-column: span 9;
+  }
 }
 .roadmapMain {
   grid-column: 1 / 9;

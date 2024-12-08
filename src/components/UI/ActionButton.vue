@@ -22,26 +22,29 @@ export default {
       default: "button",
     },
   },
-  computed: {},
 };
 </script>
 
 <style lang="scss" scoped>
 @use "src/scss/_variables.scss" as *;
-
+@use "src/scss/_mixins.scss" as mixins;
 
 .button {
   cursor: pointer;
   border: none;
   border-radius: $border-radius-medium;
   color: $secondary-color;
-  font-weight: 500;
   font-size: $medium-gap;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: $medium-gap;
   transition: all 0.3s;
+
+    @include mixins.respond(small) {
+    font-size: $small-font;
+  }
+
 }
 
 .small {
@@ -49,7 +52,7 @@ export default {
 }
 
 .medium {
-  padding: 0.75rem $medium-gap;
+  padding: $medium-small-gap $medium-gap;
 }
 
 .big {

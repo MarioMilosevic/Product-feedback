@@ -5,7 +5,7 @@
     :class="['select', color]"
     v-model="localContent"
     @change="$emit('update-select', localContent)"
-    >
+  >
     <option v-for="(option, index) in options" :key="index" :value="option">
       {{ option }}
     </option>
@@ -13,7 +13,6 @@
 </template>
 
 <script lang="ts">
-
 export default {
   props: {
     name: {
@@ -44,6 +43,7 @@ export default {
 
 <style lang="scss" scoped>
 @use "src/scss/_variables.scss" as *;
+@use "src/scss/_mixins.scss" as mixins;
 
 .select {
   padding: $small-gap;
@@ -55,9 +55,14 @@ export default {
 .blue {
   background-color: $terniary-color;
   color: $primary-color;
-  font-size: 1rem;
+  font-size: $medium-gap;
   font-weight: 600;
   cursor: pointer;
+  
+  @include mixins.respond(small) {
+    padding: 0rem;
+    font-size: $small-font;
+  }
 }
 
 .white {

@@ -10,7 +10,7 @@ export default {};
 
 <style lang="scss" scoped>
 @use "src/scss/_variables.scss" as *;
-
+@use "src/scss/_mixins" as mixins;
 
 .section {
   width: 100%;
@@ -22,6 +22,10 @@ export default {};
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @include mixins.respond(medium) {
+    height: 100%;
+  }
 
   h3 {
     color: $primary-color;

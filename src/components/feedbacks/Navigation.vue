@@ -1,7 +1,7 @@
 <template>
   <nav :class="['navigation', propClass]">
     <div class="navigation__wrapper" v-if="name === 'home'">
-      <Icon>
+      <Icon class="navigation__wrapper-lightbulb">
         <Lightbulb />
       </Icon>
       <h3>{{ getFeedbacksLength }} Suggestions</h3>
@@ -93,7 +93,7 @@ export default {
 
 <style lang="scss" scoped>
 @use "src/scss/_variables.scss" as *;
-
+@use "src/scss/_mixins.scss" as mixins;
 
 .navigation {
   background-color: $terniary-color;
@@ -106,10 +106,19 @@ export default {
   &__wrapper {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: $medium-gap;
+
+    &-lightbulb {
+      @include mixins.respond(small) {
+        display: none;
+      }
+    }
 
     h3 {
       color: $secondary-color;
+      @include mixins.respond(small) {
+        display: none;
+      }
     }
   }
 
@@ -120,7 +129,7 @@ export default {
 
 .homeNav {
   justify-content: space-between;
-  padding: 1rem 2rem;
+  padding: $medium-gap;
 }
 
 .roadmapNav {

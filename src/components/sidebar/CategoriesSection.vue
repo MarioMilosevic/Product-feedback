@@ -27,11 +27,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useFeedbackStore, [
-      "categories",
-      "getCategoryObjects",
-      "sort",
-    ]),
+    ...mapState(useFeedbackStore, ["categories", "getCategoryObjects", "sort"]),
 
     allCategories() {
       return [{ id: 0, name: "All" }, ...this.getCategoryObjects];
@@ -53,15 +49,19 @@ export default {
 
 <style lang="scss" scoped>
 @use "src/scss/_variables.scss" as *;
-
+@use "src/scss/_mixins" as mixins;
 
 .section {
   background-color: $secondary-color;
-  padding: 2rem;
+  padding: $very-big-gap;
   display: grid;
   border-radius: $border-radius-medium;
   align-items: center;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: $medium-gap;
+  
+  @include mixins.respond(medium) {
+    height: 100%;
+  }
 }
 </style>

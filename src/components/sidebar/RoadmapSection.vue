@@ -2,7 +2,9 @@
   <section class="section">
     <div class="section__header">
       <h4>Roadmap</h4>
-      <router-link :to="{name:'Roadmap'}" class="section__header-button">View</router-link>
+      <router-link :to="{ name: 'Roadmap' }" class="section__header-button"
+        >View</router-link
+      >
     </div>
     <div class="section__counts">
       <Status
@@ -31,15 +33,19 @@ export default {
 
 <style lang="scss" scoped>
 @use "src/scss/_variables.scss" as *;
-
+@use "src/scss/_mixins" as mixins;
 
 .section {
   background-color: $secondary-color;
-  padding: 2rem;
+  padding: $very-big-gap;
   display: flex;
   flex-direction: column;
   border-radius: $border-radius-medium;
-  gap: 1rem;
+  gap: $medium-gap;
+  
+  @include mixins.respond(medium) {
+    height: 100%;
+  }
 
   &__header {
     display: flex;

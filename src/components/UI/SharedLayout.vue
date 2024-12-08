@@ -90,13 +90,17 @@ export default {
 
 <style lang="scss" scoped>
 @use "src/scss/_variables.scss" as *;
-
+@use "src/scss/_mixins.scss" as mixins;
 
 .nav {
   grid-column: span 8;
   display: flex;
   justify-content: space-between;
   gap: $big-gap;
+
+  @include mixins.respond(small) {
+    grid-column: span 9;
+  }
 
   &__buttons {
     display: flex;

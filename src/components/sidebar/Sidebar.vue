@@ -32,8 +32,7 @@ export default {
   gap: $medium-gap;
 
   @include mixins.respond(medium) {
-    border:1px solid black;
-    grid-row:1/2;
+    grid-row:2/3;
     grid-column:1/9;
     flex-direction:row;
     align-items:center;
