@@ -123,7 +123,6 @@ export default {
               this.setCurrentPage(this.currentPage + 1);
               this.addMultipleFeedbacksToStore(nextFeedbacksData);
             } else {
-              console.log("uslo");
               loadingObserver.unobserve(loadingRef);
               this.isObserving = false;
             }

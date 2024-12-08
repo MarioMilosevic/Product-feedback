@@ -44,8 +44,9 @@ export default {
 
 <style lang="scss" scoped>
 @use "src/scss/_variables.scss" as *;
+
 .select {
-  padding: 1rem;
+  padding: $small-gap;
   border-radius: $border-radius-medium;
   border: none;
   outline-color: $terniary-color;

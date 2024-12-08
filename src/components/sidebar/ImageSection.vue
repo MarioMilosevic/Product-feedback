@@ -14,7 +14,7 @@ export default {};
 
 .section {
   width: 100%;
-  height: 150px;
+  height: 10rem;
   border-radius: 15px;
   background: #00c6ff;
   background: -webkit-linear-gradient(to right, #0072ff, #00c6ff);

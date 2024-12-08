@@ -36,7 +36,6 @@ export const fetchAllFeedbacks = async (page?: number, limit?: number) => {
       )
       .order("likes", { ascending: false });
 
-    // Apply range only if page and limit are provided
     if (page && limit) {
       query.range((page - 1) * limit, page * limit - 1);
     }
@@ -51,47 +50,6 @@ export const fetchAllFeedbacks = async (page?: number, limit?: number) => {
     console.error("Unexpected error occurred", error);
   }
 };
-
-
-// export const fetchAllFeedbacks = async (page?:number, limit?:number) => {
-//   try {
-//     const { data, error } = await supabase
-//       .from("Feedbacks")
-//       .select(
-//         `*, Comments(count), 
-//         status:Status(name),
-//         category:Categories(name)`
-//       )
-//       .order("likes", { ascending: false })
-//       .range((page - 1) * limit, page * limit - 1);
-//     if (error) {
-//       console.error("Unable to fetch feedbacks", error);
-//       return;
-//     }
-//     return data;
-//   } catch (error) {
-//     console.error("Unexpected error occured", error);
-//   }
-// };
-// export const fetchAllFeedbacks = async () => {
-//   try {
-//     const { data, error } = await supabase
-//       .from("Feedbacks")
-//       .select(
-//         `*, Comments(count),
-//         status:Status(name),
-//         category:Categories(name)`
-//       )
-//       .order("likes", { ascending: false });
-//     if (error) {
-//       console.error("Unable to fetch feedbacks", error);
-//       return;
-//     }
-//     return data;
-//   } catch (error) {
-//     console.error("Unexpected error occured", error);
-//   }
-// };
 
 export const fetchFilteredFeedbacks = async (id: number, sort: string) => {
   try {

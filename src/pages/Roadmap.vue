@@ -16,7 +16,7 @@ export default {
   },
   async created() {
     this.setLoading(true);
-    await getData();
+    await getData(this.currentPage, this.limit);
     this.setLoading(false);
   },
   computed: {
