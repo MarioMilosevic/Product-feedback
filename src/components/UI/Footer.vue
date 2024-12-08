@@ -1,5 +1,5 @@
 <template>
-  <footer ref="footerRef" :class="footerPositioning">
+  <footer :class="footerPositioning">
     <small>Copyright &copy; Mario Milošević</small>
     <a href="https://github.com/MarioMilosevic" target="_blank">
       <svg
@@ -23,12 +23,7 @@ export default {
       type: String,
       required: true,
     },
-    isObserving: {
-      type: Boolean,
-      required: true,
-    },
   },
-  emits: ["intersecting-event"],
   data() {
     return {
       footerObserver: null as IntersectionObserver | null,
@@ -37,34 +32,6 @@ export default {
   computed: {
     footerPositioning() {
       return `${this.position}`;
-    },
-    footerRef() {
-      return this.$refs.footerRef as HTMLElement;
-    },
-  },
-  mounted() {
-    this.footerObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(async (entry) => {
-          if (entry.isIntersecting) {
-            this.$emit("intersecting-event");
-          }
-        });
-      },
-      {
-        root: null,
-        threshold: 0.1,
-      }
-    );
-    if (this.isObserving) {
-      this.footerObserver.observe(this.footerRef);
-    }
-  },
-  watch: {
-    isObserving(newValue) {
-      if (!newValue && this.footerObserver) {
-        this.footerObserver.unobserve(this.footerRef);
-      }
     },
   },
 };
