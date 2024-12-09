@@ -35,14 +35,16 @@ export default {
   },
   methods: {
     ...mapActions(useFeedbackStore, ["setFeedbacks", "setFilterId", "setCurrentPage"]),
+
     async changeCategory(id: number) {
-      console.log('klik')
       this.categoryIndex = id;
       this.setCurrentPage(1)
       this.setFilterId(id);
+      // console.log('category fetch')
       const data = await fetchFeedbacks(this.filterOptions, this.currentPage);
       if (data) {
         this.setFeedbacks(data);
+        this.setCurrentPage(this.currentPage + 1)
       }
     },
   },

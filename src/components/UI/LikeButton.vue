@@ -45,17 +45,23 @@ export default {
 
 <style scoped lang="scss">
 @use "src/scss/_variables.scss" as *;
+@use "src/scss/_mixins.scss" as mixins;
 
 
 .likeButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
+  gap: $small-gap;
   border-radius: $border-radius-medium;
   border: none;
-  padding: 0.625rem;
+  padding: $small-gap;
   cursor: pointer;
+
+   @include mixins.respond(small) {
+    grid-column: 1/2;
+    }
+
 
   &:active {
     transform: scale(1.1);

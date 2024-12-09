@@ -17,8 +17,8 @@
         </p>
         <Category :category="feedback.category.name" />
       </router-link>
+      <CommentIcon v-if="commentsCount > 0" :commentsCount="commentsCount" />
     </div>
-    <CommentIcon v-if="commentsCount > 0" :commentsCount="commentsCount" />
     <div v-if="isEditing" class="edit-delete">
       <Icon
         size="big"
@@ -39,19 +39,19 @@
 </template>
 
 <script lang="ts">
-import { PropType } from "vue";
-import { FeedbackType, SingleFeedbackType } from "src/utils/types";
+import LikeButton from "src/components/UI/LikeButton.vue";
+import CommentIcon from "src/components/UI/CommentIcon.vue";
 import Icon from "src/components/UI/Icon.vue";
 import Category from "src/components/UI/Category.vue";
 import Caret from "src/icons/Caret.vue";
 import Chat from "src/icons/Chat.vue";
 import Edit from "src/icons/Edit.vue";
 import Delete from "src/icons/Delete.vue";
+import { PropType } from "vue";
+import { FeedbackType, SingleFeedbackType } from "src/utils/types";
 import { mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { checkLikeValidation, isLikedClass } from "src/api/FeedbacksApi";
-import LikeButton from "src/components/UI/LikeButton.vue";
-import CommentIcon from "src/components/UI/CommentIcon.vue";
 import { showToast } from "src/utils/toastify";
 
 export default {
@@ -113,10 +113,9 @@ export default {
   justify-content: space-between;
   align-items: center;
 
-
-    @include mixins.respond(small) {
-      padding: $medium-gap;
-    }
+   @include mixins.respond(small) {
+    padding: $small-gap;
+  }
 
 
   &__content {
@@ -124,6 +123,13 @@ export default {
     align-items: center;
     gap: 2rem;
     flex-grow: 1;
+
+    @include mixins.respond(small) {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: $medium-gap;
+    }
+
 
     &__link {
       display: flex;
@@ -133,6 +139,11 @@ export default {
       gap: 1rem;
       color: inherit;
       text-decoration: none;
+
+        @include mixins.respond(small) {
+          grid-column: 1/4;
+          grid-row:1/2;
+    }
 
       h4 {
         color: $heading-color;

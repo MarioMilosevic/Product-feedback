@@ -1,7 +1,6 @@
 <template>
   <main :class="mainClass">
     <Navigation @open-modal="openModal" :name="page" />
-
     <template v-if="feedbacks.length > 0">
       <Feedback
         v-if="page === 'home'"
@@ -65,6 +64,7 @@ export default {
   data() {
     return {
       isObserving: true,
+      loadingObserver:null as IntersectionObserver | null
     };
   },
   computed: {
@@ -89,6 +89,7 @@ export default {
       "setCurrentPage",
       "addMultipleFeedbacksToStore",
       "setLoading",
+      "setFeedbacks",
     ]),
     filterFeedbackByStatus(statusName: string) {
       return this.feedbacks.filter(
@@ -104,30 +105,48 @@ export default {
     updateLikedIds(updatedFeedback: FeedbackType) {
       this.setFeedbacksLikes(updatedFeedback);
     },
+    initializeObserver() {
+      this.isObserving = true;
+      this.loadingObserver?.disconnect()
+      // console.log('pozvao disconnect')
+      const loadingRef = this.$refs.loadingRef as HTMLElement;
+       this.loadingObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(async (entry) => {
+            if (entry.isIntersecting && this.isObserving) {
+              // console.log("trenutna strainca",this.currentPage);
+              const nextFeedbacksData = await fetchFeedbacks(
+                this.filterOptions,
+                this.currentPage
+              );
+              console.log(nextFeedbacksData);
+              if (nextFeedbacksData && nextFeedbacksData.length > 0) {
+                this.setCurrentPage(this.currentPage + 1);
+                this.addMultipleFeedbacksToStore(nextFeedbacksData);
+              } else {
+                if (this.loadingObserver) {
+                  this.loadingObserver.unobserve(loadingRef);
+                  console.log("unobserve");
+                }
+                this.isObserving = false;
+                  console.log('observing false')
+              }
+            }
+          });
+        },
+        {
+          root: null,
+          threshold: 0.5,
+        }
+      );
+      // console.log("initializeObserver");
+      this.loadingObserver.observe(loadingRef);
+      // console.log("observe");
+    },
   },
   mounted() {
-    const loadingRef = this.$refs.loadingRef as HTMLElement;
-    const loadingObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(async (entry) => {
-          if (entry.isIntersecting && this.isObserving) {
-            const nextFeedbacksData = await fetchFeedbacks(this.filterOptions,this.currentPage);
-            if (nextFeedbacksData && nextFeedbacksData.length > 0) {
-              this.setCurrentPage(this.currentPage + 1);
-              this.addMultipleFeedbacksToStore(nextFeedbacksData);
-            } else {
-              loadingObserver.unobserve(loadingRef);
-              this.isObserving = false;
-            }
-          }
-        });
-      },
-      {
-        root: null,
-        threshold: 0.5,
-      }
-    );
-    loadingObserver.observe(loadingRef);
+    // console.log("mount");
+    this.initializeObserver();
   },
 };
 </script>
@@ -141,11 +160,12 @@ export default {
   flex-direction: column;
   grid-column: span 7;
   gap: 1rem;
-
-  @include mixins.respond(medium) {
-    grid-column: span 9;
-  }
+  
   @include mixins.respond(small) {
+    grid-column: span 9;
+    padding: 0 $medium-gap;
+  }
+  @include mixins.respond(medium) {
     grid-column: span 9;
   }
 }

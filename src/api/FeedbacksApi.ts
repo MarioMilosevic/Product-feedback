@@ -20,7 +20,7 @@ export const getData = async (
       fetchCategories(),
       fetchStatusOptions(),
     ]);
-    console.log(feedbacksData);
+    // console.log(feedbacksData);
     if (feedbacksData && categoriesData && statusData) {
       store.setCategories(categoriesData);
       store.setFeedbacks(feedbacksData);

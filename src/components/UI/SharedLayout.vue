@@ -126,6 +126,10 @@ export default {
     grid-column-start: 1;
     grid-column-end: 4;
     align-self: center;
+
+     @include mixins.respond(small) {
+      font-size: $small-font;
+    }
   }
 
   &__button {

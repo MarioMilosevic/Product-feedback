@@ -36,12 +36,16 @@ export default {
 
 <style scoped lang="scss">
 @use "src/scss/_variables.scss" as *;
-
+@use "src/scss/_mixins.scss" as mixins;
 
 .comment {
   display: flex;
   gap: $medium-gap;
   align-items: center;
+
+  @include mixins.respond(small) {
+    grid-column: 3/4;
+  }
 
   &-length {
     font-weight: 600;

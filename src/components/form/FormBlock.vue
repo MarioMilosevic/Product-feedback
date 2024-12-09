@@ -9,7 +9,6 @@
 </template>
 <script lang="ts">
 export default {
-  components: {},
   props: {
     direction: {
       type: String,
@@ -20,26 +19,23 @@ export default {
       default: "white",
     },
   },
-  computed: {},
-  mounted() {
-    //
-  },
-  methods: {
-    //
-  },
 };
 </script>
 
 <style lang="scss" scoped>
 @use "src/scss/_variables.scss" as *;
-
+@use "src/scss/_mixins.scss" as mixins;
 
 .formBlock {
   display: flex;
   background-color: $secondary-color;
-  gap: 1rem;
+  gap: $medium-gap;
   position: relative;
   border-radius: $border-radius-medium;
+
+  @include mixins.respond(small) {
+    gap: $small-gap;
+  }
 }
 
 .error {
