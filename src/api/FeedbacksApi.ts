@@ -1,19 +1,26 @@
 import supabase from "src/config/supabaseClient";
-import { FeedbackType, SingleFeedbackType } from "src/utils/types";
+import {
+  FeedbackType,
+  FilterOptionsType,
+  SingleFeedbackType,
+} from "src/utils/types";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { fetchSingleStatusOption, fetchStatusOptions } from "src/api/StatusApi";
 import { fetchCategories, fetchSingleCategory } from "src/api/CategoriesApi";
 import { showToast } from "src/utils/toastify";
 
-export const getData = async (page?:number, limit?:number) => {
+export const getData = async (
+  filterOptions: FilterOptionsType,
+  page: number
+) => {
   try {
     const store = useFeedbackStore();
-    
     const [feedbacksData, categoriesData, statusData] = await Promise.all([
-      fetchAllFeedbacks(page, limit),
+      fetchFeedbacks(filterOptions, page),
       fetchCategories(),
       fetchStatusOptions(),
     ]);
+    console.log(feedbacksData);
     if (feedbacksData && categoriesData && statusData) {
       store.setCategories(categoriesData);
       store.setFeedbacks(feedbacksData);
@@ -25,42 +32,26 @@ export const getData = async (page?:number, limit?:number) => {
   }
 };
 
-export const fetchAllFeedbacks = async (page?: number, limit?: number) => {
+
+export const fetchFeedbacks = async (
+  filterOptions: FilterOptionsType,
+  page: number
+) => {
   try {
-    const query = supabase
+    const { filterId, sort } = filterOptions;
+    const limit = 5;
+    let query = supabase
       .from("Feedbacks")
       .select(
-        `*, Comments(count), 
-      status:Status(name),
-      category:Categories(name)`
-      )
-      .order("likes", { ascending: false });
-
-    if (page && limit) {
-      query.range((page - 1) * limit, page * limit - 1);
-    }
-
-    const { data, error } = await query;
-    if (error) {
-      console.error("Unable to fetch feedbacks", error);
-      return;
-    }
-    return data;
-  } catch (error) {
-    console.error("Unexpected error occurred", error);
-  }
-};
-
-export const fetchFilteredFeedbacks = async (id: number, sort: string) => {
-  try {
-    let query = supabase.from("Feedbacks").select(
-      `*, Comments(count), 
-        status:Status(name),
+        `*, 
+        Comments(count), 
+        status:Status(name), 
         category:Categories(name)`
-    );
+      )
+      .range((page - 1) * limit, page * limit - 1);
 
-    if (id) {
-      query.eq("category", id);
+    if (filterId !== 0) {
+      query.eq("category", filterId);
     }
 
     if (sort === "Most Likes") {
@@ -88,6 +79,7 @@ export const fetchFilteredFeedbacks = async (id: number, sort: string) => {
     return [];
   }
 };
+
 
 export const fetchSingleFeedback = async (id: number) => {
   try {

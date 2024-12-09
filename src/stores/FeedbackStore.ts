@@ -5,6 +5,7 @@ import {
   CategoryType,
   StatusType,
   UserType,
+  FilterOptionsType
 } from "src/utils/types";
 
 export const useFeedbackStore = defineStore("feedbacksStore", {
@@ -13,13 +14,14 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       feedbacks: [] as FeedbackType[],
       categories: [] as CategoryType[],
       statusOptions: [] as StatusType[],
-      filterId: 0,
-      sort: "Most Likes",
+      filterOptions: {
+        filterId: 0,
+        sort: "Most Likes",
+      } as FilterOptionsType,
       user: notLoggedInUser as UserType,
       loading: false,
       isModalOpen: false,
-      currentPage: 1,
-      limit:5
+      currentPage:1
     };
   },
   getters: {
@@ -90,10 +92,10 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       this.statusOptions = status;
     },
     setSort(value: string) {
-      this.sort = value;
+      this.filterOptions.sort = value;
     },
     setFilterId(value: number) {
-      this.filterId = value;
+      this.filterOptions.filterId = value;
     },
     setUser(newUser: UserType) {
       this.user = newUser;

@@ -13,7 +13,7 @@
           color="blue"
           name="sort"
           :options="navSortOptions"
-          :content="sort"
+          :content="filterOptions.sort"
           @update-select="updateSelect"
         ></Select>
       </FormBlock>
@@ -35,7 +35,7 @@ import Lightbulb from "src/icons/Lightbulb.vue";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapActions, mapState } from "pinia";
 import { navSortOptions } from "src/utils/constants";
-import { fetchFilteredFeedbacks } from "src/api/FeedbacksApi";
+import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import { showToast } from "src/utils/toastify";
 
 export default {
@@ -66,16 +66,16 @@ export default {
     ...mapState(useFeedbackStore, [
       "feedbacks",
       "getFeedbacksLength",
-      "sort",
-      "filterId",
+      "filterOptions",
       "user",
+      "currentPage",
     ]),
   },
   methods: {
     ...mapActions(useFeedbackStore, ["setFeedbacks", "setSort", "setFilterId"]),
     async updateSelect(value: string) {
       this.setSort(value);
-      const data = await fetchFilteredFeedbacks(this.filterId, value);
+      const data = await fetchFeedbacks(this.filterOptions, this.currentPage);
       if (data) {
         this.setFeedbacks(data);
       }

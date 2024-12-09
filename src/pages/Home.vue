@@ -22,15 +22,28 @@ export default {
   },
   async created() {
     this.setLoading(true);
-    await getData(this.currentPage, this.limit);
-    this.setCurrentPage(this.currentPage + 1)
+    this.setCurrentPage(1);
+    this.setFilterId(0);
+    this.setSort("Most Likes");
+    await getData(this.filterOptions, this.currentPage);
+    this.setCurrentPage(this.currentPage + 1);
     this.setLoading(false);
   },
   computed: {
-    ...mapState(useFeedbackStore, ["loading", "feedbacks", "currentPage", 'limit']),
+    ...mapState(useFeedbackStore, [
+      "loading",
+      "feedbacks",
+      "currentPage",
+      "filterOptions",
+    ]),
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setLoading", 'setCurrentPage']),
+    ...mapActions(useFeedbackStore, [
+      "setLoading",
+      "setCurrentPage",
+      "setFilterId",
+      "setSort",
+    ]),
   },
 };
 </script>

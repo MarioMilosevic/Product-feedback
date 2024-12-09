@@ -14,7 +14,7 @@
 <script lang="ts">
 import Category from "src/components/UI/Category.vue";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
-import { fetchFilteredFeedbacks } from "src/api/FeedbacksApi";
+import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import { mapActions, mapState } from "pinia";
 
 export default {
@@ -27,18 +27,20 @@ export default {
     };
   },
   computed: {
-    ...mapState(useFeedbackStore, ["categories", "getCategoryObjects", "sort"]),
+    ...mapState(useFeedbackStore, ["categories", "getCategoryObjects", "filterOptions", 'currentPage']),
 
     allCategories() {
       return [{ id: 0, name: "All" }, ...this.getCategoryObjects];
     },
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setFeedbacks", "setFilterId"]),
+    ...mapActions(useFeedbackStore, ["setFeedbacks", "setFilterId", "setCurrentPage"]),
     async changeCategory(id: number) {
+      console.log('klik')
       this.categoryIndex = id;
+      this.setCurrentPage(1)
       this.setFilterId(id);
-      const data = await fetchFilteredFeedbacks(id, this.sort);
+      const data = await fetchFeedbacks(this.filterOptions, this.currentPage);
       if (data) {
         this.setFeedbacks(data);
       }

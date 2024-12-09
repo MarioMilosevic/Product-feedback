@@ -1,15 +1,14 @@
 <template>
-  <main :class="mainClass" ref="mainRef">
+  <main :class="mainClass">
     <Navigation @open-modal="openModal" :name="page" />
 
     <template v-if="feedbacks.length > 0">
       <Feedback
         v-if="page === 'home'"
-        v-for="(feedback, index) in feedbacks"
+        v-for="feedback in feedbacks"
         :key="feedback.id"
         :feedback="feedback"
         @update-like="updateLikedIds"
-        :ref="index === feedbacks.length - 1 ? 'lastFeedbackRef' : undefined"
       />
       <RoadmapPageSection
         v-else-if="page === 'roadmap'"
@@ -39,7 +38,7 @@ import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { PropType } from "vue";
 import { FeedbackType, StatusType } from "src/utils/types";
-import { fetchAllFeedbacks } from "src/api/FeedbacksApi";
+import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import { mapActions, mapState } from "pinia";
 
 export default {
@@ -70,13 +69,11 @@ export default {
   },
   computed: {
     ...mapState(useFeedbackStore, [
-      "sort",
-      "sort",
+      "filterOptions",
       "feedbacks",
       "statusOptions",
       "isModalOpen",
       "currentPage",
-      "limit",
     ]),
     mainClass() {
       return `${this.page}Main`;
@@ -114,10 +111,7 @@ export default {
       (entries) => {
         entries.forEach(async (entry) => {
           if (entry.isIntersecting && this.isObserving) {
-            const nextFeedbacksData = await fetchAllFeedbacks(
-              this.currentPage,
-              this.limit
-            );
+            const nextFeedbacksData = await fetchFeedbacks(this.filterOptions,this.currentPage);
             if (nextFeedbacksData && nextFeedbacksData.length > 0) {
               this.setCurrentPage(this.currentPage + 1);
               this.addMultipleFeedbacksToStore(nextFeedbacksData);
@@ -148,11 +142,11 @@ export default {
   grid-column: span 7;
   gap: 1rem;
 
-    @include mixins.respond(medium) {
-      grid-column: span 9;
+  @include mixins.respond(medium) {
+    grid-column: span 9;
   }
-    @include mixins.respond(small) {
-      grid-column: span 9;
+  @include mixins.respond(small) {
+    grid-column: span 9;
   }
 }
 .roadmapMain {

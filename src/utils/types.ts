@@ -91,3 +91,7 @@ export type StatusType = {
   id?: number;
 };
 
+export type FilterOptionsType = {
+  filterId: number;
+  sort:string
+}

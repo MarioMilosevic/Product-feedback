@@ -5,7 +5,7 @@ export const emptyFeedback = {
   },
   description: "",
   likes: 0,
-  likedUserIds:[],
+  likedUserIds: [],
   status: {
     name: "Planned",
   },
@@ -15,7 +15,7 @@ export const emptyFeedback = {
 export const notLoggedInUser = {
   image: "",
   username: "",
-  is_anonymous: true
+  is_anonymous: true,
 };
 
 export const navSortOptions = [
@@ -24,3 +24,8 @@ export const navSortOptions = [
   "Most Comments",
   "Least Comments",
 ];
+
+// export const defaultFilterOptions = {
+//   filterId: 0,
+//   sort: "Most Likes",
+// };
