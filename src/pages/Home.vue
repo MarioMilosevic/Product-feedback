@@ -2,6 +2,7 @@
   <LoadingSpinner v-if="loading" />
   <template v-else>
     <Sidebar />
+    <MobileSidebar/>
     <Main page="home" :data="feedbacks" />
   </template>
 </template>
@@ -10,6 +11,7 @@
 import Sidebar from "src/components/sidebar/Sidebar.vue";
 import Main from "src/components/UI/Main.vue";
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
+import MobileSidebar from "src/components/sidebar/MobileSidebar.vue";
 import { getData } from "src/api/FeedbacksApi";
 import { mapActions, mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
@@ -17,6 +19,7 @@ import { useFeedbackStore } from "src/stores/FeedbackStore";
 export default {
   components: {
     Sidebar,
+    MobileSidebar,
     Main,
     LoadingSpinner,
   },

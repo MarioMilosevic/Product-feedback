@@ -163,7 +163,7 @@ export default {
   
   @include mixins.respond(small) {
     grid-column: span 9;
-    padding: 0 $medium;
+    /* padding: 0 $medium; */
   }
   @include mixins.respond(medium) {
     grid-column: span 9;

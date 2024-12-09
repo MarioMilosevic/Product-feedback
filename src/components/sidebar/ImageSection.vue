@@ -1,18 +1,16 @@
 <template>
   <section class="section">
     <h3>Feedback Board</h3>
-    <Icon size="big" class="hamburger" @click="openSidebar">
+    <!-- <Icon size="big" class="hamburger" @click="openSidebar">
       <Hamburger />
-    </Icon>
+    </Icon> -->
     <!-- <aside :class="['section__aside', isVisible]"> -->
-    <MobileSidebar :isSidebarOpen="isSidebarOpen">
-      <template #categories>
+      <!-- <template #categories>
         <CategoriesSection />
-      </template>
+      </template> -->
       <!-- <template #roadmap>
         <RoadmapSection />
       </template> -->
-    </MobileSidebar>
     <!-- </aside> -->
   </section>
 </template>
@@ -22,24 +20,12 @@ import Icon from "src/components/UI/Icon.vue";
 import Hamburger from "src/icons/Hamburger.vue";
 import RoadmapSection from "src/components/sidebar/RoadmapSection.vue";
 import CategoriesSection from "src/components/sidebar/CategoriesSection.vue";
-import MobileSidebar from "src/components/sidebar/MobileSidebar.vue";
 export default {
   components: {
     Icon,
     Hamburger,
     RoadmapSection,
     CategoriesSection,
-    MobileSidebar,
-  },
-  data() {
-    return {
-      isSidebarOpen: true,
-    };
-  },
-  methods: {
-    openSidebar() {
-      this.isSidebarOpen = true;
-    },
   },
 };
 </script>
@@ -77,11 +63,5 @@ export default {
   }
 }
 
-.hamburger {
-  color: $secondary-color;
-  display: none;
-    @include mixins.respond(small) {
-      display: flex;
-    }
-}
+
 </style>

@@ -130,6 +130,7 @@ export default {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       padding: $medium;
+      gap: $medium;
     }
 
 

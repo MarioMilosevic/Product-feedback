@@ -103,8 +103,6 @@ export default {
   display: flex;
   justify-content: space-between;
 
-
-
   &__wrapper {
     display: flex;
     align-items: center;

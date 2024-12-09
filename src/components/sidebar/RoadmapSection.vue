@@ -47,10 +47,6 @@ export default {
     height: 100%;
   }
 
-   @include mixins.respond(small){
-    display: none;
-  }
-
   &__header {
     display: flex;
     justify-content: space-between;

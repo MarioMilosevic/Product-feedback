@@ -39,11 +39,7 @@ export default {
   }
 
   @include mixins.respond(small) {
-    grid-row: 2/3;
-    grid-column: 1/10;
-    flex-direction: row;
-    align-items: center;
-    padding: 0 $medium;
+    display:none;
   }
 }
 </style>
