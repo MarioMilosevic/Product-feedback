@@ -32,10 +32,6 @@ export default {
   gap: $medium-gap;
   position: relative;
   border-radius: $border-radius-medium;
-
-  @include mixins.respond(small) {
-    gap: $small-gap;
-  }
 }
 
 .error {

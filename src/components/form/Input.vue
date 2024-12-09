@@ -11,7 +11,6 @@
 
 <script lang="ts">
 export default {
-  components: {},
   props: {
     type: {
       type: String,
@@ -41,14 +40,16 @@ export default {
 
 <style lang="scss" scoped>
 @use "src/scss/_variables.scss" as *;
+@use "src/scss/_mixins.scss" as mixins;
 
 
 .input {
-  padding: 1rem;
+  padding: $medium-gap;
   background-color: $primary-color;
   border-radius: $border-radius-medium;
   border: none;
   outline-color: $terniary-color;
+  width: 100%;
 
   &:focus::placeholder {
     color: $terniary-color;

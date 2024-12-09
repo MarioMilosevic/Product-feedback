@@ -1,7 +1,9 @@
 <template>
   <div class="wrapper">
-    <h1>Login Form</h1>
-    <HomepageLink position="absolute" />
+    <header class="wrapper__header">
+      <HomepageLink position="absolute" />
+      <h1>Login Form</h1>
+    </header>
     <form @submit.prevent="localSignInUser" class="wrapper__form">
       <FormBlock>
         <Input
@@ -36,9 +38,8 @@
     <div class="wrapper__links">
       <p>
         Already have an account ?
-
         <router-link :to="{ name: 'Sign up' }" class="wrapper__links-link">
-           Sign up 
+          Sign up
         </router-link>
       </p>
       <p>
@@ -56,10 +57,10 @@ import ActionButton from "src/components/UI/ActionButton.vue";
 import Input from "src/components/form/Input.vue";
 import Label from "src/components/form/Label.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
+import HomepageLink from "src/components/UI/HomepageLink.vue";
 import { formWatch, signInUser, signInGuest } from "src/api/UsersApi";
 import { loginFormSchema } from "src/validation/loginFormSchema";
 import { showToast } from "src/utils/toastify";
-import HomepageLink from "src/components/UI/HomepageLink.vue";
 
 export default {
   components: {
@@ -122,8 +123,10 @@ export default {
     loginCredentials: {
       deep: true,
       handler() {
-        console.log("pvojera");
-        formWatch(this.errors);
+        const emptyObject = formWatch(this.errors);
+        if (emptyObject) {
+          this.errors = emptyObject;
+        }
       },
     },
   },
@@ -132,11 +135,11 @@ export default {
 
 <style scoped lang="scss">
 @use "src/scss/_variables.scss" as *;
-
+@use "src/scss/_mixins.scss" as mixins;
 
 .wrapper {
   padding: $big-gap 0;
-  border-radius: 10px;
+  border-radius: $border-radius-medium;
   grid-area: 2 / 3/ 3 / 7;
   display: flex;
   flex-direction: column;
@@ -145,11 +148,34 @@ export default {
   background-color: $primary-color-hover;
   position: relative;
 
-    &__links {
+  @include mixins.respond(small) {
+    padding: $big-gap;
+    grid-column: 2 / 8;
+    grid-row: 1 / 3;
+  }
+
+  h1 {
+    @include mixins.respond(small) {
+      font-size: $medium-gap;
+    }
+  }
+
+  &__header {
+    @include mixins.respond(small) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 $small-gap;
+    }
+  }
+
+  &__links {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: $small-gap;
+    font-size: $small-font;
 
     &-link {
       color: $terniary-color;
@@ -183,14 +209,13 @@ export default {
     }
     &__buttons {
       display: flex;
-      gap: 1rem;
+      gap: $medium-gap;
       flex-direction: column;
     }
 
     h3 {
       color: $secondary-color;
     }
-
   }
 }
 </style>

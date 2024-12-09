@@ -32,7 +32,7 @@ export default {
 
 <style scoped lang="scss">
 @use "src/scss/_variables.scss" as *;
-
+@use "src/scss/_mixins.scss" as mixins;
 
 .link {
   color: inherit;
@@ -40,14 +40,27 @@ export default {
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 1rem;
-  border-bottom: 1px solid $heading-color;
-  padding-bottom: $small-gap;
+  gap: $medium-gap;
+  /* border-bottom: 1px solid $heading-color;
+  padding-bottom: $small-gap; */
+  /* border: 1px solid black; */
+
+  @include mixins.respond(small) {
+    font-size: $medium-gap;
+    font-size: $small-font;
+    gap: $small-gap;
+  }
 
   &.absolute {
     position: absolute;
     top: 8%;
     left: 5%;
+
+    @include mixins.respond(small) {
+      position: static;
+      /* top: 6%;
+      left: 0%; */
+    }
   }
 }
 </style>
