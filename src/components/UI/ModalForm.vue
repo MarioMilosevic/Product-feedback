@@ -230,15 +230,11 @@ export default {
       this.singleFeedback.description = newText;
     },
     async submitNewFeedback() {
-      console.log('odje se desava')
       const validation = modalFormSchema.safeParse(this.singleFeedback);
-      console.log(validation)
       if (validation.success) {
         try {
           const data = await addFeedback(this.singleFeedback as FeedbackType);
-          console.log(data)
           if (data && data.id) {
-            console.log('uslo')
             this.addFeedbackToStore(data);
             this.$emit("close-modal");
             this.resetFeedback();

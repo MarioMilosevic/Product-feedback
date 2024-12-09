@@ -115,6 +115,8 @@ export default {
 
    @include mixins.respond(small) {
     padding: $small-gap;
+    flex-direction: column;
+    position: relative;
   }
 
 
@@ -159,7 +161,13 @@ export default {
 
 .edit-delete {
   display: flex;
-  width: 100px;
-  gap: 2rem;
+  max-width:$edit-delete;
+  gap: $very-big-gap;
+
+   @include mixins.respond(small) {
+    position: absolute;
+    bottom: 12%;
+    right: 6%;
+  }
 }
 </style>

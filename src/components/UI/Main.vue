@@ -158,7 +158,7 @@ export default {
 .homeMain {
   display: flex;
   flex-direction: column;
-  grid-column: span 7;
+  grid-column: span 8;
   gap: 1rem;
   
   @include mixins.respond(small) {

@@ -1,13 +1,13 @@
 <template>
-    <textarea
-      name="comment"
-      id="comment"
-      ref="textarea"
-      v-model="localContent"
-      :maxlength="maxCharacters"
-      @input="$emit('update-textarea', localContent)"
-    >
-    </textarea>
+  <textarea
+    name="comment"
+    id="comment"
+    ref="textarea"
+    v-model="localContent"
+    :maxlength="maxCharacters"
+    @input="$emit('update-textarea', localContent)"
+  >
+  </textarea>
 </template>
 
 <script lang="ts">
@@ -38,25 +38,26 @@ export default {
   },
   methods: {
     focusTextarea() {
-      (this.$refs.textarea as HTMLTextAreaElement).focus()
-    }
+      (this.$refs.textarea as HTMLTextAreaElement).focus();
+    },
   },
   watch: {
     content(newContent) {
-      this.localContent = newContent
-    }
-  }
+      this.localContent = newContent;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 @use "src/scss/_variables.scss" as *;
-  textarea {
-    width: 100%;
-    min-height: 6.25rem;
-    padding: 1rem;
-    border-radius: $border-radius-medium;
-    outline-color: $terniary-color;
-    line-height: 1rem;
-  }
+
+textarea {
+  width: 100%;
+  min-height: $edit-delete;
+  padding: $medium-gap;
+  border-radius: $border-radius-medium;
+  outline-color: $terniary-color;
+  line-height: $medium-gap;
+}
 </style>

@@ -93,13 +93,14 @@ export default {
 @use "src/scss/_mixins.scss" as mixins;
 
 .nav {
-  grid-column: span 8;
+  grid-column: span 9;
   display: flex;
   justify-content: space-between;
   gap: $big-gap;
 
   @include mixins.respond(small) {
     grid-column: span 9;
+    padding: 0 $medium-gap ;
   }
 
   &__buttons {

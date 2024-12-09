@@ -45,8 +45,6 @@
 </template>
 
 <script lang="ts">
-import { CommentType, SingleFeedbackType } from "src/utils/types";
-import { fetchSingleFeedback, deleteFeedback } from "src/api/FeedbacksApi";
 import Feedback from "src/components/feedbacks/Feedback.vue";
 import Comment from "src/components/UI/Comment.vue";
 import Icon from "src/components/UI/Icon.vue";
@@ -54,6 +52,8 @@ import Textarea from "src/components/form/Textarea.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
 import ModalForm from "src/components/UI/ModalForm.vue";
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
+import { CommentType, SingleFeedbackType } from "src/utils/types";
+import { fetchSingleFeedback, deleteFeedback } from "src/api/FeedbacksApi";
 import { showToast } from "src/utils/toastify";
 import { mapActions, mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
@@ -85,7 +85,12 @@ export default {
     };
   },
   computed: {
-    ...mapState(useFeedbackStore, ["user", "getFeedback", "loading", "isModalOpen"]),
+    ...mapState(useFeedbackStore, [
+      "user",
+      "getFeedback",
+      "loading",
+      "isModalOpen",
+    ]),
     feedbackId() {
       return Number(this.$route.params.id);
     },
@@ -97,9 +102,9 @@ export default {
     },
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setLoading", 'setIsModalOpen']),
+    ...mapActions(useFeedbackStore, ["setLoading", "setIsModalOpen"]),
     editFeedback() {
-      this.setIsModalOpen(true)
+      this.setIsModalOpen(true);
     },
     closeModal() {
       this.setIsModalOpen(false);
@@ -173,14 +178,19 @@ export default {
 
 <style lang="scss" scoped>
 @use "src/scss/_variables.scss" as *;
+@use "src/scss/_mixins.scss" as mixins;
 
 .wrapper {
   width: 100%;
   margin: 0 auto;
-  grid-column: span 8;
+  grid-column: span 9;
   display: flex;
   flex-direction: column;
   gap: $big-gap;
+
+  @include mixins.respond(small) {
+    padding: 0 $medium-gap;
+  }
 
   &__comments {
     background-color: $secondary-color;
@@ -198,6 +208,10 @@ export default {
     display: flex;
     flex-direction: column;
     gap: $big-gap;
+
+    @include mixins.respond(small) {
+      padding: $medium-gap;
+    }
 
     &-div {
       display: flex;

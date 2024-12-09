@@ -51,6 +51,10 @@ export default {
   outline-color: $terniary-color;
   width: 100%;
 
+    @include mixins.respond(small) {
+    font-size: $small-font;
+  }
+
   &:focus::placeholder {
     color: $terniary-color;
   }

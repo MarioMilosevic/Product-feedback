@@ -175,7 +175,10 @@ export default {
     flex-direction: column;
     align-items: center;
     gap: $small-gap;
-    font-size: $small-font;
+
+      @include mixins.respond(small) {
+        font-size: $small-font;
+      }
 
     &-link {
       color: $terniary-color;

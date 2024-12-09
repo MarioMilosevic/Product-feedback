@@ -1,7 +1,9 @@
 <template>
   <div class="wrapper">
-    <h1>Sign Up Form</h1>
-    <HomepageLink position="absolute" />
+    <header class="wrapper__header">
+      <HomepageLink position="absolute" />
+      <h1>Sign Up Form</h1>
+    </header>
     <form @submit.prevent="signUpNewUser" class="wrapper__form">
       <FormBlock>
         <Input
@@ -105,7 +107,6 @@ export default {
     FormBlock,
     HomepageLink,
   },
-  props: {},
   data() {
     return {
       signUpCredentials: {
@@ -166,7 +167,10 @@ export default {
     signUpCredentials: {
       deep: true,
       handler() {
-        formWatch(this.errors);
+        const emptyObject = formWatch(this.errors);
+        if (emptyObject) {
+          this.errors = emptyObject;
+        }
       },
     },
   },
@@ -175,10 +179,11 @@ export default {
 
 <style scoped lang="scss">
 @use "src/scss/_variables.scss" as *;
+@use "src/scss/_mixins.scss" as mixins;
 
 .wrapper {
   padding: $big-gap 0;
-  border-radius: 10px;
+  border-radius: $border-radius-medium;
   grid-area: 2 / 3/ 3 / 7;
   display: flex;
   flex-direction: column;
@@ -187,11 +192,37 @@ export default {
   background-color: $primary-color-hover;
   position: relative;
 
+  @include mixins.respond(small) {
+    padding: $big-gap;
+    grid-column: 1 / 9;
+    grid-row: 1 / 3;
+  }
+
+  h1 {
+    @include mixins.respond(small) {
+      font-size: $medium-gap;
+    }
+  }
+
+  &__header {
+    @include mixins.respond(small) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 $small-gap;
+    }
+  }
+
   &__links {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: $small-gap;
+
+    @include mixins.respond(small) {
+      font-size: $small-font;
+    }
 
     &-link {
       color: $terniary-color;

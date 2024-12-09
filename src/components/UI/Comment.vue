@@ -39,15 +39,15 @@ export default {
 
 <style lang="scss">
 @use "src/scss/_variables.scss" as *;
-
+@use "src/scss/_mixins.scss" as mixins;
 
 .singleComment {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  border-bottom: 1px solid black;
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
+  gap: $medium-gap;
+  border-bottom: 1px solid $heading-color;
+  padding-bottom: $medium-gap;
+  margin-bottom: $medium-gap;
 
   &-figure {
     width: 50px;
@@ -63,7 +63,7 @@ export default {
   &-information {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: $medium-gap;
     width: 100%;
 
     &-div {
@@ -73,7 +73,7 @@ export default {
       &-name {
         display: flex;
         flex-direction: column;
-        gap: 0.3rem;
+        gap: $small-gap;
       }
       &-button {
         border: none;
