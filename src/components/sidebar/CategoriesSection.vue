@@ -57,13 +57,17 @@ export default {
 
 .section {
   background-color: $secondary-color;
-  padding: $very-big-gap;
+  padding: $very-big;
   display: grid;
   border-radius: $border-radius-medium;
   align-items: center;
   grid-template-columns: repeat(2, 1fr);
-  gap: $medium-gap;
+  gap:$medium;
   
+ @include mixins.respond(small){
+    display: none;
+  }
+
   @include mixins.respond(medium) {
     height: 100%;
   }

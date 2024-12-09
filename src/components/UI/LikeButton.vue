@@ -52,10 +52,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: $small-gap;
+  gap: $small;
   border-radius: $border-radius-medium;
   border: none;
-  padding: $small-gap;
+  padding: $small;
   cursor: pointer;
 
    @include mixins.respond(small) {

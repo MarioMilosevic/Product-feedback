@@ -108,7 +108,7 @@ export default {
   &__wrapper {
     display: flex;
     align-items: center;
-    gap: $medium-gap;
+    gap: $medium;
 
     &-lightbulb {
       @include mixins.respond(small) {
@@ -131,11 +131,11 @@ export default {
 
 .homeNav {
   justify-content: space-between;
-  padding: $medium-gap;
+  padding: $medium;
 }
 
 .roadmapNav {
-  padding: $big-gap;
+  padding: $big;
   align-items: center;
   grid-column: 1/4;
 }

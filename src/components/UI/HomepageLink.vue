@@ -40,15 +40,13 @@ export default {
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: $medium-gap;
-  /* border-bottom: 1px solid $heading-color;
-  padding-bottom: $small-gap; */
-  /* border: 1px solid black; */
+  gap: $medium;
+
 
   @include mixins.respond(small) {
-    font-size: $medium-gap;
+    font-size: $medium;
     font-size: $small-font;
-    gap: $small-gap;
+    gap: $small;
   }
 
   &.absolute {

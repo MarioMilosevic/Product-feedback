@@ -40,7 +40,7 @@ export default {
 
 .comment {
   display: flex;
-  gap: $medium-gap;
+  gap: $medium;
   align-items: center;
 
   @include mixins.respond(small) {
@@ -49,15 +49,15 @@ export default {
 
   &-length {
     font-weight: 600;
-    font-size: $medium-gap;
+    font-size: $medium;
   }
 }
 
 .small {
-  gap: $small-gap;
+  gap: $small;
 }
 
 .medium {
-  gap: $medium-gap;
+  gap: $medium;
 }
 </style>

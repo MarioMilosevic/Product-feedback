@@ -159,11 +159,11 @@ export default {
   display: flex;
   flex-direction: column;
   grid-column: span 8;
-  gap: 1rem;
+  gap: $medium;
   
   @include mixins.respond(small) {
     grid-column: span 9;
-    padding: 0 $medium-gap;
+    padding: 0 $medium;
   }
   @include mixins.respond(medium) {
     grid-column: span 9;
@@ -180,7 +180,7 @@ export default {
 .loading {
   display: flex;
   flex-direction: column;
-  gap: $very-big-gap;
+  gap: $very-big;
 }
 
 .homeLoading {

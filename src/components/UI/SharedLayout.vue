@@ -23,6 +23,7 @@
         >
       </div>
     </template>
+   
   </nav>
 </template>
 
@@ -96,16 +97,17 @@ export default {
   grid-column: span 9;
   display: flex;
   justify-content: space-between;
-  gap: $big-gap;
+  align-items: center;
+  gap: $big;
 
   @include mixins.respond(small) {
     grid-column: span 9;
-    padding: 0 $medium-gap ;
+    padding: 0 $medium;
   }
 
   &__buttons {
     display: flex;
-    gap: $medium-gap;
+    gap: $medium;
 
     &-figure {
       width: 3.125rem;
@@ -128,7 +130,7 @@ export default {
     grid-column-end: 4;
     align-self: center;
 
-     @include mixins.respond(small) {
+    @include mixins.respond(small) {
       font-size: $small-font;
     }
   }

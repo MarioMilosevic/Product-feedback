@@ -29,9 +29,13 @@ export default {
 .formBlock {
   display: flex;
   background-color: $secondary-color;
-  gap: $medium-gap;
+  gap: $medium;
   position: relative;
   border-radius: $border-radius-medium;
+
+  @include mixins.respond(small) {
+    gap: $small;
+  }
 }
 
 .error {

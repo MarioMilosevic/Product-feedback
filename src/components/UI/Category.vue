@@ -38,7 +38,7 @@ export default {
 
 .category {
   transition: all 300ms;
-  padding: $small-gap $medium-gap;
+  padding: $small $medium;
   border: none;
 
   cursor: pointer;

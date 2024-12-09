@@ -55,12 +55,12 @@ export default {
 
 
 .small {
-  width: $small-gap;
-  height: $small-gap;
+  width: $small;
+  height: $small;
 }
 .medium {
-  width: $medium-gap;
-  height: $medium-gap;
+  width: $medium;
+  height: $medium;
 }
 .big {
   width: 2rem;

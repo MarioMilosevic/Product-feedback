@@ -16,11 +16,11 @@ export default {
   },
   async created() {
     this.setLoading(true);
-    await getData(this.currentPage, this.limit);
+    await getData(this.filterOptions, this.currentPage);
     this.setLoading(false);
   },
   computed: {
-      ...mapState(useFeedbackStore, ["loading", 'feedbacks', 'statusOptions', 'currentPage', 'limit']),
+      ...mapState(useFeedbackStore, ["loading", 'feedbacks', 'statusOptions', 'currentPage', 'filterOptions']),
   },
   methods: {
     ...mapActions(useFeedbackStore, ["setLoading", 'setStatusOptions', 'setFeedbacks', 'setLoading']),

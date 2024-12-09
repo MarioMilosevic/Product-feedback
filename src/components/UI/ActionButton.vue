@@ -34,11 +34,11 @@ export default {
   border: none;
   border-radius: $border-radius-medium;
   color: $secondary-color;
-  font-size: $medium-gap;
+  font-size: $medium;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: $medium-gap;
+  gap: $medium;
   transition: all 0.3s;
 
     @include mixins.respond(small) {
@@ -48,15 +48,15 @@ export default {
 }
 
 .small {
-  padding: $small-gap $medium-gap;
+  padding: $small $medium;
 }
 
 .medium {
-  padding: $medium-small-gap $medium-gap;
+  padding: $medium-small $medium;
 }
 
 .big {
-  padding: $medium-gap $very-big-gap;
+  padding: $medium $very-big;
 }
 
 .blue {

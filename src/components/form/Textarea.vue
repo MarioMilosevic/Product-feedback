@@ -55,9 +55,9 @@ export default {
 textarea {
   width: 100%;
   min-height: $edit-delete;
-  padding: $medium-gap;
+  padding: $medium;
   border-radius: $border-radius-medium;
   outline-color: $terniary-color;
-  line-height: $medium-gap;
+  line-height: $medium;
 }
 </style>

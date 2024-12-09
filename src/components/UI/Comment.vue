@@ -44,10 +44,10 @@ export default {
 .singleComment {
   display: flex;
   align-items: center;
-  gap: $medium-gap;
+  gap: $medium;
   border-bottom: 1px solid $heading-color;
-  padding-bottom: $medium-gap;
-  margin-bottom: $medium-gap;
+  padding-bottom: $medium;
+  margin-bottom: $medium;
 
   &-figure {
     width: 50px;
@@ -63,7 +63,7 @@ export default {
   &-information {
     display: flex;
     flex-direction: column;
-    gap: $medium-gap;
+    gap: $medium;
     width: 100%;
 
     &-div {
@@ -73,7 +73,7 @@ export default {
       &-name {
         display: flex;
         flex-direction: column;
-        gap: $small-gap;
+        gap: $small;
       }
       &-button {
         border: none;

@@ -182,25 +182,25 @@ export default {
 @use "src/scss/_mixins.scss" as mixins;
 
 .wrapper {
-  padding: $big-gap 0;
+  padding: $big 0;
   border-radius: $border-radius-medium;
   grid-area: 2 / 3/ 3 / 7;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: $very-big-gap;
+  gap: $very-big;
   background-color: $primary-color-hover;
   position: relative;
 
   @include mixins.respond(small) {
-    padding: $big-gap;
+    padding: $big;
     grid-column: 1 / 9;
     grid-row: 1 / 3;
   }
 
   h1 {
     @include mixins.respond(small) {
-      font-size: $medium-gap;
+      font-size: $medium;
     }
   }
 
@@ -210,7 +210,7 @@ export default {
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      padding: 0 $small-gap;
+      padding: 0 $small;
     }
   }
 
@@ -218,7 +218,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: $small-gap;
+    gap: $small;
 
     @include mixins.respond(small) {
       font-size: $small-font;
@@ -238,7 +238,7 @@ export default {
   &__form {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: $big-gap;
+    gap: $big;
 
     &__button {
       grid-column: span 2;

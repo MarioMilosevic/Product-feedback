@@ -46,7 +46,7 @@ export default {
 @use "src/scss/_mixins.scss" as mixins;
 
 .select {
-  padding: $small-gap;
+  padding: $small;
   border-radius: $border-radius-medium;
   border: none;
   outline-color: $terniary-color;
@@ -55,7 +55,7 @@ export default {
 .blue {
   background-color: $terniary-color;
   color: $primary-color;
-  font-size: $medium-gap;
+  font-size: $medium;
   font-weight: 600;
   cursor: pointer;
   

@@ -27,7 +27,7 @@ export default {
 .label {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: $small;
 
   h4 {
     color: $secondary-color;
@@ -38,7 +38,7 @@ export default {
   }
   
   &__paragraph {
-    font-size: $medium-small-gap;
+    font-size: $medium-small;
   }
 }
 </style>

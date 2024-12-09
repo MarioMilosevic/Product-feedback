@@ -23,8 +23,8 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: $small-gap;
-  padding-top: $medium-gap;
+  gap: $small;
+  padding-top: $medium;
 
   a {
     transition: all 700ms;

@@ -44,7 +44,7 @@ export default {
 
 
 .input {
-  padding: $medium-gap;
+  padding: $medium;
   background-color: $primary-color;
   border-radius: $border-radius-medium;
   border: none;

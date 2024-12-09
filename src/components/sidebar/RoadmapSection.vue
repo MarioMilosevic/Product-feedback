@@ -37,14 +37,18 @@ export default {
 
 .section {
   background-color: $secondary-color;
-  padding: $very-big-gap;
+  padding: $very-big;
   display: flex;
   flex-direction: column;
   border-radius: $border-radius-medium;
-  gap: $medium-gap;
+  gap: $medium;
   
   @include mixins.respond(medium) {
     height: 100%;
+  }
+
+   @include mixins.respond(small){
+    display: none;
   }
 
   &__header {

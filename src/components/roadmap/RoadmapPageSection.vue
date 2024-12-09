@@ -62,12 +62,12 @@ export default {
 .section {
   display: flex;
   flex-direction: column;
-  gap: $very-big-gap;
+  gap: $very-big;
 
   &__titleContainer {
     display: flex;
     flex-direction: column;
-    gap:$small-gap;
+    gap:$small;
 
     p {
       color: $cancel-color;
@@ -78,7 +78,7 @@ export default {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: $very-big-gap;
+    gap: $very-big;
   }
 }
 </style>

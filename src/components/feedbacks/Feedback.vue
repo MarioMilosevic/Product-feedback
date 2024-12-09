@@ -107,14 +107,14 @@ export default {
   width: 100%;
   background-color: $secondary-color;
   border-radius: $border-radius-big;
-  padding: $very-big-gap;
+  padding: $very-big;
   display: flex;
-  gap: $medium-gap;
+  gap: $medium;
   justify-content: space-between;
   align-items: center;
 
    @include mixins.respond(small) {
-    padding: $small-gap;
+    padding: $small;
     flex-direction: column;
     position: relative;
   }
@@ -123,13 +123,13 @@ export default {
   &__content {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: $very-big;
     flex-grow: 1;
 
     @include mixins.respond(small) {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      padding: $medium-gap;
+      padding: $medium;
     }
 
 
@@ -138,7 +138,7 @@ export default {
       flex-direction: column;
       align-items: flex-start;
       width: 100%;
-      gap: 1rem;
+      gap: $medium;
       color: inherit;
       text-decoration: none;
 
@@ -162,7 +162,7 @@ export default {
 .edit-delete {
   display: flex;
   max-width:$edit-delete;
-  gap: $very-big-gap;
+  gap: $very-big;
 
    @include mixins.respond(small) {
     position: absolute;

@@ -186,16 +186,16 @@ export default {
   grid-column: span 9;
   display: flex;
   flex-direction: column;
-  gap: $big-gap;
+  gap: $big;
 
   @include mixins.respond(small) {
-    padding: 0 $medium-gap;
+    padding: 0 $medium;
   }
 
   &__comments {
     background-color: $secondary-color;
     border-radius: $border-radius-big;
-    padding: $very-big-gap;
+    padding: $very-big;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -204,13 +204,13 @@ export default {
   &__addComment {
     background-color: $secondary-color;
     border-radius: $border-radius-big;
-    padding: $very-big-gap;
+    padding: $very-big;
     display: flex;
     flex-direction: column;
-    gap: $big-gap;
+    gap: $big;
 
     @include mixins.respond(small) {
-      padding: $medium-gap;
+      padding: $medium;
     }
 
     &-div {
