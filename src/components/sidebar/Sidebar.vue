@@ -14,11 +14,11 @@ export default {
 </script>
 
 <template>
-  <aside class="sidebar">
+  <section class="sidebar">
     <ImageSection />
     <CategoriesSection />
     <RoadmapSection />
-  </aside>
+  </section>
 </template>
 
 <style lang="scss" scoped>
@@ -33,7 +33,7 @@ export default {
 
   @include mixins.respond(medium) {
     grid-row: 2/3;
-    grid-column: 1/9;
+    grid-column: 1/10;
     flex-direction: row;
     align-items: center;
   }

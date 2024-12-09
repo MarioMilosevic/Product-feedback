@@ -1,10 +1,19 @@
 <template>
   <section class="section">
     <h3>Feedback Board</h3>
-    <Icon size="big" class="hamburgerColor" @click="openSidebar">
+    <Icon size="big" class="hamburger" @click="openSidebar">
       <Hamburger />
     </Icon>
-    <aside :class="['section__aside', isVisible]">Mario</aside>
+    <!-- <aside :class="['section__aside', isVisible]"> -->
+    <MobileSidebar :isSidebarOpen="isSidebarOpen">
+      <template #categories>
+        <CategoriesSection />
+      </template>
+      <!-- <template #roadmap>
+        <RoadmapSection />
+      </template> -->
+    </MobileSidebar>
+    <!-- </aside> -->
   </section>
 </template>
 
@@ -12,23 +21,20 @@
 import Icon from "src/components/UI/Icon.vue";
 import Hamburger from "src/icons/Hamburger.vue";
 import RoadmapSection from "src/components/sidebar/RoadmapSection.vue";
-import CategoriesSection from "src/components/sidebar/RoadmapSection.vue";
+import CategoriesSection from "src/components/sidebar/CategoriesSection.vue";
+import MobileSidebar from "src/components/sidebar/MobileSidebar.vue";
 export default {
   components: {
     Icon,
     Hamburger,
     RoadmapSection,
     CategoriesSection,
+    MobileSidebar,
   },
   data() {
     return {
-      isSidebarOpen: false,
+      isSidebarOpen: true,
     };
-  },
-  computed: {
-    isVisible() {
-      return this.isSidebarOpen ? "visible" : "hidden";
-    },
   },
   methods: {
     openSidebar() {
@@ -69,27 +75,13 @@ export default {
   h3 {
     color: $primary-color;
   }
-
-  &__aside {
-    border: 1px solid black;
-    position: absolute;
-    top: 0%;
-    right: 0%;
-    transition: all 300ms;
-  }
 }
 
-.visible {
-  transform: translateX(0%);
-  visibility: visible;
-}
-
-.hidden {
-  transform: translateX(100%);
-  visibility: hidden;
-}
-
-.hamburgerColor {
+.hamburger {
   color: $secondary-color;
+  display: none;
+    @include mixins.respond(small) {
+      display: flex;
+    }
 }
 </style>

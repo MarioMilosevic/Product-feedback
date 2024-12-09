@@ -63,7 +63,7 @@ export default {
   height: $medium;
 }
 .big {
-  width: 2rem;
-  height: 2rem;
+  width: $big;
+  height: $big;
 }
 </style>
