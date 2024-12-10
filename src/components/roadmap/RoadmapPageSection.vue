@@ -1,10 +1,10 @@
 <template>
   <section class="section">
-    <div class="section__titleContainer">
-      <h4>{{ title }} ({{ feedebackCount }})</h4>
-      <p>{{ descripton }}</p>
-    </div>
-
+    <RoadmapHeading
+      :title="title"
+      :feedbackCount="feedbackCount"
+      :description="description"
+    />
     <ul class="section__list">
       <RoadmapFeedback
         v-for="feedback in filteredFeedbacks"
@@ -17,6 +17,7 @@
 </template>
 <script lang="ts">
 import RoadmapFeedback from "src/components/roadmap/RoadmapFeedback.vue";
+import RoadmapHeading from "src/components/roadmap/RoadmapHeading.vue";
 import { mapActions } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { FeedbackType, StatusType } from "src/utils/types";
@@ -25,6 +26,7 @@ import { PropType } from "vue";
 export default {
   components: {
     RoadmapFeedback,
+    RoadmapHeading,
   },
   props: {
     filteredFeedbacks: {
@@ -40,10 +42,10 @@ export default {
     title() {
       return this.status.name;
     },
-    descripton() {
+    description() {
       return this.status.description;
     },
-    feedebackCount() {
+    feedbackCount() {
       return this.filteredFeedbacks.length;
     },
   },
@@ -63,16 +65,6 @@ export default {
   display: flex;
   flex-direction: column;
   gap: $very-big;
-
-  &__titleContainer {
-    display: flex;
-    flex-direction: column;
-    gap:$small;
-
-    p {
-      color: $cancel-color;
-    }
-  }
 
   &__list {
     list-style: none;

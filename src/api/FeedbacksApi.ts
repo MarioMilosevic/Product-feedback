@@ -15,6 +15,7 @@ export const getData = async (
 ) => {
   try {
     const store = useFeedbackStore();
+
     const [feedbacksData, categoriesData, statusData] = await Promise.all([
       fetchFeedbacks(filterOptions, page),
       fetchCategories(),
@@ -24,6 +25,9 @@ export const getData = async (
       store.setCategories(categoriesData);
       store.setFeedbacks(feedbacksData);
       store.setStatusOptions(statusData);
+      store.setCurrentPage(2);
+      store.setFilterId(0);
+      store.setSort("Most Likes")
     }
   } catch (error) {
     console.log(error);

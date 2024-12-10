@@ -25,11 +25,7 @@ export default {
   },
   async created() {
     this.setLoading(true);
-    this.setCurrentPage(1);
-    this.setFilterId(0);
-    this.setSort("Most Likes");
     await getData(this.filterOptions, this.currentPage);
-    this.setCurrentPage(this.currentPage + 1);
     this.setLoading(false);
   },
   computed: {

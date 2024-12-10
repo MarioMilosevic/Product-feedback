@@ -73,7 +73,7 @@ export default {
       "statusOptions",
       "isModalOpen",
       "currentPage",
-      "filterOptions"
+      "filterOptions",
     ]),
     mainClass() {
       return `${this.page}Main`;
@@ -118,7 +118,7 @@ export default {
           entries.forEach(async (entry) => {
             if (entry.isIntersecting && this.isObserving) {
               const nextFeedbacksData = await fetchFeedbacks(
-              this.filterOptions,
+                this.filterOptions,
                 this.currentPage
               );
               if (nextFeedbacksData && nextFeedbacksData.length > 0) {
@@ -181,18 +181,24 @@ export default {
 
   @include mixins.respond(small) {
     grid-column: span 9;
-    /* padding: 0 $medium; */
   }
   @include mixins.respond(medium) {
     grid-column: span 9;
   }
 }
 .roadmapMain {
-  grid-column: 1 / 9;
+  grid-column: 1 / 10;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  row-gap: 5rem;
-  column-gap: 2rem;
+  row-gap: 4rem;
+  column-gap: $very-big;
+
+  @include mixins.respond(small) {
+    display: none;
+  }
+  @include mixins.respond(medium) {
+    column-gap: $big;
+  }
 }
 
 .loading {
