@@ -20,7 +20,6 @@ export const getData = async (
       fetchCategories(),
       fetchStatusOptions(),
     ]);
-    // console.log(feedbacksData);
     if (feedbacksData && categoriesData && statusData) {
       store.setCategories(categoriesData);
       store.setFeedbacks(feedbacksData);
@@ -31,7 +30,6 @@ export const getData = async (
     return null;
   }
 };
-
 
 export const fetchFeedbacks = async (
   filterOptions: FilterOptionsType,
@@ -79,7 +77,6 @@ export const fetchFeedbacks = async (
     return [];
   }
 };
-
 
 export const fetchSingleFeedback = async (id: number) => {
   try {

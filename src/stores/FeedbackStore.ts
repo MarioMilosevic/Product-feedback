@@ -5,7 +5,7 @@ import {
   CategoryType,
   StatusType,
   UserType,
-  FilterOptionsType
+  FilterOptionsType,
 } from "src/utils/types";
 
 export const useFeedbackStore = defineStore("feedbacksStore", {
@@ -21,7 +21,7 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       user: notLoggedInUser as UserType,
       loading: false,
       isModalOpen: false,
-      currentPage:1
+      currentPage: 1,
     };
   },
   getters: {
@@ -71,8 +71,21 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
         return feedback;
       });
     },
-    addMultipleFeedbacksToStore(feedbacks: FeedbackType[]) {
+    addMultipleFeedbacksToStore(feedbacks: FeedbackType[], sortValue: string) {
       this.feedbacks.push(...feedbacks);
+      if (sortValue === "Most Likes") {
+        this.feedbacks.sort((a, b) => b.likes - a.likes);
+      } else if (sortValue === "Least Likes") {
+        this.feedbacks.sort((a, b) => a.likes - b.likes);
+      } else if (sortValue === "Most Comments") {
+        this.feedbacks.sort(
+          (a, b) => b.Comments[0].count - a.Comments[0].count
+        );
+      } else if (sortValue === "Least Comments") {
+        this.feedbacks.sort(
+          (a, b) => a.Comments[0].count - b.Comments[0].count
+        );
+      }
     },
     addFeedbackToStore(feedback: FeedbackType) {
       this.feedbacks.push(feedback);

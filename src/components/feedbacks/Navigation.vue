@@ -66,18 +66,21 @@ export default {
     ...mapState(useFeedbackStore, [
       "feedbacks",
       "getFeedbacksLength",
-      "filterOptions",
+     "filterOptions",
       "user",
       "currentPage",
     ]),
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setFeedbacks", "setSort", "setFilterId"]),
+    ...mapActions(useFeedbackStore, ["setFeedbacks", "setSort", "setFilterId", "setCurrentPage"]),
+
     async updateSelect(value: string) {
       this.setSort(value);
+      this.setCurrentPage(1)
       const data = await fetchFeedbacks(this.filterOptions, this.currentPage);
       if (data) {
         this.setFeedbacks(data);
+        this.setCurrentPage(this.currentPage + 1)
       }
     },
     openModal() {

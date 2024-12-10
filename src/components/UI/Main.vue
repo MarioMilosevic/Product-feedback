@@ -35,7 +35,7 @@ import RoadmapPageSection from "src/components/roadmap/RoadmapPageSection.vue";
 import Footer from "src/components/UI/Footer.vue";
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
-import {  PropType } from "vue";
+import { PropType } from "vue";
 import { FeedbackType, StatusType } from "src/utils/types";
 import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import { mapActions, mapState } from "pinia";
@@ -69,17 +69,20 @@ export default {
   },
   computed: {
     ...mapState(useFeedbackStore, [
-      "filterOptions",
       "feedbacks",
       "statusOptions",
       "isModalOpen",
       "currentPage",
+      "filterOptions"
     ]),
     mainClass() {
       return `${this.page}Main`;
     },
     loadingPosition() {
       return `${this.page}Loading`;
+    },
+    loadingRef() {
+      return this.$refs.loadingRef;
     },
   },
   methods: {
@@ -105,46 +108,6 @@ export default {
     updateLikedIds(updatedFeedback: FeedbackType) {
       this.setFeedbacksLikes(updatedFeedback);
     },
-    // initializeObserver() {
-    //   this.isObserving = true;
-    //   this.loadingObserver?.disconnect();
-    //   this.loadingObserver = null;
-
-    //   const loadingRef = this.$refs.loadingRef as HTMLElement;
-    //   this.loadingObserver = new IntersectionObserver(
-    //     (entries) => {
-    //       entries.forEach(async (entry) => {
-    //         console.log("ENTRY ", entry);
-    //         if (entry.isIntersecting && this.isObserving) {
-    //           console.log("INTERSECTING");
-    //           console.log(this.isObserving);
-    //           const nextFeedbacksData = await fetchFeedbacks(
-    //             this.filterOptions,
-    //             this.currentPage
-    //           );
-    //           console.log(nextFeedbacksData);
-    //           if (nextFeedbacksData && nextFeedbacksData.length > 0) {
-    //             this.setCurrentPage(this.currentPage + 1);
-    //             this.addMultipleFeedbacksToStore(nextFeedbacksData);
-    //           } else {
-    //             if (this.loadingObserver) {
-    //               this.loadingObserver.unobserve(loadingRef);
-    //               this.loadingObserver = null;
-    //               console.log("unobserve");
-    //             }
-    //             this.isObserving = false;
-    //             console.log("observing false");
-    //           }
-    //         }
-    //       });
-    //     },
-    //     {
-    //       root: null,
-    //       threshold: 0.5,
-    //     }
-    //   );
-    //   this.loadingObserver.observe(loadingRef);
-    // },
     setupObserver() {
       this.isObserving = true;
       this.loadingObserver?.disconnect();
@@ -153,18 +116,17 @@ export default {
       this.loadingObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach(async (entry) => {
-            // console.log("ENTRY ", entry);
             if (entry.isIntersecting && this.isObserving) {
-              // console.log("INTERSECTING");
-              // console.log(this.isObserving);
               const nextFeedbacksData = await fetchFeedbacks(
-                this.filterOptions,
+              this.filterOptions,
                 this.currentPage
               );
-              // console.log(nextFeedbacksData);
               if (nextFeedbacksData && nextFeedbacksData.length > 0) {
                 this.setCurrentPage(this.currentPage + 1);
-                this.addMultipleFeedbacksToStore(nextFeedbacksData);
+                this.addMultipleFeedbacksToStore(
+                  nextFeedbacksData,
+                  this.filterOptions.sort
+                );
               } else {
                 this.observerUnobserve();
               }
@@ -176,43 +138,32 @@ export default {
           threshold: 0.5,
         }
       );
-      this.observerObserve()
+      this.observerObserve();
     },
     observerObserve() {
-      const loadingRef = this.$refs.loadingRef as HTMLElement;
-      if(this.loadingObserver){
-        this.loadingObserver.observe(loadingRef);
+      if (this.loadingObserver) {
+        this.loadingObserver.observe(this.loadingRef as HTMLElement);
       }
     },
     observerUnobserve() {
-      const loadingRef = this.$refs.loadingRef as HTMLElement;
       if (this.loadingObserver) {
-        this.loadingObserver.unobserve(loadingRef);
+        this.loadingObserver.unobserve(this.loadingRef as HTMLElement);
         this.loadingObserver = null;
-        console.log("unobserve");
       }
       this.isObserving = false;
-      console.log("observing false");
     },
   },
+  beforeUnmount() {
+    this.observerUnobserve();
+  },
   mounted() {
-    // this.initializeObserver();
     this.setupObserver();
   },
   watch: {
     currentPage(newValue) {
       if (newValue === 2) {
-        console.log(this.$refs.loadingRef);
-        console.log("treba observer namjestiti");
-        console.log(this.isObserving);
-        this.setupObserver()
-        // this.initializeObserver();
+        this.setupObserver();
       }
-    },
-    loadingObserver(newValue) {
-      console.log(this.loadingObserver);
-      console.log(this.isObserving);
-      console.log(newValue);
     },
   },
 };

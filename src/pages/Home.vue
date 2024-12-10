@@ -2,7 +2,7 @@
   <LoadingSpinner v-if="loading" />
   <template v-else>
     <Sidebar />
-    <MobileSidebar/>
+    <MobileSidebar />
     <Main page="home" :data="feedbacks" />
   </template>
 </template>
