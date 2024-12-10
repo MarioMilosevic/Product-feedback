@@ -1,9 +1,9 @@
 <template>
   <section class="mobile">
-    <ImageSection class="mobile__imageSection"/>
+    <ImageSection class="mobile__imageSection" />
     <Icon class="mobile__icon" size="big" @click="toggleSidebar">
-      <Hamburger class="mobile__icon-button" v-if="!isSidebarOpen"/>
-      <X class="mobile__icon-button" v-else/>
+      <Hamburger class="mobile__icon-button" v-if="!isSidebarOpen" />
+      <X class="mobile__icon-button" v-else />
     </Icon>
     <aside :class="['mobile__sidebar', isVisible]">
       <CategoriesSection />
@@ -29,8 +29,8 @@ export default {
     ImageSection,
     Hamburger,
     CategoriesSection,
-        RoadmapSection,
-    X
+    RoadmapSection,
+    X,
   },
   data() {
     return {

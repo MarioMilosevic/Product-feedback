@@ -38,10 +38,13 @@ export default {
 
     async changeCategory(id: number) {
       this.categoryIndex = id;
+      // da bi onda fecovao narednih 5 a ne opet prvih 5 koji su vec fecovani
+      this.setFeedbacks([])
       this.setCurrentPage(1)
       this.setFilterId(id);
-      // console.log('category fetch')
+      console.log('category fetch')
       const data = await fetchFeedbacks(this.filterOptions, this.currentPage);
+      console.log(data)
       if (data) {
         this.setFeedbacks(data);
         this.setCurrentPage(this.currentPage + 1)
@@ -65,8 +68,6 @@ export default {
   gap:$medium;
   
   @include mixins.respond(small){
-  
-  
   
   } 
 

@@ -35,7 +35,7 @@ import RoadmapPageSection from "src/components/roadmap/RoadmapPageSection.vue";
 import Footer from "src/components/UI/Footer.vue";
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
-import { PropType } from "vue";
+import {  PropType } from "vue";
 import { FeedbackType, StatusType } from "src/utils/types";
 import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import { mapActions, mapState } from "pinia";
@@ -64,7 +64,7 @@ export default {
   data() {
     return {
       isObserving: true,
-      loadingObserver:null as IntersectionObserver | null
+      loadingObserver: null as IntersectionObserver | null,
     };
   },
   computed: {
@@ -105,31 +105,68 @@ export default {
     updateLikedIds(updatedFeedback: FeedbackType) {
       this.setFeedbacksLikes(updatedFeedback);
     },
-    initializeObserver() {
+    // initializeObserver() {
+    //   this.isObserving = true;
+    //   this.loadingObserver?.disconnect();
+    //   this.loadingObserver = null;
+
+    //   const loadingRef = this.$refs.loadingRef as HTMLElement;
+    //   this.loadingObserver = new IntersectionObserver(
+    //     (entries) => {
+    //       entries.forEach(async (entry) => {
+    //         console.log("ENTRY ", entry);
+    //         if (entry.isIntersecting && this.isObserving) {
+    //           console.log("INTERSECTING");
+    //           console.log(this.isObserving);
+    //           const nextFeedbacksData = await fetchFeedbacks(
+    //             this.filterOptions,
+    //             this.currentPage
+    //           );
+    //           console.log(nextFeedbacksData);
+    //           if (nextFeedbacksData && nextFeedbacksData.length > 0) {
+    //             this.setCurrentPage(this.currentPage + 1);
+    //             this.addMultipleFeedbacksToStore(nextFeedbacksData);
+    //           } else {
+    //             if (this.loadingObserver) {
+    //               this.loadingObserver.unobserve(loadingRef);
+    //               this.loadingObserver = null;
+    //               console.log("unobserve");
+    //             }
+    //             this.isObserving = false;
+    //             console.log("observing false");
+    //           }
+    //         }
+    //       });
+    //     },
+    //     {
+    //       root: null,
+    //       threshold: 0.5,
+    //     }
+    //   );
+    //   this.loadingObserver.observe(loadingRef);
+    // },
+    setupObserver() {
       this.isObserving = true;
-      this.loadingObserver?.disconnect()
-      // console.log('pozvao disconnect')
-      const loadingRef = this.$refs.loadingRef as HTMLElement;
-       this.loadingObserver = new IntersectionObserver(
+      this.loadingObserver?.disconnect();
+      this.loadingObserver = null;
+
+      this.loadingObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach(async (entry) => {
+            // console.log("ENTRY ", entry);
             if (entry.isIntersecting && this.isObserving) {
-              // console.log("trenutna strainca",this.currentPage);
+              // console.log("INTERSECTING");
+              // console.log(this.isObserving);
               const nextFeedbacksData = await fetchFeedbacks(
                 this.filterOptions,
                 this.currentPage
               );
-              console.log(nextFeedbacksData);
+              // console.log(nextFeedbacksData);
               if (nextFeedbacksData && nextFeedbacksData.length > 0) {
                 this.setCurrentPage(this.currentPage + 1);
                 this.addMultipleFeedbacksToStore(nextFeedbacksData);
               } else {
-                if (this.loadingObserver) {
-                  this.loadingObserver.unobserve(loadingRef);
-                  console.log("unobserve");
-                }
-                this.isObserving = false;
-                  console.log('observing false')
+                this.observerUnobserve();
               }
             }
           });
@@ -139,14 +176,44 @@ export default {
           threshold: 0.5,
         }
       );
-      // console.log("initializeObserver");
-      this.loadingObserver.observe(loadingRef);
-      // console.log("observe");
+      this.observerObserve()
+    },
+    observerObserve() {
+      const loadingRef = this.$refs.loadingRef as HTMLElement;
+      if(this.loadingObserver){
+        this.loadingObserver.observe(loadingRef);
+      }
+    },
+    observerUnobserve() {
+      const loadingRef = this.$refs.loadingRef as HTMLElement;
+      if (this.loadingObserver) {
+        this.loadingObserver.unobserve(loadingRef);
+        this.loadingObserver = null;
+        console.log("unobserve");
+      }
+      this.isObserving = false;
+      console.log("observing false");
     },
   },
   mounted() {
-    // console.log("mount");
-    this.initializeObserver();
+    // this.initializeObserver();
+    this.setupObserver();
+  },
+  watch: {
+    currentPage(newValue) {
+      if (newValue === 2) {
+        console.log(this.$refs.loadingRef);
+        console.log("treba observer namjestiti");
+        console.log(this.isObserving);
+        this.setupObserver()
+        // this.initializeObserver();
+      }
+    },
+    loadingObserver(newValue) {
+      console.log(this.loadingObserver);
+      console.log(this.isObserving);
+      console.log(newValue);
+    },
   },
 };
 </script>
@@ -160,7 +227,7 @@ export default {
   flex-direction: column;
   grid-column: span 8;
   gap: $medium;
-  
+
   @include mixins.respond(small) {
     grid-column: span 9;
     /* padding: 0 $medium; */
