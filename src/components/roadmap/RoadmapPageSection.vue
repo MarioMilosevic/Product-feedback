@@ -60,11 +60,18 @@ export default {
 
 <style scoped lang="scss">
 @use "src/scss/_variables.scss" as *;
+@use "src/scss/_mixins.scss" as mixins;
 
 .section {
   display: flex;
   flex-direction: column;
   gap: $very-big;
+
+
+  @include mixins.respond(small) {
+    padding-top: $very-big;
+    grid-column: span 3;
+  }
 
   &__list {
     list-style: none;

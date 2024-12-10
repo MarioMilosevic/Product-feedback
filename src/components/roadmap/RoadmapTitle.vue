@@ -32,6 +32,12 @@ export default {
 p {
   text-align: center;
   padding: 1rem;
+  transition: all;
+  transition-duration: 100ms;
+
+  &:active {
+    background-color: $primary-color-hover;
+  }
 }
 
 .withBorder {

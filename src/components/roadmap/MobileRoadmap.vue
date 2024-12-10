@@ -6,25 +6,20 @@
       :key="status.id"
       :title="status.name"
       :isSelected="active === index"
+      @click="changeSection(index)"
     />
-
-    <!-- <RoadmapHeading v-for="statusOption in data" :key="statusOption.id" 
-    :title="statusOption.name"
-    :description="statusOption.description"
-
-    /> -->
-    <!-- nek prikazuje naslov svih a ispod nek prikazuje samo trenutno selektovani roadmappage, i na promjenu
- da feca od onog koji je selektovan i da proslijedi kroz prop podatke
- i to je to -->
+    <RoadmapPageSection :status="statusOptions[active]" :filteredFeedbacks="feedbacks"/>
   </main>
 </template>
 <script lang="ts">
 import Navigation from "src/components/feedbacks/Navigation.vue";
 import RoadmapPageSection from "src/components/roadmap/RoadmapPageSection.vue";
+import RoadmapTitle from "src/components/roadmap/RoadmapTitle.vue";
 import RoadmapHeading from "src/components/roadmap/RoadmapHeading.vue";
 import { StatusType } from "src/utils/types";
 import { PropType } from "vue";
-import RoadmapTitle from "src/components/roadmap/RoadmapTitle.vue";
+import { mapState } from "pinia";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
 
 export default {
   components: {
@@ -44,8 +39,13 @@ export default {
       active: 0,
     };
   },
-  mounted() {
-    console.log(this.data);
+  computed: {
+    ...mapState(useFeedbackStore, ['statusOptions', 'feedbacks'])
+  },
+  methods: {
+    changeSection(index:number) {
+      this.active = index
+    }
   },
 };
 </script>

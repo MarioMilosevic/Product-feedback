@@ -72,6 +72,7 @@ export default {
 
 <style scoped lang="scss">
 @use "src/scss/_variables.scss" as *;
+@use "src/scss/_mixins.scss" as mixins;
 
 .li {
   background-color: $secondary-color;
@@ -84,6 +85,10 @@ export default {
   border-top-width: 0.3rem;
   border-top-style: solid;
   min-height: 20rem;
+
+  @include mixins.respond(small) {
+    min-height: 0rem;
+  }
 
   &__category {
     align-self: start;
