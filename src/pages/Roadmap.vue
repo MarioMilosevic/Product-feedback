@@ -1,7 +1,9 @@
 <template>
   <LoadingSpinner v-if="loading" />
-  <Main v-else page="roadmap" :data="statusOptions"/>
-  <MobileRoadmap/>
+  <template v-else>
+    <Main page="roadmap" :data="statusOptions"/>
+    <MobileRoadmap :data="statusOptions"/>
+  </template>
 </template>
 <script lang="ts">
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
