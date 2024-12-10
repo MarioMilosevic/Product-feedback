@@ -1,6 +1,6 @@
 <template>
   <main class="main">
-    <Navigation name="roadmap" />
+    <Navigation name="roadmap" @open-modal="openModal" />
     <RoadmapTitle
       v-for="(status, index) in data"
       :key="status.id"
@@ -8,7 +8,15 @@
       :isSelected="active === index"
       @click="changeSection(index)"
     />
-    <RoadmapPageSection :status="statusOptions[active]" :filteredFeedbacks="feedbacks"/>
+    <RoadmapPageSection
+      :status="statusOptions[active]"
+      :filteredFeedbacks="feedbacks"
+    />
+    <div class="main__bottom">
+      <LoadingSpinner :style="{ margin: '0 auto' }" />
+      <Footer />
+    </div>
+    <ModalForm :is-modal-open="isModalOpen" @close-modal="closeModal" />
   </main>
 </template>
 <script lang="ts">
@@ -16,6 +24,9 @@ import Navigation from "src/components/feedbacks/Navigation.vue";
 import RoadmapPageSection from "src/components/roadmap/RoadmapPageSection.vue";
 import RoadmapTitle from "src/components/roadmap/RoadmapTitle.vue";
 import RoadmapHeading from "src/components/roadmap/RoadmapHeading.vue";
+import ModalForm from "src/components/UI/ModalForm.vue";
+import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
+import Footer from "src/components/UI/Footer.vue";
 import { StatusType } from "src/utils/types";
 import { PropType } from "vue";
 import { mapState } from "pinia";
@@ -27,6 +38,9 @@ export default {
     RoadmapPageSection,
     RoadmapHeading,
     RoadmapTitle,
+    ModalForm,
+    LoadingSpinner,
+    Footer,
   },
   props: {
     data: {
@@ -37,15 +51,22 @@ export default {
   data() {
     return {
       active: 0,
+      isModalOpen: false,
     };
   },
   computed: {
-    ...mapState(useFeedbackStore, ['statusOptions', 'feedbacks'])
+    ...mapState(useFeedbackStore, ["statusOptions", "feedbacks"]),
   },
   methods: {
-    changeSection(index:number) {
-      this.active = index
-    }
+    changeSection(index: number) {
+      this.active = index;
+    },
+    openModal() {
+      this.isModalOpen = true;
+    },
+    closeModal() {
+      this.isModalOpen = false;
+    },
   },
 };
 </script>
@@ -56,12 +77,19 @@ export default {
 
 .main {
   display: none;
-
   @include mixins.respond(small) {
-    grid-column: 1 / 10;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    /* row-gap: 4rem; */
+    grid-column: 1 / 10;
+  }
+
+  &__bottom {
+    margin-top: $big;
+    grid-column: 2/3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: $medium;
   }
 }
 </style>

@@ -119,7 +119,7 @@ export default {
             if (entry.isIntersecting && this.isObserving) {
               const nextFeedbacksData = await fetchFeedbacks(
                 this.filterOptions,
-                this.currentPage
+                this.currentPage,
               );
               if (nextFeedbacksData && nextFeedbacksData.length > 0) {
                 this.setCurrentPage(this.currentPage + 1);
