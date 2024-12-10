@@ -117,9 +117,11 @@ export default {
         (entries) => {
           entries.forEach(async (entry) => {
             if (entry.isIntersecting && this.isObserving) {
+              console.log('radi')
               const nextFeedbacksData = await fetchFeedbacks(
                 this.filterOptions,
                 this.currentPage,
+                true
               );
               if (nextFeedbacksData && nextFeedbacksData.length > 0) {
                 this.setCurrentPage(this.currentPage + 1);
@@ -153,11 +155,12 @@ export default {
       this.isObserving = false;
     },
   },
+  mounted() {
+    // console.log('mount')
+    this.setupObserver();
+  },
   beforeUnmount() {
     this.observerUnobserve();
-  },
-  mounted() {
-    this.setupObserver();
   },
   watch: {
     currentPage(newValue) {

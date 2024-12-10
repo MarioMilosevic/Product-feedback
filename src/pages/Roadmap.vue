@@ -1,8 +1,8 @@
 <template>
   <LoadingSpinner v-if="loading" />
   <template v-else>
-    <Main page="roadmap" :data="statusOptions"/>
-    <MobileRoadmap :data="statusOptions"/>
+    <Main page="roadmap" :data="statusOptions" />
+    <MobileRoadmap :data="statusOptions" />
   </template>
 </template>
 <script lang="ts">
@@ -17,23 +17,38 @@ export default {
   components: {
     Main,
     LoadingSpinner,
-    MobileRoadmap
+    MobileRoadmap,
   },
   async created() {
     this.setLoading(true);
-    await getData(this.filterOptions, this.currentPage, 1, 2);
+    if (window.innerWidth > 700) {
+      await getData(1, true);
+    } else {
+      await getData(1, false, 1);
+    }
     this.setLoading(false);
   },
   computed: {
-      ...mapState(useFeedbackStore, ["loading", 'feedbacks', 'statusOptions', 'currentPage', 'filterOptions']),
+    ...mapState(useFeedbackStore, [
+      "loading",
+      "feedbacks",
+      "statusOptions",
+      "currentPage",
+      "filterOptions",
+    ]),
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setLoading", 'setStatusOptions', 'setFeedbacks', 'setLoading']),
+    ...mapActions(useFeedbackStore, [
+      "setLoading",
+      "setStatusOptions",
+      "setFeedbacks",
+      "setLoading",
+    ]),
     filterFeedbackByStatus(statusName: string) {
-     return this.feedbacks.filter(
-       (feedback) => feedback.status.name === statusName
-     );
-   },
+      return this.feedbacks.filter(
+        (feedback) => feedback.status.name === statusName
+      );
+    },
   },
 };
 </script>

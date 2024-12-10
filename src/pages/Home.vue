@@ -25,7 +25,7 @@ export default {
   },
   async created() {
     this.setLoading(true);
-    await getData(this.filterOptions, this.currentPage);
+    await getData(this.currentPage, true);
     this.setLoading(false);
   },
   computed: {

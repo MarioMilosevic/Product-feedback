@@ -10,16 +10,15 @@ import { fetchCategories, fetchSingleCategory } from "src/api/CategoriesApi";
 import { showToast } from "src/utils/toastify";
 
 export const getData = async (
-  filterOptions: FilterOptionsType,
   page: number,
-  limit?:number,
-  statusId?: number,
+  hasRange: boolean,
+  statusId?: number
 ) => {
   try {
     const store = useFeedbackStore();
 
     const [feedbacksData, categoriesData, statusData] = await Promise.all([
-      fetchFeedbacks(filterOptions, page, statusId, limit),
+      fetchFeedbacks(store.filterOptions, page, hasRange, statusId),
       fetchCategories(),
       fetchStatusOptions(),
     ]);
@@ -40,11 +39,12 @@ export const getData = async (
 export const fetchFeedbacks = async (
   filterOptions: FilterOptionsType,
   page: number,
-  limit = 5,
-  statusId?: number,
+  hasRange: boolean,
+  statusId?: number
 ) => {
   try {
     const { filterId, sort } = filterOptions;
+    const limit = 5;
     let query = supabase
       .from("Feedbacks")
       .select(
@@ -53,7 +53,10 @@ export const fetchFeedbacks = async (
         status:Status(name), 
         category:Categories(name)`
       )
-      .range((page - 1) * limit, page * limit - 1);
+      .limit(limit);
+    if (hasRange) {
+      query.range((page - 1) * limit, page * limit - 1);
+    }
 
     if (statusId) {
       query.eq("status", statusId);

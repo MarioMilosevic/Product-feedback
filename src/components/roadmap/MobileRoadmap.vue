@@ -12,9 +12,9 @@
       :status="statusOptions[active]"
       :filteredFeedbacks="feedbacks"
     />
-    <div class="main__bottom">
-      <LoadingSpinner :style="{ margin: '0 auto' }" />
-      <Footer />
+    <div class="main__bottom" ref="loadingRef">
+      <LoadingSpinner v-if="isObserving" :style="{ margin: '0 auto' }" />
+      <Footer v-else/>
     </div>
     <ModalForm :is-modal-open="isModalOpen" @close-modal="closeModal" />
   </main>
@@ -27,10 +27,11 @@ import RoadmapHeading from "src/components/roadmap/RoadmapHeading.vue";
 import ModalForm from "src/components/UI/ModalForm.vue";
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
 import Footer from "src/components/UI/Footer.vue";
-import { StatusType } from "src/utils/types";
+import { FeedbackType, StatusType } from "src/utils/types";
 import { PropType } from "vue";
-import { mapState } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
+import { fetchFeedbacks } from "src/api/FeedbacksApi";
 
 export default {
   components: {
@@ -52,14 +53,28 @@ export default {
     return {
       active: 0,
       isModalOpen: false,
+      isObserving: false,
+      loadingObserver: null as IntersectionObserver | null,
     };
   },
   computed: {
-    ...mapState(useFeedbackStore, ["statusOptions", "feedbacks"]),
+    ...mapState(useFeedbackStore, [
+      "statusOptions",
+      "feedbacks",
+      "filterOptions",
+      "currentPage",
+    ]),
+    loadingRef() {
+      return this.$refs.loadingRef;
+    },
   },
   methods: {
-    changeSection(index: number) {
+    ...mapActions(useFeedbackStore, ["setCurrentPage", 'addMultipleFeedbacksToStore', "setFeedbacks"]),
+   async changeSection(index: number) {
       this.active = index;
+      this.setCurrentPage(1)
+     const data = await fetchFeedbacks(this.filterOptions, this.currentPage, true, index + 1)
+      this.setFeedbacks(data as FeedbackType[])
     },
     openModal() {
       this.isModalOpen = true;
@@ -67,7 +82,65 @@ export default {
     closeModal() {
       this.isModalOpen = false;
     },
+    setupObserver() {
+      this.isObserving = true;
+      this.loadingObserver?.disconnect();
+      this.loadingObserver = null;
+
+      this.loadingObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(async (entry) => {
+            if (entry.isIntersecting && this.isObserving) {
+              console.log('interserctin')
+              const nextFeedbacksData = await fetchFeedbacks(
+                this.filterOptions,
+                this.currentPage,
+                true
+              );
+              if (nextFeedbacksData && nextFeedbacksData.length > 0) {
+                this.setCurrentPage(this.currentPage + 1);
+                this.addMultipleFeedbacksToStore(
+                  nextFeedbacksData,
+                  this.filterOptions.sort
+                );
+              } else {
+                console.log('uslo')
+                this.observerUnobserve();
+              }
+            }
+          });
+        },
+        {
+          root: null,
+          threshold: 0.5,
+        }
+      );
+      this.observerObserve();
+    },
+    observerObserve() {
+      if (this.loadingObserver) {
+        this.loadingObserver.observe(this.loadingRef as HTMLElement);
+      }
+    },
+    observerUnobserve() {
+      if (this.loadingObserver) {
+        this.loadingObserver.unobserve(this.loadingRef as HTMLElement);
+        this.loadingObserver = null;
+      }
+      this.isObserving = false;
+    },
   },
+    beforeUnmount() {
+    this.observerUnobserve();
+  },
+  mounted() {
+    this.setupObserver();
+  },
+  watch: {
+    active() {
+      this.setupObserver()
+    }
+  }
 };
 </script>
 

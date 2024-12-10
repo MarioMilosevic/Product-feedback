@@ -31,7 +31,7 @@
 import HomepageLink from "src/components/UI/HomepageLink.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
 import Icon from "src/components/UI/Icon.vue";
-import { retrieveUser, signOutUser } from "src/api/UsersApi";
+import { signOutUser } from "src/api/UsersApi";
 import { mapState, mapActions } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { showToast } from "src/utils/toastify";
@@ -56,17 +56,9 @@ export default {
       return firstName;
     },
   },
-  async created() {
-    this.setLoading(true);
-    const user = await retrieveUser();
-    // console.log("trenutni user na stvaranju prije setUser", user);
-    if (user.id) {
-      this.setUser(user);
-      this.setLoading(false);
-    }
-  },
+ 
   methods: {
-    ...mapActions(useFeedbackStore, ["setUser", "setLoading"]),
+    ...mapActions(useFeedbackStore, ["setUser"]),
     goBack() {
       this.$router.push("/home");
     },
