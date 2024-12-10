@@ -14,7 +14,7 @@
     />
     <div class="main__bottom" ref="loadingRef">
       <LoadingSpinner v-if="isObserving" :style="{ margin: '0 auto' }" />
-      <Footer v-else/>
+      <Footer v-else />
     </div>
     <ModalForm :is-modal-open="isModalOpen" @close-modal="closeModal" />
   </main>
@@ -69,12 +69,22 @@ export default {
     },
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setCurrentPage", 'addMultipleFeedbacksToStore', "setFeedbacks"]),
-   async changeSection(index: number) {
+    ...mapActions(useFeedbackStore, [
+      "setCurrentPage",
+      "addMultipleFeedbacksToStore",
+      "setFeedbacks",
+    ]),
+
+    async changeSection(index: number) {
       this.active = index;
-      this.setCurrentPage(1)
-     const data = await fetchFeedbacks(this.filterOptions, this.currentPage, true, index + 1)
-      this.setFeedbacks(data as FeedbackType[])
+      this.setCurrentPage(2);
+      const data = await fetchFeedbacks(
+        this.filterOptions,
+        1,
+        true,
+        this.active + 1
+      );
+      this.setFeedbacks(data as FeedbackType[]);
     },
     openModal() {
       this.isModalOpen = true;
@@ -91,20 +101,18 @@ export default {
         (entries) => {
           entries.forEach(async (entry) => {
             if (entry.isIntersecting && this.isObserving) {
-              console.log('interserctin')
+              console.log("interserctin");
               const nextFeedbacksData = await fetchFeedbacks(
                 this.filterOptions,
                 this.currentPage,
-                true
+                true,
+                this.active + 1
               );
               if (nextFeedbacksData && nextFeedbacksData.length > 0) {
                 this.setCurrentPage(this.currentPage + 1);
-                this.addMultipleFeedbacksToStore(
-                  nextFeedbacksData,
-                  this.filterOptions.sort
-                );
+                this.addMultipleFeedbacksToStore(nextFeedbacksData);
               } else {
-                console.log('uslo')
+                console.log("uslo");
                 this.observerUnobserve();
               }
             }
@@ -130,17 +138,22 @@ export default {
       this.isObserving = false;
     },
   },
-    beforeUnmount() {
+  beforeUnmount() {
     this.observerUnobserve();
   },
   mounted() {
     this.setupObserver();
   },
   watch: {
-    active() {
-      this.setupObserver()
-    }
-  }
+    currentPage(newValue) {
+      if (newValue === 2) {
+        this.setupObserver();
+      }
+    },
+    // active() {
+    //   this.setupObserver();
+    // },
+  },
 };
 </script>
 

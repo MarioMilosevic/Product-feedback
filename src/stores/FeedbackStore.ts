@@ -71,8 +71,9 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
         return feedback;
       });
     },
-    addMultipleFeedbacksToStore(feedbacks: FeedbackType[], sortValue: string) {
+    addMultipleFeedbacksToStore(feedbacks: FeedbackType[], sortValue?: string) {
       this.feedbacks.push(...feedbacks);
+  
       if (sortValue === "Most Likes") {
         this.feedbacks.sort((a, b) => b.likes - a.likes);
       } else if (sortValue === "Least Likes") {
