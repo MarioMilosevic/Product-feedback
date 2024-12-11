@@ -14,12 +14,6 @@ body {
   gap: 1.5rem;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-/* 
-console.log
-  @media (min-width:601px) and (max-width:900px) {
-    background-color: red;
-  } */
-
 }
 
 h1,

@@ -299,6 +299,7 @@ export default {
 
 <style lang="scss" scoped>
 @use "src/scss/_variables.scss" as *;
+@use "src/scss/_mixins.scss" as mixins;
 
 
 .overlay {
@@ -321,17 +322,17 @@ export default {
     width: 100%;
     transform: translate(-50%, -50%);
     background-color: $secondary-color;
-    padding: 2rem;
+    padding: $very-big;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: $medium;
 
     &-form {
       background-color: $secondary-color;
-      padding: 1rem;
+      padding: $medium;
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: $very-big;
 
       &-text {
         display: flex;
@@ -343,12 +344,12 @@ export default {
       }
 
       &-buttonContainer {
-        margin-top: 1rem;
+        margin-top: $medium;
         display: flex;
 
         &-div {
           display: flex;
-          gap: 1rem;
+          gap: $medium;
         }
       }
     }
@@ -379,7 +380,7 @@ export default {
 }
 
 .error {
-  color: red;
-  font-size: 12px;
+  color: $error-color;
+  font-size: $small-font;
 }
 </style>

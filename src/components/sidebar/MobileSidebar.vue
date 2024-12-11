@@ -1,15 +1,22 @@
 <template>
   <section class="mobile">
     <ImageSection class="mobile__imageSection" />
-    <Icon class="mobile__icon" size="big" @click="toggleSidebar">
-      <Hamburger class="mobile__icon-button" v-if="!isSidebarOpen" />
-      <X class="mobile__icon-button" v-else />
+    <Icon
+      class="mobile__icon"
+      size="big"
+      @click="openSidebar"
+      v-if="!isSidebarOpen"
+    >
+      <Hamburger />
     </Icon>
     <aside :class="['mobile__sidebar', isVisible]">
       <CategoriesSection />
       <RoadmapSection />
     </aside>
-    <div class="mobile__overlay" v-if="isSidebarOpen"></div>
+    <div
+      :class="['mobile__overlay', overlayVisible]"
+      @click="closeSidebar"
+    ></div>
   </section>
 </template>
 
@@ -20,7 +27,6 @@ import ImageSection from "src/components/sidebar/ImageSection.vue";
 import Hamburger from "src/icons/Hamburger.vue";
 import CategoriesSection from "src/components/sidebar/CategoriesSection.vue";
 import RoadmapSection from "src/components/sidebar/RoadmapSection.vue";
-import X from "src/icons/X.vue";
 
 export default {
   components: {
@@ -30,7 +36,6 @@ export default {
     Hamburger,
     CategoriesSection,
     RoadmapSection,
-    X,
   },
   data() {
     return {
@@ -41,10 +46,16 @@ export default {
     isVisible() {
       return this.isSidebarOpen ? "visible" : "hidden";
     },
+    overlayVisible() {
+      return this.isSidebarOpen ? "overlayVisible" : "";
+    },
   },
   methods: {
-    toggleSidebar() {
-      this.isSidebarOpen = !this.isSidebarOpen;
+    openSidebar() {
+      this.isSidebarOpen = true;
+    },
+    closeSidebar() {
+      this.isSidebarOpen = false;
     },
   },
 };
@@ -60,13 +71,10 @@ export default {
   flex-direction: column;
   display: none;
   position: relative;
+  overflow: hidden;
 
   @include mixins.respond(small) {
     display: flex;
-  }
-
-  &__imageSection {
-    z-index: 2;
   }
 
   &__icon {
@@ -75,16 +83,13 @@ export default {
     right: 5%;
     transform: translateY(-50%);
     z-index: 2;
-
-    &-button {
-      color: $secondary-color;
-    }
+    color: $secondary-color;
   }
 
   &__sidebar {
     z-index: 2;
-    position: absolute;
-    top: 100%;
+    position: fixed;
+    top: 15%;
     right: 0%;
     transition: all;
     transition-duration: 300ms;
@@ -104,16 +109,19 @@ export default {
     z-index: 1;
     backdrop-filter: blur(3px);
     background-color: rgba(0, 0, 0, 0.6);
+    visibility: hidden;
   }
+}
+
+.overlayVisible {
+  visibility: visible;
 }
 
 .visible {
   transform: translateX(0%);
-  visibility: visible;
 }
 
 .hidden {
   transform: translateX(100%);
-  visibility: hidden;
 }
 </style>

@@ -117,7 +117,6 @@ export default {
         (entries) => {
           entries.forEach(async (entry) => {
             if (entry.isIntersecting && this.isObserving) {
-              console.log('radi')
               const nextFeedbacksData = await fetchFeedbacks(
                 this.filterOptions,
                 this.currentPage,
