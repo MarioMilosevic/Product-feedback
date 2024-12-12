@@ -3,7 +3,7 @@
 Product Feedback is an full-stack application, designed for managing feedbacks. 
 
 ## Environment Variables
-  To run this project, you will need to add the following environment variablet to your .env.local file:
+  To run this project, you will need to add the following environment variable to your .env.local file:
     - **VITE_SUPABASE_URL** : Your Supabase URL,
     - **VITE_SERVICE_KEY** : Your service key,
     - **VITE_CLOUD_NAME** : Your Cloudinary cloud name,
