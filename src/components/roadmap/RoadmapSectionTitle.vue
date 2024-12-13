@@ -1,8 +1,8 @@
 <template>
-  <article>
+  <div>
     <h3>{{ selectedStatus.name }} ({{ count }})</h3>
     <p>{{ selectedStatus.description }}</p>
-  </article>
+  </div>
 </template>
 <script lang="ts">
 import { StatusType } from "src/utils/types";
@@ -25,7 +25,7 @@ export default {
 <style scoped lang="scss">
 @use "src/scss/_variables.scss" as *;
 
-article {
+div {
   display: flex;
   flex-direction: column;
   gap: $small;

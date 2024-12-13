@@ -3,7 +3,7 @@
   <template v-else>
     <Sidebar />
     <MobileSidebar />
-    <Main page="home" :data="feedbacks" />
+    <Main page="home"/>
   </template>
 </template>
 

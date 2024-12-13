@@ -1,8 +1,7 @@
 <template>
   <LoadingSpinner v-if="loading" />
   <template v-else>
-    <Main page="roadmap" :data="statusOptions" />
-    <MobileRoadmap :data="statusOptions" />
+    <Main page="roadmap" />
   </template>
 </template>
 <script lang="ts">
@@ -11,13 +10,13 @@ import Main from "src/components/UI/Main.vue";
 import { mapActions, mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { getData } from "src/api/FeedbacksApi";
-import MobileRoadmap from "src/components/roadmap/MobileRoadmap.vue";
+// import MobileRoadmap from "src/components/roadmap/MobileRoadmap.vue";
 
 export default {
   components: {
     Main,
     LoadingSpinner,
-    MobileRoadmap,
+    // MobileRoadmap,
   },
   async created() {
     this.setLoading(true);

@@ -1,7 +1,6 @@
 <template>
   <p :class="[selected, borderColor]">
     {{ status.name }}
-    ({{ count }})
   </p>
 </template>
 <script lang="ts">
@@ -13,10 +12,6 @@ export default {
     status: {
       type: Object as PropType<StatusType>,
       required: true,
-    },
-    count: {
-      type: Number,
-      default: 0,
     },
     isSelected: {
       type: Boolean,
@@ -31,9 +26,6 @@ export default {
       return this.isSelected ? "withBorder" : "";
     },
   },
-  mounted() {
-    console.log(this.status);
-  },
 };
 </script>
 
@@ -45,7 +37,8 @@ p {
   padding: $medium;
   transition: all;
   transition-duration: 100ms;
-  margin-bottom: $medium;
+  margin-bottom: $big;
+  cursor: pointer;
 
   &:active {
     background-color: $primary-color-hover;

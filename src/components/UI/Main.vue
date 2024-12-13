@@ -1,14 +1,3 @@
-<!-- <RoadmapPageSection
-          :status="statusOptions[roadmapActiveSection]"
-          :filteredFeedbacks="feedbacks"
-        /> -->
-<!-- <RoadmapPageSection
-        v-else-if="page === 'roadmap'"
-        v-for="status in statusOptions"
-        :key="status.id"
-        :status="status"
-        :filteredFeedbacks="filterFeedbackByStatus(status.name)"
-      /> -->
 <template>
   <main :class="mainClass">
     <Navigation @open-modal="openModal" :name="page" />
@@ -22,9 +11,8 @@
       />
       <template v-else-if="page === 'roadmap'">
         <RoadmapTitle
-          v-for="(status, index) in data"
+          v-for="(status, index) in statusOptions"
           :key="status.id"
-          :count="filterFeedbackByStatus(status.name)"
           :status="status"
           :isSelected="roadmapActiveSection === index"
           @click="changeSection(index)"
@@ -64,8 +52,7 @@ import RoadmapTitle from "src/components/roadmap/RoadmapTitle.vue";
 import RoadmapFeedback from "src/components/roadmap/RoadmapFeedback.vue";
 import RoadmapSectionTitle from "src/components/roadmap/RoadmapSectionTitle.vue";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
-import { PropType } from "vue";
-import { FeedbackType, StatusType } from "src/utils/types";
+import { FeedbackType } from "src/utils/types";
 import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import { mapActions, mapState } from "pinia";
 
@@ -85,10 +72,6 @@ export default {
   props: {
     page: {
       type: String,
-      required: true,
-    },
-    data: {
-      type: Array as PropType<FeedbackType[] | StatusType[]>,
       required: true,
     },
   },
@@ -161,11 +144,21 @@ export default {
         (entries) => {
           entries.forEach(async (entry) => {
             if (entry.isIntersecting && this.isObserving) {
-              const nextFeedbacksData = await fetchFeedbacks(
-                this.filterOptions,
-                this.currentPage,
-                true
-              );
+              let nextFeedbacksData;
+              if (this.page === "home") {
+                nextFeedbacksData = await fetchFeedbacks(
+                  this.filterOptions,
+                  this.currentPage,
+                  true
+                );
+              } else if (this.page === "roadmap") {
+                nextFeedbacksData = await fetchFeedbacks(
+                  this.filterOptions,
+                  this.currentPage,
+                  true,
+                  this.roadmapActiveSection + 1
+                );
+              }
               if (nextFeedbacksData && nextFeedbacksData.length > 0) {
                 this.setCurrentPage(this.currentPage + 1);
                 this.addMultipleFeedbacksToStore(
@@ -200,7 +193,6 @@ export default {
   },
   mounted() {
     this.setupObserver();
-    console.log(this.statusOptions);
   },
   beforeUnmount() {
     this.observerUnobserve();
@@ -237,9 +229,6 @@ export default {
   grid-template-columns: repeat(3, 1fr);
   grid-column: 1 / 10;
 
-  @include mixins.respond(small) {
-    display: none;
-  }
   @include mixins.respond(medium) {
     column-gap: $big;
   }
@@ -250,6 +239,10 @@ export default {
     flex-direction: column;
     padding: 0 $medium;
     gap: $big;
+
+    @include mixins.respond(small) {
+      column-gap: $medium;
+    }
   }
 }
 
