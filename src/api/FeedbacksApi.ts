@@ -11,14 +11,13 @@ import { showToast } from "src/utils/toastify";
 
 export const getData = async (
   page: number,
-  hasRange: boolean,
   statusId?: number
 ) => {
   try {
     const store = useFeedbackStore();
 
     const [feedbacksData, categoriesData, statusData] = await Promise.all([
-      fetchFeedbacks(store.filterOptions, page, hasRange, statusId),
+      fetchFeedbacks(store.filterOptions, page, statusId),
       fetchCategories(),
       fetchStatusOptions(),
     ]);
@@ -39,7 +38,6 @@ export const getData = async (
 export const fetchFeedbacks = async (
   filterOptions: FilterOptionsType,
   page: number,
-  hasRange: boolean,
   statusId?: number
 ) => {
   try {
@@ -52,11 +50,8 @@ export const fetchFeedbacks = async (
         Comments(count), 
         status:Status(name), 
         category:Categories(name)`
-      )
-      .limit(limit);
-    if (hasRange) {
-      query.range((page - 1) * limit, page * limit - 1);
-    }
+    )
+      .range(0, page * limit - 1)
 
     if (statusId) {
       query.eq("status", statusId);

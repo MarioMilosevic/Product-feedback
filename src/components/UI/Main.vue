@@ -105,7 +105,6 @@ export default {
       "setFeedbacksLikes",
       "setIsModalOpen",
       "setCurrentPage",
-      "addMultipleFeedbacksToStore",
       "setLoading",
       "setFeedbacks",
     ]),
@@ -130,7 +129,6 @@ export default {
       const data = await fetchFeedbacks(
         this.filterOptions,
         1,
-        true,
         this.roadmapActiveSection + 1
       );
       this.setFeedbacks(data as FeedbackType[]);
@@ -144,27 +142,23 @@ export default {
         (entries) => {
           entries.forEach(async (entry) => {
             if (entry.isIntersecting && this.isObserving) {
-              let nextFeedbacksData;
+              let feedbacksData;
               if (this.page === "home") {
-                nextFeedbacksData = await fetchFeedbacks(
+                feedbacksData = await fetchFeedbacks(
                   this.filterOptions,
                   this.currentPage,
-                  true
                 );
               } else if (this.page === "roadmap") {
-                nextFeedbacksData = await fetchFeedbacks(
+                feedbacksData = await fetchFeedbacks(
                   this.filterOptions,
                   this.currentPage,
-                  true,
                   this.roadmapActiveSection + 1
                 );
               }
-              if (nextFeedbacksData && nextFeedbacksData.length > 0) {
+              if (feedbacksData && feedbacksData.length > 0 && feedbacksData.length !== this.feedbacks.length) {
                 this.setCurrentPage(this.currentPage + 1);
-                this.addMultipleFeedbacksToStore(
-                  nextFeedbacksData,
-                  this.filterOptions.sort
-                );
+                this.setFeedbacks(feedbacksData)
+                this.setFeedbacks(feedbacksData)
               } else {
                 this.observerUnobserve();
               }

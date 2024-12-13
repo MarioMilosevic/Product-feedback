@@ -77,7 +77,7 @@ export default {
     async updateSelect(value: string) {
       this.setSort(value);
       this.setCurrentPage(1)
-      const data = await fetchFeedbacks(this.filterOptions, this.currentPage, true);
+      const data = await fetchFeedbacks(this.filterOptions, this.currentPage);
       if (data) {
         this.setFeedbacks(data);
         this.setCurrentPage(this.currentPage + 1)

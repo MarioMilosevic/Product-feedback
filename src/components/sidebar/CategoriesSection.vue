@@ -42,7 +42,7 @@ export default {
       this.setCurrentPage(1)
       this.setFilterId(id);
       this.$emit('category-event')
-      const data = await fetchFeedbacks(this.filterOptions,this.currentPage, true);
+      const data = await fetchFeedbacks(this.filterOptions,this.currentPage);
       if (data) {
         this.setFeedbacks(data);
         this.setCurrentPage(this.currentPage + 1)

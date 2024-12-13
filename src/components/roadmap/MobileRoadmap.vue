@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <main class="main">
     <Navigation name="roadmap" @open-modal="openModal" />
     <RoadmapTitle
@@ -173,4 +173,4 @@ export default {
     gap: $medium;
   }
 }
-</style>
+</style> -->
