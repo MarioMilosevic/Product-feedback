@@ -101,7 +101,6 @@ export default {
         (entries) => {
           entries.forEach(async (entry) => {
             if (entry.isIntersecting && this.isObserving) {
-              console.log("interserctin");
               const nextFeedbacksData = await fetchFeedbacks(
                 this.filterOptions,
                 this.currentPage,
@@ -112,7 +111,6 @@ export default {
                 this.setCurrentPage(this.currentPage + 1);
                 this.addMultipleFeedbacksToStore(nextFeedbacksData);
               } else {
-                console.log("uslo");
                 this.observerUnobserve();
               }
             }
@@ -150,9 +148,6 @@ export default {
         this.setupObserver();
       }
     },
-    // active() {
-    //   this.setupObserver();
-    // },
   },
 };
 </script>

@@ -1,3 +1,14 @@
+<!-- <RoadmapPageSection
+          :status="statusOptions[roadmapActiveSection]"
+          :filteredFeedbacks="feedbacks"
+        /> -->
+<!-- <RoadmapPageSection
+        v-else-if="page === 'roadmap'"
+        v-for="status in statusOptions"
+        :key="status.id"
+        :status="status"
+        :filteredFeedbacks="filterFeedbackByStatus(status.name)"
+      /> -->
 <template>
   <main :class="mainClass">
     <Navigation @open-modal="openModal" :name="page" />
@@ -9,13 +20,29 @@
         :feedback="feedback"
         @update-like="updateLikedIds"
       />
-      <RoadmapPageSection
-        v-else-if="page === 'roadmap'"
-        v-for="status in statusOptions"
-        :key="status.id"
-        :status="status"
-        :filteredFeedbacks="filterFeedbackByStatus(status.name)"
-      />
+      <template v-else-if="page === 'roadmap'">
+        <RoadmapTitle
+          v-for="(status, index) in data"
+          :key="status.id"
+          :count="filterFeedbackByStatus(status.name)"
+          :status="status"
+          :isSelected="roadmapActiveSection === index"
+          @click="changeSection(index)"
+        />
+        <ul class="roadmapMain__list">
+          <RoadmapSectionTitle
+            :selectedStatus="statusOptions[roadmapActiveSection]"
+            :count="
+              filterFeedbackByStatus(statusOptions[roadmapActiveSection].name)
+            "
+          />
+          <RoadmapFeedback
+            v-for="feedback in feedbacks"
+            :feedback="feedback"
+            :key="feedback.id"
+          />
+        </ul>
+      </template>
     </template>
     <Nofeedbacks v-else @open-modal="openModal" />
     <div :class="['loading', loadingPosition]" ref="loadingRef">
@@ -31,9 +58,11 @@ import Feedback from "src/components/feedbacks/Feedback.vue";
 import Navigation from "src/components/feedbacks/Navigation.vue";
 import ModalForm from "src/components/UI/ModalForm.vue";
 import Nofeedbacks from "src/components/feedbacks/Nofeedbacks.vue";
-import RoadmapPageSection from "src/components/roadmap/RoadmapPageSection.vue";
 import Footer from "src/components/UI/Footer.vue";
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
+import RoadmapTitle from "src/components/roadmap/RoadmapTitle.vue";
+import RoadmapFeedback from "src/components/roadmap/RoadmapFeedback.vue";
+import RoadmapSectionTitle from "src/components/roadmap/RoadmapSectionTitle.vue";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { PropType } from "vue";
 import { FeedbackType, StatusType } from "src/utils/types";
@@ -47,7 +76,9 @@ export default {
     Navigation,
     ModalForm,
     Nofeedbacks,
-    RoadmapPageSection,
+    RoadmapTitle,
+    RoadmapFeedback,
+    RoadmapSectionTitle,
     Footer,
     LoadingSpinner,
   },
@@ -65,6 +96,7 @@ export default {
     return {
       isObserving: true,
       loadingObserver: null as IntersectionObserver | null,
+      roadmapActiveSection: 0,
     };
   },
   computed: {
@@ -95,9 +127,10 @@ export default {
       "setFeedbacks",
     ]),
     filterFeedbackByStatus(statusName: string) {
-      return this.feedbacks.filter(
+      const filteredFeedbacks = this.feedbacks.filter(
         (feedback) => feedback.status.name === statusName
       );
+      return filteredFeedbacks.length;
     },
     closeModal() {
       this.setIsModalOpen(false);
@@ -107,6 +140,17 @@ export default {
     },
     updateLikedIds(updatedFeedback: FeedbackType) {
       this.setFeedbacksLikes(updatedFeedback);
+    },
+    async changeSection(index: number) {
+      this.roadmapActiveSection = index;
+      this.setCurrentPage(2);
+      const data = await fetchFeedbacks(
+        this.filterOptions,
+        1,
+        true,
+        this.roadmapActiveSection + 1
+      );
+      this.setFeedbacks(data as FeedbackType[]);
     },
     setupObserver() {
       this.isObserving = true;
@@ -155,8 +199,8 @@ export default {
     },
   },
   mounted() {
-    // console.log('mount')
     this.setupObserver();
+    console.log(this.statusOptions);
   },
   beforeUnmount() {
     this.observerUnobserve();
@@ -189,17 +233,23 @@ export default {
   }
 }
 .roadmapMain {
-  grid-column: 1 / 10;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  row-gap: 4rem;
-  column-gap: $very-big;
+  grid-column: 1 / 10;
 
   @include mixins.respond(small) {
     display: none;
   }
   @include mixins.respond(medium) {
     column-gap: $big;
+  }
+
+  &__list {
+    grid-column: 1/4;
+    display: flex;
+    flex-direction: column;
+    padding: 0 $medium;
+    gap: $big;
   }
 }
 

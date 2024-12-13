@@ -21,11 +21,12 @@ export default {
   },
   async created() {
     this.setLoading(true);
-    if (window.innerWidth > 700) {
-      await getData(1, true);
-    } else {
-      await getData(1, false, 1);
-    }
+    await getData(1, false, 1)
+    // if (window.innerWidth > 700) {
+    //   await getData(1, true);
+    // } else {
+    //   await getData(1, false, 1);
+    // }
     this.setLoading(false);
   },
   computed: {

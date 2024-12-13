@@ -1,14 +1,22 @@
 <template>
   <p :class="[selected, borderColor]">
-    {{ title }}
+    {{ status.name }}
+    ({{ count }})
   </p>
 </template>
 <script lang="ts">
+import { StatusType } from "src/utils/types";
+import { PropType } from "vue";
+
 export default {
   props: {
-    title: {
-      type: String,
+    status: {
+      type: Object as PropType<StatusType>,
       required: true,
+    },
+    count: {
+      type: Number,
+      default: 0,
     },
     isSelected: {
       type: Boolean,
@@ -17,11 +25,14 @@ export default {
   },
   computed: {
     borderColor() {
-      return this.isSelected ? `${this.title}`.toLowerCase() : "";
+      return this.isSelected ? `${this.status.name}`.toLowerCase() : "";
     },
     selected() {
       return this.isSelected ? "withBorder" : "";
     },
+  },
+  mounted() {
+    console.log(this.status);
   },
 };
 </script>
@@ -31,9 +42,10 @@ export default {
 
 p {
   text-align: center;
-  padding: 1rem;
+  padding: $medium;
   transition: all;
   transition-duration: 100ms;
+  margin-bottom: $medium;
 
   &:active {
     background-color: $primary-color-hover;

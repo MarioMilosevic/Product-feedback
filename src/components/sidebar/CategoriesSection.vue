@@ -21,6 +21,7 @@ export default {
   components: {
     Category,
   },
+  emits:['category-event'],
   data() {
     return {
       categoryIndex: 0,
@@ -40,7 +41,8 @@ export default {
       this.categoryIndex = id;
       this.setCurrentPage(1)
       this.setFilterId(id);
-      const data = await fetchFeedbacks(this.filterOptions,this.currentPage);
+      this.$emit('category-event')
+      const data = await fetchFeedbacks(this.filterOptions,this.currentPage, true);
       if (data) {
         this.setFeedbacks(data);
         this.setCurrentPage(this.currentPage + 1)
@@ -62,10 +64,6 @@ export default {
   align-items: center;
   grid-template-columns: repeat(2, 1fr);
   gap:$medium;
-  
-  @include mixins.respond(small){
-  
-  } 
 
   @include mixins.respond(medium) {
     height: 100%;

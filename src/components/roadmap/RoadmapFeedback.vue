@@ -84,7 +84,7 @@ export default {
   border-radius: $border-radius-medium;
   border-top-width: 0.3rem;
   border-top-style: solid;
-  min-height: 20rem;
+  grid-column: 1 / 4;
 
   @include mixins.respond(small) {
     min-height: 0rem;

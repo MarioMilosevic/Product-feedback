@@ -24,8 +24,3 @@ export const navSortOptions = [
   "Most Comments",
   "Least Comments",
 ];
-
-// export const defaultFilterOptions = {
-//   filterId: 0,
-//   sort: "Most Likes",
-// };

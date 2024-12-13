@@ -9,12 +9,15 @@
     >
       <Hamburger />
     </Icon>
-    <aside :class="['mobile__sidebar', isVisible]">
-      <CategoriesSection />
+    <aside class="mobile__sidebar"
+    :style="{transform: isSidebarOpen ? 'translateX(0%)' : 'translateX(100%)'}"
+    >
+      <CategoriesSection @category-event="closeSidebar"/>
       <RoadmapSection />
     </aside>
     <div
-      :class="['mobile__overlay', overlayVisible]"
+      class="mobile__overlay"
+      :style="{ visibility: isSidebarOpen ? 'visible' : 'hidden' }"
       @click="closeSidebar"
     ></div>
   </section>
@@ -41,14 +44,6 @@ export default {
     return {
       isSidebarOpen: false,
     };
-  },
-  computed: {
-    isVisible() {
-      return this.isSidebarOpen ? "visible" : "hidden";
-    },
-    overlayVisible() {
-      return this.isSidebarOpen ? "overlayVisible" : "";
-    },
   },
   methods: {
     openSidebar() {
@@ -111,17 +106,5 @@ export default {
     background-color: rgba(0, 0, 0, 0.6);
     visibility: hidden;
   }
-}
-
-.overlayVisible {
-  visibility: visible;
-}
-
-.visible {
-  transform: translateX(0%);
-}
-
-.hidden {
-  transform: translateX(100%);
 }
 </style>
