@@ -18,7 +18,25 @@
         ></Select>
       </FormBlock>
     </div>
-    <h1 v-else>Roadmap</h1>
+    <template v-else>
+      <FormBlock direction="row">
+        <template #label>
+          <Label name="search">
+            <template #title>
+              <h1>Roadmap</h1>
+            </template>
+          </Label>
+        </template>
+        <template #default>
+          <Input
+            :content="searchValue"
+            name="search"
+            color="blue"
+            placeholder="Search feedbacks..."
+          />
+        </template>
+      </FormBlock>
+    </template>
     <ActionButton color="purple" size="medium" @click="openModal">
       Add Feedback
     </ActionButton>
@@ -32,6 +50,7 @@ import Icon from "src/components/UI/Icon.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
 import Lightbulb from "src/icons/Lightbulb.vue";
+import Input from "src/components/form/Input.vue";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapActions, mapState } from "pinia";
 import { navSortOptions } from "src/utils/constants";
@@ -46,6 +65,7 @@ export default {
     Label,
     FormBlock,
     Lightbulb,
+    Input,
   },
   props: {
     name: {
@@ -57,6 +77,7 @@ export default {
   data() {
     return {
       navSortOptions,
+      searchValue: "",
     };
   },
   computed: {
@@ -66,21 +87,26 @@ export default {
     ...mapState(useFeedbackStore, [
       "feedbacks",
       "getFeedbacksLength",
-     "filterOptions",
+      "filterOptions",
       "user",
       "currentPage",
     ]),
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setFeedbacks", "setSort", "setFilterId", "setCurrentPage"]),
+    ...mapActions(useFeedbackStore, [
+      "setFeedbacks",
+      "setSort",
+      "setFilterId",
+      "setCurrentPage",
+    ]),
 
     async updateSelect(value: string) {
       this.setSort(value);
-      this.setCurrentPage(1)
+      this.setCurrentPage(1);
       const data = await fetchFeedbacks(this.filterOptions, this.currentPage);
       if (data) {
         this.setFeedbacks(data);
-        this.setCurrentPage(this.currentPage + 1)
+        this.setCurrentPage(this.currentPage + 1);
       }
     },
     openModal() {

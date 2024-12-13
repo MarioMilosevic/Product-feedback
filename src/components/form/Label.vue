@@ -1,5 +1,5 @@
 <template>
-  <label :for="name" class="label">
+  <label :for="name" :class="['label', textSize]">
     <h4>
       <slot name="title" />
     </h4>
@@ -16,6 +16,19 @@ export default {
       type: String,
       required: true,
     },
+    size: {
+      type: String,
+      default: "medium",
+    },
+    color: {
+      type: String,
+      required: false,
+    },
+  },
+  computed: {
+    textSize() {
+      return `${this.size}Label`;
+    },
   },
 };
 </script>
@@ -30,13 +43,11 @@ export default {
   gap: $small;
 
   h4 {
-    color: $secondary-color;
-
     @include mixins.respond(small) {
       font-size: $small-font;
     }
   }
-  
+
   &__paragraph {
     font-size: $medium-small;
   }

@@ -46,7 +46,7 @@ export default {
 @use "src/scss/_mixins.scss" as mixins;
 
 .select {
-  padding: $small;
+  padding: $medium;
   border-radius: $border-radius-medium;
   border: none;
   outline-color: $terniary-color;

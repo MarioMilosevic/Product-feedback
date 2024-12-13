@@ -21,31 +21,41 @@ export default {
   components: {
     Category,
   },
-  emits:['category-event'],
+  emits: ["category-event"],
   data() {
     return {
       categoryIndex: 0,
     };
   },
   computed: {
-    ...mapState(useFeedbackStore, ["categories", "getCategoryObjects", "filterOptions", 'currentPage']),
+    ...mapState(useFeedbackStore, [
+      "categories",
+      "getCategoryObjects",
+      "filterOptions",
+      "currentPage",
+    ]),
 
     allCategories() {
       return [{ id: 0, name: "All" }, ...this.getCategoryObjects];
     },
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setFeedbacks", "setFilterId", "setCurrentPage"]),
+    ...mapActions(useFeedbackStore, [
+      "setFeedbacks",
+      "setFilterId",
+      "setCurrentPage",
+    ]),
 
     async changeCategory(id: number) {
+      if (this.filterOptions.filterId === id) return;
       this.categoryIndex = id;
-      this.setCurrentPage(1)
+      this.setCurrentPage(1);
       this.setFilterId(id);
-      this.$emit('category-event')
-      const data = await fetchFeedbacks(this.filterOptions,this.currentPage);
+      this.$emit("category-event");
+      const data = await fetchFeedbacks(this.filterOptions, this.currentPage);
       if (data) {
         this.setFeedbacks(data);
-        this.setCurrentPage(this.currentPage + 1)
+        this.setCurrentPage(this.currentPage + 1);
       }
     },
   },
@@ -63,7 +73,7 @@ export default {
   border-radius: $border-radius-medium;
   align-items: center;
   grid-template-columns: repeat(2, 1fr);
-  gap:$medium;
+  gap: $medium;
 
   @include mixins.respond(medium) {
     height: 100%;
