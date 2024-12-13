@@ -1,6 +1,6 @@
 <template>
-  <label :for="name" :class="['label', textSize]">
-    <h4>
+  <label :for="name" :class="['label', textSize, labelTextColor]">
+    <h4 :class="labelTextColor">
       <slot name="title" />
     </h4>
     <p v-if="$slots.description" class="label__paragraph">
@@ -20,11 +20,21 @@ export default {
       type: String,
       default: "medium",
     },
+    textColor: {
+      type: String,
+      default: "black",
+    },
   },
   computed: {
     textSize() {
       return `${this.size}Label`;
     },
+    labelTextColor() {
+      return `${this.textColor}Label`;
+    },
+  },
+  mounted() {
+    console.log(this.textColor);
   },
 };
 </script>
@@ -47,5 +57,13 @@ export default {
   &__paragraph {
     font-size: $medium-small;
   }
+}
+
+.blackLabel {
+  color: #444;
+}
+
+.whiteLabel {
+  color: $secondary-color;
 }
 </style>

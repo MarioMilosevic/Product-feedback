@@ -32,6 +32,7 @@
             v-for="feedback in feedbacks"
             :feedback="feedback"
             :key="feedback.id"
+            @update-like="updateLikedIds"
           />
         </ul>
       </template>
@@ -93,7 +94,7 @@ export default {
       "isModalOpen",
       "currentPage",
       "filterOptions",
-      "searchValue"
+      "searchValue",
     ]),
     mainClass() {
       return `${this.page}Main`;
@@ -112,6 +113,7 @@ export default {
       "setCurrentPage",
       "setLoading",
       "setFeedbacks",
+      "setSearchValue",
     ]),
     filterFeedbackByStatus(statusName: string) {
       const filteredFeedbacks = this.feedbacks.filter(
@@ -130,6 +132,7 @@ export default {
     },
     async changeSection(index: number) {
       this.roadmapActiveSection = index;
+      console.log(this.searchValue)
       this.setCurrentPage(2);
       const data = await fetchFeedbacks(
         this.filterOptions,
@@ -137,6 +140,7 @@ export default {
         this.roadmapActiveSection + 1
       );
       this.setFeedbacks(data as FeedbackType[]);
+      this.setSearchValue("");
     },
     setupObserver() {
       this.isObserving = true;

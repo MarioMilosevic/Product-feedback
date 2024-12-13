@@ -6,7 +6,7 @@
       </Icon>
       <h3>{{ getFeedbacksLength }} Suggestions</h3>
       <FormBlock direction="row" color="blue">
-        <Label name="sort">
+        <Label name="sort" textColor="white">
           <template #title>Sort By:</template>
         </Label>
         <Select
@@ -84,7 +84,7 @@ export default {
     return {
       navSortOptions,
       localSearchValue: this.searchValue,
-      timeout: undefined,
+      timeout: undefined as ReturnType<typeof setTimeout> | undefined,
     };
   },
   computed: {
@@ -113,7 +113,7 @@ export default {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(async () => {
         this.setSearchValue(value);
-        console.log(this.searchValue)
+        console.log(this.searchValue);
         const data = await fetchFeedbacks(
           this.filterOptions,
           1,

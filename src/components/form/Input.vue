@@ -44,6 +44,11 @@ export default {
       localContent: this.content,
     };
   },
+  watch: {
+    content(newValue) {
+      this.localContent = newValue;
+    },
+  },
 };
 </script>
 
