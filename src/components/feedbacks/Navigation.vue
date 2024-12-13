@@ -33,6 +33,7 @@
             name="search"
             color="blue"
             placeholder="Search feedbacks..."
+            @update-input="searchFeedbacks"
           />
         </template>
       </FormBlock>
@@ -54,8 +55,9 @@ import Input from "src/components/form/Input.vue";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapActions, mapState } from "pinia";
 import { navSortOptions } from "src/utils/constants";
-import { fetchFeedbacks } from "src/api/FeedbacksApi";
+import { fetchFeedbacks, searchFeedbacks } from "src/api/FeedbacksApi";
 import { showToast } from "src/utils/toastify";
+import { FeedbackType } from "src/utils/types";
 
 export default {
   components: {
@@ -72,12 +74,17 @@ export default {
       type: String,
       required: true,
     },
+    activeCategory: {
+      type: Number,
+      default: 0,
+    },
   },
   emits: ["open-modal"],
   data() {
     return {
       navSortOptions,
-      searchValue: "",
+      localSearchValue: this.searchValue,
+      timeout: undefined,
     };
   },
   computed: {
@@ -90,6 +97,7 @@ export default {
       "filterOptions",
       "user",
       "currentPage",
+      "searchValue",
     ]),
   },
   methods: {
@@ -98,7 +106,24 @@ export default {
       "setSort",
       "setFilterId",
       "setCurrentPage",
+      "setSearchValue",
     ]),
+
+    async searchFeedbacks(value: string) {
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(async () => {
+        this.setSearchValue(value);
+        console.log(this.searchValue)
+        const data = await fetchFeedbacks(
+          this.filterOptions,
+          1,
+          this.activeCategory + 1,
+          this.searchValue
+        );
+        console.log(data);
+        this.setFeedbacks(data as FeedbackType[]);
+      }, 500);
+    },
 
     async updateSelect(value: string) {
       this.setSort(value);

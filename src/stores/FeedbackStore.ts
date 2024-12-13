@@ -22,6 +22,7 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       loading: false,
       isModalOpen: false,
       currentPage: 1,
+      searchValue:"",
     };
   },
   getters: {
@@ -71,23 +72,6 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
         return feedback;
       });
     },
-    // addMultipleFeedbacksToStore(feedbacks: FeedbackType[]) {
-    //   this.feedbacks.push(...feedbacks);
-  
-    //   // if (sortValue === "Most Likes") {
-    //   //   this.feedbacks.sort((a, b) => b.likes - a.likes);
-    //   // } else if (sortValue === "Least Likes") {
-    //   //   this.feedbacks.sort((a, b) => a.likes - b.likes);
-    //   // } else if (sortValue === "Most Comments") {
-    //   //   this.feedbacks.sort(
-    //   //     (a, b) => b.Comments[0].count - a.Comments[0].count
-    //   //   );
-    //   // } else if (sortValue === "Least Comments") {
-    //   //   this.feedbacks.sort(
-    //   //     (a, b) => a.Comments[0].count - b.Comments[0].count
-    //   //   );
-    //   // }
-    // },
     addFeedbackToStore(feedback: FeedbackType) {
       this.feedbacks.push(feedback);
     },
@@ -123,5 +107,8 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     setCurrentPage(value: number) {
       this.currentPage = value;
     },
+    setSearchValue(value: string) {
+      this.searchValue = value
+    }
   },
 });

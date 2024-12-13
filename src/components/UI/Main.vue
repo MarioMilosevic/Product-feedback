@@ -1,6 +1,10 @@
 <template>
   <main :class="mainClass">
-    <Navigation @open-modal="openModal" :name="page" />
+    <Navigation
+      @open-modal="openModal"
+      :name="page"
+      :activeCategory="roadmapActiveSection"
+    />
     <template v-if="feedbacks.length > 0">
       <Feedback
         v-if="page === 'home'"
@@ -89,6 +93,7 @@ export default {
       "isModalOpen",
       "currentPage",
       "filterOptions",
+      "searchValue"
     ]),
     mainClass() {
       return `${this.page}Main`;
@@ -146,19 +151,24 @@ export default {
               if (this.page === "home") {
                 feedbacksData = await fetchFeedbacks(
                   this.filterOptions,
-                  this.currentPage,
+                  this.currentPage
                 );
               } else if (this.page === "roadmap") {
                 feedbacksData = await fetchFeedbacks(
                   this.filterOptions,
                   this.currentPage,
-                  this.roadmapActiveSection + 1
+                  this.roadmapActiveSection + 1,
+                  this.searchValue
                 );
               }
-              if (feedbacksData && feedbacksData.length > 0 && feedbacksData.length !== this.feedbacks.length) {
+              if (
+                feedbacksData &&
+                feedbacksData.length > 0 &&
+                feedbacksData.length !== this.feedbacks.length
+              ) {
                 this.setCurrentPage(this.currentPage + 1);
-                this.setFeedbacks(feedbacksData)
-                this.setFeedbacks(feedbacksData)
+                this.setFeedbacks(feedbacksData);
+                this.setFeedbacks(feedbacksData);
               } else {
                 this.observerUnobserve();
               }

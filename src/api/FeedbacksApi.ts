@@ -9,10 +9,7 @@ import { fetchSingleStatusOption, fetchStatusOptions } from "src/api/StatusApi";
 import { fetchCategories, fetchSingleCategory } from "src/api/CategoriesApi";
 import { showToast } from "src/utils/toastify";
 
-export const getData = async (
-  page: number,
-  statusId?: number
-) => {
+export const getData = async (page: number, statusId?: number) => {
   try {
     const store = useFeedbackStore();
 
@@ -38,7 +35,8 @@ export const getData = async (
 export const fetchFeedbacks = async (
   filterOptions: FilterOptionsType,
   page: number,
-  statusId?: number
+  statusId?: number,
+  searchValue?: string
 ) => {
   try {
     const { filterId, sort } = filterOptions;
@@ -50,11 +48,14 @@ export const fetchFeedbacks = async (
         Comments(count), 
         status:Status(name), 
         category:Categories(name)`
-    )
-      .range(0, page * limit - 1)
+      )
+      .range(0, page * limit - 1);
 
     if (statusId) {
       query.eq("status", statusId);
+    }
+    if (searchValue && searchValue?.length > 0) {
+      query.ilike("title", `%${searchValue}%`);
     }
 
     if (filterId !== 0) {
@@ -85,6 +86,22 @@ export const fetchFeedbacks = async (
     console.log(error);
     return [];
   }
+};
+
+export const searchFeedbacks = async (value: string, statusId: number) => {
+  const { data, error } = await supabase
+    .from("Feedbacks")
+    .select("*")
+    .eq("status", statusId)
+    .ilike("title", `%${value}%`);
+
+  if (error) {
+    console.error("Error occured", error);
+    return;
+  }
+
+  console.log(data);
+  return data;
 };
 
 export const fetchSingleFeedback = async (id: number) => {
