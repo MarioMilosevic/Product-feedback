@@ -5,10 +5,20 @@
     <p class="error">
       <slot name="error" />
     </p>
+    <Icon class="formBlock__icon" v-if="hasIcon">
+      <Search />
+    </Icon>
   </div>
 </template>
 <script lang="ts">
+import Search from "src/icons/Search.vue";
+import Icon from "src/components/UI/Icon.vue";
+
 export default {
+  components: {
+    Icon,
+    Search,
+  },
   props: {
     direction: {
       type: String,
@@ -17,6 +27,10 @@ export default {
     color: {
       type: String,
       default: "white",
+    },
+    hasIcon: {
+      type: Boolean,
+      default: false,
     },
   },
 };
@@ -32,9 +46,17 @@ export default {
   gap: $medium;
   position: relative;
   border-radius: $border-radius-medium;
+  position: relative;
 
   @include mixins.respond(small) {
     gap: $small;
+  }
+
+  &__icon {
+    position: absolute;
+    top: 50%;
+    right: 3%;
+    transform: translateY(-50%);
   }
 }
 

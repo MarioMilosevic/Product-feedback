@@ -19,7 +19,7 @@
       </FormBlock>
     </div>
     <template v-else>
-      <FormBlock direction="row">
+      <FormBlock direction="row" color="blue" :has-icon="true">
         <template #label>
           <Label name="search">
             <template #title>

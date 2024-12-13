@@ -51,8 +51,6 @@ export default {
 @use "src/scss/_variables.scss" as *;
 @use "src/scss/_mixins.scss" as mixins;
 
-/* $terniary-color */
-
 .input {
   padding: $medium;
   border-radius: $border-radius-medium;
@@ -67,11 +65,6 @@ export default {
   background-color: $primary-color;
   outline-color: $terniary-color;
   border: none;
-
-
-  /* &:focus::placeholder {
-    color: $terniary-color;
-  } */
 
   &:focus {
     &::placeholder {

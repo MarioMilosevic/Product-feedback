@@ -20,10 +20,6 @@ export default {
       type: String,
       default: "medium",
     },
-    color: {
-      type: String,
-      required: false,
-    },
   },
   computed: {
     textSize() {
