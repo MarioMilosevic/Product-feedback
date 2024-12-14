@@ -2,13 +2,13 @@
   <main>
     <slot name="navigation" />
     <slot name="title" />
-    <slot name="sectionTitle" />
+    <slot name="list" />
     <slot name="feedback" />
     <slot name="form" />
     <slot name="empty" />
-    <div ref="loadingRef">
-      <slot name="loading" v-if="isObserving"/>
-      <slot name="footer"  v-if="!isObserving"/>
+    <div ref="loadingRef" class="loading">
+      <slot name="loading" v-if="isObserving" />
+      <slot name="footer" v-if="!isObserving" />
     </div>
   </main>
 </template>
@@ -35,16 +35,13 @@ export default {
       return this.$refs.loadingRef;
     },
   },
-
   methods: {
     ...mapActions(useFeedbackStore, ["setFeedbacks", "setCurrentPage"]),
     setupObserver() {
       if (!this.loadingRef) return;
-      console.log(this.$refs.loadingRef);
       this.isObserving = true;
       this.loadingObserver?.disconnect();
       this.loadingObserver = null;
-
       this.loadingObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach(async (entry) => {
@@ -90,13 +87,24 @@ export default {
   },
 
   mounted() {
-      console.log(this.$refs.loadingRef);
-    this.setupObserver()
-    },
-   beforeUnmount() {
+    this.setupObserver();
+  },
+  beforeUnmount() {
     this.observerUnobserve();
+  },
+  watch: {
+    currentPage(newValue) {
+      if (newValue === 2) {
+        this.setupObserver();
+      }
+    },
   },
 };
 </script>
 
-<style></style>
+<style scoped lang="scss">
+.loading {
+  display: flex;
+  justify-content: center;
+}
+</style>

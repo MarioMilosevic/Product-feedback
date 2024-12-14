@@ -85,6 +85,7 @@ export default {
   border-top-width: 0.3rem;
   border-top-style: solid;
   grid-column: 1 / 4;
+  margin-bottom: $very-big;
 
   @include mixins.respond(small) {
     min-height: 0rem;

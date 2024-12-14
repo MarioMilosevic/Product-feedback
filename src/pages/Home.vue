@@ -81,16 +81,12 @@ export default {
       "loading",
       "feedbacks",
       "currentPage",
-      "filterOptions",
     ]),
   },
   methods: {
     ...mapActions(useFeedbackStore, [
       "setLoading",
-      "setCurrentPage",
-      "setFilterId",
-      "setSort",
-      "setFeedbacks",
+      'setFeedbacksLikes'
     ]),
     openModal() {
       this.isModalOpen = true;

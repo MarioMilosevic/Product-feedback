@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="title">
     <h3>{{ selectedStatus.name }} ({{ count }})</h3>
     <p>{{ selectedStatus.description }}</p>
   </div>
@@ -25,10 +25,11 @@ export default {
 <style scoped lang="scss">
 @use "src/scss/_variables.scss" as *;
 
-div {
+.title {
+  padding: 0 $medium;
   display: flex;
   flex-direction: column;
   gap: $small;
-  margin-bottom: $medium;
+  margin-bottom: $very-big;
 }
 </style>
