@@ -1,7 +1,7 @@
 <template>
-  <p :class="[selected, borderColor]">
+  <h3 :class="[selected, borderColor]">
     {{ status.name }}
-  </p>
+  </h3>
 </template>
 <script lang="ts">
 import { StatusType } from "src/utils/types";
@@ -32,13 +32,15 @@ export default {
 <style scoped lang="scss">
 @use "src/scss/_variables.scss" as *;
 
-p {
+h3 {
   text-align: center;
   padding: $medium;
   transition: all;
   transition-duration: 100ms;
   margin-bottom: $big;
   cursor: pointer;
+  font-weight: 400;
+  color: #444;
 
   &:active {
     background-color: $primary-color-hover;

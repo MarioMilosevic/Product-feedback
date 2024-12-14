@@ -13,6 +13,7 @@
         :feedback="feedback"
         @update-like="updateLikedIds"
       />
+      
       <template v-else-if="page === 'roadmap'">
         <RoadmapTitle
           v-for="(status, index) in statusOptions"

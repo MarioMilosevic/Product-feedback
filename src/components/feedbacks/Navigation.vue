@@ -1,5 +1,6 @@
 <template>
   <nav :class="['navigation', propClass]">
+    
     <div class="navigation__wrapper" v-if="name === 'home'">
       <Icon class="navigation__wrapper-lightbulb">
         <Lightbulb />
@@ -18,6 +19,7 @@
         ></Select>
       </FormBlock>
     </div>
+
     <template v-else>
       <FormBlock direction="row" color="blue" :has-icon="true">
         <template #label>
@@ -55,7 +57,7 @@ import Input from "src/components/form/Input.vue";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapActions, mapState } from "pinia";
 import { navSortOptions } from "src/utils/constants";
-import { fetchFeedbacks, searchFeedbacks } from "src/api/FeedbacksApi";
+import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import { showToast } from "src/utils/toastify";
 import { FeedbackType } from "src/utils/types";
 

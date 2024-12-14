@@ -33,9 +33,6 @@ export default {
       return `${this.textColor}Label`;
     },
   },
-  mounted() {
-    console.log(this.textColor);
-  },
 };
 </script>
 

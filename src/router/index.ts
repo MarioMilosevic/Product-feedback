@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { retrieveUser } from "src/api/UsersApi";
-import FeedbackDetails from "src/pages/FeedbackDetails.vue";
+import FeedbackDetails from "src/pages//feedbacks/index.vue";
 import NotFound from "src/pages/NotFound.vue";
 import Home from "src/pages/Home.vue";
 import Login from "src/pages/Login.vue";
