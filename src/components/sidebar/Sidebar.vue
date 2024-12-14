@@ -36,6 +36,8 @@ export default {
     grid-column: 1/10;
     flex-direction: row;
     align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 
   @include mixins.respond(small) {

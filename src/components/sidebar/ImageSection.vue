@@ -44,7 +44,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  /*  */
   position: relative;
 
   @include mixins.respond(small) {
@@ -56,6 +55,7 @@ export default {
   }
   @include mixins.respond(medium) {
     height: 100%;
+    /* width: 33%; */
   }
 
   h3 {

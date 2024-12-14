@@ -9,10 +9,16 @@
     >
       <Hamburger />
     </Icon>
-    <aside class="mobile__sidebar"
-    :style="{transform: isSidebarOpen ? 'translateX(0%)' : 'translateX(100%)'}"
+    <aside
+      class="mobile__sidebar"
+      :style="{
+        transform: isSidebarOpen ? 'translateX(0%)' : 'translateX(100%)',
+      }"
     >
-      <CategoriesSection @category-event="closeSidebar"/>
+      <Icon class="mobile__sidebar-icon" size="big" @click="closeSidebar">
+        <X />
+      </Icon>
+      <CategoriesSection @category-event="closeSidebar" />
       <RoadmapSection />
     </aside>
     <div
@@ -30,6 +36,7 @@ import ImageSection from "src/components/sidebar/ImageSection.vue";
 import Hamburger from "src/icons/Hamburger.vue";
 import CategoriesSection from "src/components/sidebar/CategoriesSection.vue";
 import RoadmapSection from "src/components/sidebar/RoadmapSection.vue";
+import X from "src/icons/X.vue";
 
 export default {
   components: {
@@ -39,6 +46,7 @@ export default {
     Hamburger,
     CategoriesSection,
     RoadmapSection,
+    X,
   },
   data() {
     return {
@@ -93,6 +101,12 @@ export default {
     gap: $medium;
     background-color: $primary-color;
     border-radius: $border-radius-big;
+
+    &-icon {
+      position: absolute;
+      top: 1%;
+      right: 2%;
+    }
   }
 
   &__overlay {
