@@ -35,6 +35,12 @@
       <template #form>
         <ModalForm :isModalOpen="isModalOpen" @close-modal="closeModal" />
       </template>
+      <template #loading>
+        <LoadingSpinner :style="{ margin: '0 auto' }" />
+      </template>
+      <template #footer>
+        <Footer />
+      </template>
     </MainMario>
   </template>
 </template>
@@ -52,6 +58,7 @@ import { FeedbackType } from "src/utils/types";
 import RoadmapSectionTitle from "src/components/roadmap/RoadmapSectionTitle.vue";
 import RoadmapFeedback from "src/components/roadmap/RoadmapFeedback.vue";
 import ModalForm from "src/components/UI/ModalForm.vue";
+import Footer from "src/components/UI/Footer.vue";
 
 export default {
   components: {
@@ -63,6 +70,7 @@ export default {
     RoadmapSectionTitle,
     RoadmapFeedback,
     ModalForm,
+    Footer,
   },
   async created() {
     this.setLoading(true);
@@ -92,7 +100,7 @@ export default {
       "setLoading",
       "setFeedbacksLikes",
       "setCurrentPage",
-      'setSearchValue'
+      "setSearchValue",
     ]),
     openModal() {
       this.isModalOpen = true;
@@ -110,7 +118,7 @@ export default {
       this.setFeedbacksLikes(updatedFeedback);
     },
     async changeSection(index: number) {
-      console.log('radi')
+      console.log("radi");
       this.activeIndex = index;
       this.setCurrentPage(2);
       const data = await fetchFeedbacks(

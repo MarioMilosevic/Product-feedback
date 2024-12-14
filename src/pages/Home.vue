@@ -25,11 +25,8 @@
       <template #empty v-if="feedbacks.length === 0">
         <Nofeedbacks />
       </template>
-      <template #loading>
-        <LoadingSpinner :style="{ margin: '0 auto' }" />
-      </template>
-      <template #footer>
-        <Footer />
+      <template #scroll>
+        <Scroll :isObserving="isObserving" class="home__loading" ref="scrollRef"/>
       </template>
     </MainMario>
   </template>
@@ -46,10 +43,11 @@ import Feedback from "src/components/feedbacks/Feedback.vue";
 import ModalForm from "src/components/UI/ModalForm.vue";
 import Nofeedbacks from "src/components/feedbacks/Nofeedbacks.vue";
 import Footer from "src/components/UI/Footer.vue";
-import { getData } from "src/api/FeedbacksApi";
+import { getData, fetchFeedbacks } from "src/api/FeedbacksApi";
 import { mapActions, mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { FeedbackType } from "src/utils/types";
+import Scroll from "src/components/UI/Scroll.vue";
 
 export default {
   components: {
@@ -63,6 +61,7 @@ export default {
     ModalForm,
     Nofeedbacks,
     Footer,
+    Scroll
   },
   async created() {
     this.setLoading(true);
@@ -73,6 +72,9 @@ export default {
     return {
       isModalOpen: false,
       activeCategory: 0,
+      isObserving: true,
+      loadingObserver: null as IntersectionObserver | null,
+      loadingRef: null,
     };
   },
 
@@ -81,12 +83,15 @@ export default {
       "loading",
       "feedbacks",
       "currentPage",
+      "filterOptions",
     ]),
   },
   methods: {
     ...mapActions(useFeedbackStore, [
       "setLoading",
-      'setFeedbacksLikes'
+      "setFeedbacksLikes",
+      "setCurrentPage",
+      "setFeedbacks",
     ]),
     openModal() {
       this.isModalOpen = true;
@@ -96,6 +101,66 @@ export default {
     },
     updateLikedIds(updatedFeedback: FeedbackType) {
       this.setFeedbacksLikes(updatedFeedback);
+    },
+    setupObserver() {
+      if (!this.loadingRef) return;
+      this.isObserving = true;
+      this.loadingObserver?.disconnect();
+      this.loadingObserver = null;
+      this.loadingObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(async (entry) => {
+            if (entry.isIntersecting && this.isObserving) {
+              const feedbacksData = await fetchFeedbacks(
+                this.filterOptions,
+                this.currentPage
+              );
+              if (
+                feedbacksData &&
+                feedbacksData.length > 0 &&
+                feedbacksData.length !== this.feedbacks.length
+              ) {
+                this.setCurrentPage(this.currentPage + 1);
+                this.setFeedbacks(feedbacksData);
+                this.setFeedbacks(feedbacksData);
+              } else {
+                this.isObserving = false;
+                this.observerUnobserve();
+              }
+            }
+          });
+        },
+        {
+          root: null,
+          threshold: 0.5,
+        }
+      );
+      this.observerObserve();
+    },
+    observerObserve() {
+      if (this.loadingObserver) {
+        this.loadingObserver.observe(this.loadingRef as HTMLElement);
+      }
+    },
+    observerUnobserve() {
+      if (this.loadingObserver) {
+        this.loadingObserver.unobserve(this.loadingRef as HTMLElement);
+        this.loadingObserver = null;
+      }
+      this.isObserving = false;
+    },
+  },
+  updated() {
+    if (this.isObserving) {
+      this.loadingRef = this.$refs.scrollRef.$el;
+      this.setupObserver();
+    }
+  },
+  watch: {
+    currentPage(newValue) {
+      if (newValue === 2) {
+        this.setupObserver();
+      }
     },
   },
 };
