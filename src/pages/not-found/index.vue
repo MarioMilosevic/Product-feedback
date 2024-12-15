@@ -8,6 +8,7 @@
 import ActionButton from "src/components/layout/ActionButton.vue";
 
 export default {
+  name:"NotFound",
   components: {
     ActionButton,
   },

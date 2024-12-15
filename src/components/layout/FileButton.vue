@@ -7,7 +7,6 @@
 <style scoped lang="scss">
 @use "src/scss/_variables.scss" as *;
 
-
 button {
   padding: 1rem;
   border-radius: $border-radius-medium;

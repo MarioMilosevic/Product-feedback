@@ -39,6 +39,7 @@ import { mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 
 export default {
+  name:"RoadmapFeedback",
   components: {
     Status,
     Category,

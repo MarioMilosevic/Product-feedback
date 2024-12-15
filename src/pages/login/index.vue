@@ -63,6 +63,7 @@ import { loginFormSchema } from "src/validation/loginFormSchema";
 import { showToast } from "src/utils/toastify";
 
 export default {
+  name:"Login",
   components: {
     ActionButton,
     FormBlock,

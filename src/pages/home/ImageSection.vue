@@ -12,6 +12,7 @@ import Icon from "src/components/layout/Icon.vue";
 import Hamburger from "src/icons/Hamburger.vue";
 
 export default {
+  name:"ImageSection",
   components: {
     Icon,
     Hamburger,

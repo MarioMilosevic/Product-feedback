@@ -60,6 +60,7 @@ import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { addComment } from "src/api/CommentsApi";
 
 export default {
+  name:"FeedbackDetails",
   async created() {
     this.setLoading(true);
     const data = await fetchSingleFeedback(this.feedbackId);

@@ -23,6 +23,7 @@ import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import { mapActions, mapState } from "pinia";
 
 export default {
+  name:"CategoriesSection",
   components: {
     Category,
     Icon,

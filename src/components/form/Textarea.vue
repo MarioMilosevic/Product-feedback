@@ -12,7 +12,7 @@
 
 <script lang="ts">
 export default {
-  components: {},
+  name:"Textarea",
   props: {
     maxCharacters: {
       type: Number,

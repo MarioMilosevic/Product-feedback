@@ -22,6 +22,7 @@
 import { PropType } from "vue";
 import { CommentType } from "src/utils/types";
 export default {
+  name:"Comment",
   props: {
     comment: {
       type: Object as PropType<CommentType>,

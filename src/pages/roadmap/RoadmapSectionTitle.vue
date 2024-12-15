@@ -9,6 +9,7 @@ import { StatusType } from "src/utils/types";
 import { PropType } from "vue";
 
 export default {
+  name:"RoadmapSectionTitle",
   props: {
     selectedStatus: {
       type: Object as PropType<StatusType>,

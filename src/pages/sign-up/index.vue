@@ -100,6 +100,7 @@ import { signUpFormSchema } from "src/validation/signUpFormSchema";
 import HomepageLink from "src/components/layout/HomepageLink.vue";
 
 export default {
+  name:"SignUp",
   components: {
     Input,
     UploadWidget,

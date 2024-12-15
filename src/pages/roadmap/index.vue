@@ -85,6 +85,7 @@ import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import { FeedbackType } from "src/utils/types";
 
 export default {
+  name:"Roadmap",
   components: {
     LoadingSpinner,
     Main,

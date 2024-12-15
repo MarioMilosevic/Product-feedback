@@ -8,6 +8,7 @@
 <script lang="ts">
 import Icon from "src/components/layout/Icon.vue";
 export default {
+  name:"HomepageLink",
   components: {
     Icon,
   },

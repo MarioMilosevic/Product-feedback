@@ -8,6 +8,7 @@ import { StatusType } from "src/utils/types";
 import { PropType } from "vue";
 
 export default {
+  name:"RoadmapTitle",
   props: {
     status: {
       type: Object as PropType<StatusType>,

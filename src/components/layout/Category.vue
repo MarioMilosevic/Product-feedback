@@ -1,5 +1,6 @@
 <script lang="ts">
 export default {
+  name:"Category",
   props: {
     category: {
       type: String,
@@ -15,7 +16,6 @@ export default {
     },
   },
   emits: ["category-event"],
-  mounted() {},
 };
 </script>
 

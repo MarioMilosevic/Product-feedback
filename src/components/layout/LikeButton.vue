@@ -14,6 +14,7 @@ import Icon from "src/components/layout/Icon.vue";
 import Caret from "src/icons/Caret.vue";
 
 export default {
+  name:"LikeButton",
   components: {
     Icon,
     Caret,

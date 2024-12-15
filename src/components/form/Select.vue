@@ -14,6 +14,7 @@
 
 <script lang="ts">
 export default {
+  name: "Select",
   props: {
     name: {
       type: String,

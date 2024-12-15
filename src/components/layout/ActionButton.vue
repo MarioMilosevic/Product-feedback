@@ -8,6 +8,7 @@
 import { PropType } from "vue";
 
 export default {
+  name:"ActionButton",
   props: {
     color: {
       type: String,

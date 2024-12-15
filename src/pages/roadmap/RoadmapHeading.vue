@@ -6,6 +6,7 @@
 </template>
 <script lang="ts">
 export default {
+  name:"RoadmapHeading",
   props: {
     title: {
       type: String,

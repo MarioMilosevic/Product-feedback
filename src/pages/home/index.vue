@@ -84,6 +84,7 @@ import { FeedbackType } from "src/utils/types";
 import { navSortOptions } from "src/utils/constants";
 
 export default {
+  name:"Home",
   components: {
     Sidebar,
     LoadingSpinner,

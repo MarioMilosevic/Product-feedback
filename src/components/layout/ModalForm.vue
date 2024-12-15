@@ -160,7 +160,7 @@ import Close from "src/icons/Close.vue";
 import { formWatch } from "src/api/UsersApi";
 
 export default {
-  name: "Modal",
+  name: "ModalForm",
   components: {
     Select,
     Icon,

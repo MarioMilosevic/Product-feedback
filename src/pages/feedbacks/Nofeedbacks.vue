@@ -30,6 +30,7 @@ import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { showToast } from "src/utils/toastify";
 
 export default {
+  name:"NoFeedbacks",
   components: {
     Icon,
     ActionButton,

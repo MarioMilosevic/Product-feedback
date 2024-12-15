@@ -40,6 +40,7 @@ import { UserType } from "src/utils/types";
 import { notLoggedInUser } from "src/utils/constants";
 
 export default {
+  name:"SharedLayout",
   components: {
     ActionButton,
     Icon,

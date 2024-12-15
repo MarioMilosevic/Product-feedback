@@ -10,6 +10,7 @@
 </template>
 <script lang="ts">
 export default {
+  name:"Navigation",
   props: {
     activeCategory: {
       type: Number,

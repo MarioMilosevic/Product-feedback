@@ -13,6 +13,7 @@ import Footer from "src/components/layout/Footer.vue";
 import LoadingSpinner from "src/components/layout/LoadingSpinner.vue";
 
 export default {
+  name:"Scroll",
   components: {
     LoadingSpinner,
     Footer,

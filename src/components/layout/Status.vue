@@ -8,6 +8,7 @@
 
 <script lang="ts">
 export default {
+  name:"Status",
   props: {
     status: {
       type: String,

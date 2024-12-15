@@ -18,12 +18,13 @@
 </template>
 
 <script lang="ts">
-import { useFeedbackStore } from "src/stores/FeedbackStore";
 import Status from "src/components/layout/Status.vue";
 import Category from "src/components/layout/Category.vue";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapState } from "pinia";
 
 export default {
+  name:"RoadmapSection",
   components: { Status, Category },
   computed: {
     ...mapState(useFeedbackStore, ["getStatusCount"]),

@@ -15,6 +15,7 @@ import Search from "src/icons/Search.vue";
 import Icon from "src/components/layout/Icon.vue";
 
 export default {
+  name:'FormBlock',
   components: {
     Icon,
     Search,

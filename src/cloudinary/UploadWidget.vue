@@ -22,17 +22,12 @@ interface CloudinaryResult {
 }
 
 export default {
+  name:'UploadWidget',
   components: {
     FileButton,
     Input,
   },
-  props: {},
   emits: ["image-event"],
-  data() {
-    return {};
-  },
-  computed: {},
-  mounted() {},
   methods: {
     openUploadWidget() {
       const widget = cloudinary.createUploadWidget(
@@ -51,4 +46,4 @@ export default {
   },
 };
 </script>
-<style></style>
+

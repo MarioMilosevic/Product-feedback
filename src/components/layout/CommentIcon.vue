@@ -12,6 +12,7 @@ import Icon from "src/components/layout/Icon.vue";
 import Chat from "src/icons/Chat.vue";
 
 export default {
+  name:"CommentIcon",
   components: {
     Icon,
     Chat,
