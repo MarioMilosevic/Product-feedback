@@ -12,7 +12,7 @@
 </template>
 <script lang="ts">
 import Search from "src/icons/Search.vue";
-import Icon from "src/components/UI/Icon.vue";
+import Icon from "src/components/layout/Icon.vue";
 
 export default {
   components: {

@@ -28,9 +28,9 @@
 </template>
 
 <script lang="ts">
-import HomepageLink from "src/components/UI/HomepageLink.vue";
-import ActionButton from "src/components/UI/ActionButton.vue";
-import Icon from "src/components/UI/Icon.vue";
+import HomepageLink from "src/components/layout/HomepageLink.vue";
+import ActionButton from "src/components/layout/ActionButton.vue";
+import Icon from "src/components/layout/Icon.vue";
 import { signOutUser } from "src/api/UsersApi";
 import { mapState, mapActions } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";

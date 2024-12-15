@@ -136,9 +136,9 @@
 
 <script lang="ts">
 import Select from "src/components/form/Select.vue";
-import Icon from "src/components/UI/Icon.vue";
+import Icon from "src/components/layout/Icon.vue";
 import Textarea from "src/components/form/Textarea.vue";
-import ActionButton from "src/components/UI/ActionButton.vue";
+import ActionButton from "src/components/layout/ActionButton.vue";
 import Label from "src/components/form/Label.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
 import Input from "src/components/form/Input.vue";

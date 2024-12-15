@@ -2,11 +2,11 @@ import { createRouter, createWebHistory } from "vue-router";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { retrieveUser } from "src/api/UsersApi";
 import FeedbackDetails from "src/pages/feedbacks/index.vue";
-import NotFound from "src/pages/NotFound.vue";
+import NotFound from "src/pages/not-found/index.vue";
 import Home from "src/pages/home/index.vue";
-import Login from "src/pages/Login.vue";
-import SignUp from "src/pages/SignUp.vue";
-import Roadmap from "src/pages/Roadmap.vue";
+import Login from "src/pages/login/index.vue";
+import SignUp from "src/pages/sign-up/index.vue";
+import Roadmap from "src/pages/roadmap/index.vue";
 
 export const routes = [
   {

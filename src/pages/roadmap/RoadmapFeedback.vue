@@ -28,10 +28,10 @@
 </template>
 
 <script lang="ts">
-import Status from "src/components/UI/Status.vue";
-import Category from "src/components/UI/Category.vue";
-import LikeButton from "src/components/UI/LikeButton.vue";
-import CommentIcon from "src/components/UI/CommentIcon.vue";
+import Status from "src/components/layout/Status.vue";
+import Category from "src/components/layout/Category.vue";
+import LikeButton from "src/components/layout/LikeButton.vue";
+import CommentIcon from "src/components/layout/CommentIcon.vue";
 import { checkLikeValidation, isLikedClass } from "src/api/FeedbacksApi";
 import { PropType } from "vue";
 import { FeedbackType } from "src/utils/types";

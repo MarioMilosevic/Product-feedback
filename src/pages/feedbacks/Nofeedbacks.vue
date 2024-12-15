@@ -22,8 +22,8 @@
 </template>
 
 <script lang="ts">
-import Icon from "src/components/UI/Icon.vue";
-import ActionButton from "src/components/UI/ActionButton.vue";
+import Icon from "src/components/layout/Icon.vue";
+import ActionButton from "src/components/layout/ActionButton.vue";
 import Inspector from "src/icons/Inspector.vue";
 import { mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";

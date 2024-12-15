@@ -64,23 +64,23 @@
 </template>
 
 <script lang="ts">
-import Sidebar from "src/pages/home/Sidebar.vue"
+import Sidebar from "src/pages/home/Sidebar.vue";
 import SidebarMario from "src/pages/home/SidebarMario.vue";
-import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
+import LoadingSpinner from "src/components/layout/LoadingSpinner.vue";
 import MobileSidebar from "src/pages/home/MobileSidebar.vue";
-import Main from "src/components/UI/Main.vue";
-import Feedback from "src/components/feedbacks/Feedback.vue";
-import ModalForm from "src/components/UI/ModalForm.vue";
-import Nofeedbacks from "src/components/feedbacks/Nofeedbacks.vue";
-import Footer from "src/components/UI/Footer.vue";
-import Scroll from "src/components/UI/Scroll.vue";
-import Navigation from "src/components/feedbacks/Navigation.vue";
+import Main from "src/components/layout/Main.vue";
+import Feedback from "src/pages/feedbacks/Feedback.vue";
+import ModalForm from "src/components/layout/ModalForm.vue";
+import Nofeedbacks from "src/pages/feedbacks/Nofeedbacks.vue";
+import Footer from "src/components/layout/Footer.vue";
+import Scroll from "src/components/layout/Scroll.vue";
+import Navigation from "src/components/layout/Navigation.vue";
 import Lightbulb from "src/icons/Lightbulb.vue";
-import Icon from "src/components/UI/Icon.vue";
+import Icon from "src/components/layout/Icon.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
 import Label from "src/components/form/Label.vue";
 import Select from "src/components/form/Select.vue";
-import ActionButton from "src/components/UI/ActionButton.vue";
+import ActionButton from "src/components/layout/ActionButton.vue";
 import { getData, fetchFeedbacks } from "src/api/FeedbacksApi";
 import { mapActions, mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
@@ -105,7 +105,7 @@ export default {
     Label,
     Select,
     ActionButton,
-    SidebarMario
+    SidebarMario,
   },
   async created() {
     this.setLoading(true);

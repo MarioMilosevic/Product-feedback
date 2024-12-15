@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import Icon from "src/components/UI/Icon.vue";
+import Icon from "src/components/layout/Icon.vue";
 import Caret from "src/icons/Caret.vue";
 
 export default {

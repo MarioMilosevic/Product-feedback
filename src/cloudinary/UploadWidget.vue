@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import FileButton from "src/components/UI/FileButton.vue";
+import FileButton from "src/components/layout/FileButton.vue";
 import Input from "src/components/form/Input.vue";
 import { cloud_name } from "src/config/cloudinaryClient";
 

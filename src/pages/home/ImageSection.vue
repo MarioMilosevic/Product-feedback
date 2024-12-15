@@ -1,22 +1,11 @@
 <template>
   <section class="section">
     <h3>Feedback Board</h3>
-    <!-- <Icon size="big" class="hamburger" @click="openSidebar">
-      <Hamburger />
-    </Icon> -->
-    <!-- <aside :class="['section__aside', isVisible]"> -->
-    <!-- <template #categories>
-        <CategoriesSection />
-      </template> -->
-    <!-- <template #roadmap>
-        <RoadmapSection />
-      </template> -->
-    <!-- </aside> -->
   </section>
 </template>
 
 <script @lang="ts">
-import Icon from "src/components/UI/Icon.vue";
+import Icon from "src/components/layout/Icon.vue";
 import Hamburger from "src/icons/Hamburger.vue";
 import CategoriesSection from "src/pages/home/CategoriesSection.vue";
 import RoadmapSection from "src/pages/home/RoadmapSection.vue";

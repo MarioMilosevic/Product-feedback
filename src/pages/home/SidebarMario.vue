@@ -18,7 +18,7 @@
 import ImageSection from "src/pages/home/ImageSection.vue";
 import CategoriesSection from "src/pages/home/CategoriesSection.vue";
 import RoadmapSection from "src/pages/home/RoadmapSection.vue";
-import Icon from "src/components/UI/Icon.vue";
+import Icon from "src/components/layout/Icon.vue";
 import X from "src/icons/X.vue";
 import Hamburger from "src/icons/Hamburger.vue";
 

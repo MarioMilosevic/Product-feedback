@@ -45,13 +45,13 @@
 </template>
 
 <script lang="ts">
-import Feedback from "src/components/feedbacks/Feedback.vue";
-import Comment from "src/components/UI/Comment.vue";
-import Icon from "src/components/UI/Icon.vue";
+import Feedback from "src/pages/feedbacks/Feedback.vue";
+import Comment from "src/components/layout/Comment.vue";
+import Icon from "src/components/layout/Icon.vue";
 import Textarea from "src/components/form/Textarea.vue";
-import ActionButton from "src/components/UI/ActionButton.vue";
-import ModalForm from "src/components/UI/ModalForm.vue";
-import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
+import ActionButton from "src/components/layout/ActionButton.vue";
+import ModalForm from "src/components/layout/ModalForm.vue";
+import LoadingSpinner from "src/components/layout/LoadingSpinner.vue";
 import { CommentType, SingleFeedbackType } from "src/utils/types";
 import { fetchSingleFeedback, deleteFeedback } from "src/api/FeedbacksApi";
 import { showToast } from "src/utils/toastify";

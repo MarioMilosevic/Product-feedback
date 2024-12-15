@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import Icon from "src/components/UI/Icon.vue";
+import Icon from "src/components/layout/Icon.vue";
 import Chat from "src/icons/Chat.vue";
 
 export default {

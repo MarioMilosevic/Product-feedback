@@ -92,12 +92,12 @@
 <script lang="ts">
 import UploadWidget from "src/cloudinary/UploadWidget.vue";
 import Input from "src/components/form/Input.vue";
-import ActionButton from "src/components/UI/ActionButton.vue";
+import ActionButton from "src/components/layout/ActionButton.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
 import { createNewUser, formWatch } from "src/api/UsersApi";
 import { showToast } from "src/utils/toastify";
 import { signUpFormSchema } from "src/validation/signUpFormSchema";
-import HomepageLink from "src/components/UI/HomepageLink.vue";
+import HomepageLink from "src/components/layout/HomepageLink.vue";
 
 export default {
   components: {

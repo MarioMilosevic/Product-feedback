@@ -65,19 +65,19 @@
 </template>
 
 <script lang="ts">
-import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
-import Main from "src/components/UI/Main.vue";
-import RoadmapTitle from "src/components/roadmap/RoadmapTitle.vue";
-import RoadmapSectionTitle from "src/components/roadmap/RoadmapSectionTitle.vue";
-import RoadmapFeedback from "src/components/roadmap/RoadmapFeedback.vue";
-import ModalForm from "src/components/UI/ModalForm.vue";
-import Footer from "src/components/UI/Footer.vue";
-import Scroll from "src/components/UI/Scroll.vue";
-import Navigation from "src/components/feedbacks/Navigation.vue";
+import LoadingSpinner from "src/components/layout/LoadingSpinner.vue";
+import Main from "src/components/layout/Main.vue";
+import RoadmapTitle from "src/pages/roadmap/RoadmapTitle.vue";
+import RoadmapSectionTitle from "src/pages/roadmap/RoadmapSectionTitle.vue";
+import RoadmapFeedback from "src/pages/roadmap/RoadmapFeedback.vue";
+import ModalForm from "src/components/layout/ModalForm.vue";
+import Footer from "src/components/layout/Footer.vue";
+import Scroll from "src/components/layout/Scroll.vue";
+import Navigation from "src/components/layout/Navigation.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
 import Label from "src/components/form/Label.vue";
 import Input from "src/components/form/Input.vue";
-import ActionButton from "src/components/UI/ActionButton.vue";
+import ActionButton from "src/components/layout/ActionButton.vue";
 import { mapActions, mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { getData } from "src/api/FeedbacksApi";
@@ -159,7 +159,7 @@ export default {
         this.activeIndex + 1
       );
       this.setFeedbacks(data as FeedbackType[]);
-      this.setupObserver()
+      this.setupObserver();
     },
     searchFeedbacks(value: string) {
       this.setCurrentPage(1);
@@ -173,8 +173,8 @@ export default {
           this.searchValue
         );
         this.setFeedbacks(data as FeedbackType[]);
-        this.setCurrentPage(2)
-        this.setupObserver()
+        this.setCurrentPage(2);
+        this.setupObserver();
       }, 500);
     },
     setupObserver() {
@@ -289,7 +289,6 @@ export default {
 }
 
 .loadingRef {
-  border: 1px solid black;
   grid-column: 2/3;
 }
 </style>

@@ -5,7 +5,7 @@
   >
 </template>
 <script lang="ts">
-import ActionButton from "src/components/UI/ActionButton.vue";
+import ActionButton from "src/components/layout/ActionButton.vue";
 
 export default {
   components: {

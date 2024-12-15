@@ -9,8 +9,8 @@
   </div>
 </template>
 <script lang="ts">
-import Footer from "src/components/UI/Footer.vue";
-import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
+import Footer from "src/components/layout/Footer.vue";
+import LoadingSpinner from "src/components/layout/LoadingSpinner.vue";
 
 export default {
   components: {

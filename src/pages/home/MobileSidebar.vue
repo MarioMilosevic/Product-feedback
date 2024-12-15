@@ -31,7 +31,7 @@
 
 <script lang="ts">
 import Close from "src/icons/Close.vue";
-import Icon from "src/components/UI/Icon.vue";
+import Icon from "src/components/layout/Icon.vue";
 import ImageSection from "src/pages/home/ImageSection.vue";
 import Hamburger from "src/icons/Hamburger.vue";
 import CategoriesSection from "src/pages/home/CategoriesSection.vue";

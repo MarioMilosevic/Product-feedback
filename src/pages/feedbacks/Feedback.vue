@@ -39,10 +39,10 @@
 </template>
 
 <script lang="ts">
-import LikeButton from "src/components/UI/LikeButton.vue";
-import CommentIcon from "src/components/UI/CommentIcon.vue";
-import Icon from "src/components/UI/Icon.vue";
-import Category from "src/components/UI/Category.vue";
+import LikeButton from "src/components/layout/LikeButton.vue";
+import CommentIcon from "src/components/layout/CommentIcon.vue";
+import Icon from "src/components/layout/Icon.vue";
+import Category from "src/components/layout/Category.vue";
 import Caret from "src/icons/Caret.vue";
 import Chat from "src/icons/Chat.vue";
 import Edit from "src/icons/Edit.vue";

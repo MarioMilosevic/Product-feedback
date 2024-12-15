@@ -53,11 +53,11 @@
 </template>
 
 <script lang="ts">
-import ActionButton from "src/components/UI/ActionButton.vue";
+import ActionButton from "src/components/layout/ActionButton.vue";
 import Input from "src/components/form/Input.vue";
 import Label from "src/components/form/Label.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
-import HomepageLink from "src/components/UI/HomepageLink.vue";
+import HomepageLink from "src/components/layout/HomepageLink.vue";
 import { formWatch, signInUser, signInGuest } from "src/api/UsersApi";
 import { loginFormSchema } from "src/validation/loginFormSchema";
 import { showToast } from "src/utils/toastify";

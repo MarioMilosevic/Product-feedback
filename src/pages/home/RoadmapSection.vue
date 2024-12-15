@@ -19,8 +19,8 @@
 
 <script lang="ts">
 import { useFeedbackStore } from "src/stores/FeedbackStore";
-import Status from "src/components/UI/Status.vue";
-import Category from "src/components/UI/Category.vue";
+import Status from "src/components/layout/Status.vue";
+import Category from "src/components/layout/Category.vue";
 import { mapState } from "pinia";
 
 export default {
