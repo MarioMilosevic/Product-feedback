@@ -1,6 +1,7 @@
 <template>
   <nav>
     <div class="title">
+      <slot name="icon"/>
       <slot name="title" />
       <slot name="form-element" />
     </div>

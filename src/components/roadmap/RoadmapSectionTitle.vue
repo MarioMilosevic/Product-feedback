@@ -31,5 +31,6 @@ export default {
   flex-direction: column;
   gap: $small;
   margin-bottom: $very-big;
+  grid-column: 1/4;
 }
 </style>

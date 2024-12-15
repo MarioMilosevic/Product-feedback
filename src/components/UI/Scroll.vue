@@ -1,8 +1,7 @@
 <template>
-  <div class="loading">
+  <slot name="loadingRef"/>
     <LoadingSpinner :style="{ margin: '0 auto' }" v-if="isObserving" />
     <Footer v-else />
-  </div>
 </template>
 <script lang="ts">
 import Footer from "src/components/UI/Footer.vue";
@@ -32,3 +31,6 @@ export default {
   gap: $very-big;
 }
 </style>
+
+  <!-- <div class="loading">
+    </div> -->

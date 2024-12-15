@@ -26,11 +26,6 @@
             </ActionButton>
           </template>
         </Navigation>
-        <!-- <Navigation
-          @open-modal="openModal"
-          name="roadmap"
-          :activeCategory="activeIndex"
-        /> -->
       </template>
       <template #title>
         <RoadmapTitle
@@ -154,7 +149,6 @@ export default {
       this.setFeedbacksLikes(updatedFeedback);
     },
     async changeSection(index: number) {
-      console.log("radi");
       this.activeIndex = index;
       this.setCurrentPage(2);
       const data = await fetchFeedbacks(

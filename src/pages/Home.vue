@@ -6,11 +6,13 @@
     <MainMario class="home">
       <template #navigation>
         <Navigation class="home__navigation">
+          <template #icon>
+            <Icon size="big" class="home__navigation-icon">
+              <Lightbulb />
+            </Icon>
+          </template>
           <template #title>
             <div class="home__navigation-title">
-              <Icon size="big">
-                <Lightbulb />
-              </Icon>
               <h3>{{ getFeedbacksLength }} Suggestions</h3>
             </div>
           </template>
@@ -50,11 +52,11 @@
         <Nofeedbacks />
       </template>
       <template #scroll>
-        <Scroll
-          :isObserving="isObserving"
-          class="home__loading"
-          ref="scrollRef"
-        />
+        <Scroll :isObserving="isObserving">
+          <template #loadingRef>
+            <div ref="loadingRef"></div>
+          </template>
+        </Scroll>
       </template>
     </MainMario>
   </template>
@@ -70,11 +72,6 @@ import Feedback from "src/components/feedbacks/Feedback.vue";
 import ModalForm from "src/components/UI/ModalForm.vue";
 import Nofeedbacks from "src/components/feedbacks/Nofeedbacks.vue";
 import Footer from "src/components/UI/Footer.vue";
-import { getData, fetchFeedbacks } from "src/api/FeedbacksApi";
-import { mapActions, mapState } from "pinia";
-import { useFeedbackStore } from "src/stores/FeedbackStore";
-import { FeedbackType } from "src/utils/types";
-import { navSortOptions } from "src/utils/constants";
 import Scroll from "src/components/UI/Scroll.vue";
 import Navigation from "src/components/feedbacks/Navigation.vue";
 import Lightbulb from "src/icons/Lightbulb.vue";
@@ -83,6 +80,11 @@ import FormBlock from "src/components/form/FormBlock.vue";
 import Label from "src/components/form/Label.vue";
 import Select from "src/components/form/Select.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
+import { getData, fetchFeedbacks } from "src/api/FeedbacksApi";
+import { mapActions, mapState } from "pinia";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
+import { FeedbackType } from "src/utils/types";
+import { navSortOptions } from "src/utils/constants";
 
 export default {
   components: {
@@ -97,7 +99,6 @@ export default {
     Nofeedbacks,
     Footer,
     Scroll,
-    Navigation,
     Icon,
     Lightbulb,
     FormBlock,
@@ -192,12 +193,12 @@ export default {
       this.observerObserve();
     },
     observerObserve() {
-      if (this.loadingObserver) {
+      if (this.loadingObserver && this.loadingRef) {
         this.loadingObserver.observe(this.loadingRef as HTMLElement);
       }
     },
     observerUnobserve() {
-      if (this.loadingObserver) {
+      if (this.loadingObserver && this.loadingRef) {
         this.loadingObserver.unobserve(this.loadingRef as HTMLElement);
         this.loadingObserver = null;
       }
@@ -206,7 +207,7 @@ export default {
   },
   updated() {
     if (this.isObserving) {
-      this.loadingRef = this.$refs.scrollRef.$el;
+      this.loadingRef = this.$refs.loadingRef as null;
       this.setupObserver();
     }
   },
@@ -247,11 +248,21 @@ export default {
     align-items: center;
     padding: $medium;
 
+    &-icon {
+      @include mixins.respond(small) {
+        display: none;
+      }
+    }
+
     &-title {
       display: flex;
       align-items: center;
       gap: $medium;
       color: $secondary-color;
+
+      @include mixins.respond(small) {
+        display: none;
+      }
     }
   }
 
