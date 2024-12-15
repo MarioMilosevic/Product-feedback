@@ -3,11 +3,34 @@
   <template v-else>
     <MainMario class="roadmap">
       <template #navigation>
-        <Navigation
+        <Navigation class="roadmap__navigation">
+          <template #title>
+            <h2 class="roadmap__navigation-title">Roadmap</h2>
+          </template>
+          <template #form-element>
+            <FormBlock direction="row" color="blue" :has-icon="true">
+              <template #default>
+                <Input
+                  :content="searchValue"
+                  name="search"
+                  color="blue"
+                  placeholder="Search feedbacks..."
+                  @update-input="searchFeedbacks"
+                />
+              </template>
+            </FormBlock>
+          </template>
+          <template #button>
+            <ActionButton color="purple" size="medium" @click="openModal">
+              Add Feedback
+            </ActionButton>
+          </template>
+        </Navigation>
+        <!-- <Navigation
           @open-modal="openModal"
           name="roadmap"
           :activeCategory="activeIndex"
-        />
+        /> -->
       </template>
       <template #title>
         <RoadmapTitle
@@ -35,15 +58,13 @@
       <template #form>
         <ModalForm :isModalOpen="isModalOpen" @close-modal="closeModal" />
       </template>
-      <template #loading>
-        <LoadingSpinner :style="{ margin: '0 auto' }" />
-      </template>
-      <template #footer>
-        <Footer />
+      <template #scroll>
+        <Scroll :isObserving="isObserving" :style="{ gridColumn: '2/3' }" />
       </template>
     </MainMario>
   </template>
 </template>
+
 <script lang="ts">
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
 import Main from "src/components/UI/Main.vue";
@@ -51,7 +72,6 @@ import { mapActions, mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { getData } from "src/api/FeedbacksApi";
 import MainMario from "src/components/UI/MainMario.vue";
-import Navigation from "src/components/feedbacks/Navigation.vue";
 import RoadmapTitle from "src/components/roadmap/RoadmapTitle.vue";
 import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import { FeedbackType } from "src/utils/types";
@@ -59,6 +79,12 @@ import RoadmapSectionTitle from "src/components/roadmap/RoadmapSectionTitle.vue"
 import RoadmapFeedback from "src/components/roadmap/RoadmapFeedback.vue";
 import ModalForm from "src/components/UI/ModalForm.vue";
 import Footer from "src/components/UI/Footer.vue";
+import Scroll from "src/components/UI/Scroll.vue";
+import Navigation from "src/components/feedbacks/Navigation.vue";
+import FormBlock from "src/components/form/FormBlock.vue";
+import Label from "src/components/form/Label.vue";
+import Input from "src/components/form/Input.vue";
+import ActionButton from "src/components/UI/ActionButton.vue";
 
 export default {
   components: {
@@ -71,6 +97,11 @@ export default {
     RoadmapFeedback,
     ModalForm,
     Footer,
+    Scroll,
+    FormBlock,
+    Label,
+    Input,
+    ActionButton,
   },
   async created() {
     this.setLoading(true);
@@ -81,6 +112,11 @@ export default {
     return {
       activeIndex: 0,
       isModalOpen: false,
+      searchValue: "",
+      isObserving: true,
+      timeout: undefined as ReturnType<typeof setTimeout> | undefined,
+      loadingObserver: null as IntersectionObserver | null,
+      loadingRef: null,
     };
   },
   computed: {
@@ -129,6 +165,80 @@ export default {
       this.setFeedbacks(data as FeedbackType[]);
       this.setSearchValue("");
     },
+    async searchFeedbacks(value: string) {
+      console.log(value);
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(async () => {
+        this.setSearchValue(value);
+        const data = await fetchFeedbacks(
+          this.filterOptions,
+          1,
+          this.activeIndex + 1,
+          value
+        );
+        this.setFeedbacks(data as FeedbackType[]);
+      }, 500);
+    },
+    setupObserver() {
+      if (!this.loadingRef) return;
+      this.isObserving = true;
+      this.loadingObserver?.disconnect();
+      this.loadingObserver = null;
+      this.loadingObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(async (entry) => {
+            if (entry.isIntersecting && this.isObserving) {
+              const feedbacksData = await fetchFeedbacks(
+                this.filterOptions,
+                this.currentPage
+              );
+              if (
+                feedbacksData &&
+                feedbacksData.length > 0 &&
+                feedbacksData.length !== this.feedbacks.length
+              ) {
+                this.setCurrentPage(this.currentPage + 1);
+                this.setFeedbacks(feedbacksData);
+                this.setFeedbacks(feedbacksData);
+              } else {
+                this.isObserving = false;
+                this.observerUnobserve();
+              }
+            }
+          });
+        },
+        {
+          root: null,
+          threshold: 0.5,
+        }
+      );
+      this.observerObserve();
+    },
+    observerObserve() {
+      if (this.loadingObserver) {
+        this.loadingObserver.observe(this.loadingRef as HTMLElement);
+      }
+    },
+    observerUnobserve() {
+      if (this.loadingObserver) {
+        this.loadingObserver.unobserve(this.loadingRef as HTMLElement);
+        this.loadingObserver = null;
+      }
+      this.isObserving = false;
+    },
+  },
+  updated() {
+    // if (this.isObserving) {
+    //   this.loadingRef = this.$refs.scrollRef.$el;
+    //   this.setupObserver();
+    // }
+  },
+  watch: {
+    currentPage(newValue) {
+      if (newValue === 2) {
+        this.setupObserver();
+      }
+    },
   },
 };
 </script>
@@ -144,6 +254,32 @@ export default {
 
   @include mixins.respond(medium) {
     column-gap: $big;
+  }
+
+  &__navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $medium;
+    grid-column: 1/4;
+    background-color: $terniary-color;
+    border-radius: $border-radius-medium;
+    color: $secondary-color;
+
+    @include mixins.respond(small) {
+      column-gap: $small;
+      padding: $small;
+    }
+
+    @include mixins.respond(medium) {
+      column-gap: $big;
+    }
+
+    &-title {
+        @include mixins.respond(small) {
+          font-size: 1rem;
+    }
+    }
   }
 
   &__list {

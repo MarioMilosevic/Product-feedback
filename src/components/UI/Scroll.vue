@@ -26,9 +26,9 @@ export default {
 @use "src/scss/_mixins" as mixins;
 @use "src/scss/_variables" as *;
 
-/* .loading {
+.loading {
   display: flex;
   flex-direction: column;
   gap: $very-big;
-} */
+}
 </style>

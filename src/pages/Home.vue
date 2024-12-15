@@ -5,11 +5,35 @@
     <MobileSidebar />
     <MainMario class="home">
       <template #navigation>
-        <Navigation
-          @open-modal="openModal"
-          name="home"
-          :activeCategory="activeCategory"
-        />
+        <Navigation class="home__navigation">
+          <template #title>
+            <div class="home__navigation-title">
+              <Icon size="big">
+                <Lightbulb />
+              </Icon>
+              <h3>{{ getFeedbacksLength }} Suggestions</h3>
+            </div>
+          </template>
+          <template #form-element>
+            <FormBlock direction="row" color="blue">
+              <Label name="sort" textColor="white">
+                <template #title>Sort By:</template>
+              </Label>
+              <Select
+                color="blue"
+                name="sort"
+                :options="navSortOptions"
+                :content="filterOptions.sort"
+                @update-select="updateSelect"
+              ></Select>
+            </FormBlock>
+          </template>
+          <template #button>
+            <ActionButton color="purple" size="medium" @click="openModal">
+              Add Feedback
+            </ActionButton>
+          </template>
+        </Navigation>
       </template>
       <template #feedback>
         <Feedback
@@ -26,7 +50,11 @@
         <Nofeedbacks />
       </template>
       <template #scroll>
-        <Scroll :isObserving="isObserving" class="home__loading" ref="scrollRef"/>
+        <Scroll
+          :isObserving="isObserving"
+          class="home__loading"
+          ref="scrollRef"
+        />
       </template>
     </MainMario>
   </template>
@@ -38,7 +66,6 @@ import Main from "src/components/UI/Main.vue";
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
 import MobileSidebar from "src/components/sidebar/MobileSidebar.vue";
 import MainMario from "src/components/UI/MainMario.vue";
-import Navigation from "src/components/feedbacks/Navigation.vue";
 import Feedback from "src/components/feedbacks/Feedback.vue";
 import ModalForm from "src/components/UI/ModalForm.vue";
 import Nofeedbacks from "src/components/feedbacks/Nofeedbacks.vue";
@@ -47,7 +74,15 @@ import { getData, fetchFeedbacks } from "src/api/FeedbacksApi";
 import { mapActions, mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { FeedbackType } from "src/utils/types";
+import { navSortOptions } from "src/utils/constants";
 import Scroll from "src/components/UI/Scroll.vue";
+import Navigation from "src/components/feedbacks/Navigation.vue";
+import Lightbulb from "src/icons/Lightbulb.vue";
+import Icon from "src/components/UI/Icon.vue";
+import FormBlock from "src/components/form/FormBlock.vue";
+import Label from "src/components/form/Label.vue";
+import Select from "src/components/form/Select.vue";
+import ActionButton from "src/components/UI/ActionButton.vue";
 
 export default {
   components: {
@@ -61,7 +96,14 @@ export default {
     ModalForm,
     Nofeedbacks,
     Footer,
-    Scroll
+    Scroll,
+    Navigation,
+    Icon,
+    Lightbulb,
+    FormBlock,
+    Label,
+    Select,
+    ActionButton,
   },
   async created() {
     this.setLoading(true);
@@ -70,6 +112,7 @@ export default {
   },
   data() {
     return {
+      navSortOptions,
       isModalOpen: false,
       activeCategory: 0,
       isObserving: true,
@@ -84,6 +127,7 @@ export default {
       "feedbacks",
       "currentPage",
       "filterOptions",
+      "getFeedbacksLength",
     ]),
   },
   methods: {
@@ -92,12 +136,22 @@ export default {
       "setFeedbacksLikes",
       "setCurrentPage",
       "setFeedbacks",
+      "setSort",
     ]),
     openModal() {
       this.isModalOpen = true;
     },
     closeModal() {
       this.isModalOpen = false;
+    },
+    async updateSelect(value: string) {
+      this.setSort(value);
+      this.setCurrentPage(1);
+      const data = await fetchFeedbacks(this.filterOptions, this.currentPage);
+      if (data) {
+        this.setFeedbacks(data);
+        this.setCurrentPage(this.currentPage + 1);
+      }
     },
     updateLikedIds(updatedFeedback: FeedbackType) {
       this.setFeedbacksLikes(updatedFeedback);
@@ -181,6 +235,24 @@ export default {
   }
   @include mixins.respond(medium) {
     grid-column: span 9;
+  }
+
+  &__navigation {
+    background-color: $terniary-color;
+    border-radius: $border-radius-medium;
+    color: $secondary-color;
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $medium;
+
+    &-title {
+      display: flex;
+      align-items: center;
+      gap: $medium;
+      color: $secondary-color;
+    }
   }
 
   &__loading {
