@@ -54,7 +54,11 @@
         <ModalForm :isModalOpen="isModalOpen" @close-modal="closeModal" />
       </template>
       <template #scroll>
-        <Scroll :isObserving="isObserving" :style="{ gridColumn: '2/3' }" />
+        <Scroll :isObserving="isObserving">
+          <template #loadingRef>
+            <div ref="loadingRef"></div>
+          </template>
+        </Scroll>
       </template>
     </MainMario>
   </template>
@@ -131,7 +135,6 @@ export default {
       "setLoading",
       "setFeedbacksLikes",
       "setCurrentPage",
-      "setSearchValue",
     ]),
     openModal() {
       this.isModalOpen = true;
@@ -149,6 +152,7 @@ export default {
       this.setFeedbacksLikes(updatedFeedback);
     },
     async changeSection(index: number) {
+      this.searchValue = "";
       this.activeIndex = index;
       this.setCurrentPage(2);
       const data = await fetchFeedbacks(
@@ -157,20 +161,22 @@ export default {
         this.activeIndex + 1
       );
       this.setFeedbacks(data as FeedbackType[]);
-      this.setSearchValue("");
+      this.setupObserver()
     },
-    async searchFeedbacks(value: string) {
-      console.log(value);
+    searchFeedbacks(value: string) {
+      this.setCurrentPage(1);
       clearTimeout(this.timeout);
       this.timeout = setTimeout(async () => {
-        this.setSearchValue(value);
+        this.searchValue = value;
         const data = await fetchFeedbacks(
           this.filterOptions,
           1,
           this.activeIndex + 1,
-          value
+          this.searchValue
         );
         this.setFeedbacks(data as FeedbackType[]);
+        this.setCurrentPage(2)
+        this.setupObserver()
       }, 500);
     },
     setupObserver() {
@@ -184,7 +190,9 @@ export default {
             if (entry.isIntersecting && this.isObserving) {
               const feedbacksData = await fetchFeedbacks(
                 this.filterOptions,
-                this.currentPage
+                this.currentPage,
+                this.activeIndex + 1,
+                this.searchValue
               );
               if (
                 feedbacksData &&
@@ -195,6 +203,7 @@ export default {
                 this.setFeedbacks(feedbacksData);
                 this.setFeedbacks(feedbacksData);
               } else {
+                console.log('ne observa vise')
                 this.isObserving = false;
                 this.observerUnobserve();
               }
@@ -209,12 +218,12 @@ export default {
       this.observerObserve();
     },
     observerObserve() {
-      if (this.loadingObserver) {
+      if (this.loadingObserver && this.loadingRef) {
         this.loadingObserver.observe(this.loadingRef as HTMLElement);
       }
     },
     observerUnobserve() {
-      if (this.loadingObserver) {
+      if (this.loadingObserver && this.loadingRef) {
         this.loadingObserver.unobserve(this.loadingRef as HTMLElement);
         this.loadingObserver = null;
       }
@@ -222,18 +231,22 @@ export default {
     },
   },
   updated() {
-    // if (this.isObserving) {
-    //   this.loadingRef = this.$refs.scrollRef.$el;
-    //   this.setupObserver();
-    // }
+    if (this.isObserving) {
+      this.loadingRef = this.$refs.loadingRef as null;
+      this.setupObserver();
+    }
   },
-  watch: {
-    currentPage(newValue) {
-      if (newValue === 2) {
-        this.setupObserver();
-      }
-    },
+  mounted() {
+    console.log(this.currentPage)
   },
+  // watch: {
+  //   // currentPage(newValue) {
+  //   //   if (newValue === 2) {
+  //   //     console.log("watcher",newValue)
+  //   //     this.setupObserver();
+  //   //   }
+  //   // },
+  // },
 };
 </script>
 
@@ -270,9 +283,9 @@ export default {
     }
 
     &-title {
-        @include mixins.respond(small) {
-          font-size: 1rem;
-    }
+      @include mixins.respond(small) {
+        font-size: 1rem;
+      }
     }
   }
 
@@ -287,5 +300,10 @@ export default {
       column-gap: $medium;
     }
   }
+}
+
+.loadingRef {
+  border: 1px solid black;
+  grid-column: 2/3;
 }
 </style>

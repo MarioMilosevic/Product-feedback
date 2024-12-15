@@ -12,7 +12,6 @@ import { showToast } from "src/utils/toastify";
 export const getData = async (page: number, statusId?: number) => {
   try {
     const store = useFeedbackStore();
-
     const [feedbacksData, categoriesData, statusData] = await Promise.all([
       fetchFeedbacks(store.filterOptions, page, statusId),
       fetchCategories(),

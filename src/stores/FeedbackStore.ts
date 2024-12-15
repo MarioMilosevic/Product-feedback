@@ -22,7 +22,6 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       loading: false,
       isModalOpen: false,
       currentPage: 1,
-      searchValue:"",
     };
   },
   getters: {
@@ -107,8 +106,5 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     setCurrentPage(value: number) {
       this.currentPage = value;
     },
-    setSearchValue(value: string) {
-      this.searchValue = value
-    }
   },
 });

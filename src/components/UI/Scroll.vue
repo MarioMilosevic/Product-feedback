@@ -1,7 +1,12 @@
 <template>
-  <slot name="loadingRef"/>
-    <LoadingSpinner :style="{ margin: '0 auto' }" v-if="isObserving" />
+  <slot name="loadingRef" />
+  <div class="ref">
+    <LoadingSpinner
+      :style="{ margin: '0 auto', gridColumn: '2/3' }"
+      v-if="isObserving"
+    />
     <Footer v-else />
+  </div>
 </template>
 <script lang="ts">
 import Footer from "src/components/UI/Footer.vue";
@@ -25,12 +30,9 @@ export default {
 @use "src/scss/_mixins" as mixins;
 @use "src/scss/_variables" as *;
 
-.loading {
+.ref {
+  grid-column: 2/3;
   display: flex;
-  flex-direction: column;
-  gap: $very-big;
+  justify-content: center;
 }
 </style>
-
-  <!-- <div class="loading">
-    </div> -->
