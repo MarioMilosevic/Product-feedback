@@ -31,6 +31,7 @@ export default {
 
 <style scoped lang="scss">
 @use "src/scss/_variables.scss" as *;
+@use "src/scss/_mixins.scss" as mixins;
 
 h3 {
   text-align: center;
@@ -41,6 +42,10 @@ h3 {
   cursor: pointer;
   font-weight: 400;
   color: #444;
+
+    @include mixins.respond(small) {
+    font-size: $small-font;
+  }
 
   &:active {
     background-color: $primary-color-hover;

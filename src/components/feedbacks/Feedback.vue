@@ -113,12 +113,11 @@ export default {
   justify-content: space-between;
   align-items: center;
 
-   @include mixins.respond(small) {
+  @include mixins.respond(small) {
     padding: $small;
     flex-direction: column;
     position: relative;
   }
-
 
   &__content {
     display: flex;
@@ -133,7 +132,6 @@ export default {
       gap: $medium;
     }
 
-
     &__link {
       display: flex;
       flex-direction: column;
@@ -143,10 +141,10 @@ export default {
       color: inherit;
       text-decoration: none;
 
-        @include mixins.respond(small) {
-          grid-column: 1/4;
-          grid-row:1/2;
-    }
+      @include mixins.respond(small) {
+        grid-column: 1/4;
+        grid-row: 1/2;
+      }
 
       h4 {
         color: $heading-color;
@@ -162,10 +160,10 @@ export default {
 
 .edit-delete {
   display: flex;
-  max-width:$edit-delete;
+  max-width: $edit-delete;
   gap: $very-big;
 
-   @include mixins.respond(small) {
+  @include mixins.respond(small) {
     position: absolute;
     bottom: 12%;
     right: 6%;

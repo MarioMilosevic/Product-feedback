@@ -1,7 +1,7 @@
 <template>
   <LoadingSpinner v-if="loading" />
   <template v-else>
-    <MainMario class="roadmap">
+    <Main class="roadmap">
       <template #navigation>
         <Navigation class="roadmap__navigation">
           <template #title>
@@ -60,17 +60,16 @@
           </template>
         </Scroll>
       </template>
-    </MainMario>
+    </Main>
   </template>
 </template>
 
 <script lang="ts">
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
-import Main from "src/components/UI/Main.vue";
 import { mapActions, mapState } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { getData } from "src/api/FeedbacksApi";
-import MainMario from "src/components/UI/MainMario.vue";
+import Main from "src/components/UI/Main.vue";
 import RoadmapTitle from "src/components/roadmap/RoadmapTitle.vue";
 import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import { FeedbackType } from "src/utils/types";
@@ -87,9 +86,8 @@ import ActionButton from "src/components/UI/ActionButton.vue";
 
 export default {
   components: {
-    Main,
     LoadingSpinner,
-    MainMario,
+    Main,
     Navigation,
     RoadmapTitle,
     RoadmapSectionTitle,
@@ -203,7 +201,6 @@ export default {
                 this.setFeedbacks(feedbacksData);
                 this.setFeedbacks(feedbacksData);
               } else {
-                console.log('ne observa vise')
                 this.isObserving = false;
                 this.observerUnobserve();
               }
@@ -236,17 +233,6 @@ export default {
       this.setupObserver();
     }
   },
-  mounted() {
-    console.log(this.currentPage)
-  },
-  // watch: {
-  //   // currentPage(newValue) {
-  //   //   if (newValue === 2) {
-  //   //     console.log("watcher",newValue)
-  //   //     this.setupObserver();
-  //   //   }
-  //   // },
-  // },
 };
 </script>
 
@@ -284,7 +270,7 @@ export default {
 
     &-title {
       @include mixins.respond(small) {
-        font-size: 1rem;
+        display: none;
       }
     }
   }

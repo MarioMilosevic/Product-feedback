@@ -3,7 +3,7 @@
   <template v-else>
     <Sidebar />
     <MobileSidebar />
-    <MainMario class="home">
+    <Main class="home">
       <template #navigation>
         <Navigation class="home__navigation">
           <template #icon>
@@ -58,16 +58,15 @@
           </template>
         </Scroll>
       </template>
-    </MainMario>
+    </Main>
   </template>
 </template>
 
 <script lang="ts">
 import Sidebar from "src/components/sidebar/Sidebar.vue";
-import Main from "src/components/UI/Main.vue";
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
 import MobileSidebar from "src/components/sidebar/MobileSidebar.vue";
-import MainMario from "src/components/UI/MainMario.vue";
+import Main from "src/components/UI/Main.vue";
 import Feedback from "src/components/feedbacks/Feedback.vue";
 import ModalForm from "src/components/UI/ModalForm.vue";
 import Nofeedbacks from "src/components/feedbacks/Nofeedbacks.vue";
@@ -90,10 +89,9 @@ export default {
   components: {
     Sidebar,
     MobileSidebar,
-    Main,
     LoadingSpinner,
     Navigation,
-    MainMario,
+    Main,
     Feedback,
     ModalForm,
     Nofeedbacks,

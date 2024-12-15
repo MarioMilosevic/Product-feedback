@@ -89,6 +89,8 @@ export default {
 
   @include mixins.respond(small) {
     min-height: 0rem;
+    font-size: $small-font;
+    margin: 0 $medium $big;
   }
 
   &__category {

@@ -26,7 +26,7 @@ export const getData = async (page: number, statusId?: number) => {
       store.setSort("Most Likes");
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return null;
   }
 };
@@ -82,7 +82,7 @@ export const fetchFeedbacks = async (
 
     return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 };
@@ -99,7 +99,6 @@ export const searchFeedbacks = async (value: string, statusId: number) => {
     return;
   }
 
-  console.log(data);
   return data;
 };
 

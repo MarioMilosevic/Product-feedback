@@ -24,6 +24,7 @@ export default {
 
 <style scoped lang="scss">
 @use "src/scss/_variables.scss" as *;
+@use "src/scss/_mixins.scss" as mixins;
 
 .title {
   padding: 0 $medium;
@@ -32,5 +33,9 @@ export default {
   gap: $small;
   margin-bottom: $very-big;
   grid-column: 1/4;
+
+  @include mixins.respond(small) {
+    font-size: $small-font;
+  }
 }
 </style>
