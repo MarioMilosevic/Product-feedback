@@ -42,7 +42,6 @@ export default {
         },
         (error: CloudinaryError, result: CloudinaryResult) => {
           if (!error && result && result.event === "success") {
-            // console.log("Done! Here is the image info: ", result.info);
             this.$emit("image-event", result.info.secure_url);
           }
         }

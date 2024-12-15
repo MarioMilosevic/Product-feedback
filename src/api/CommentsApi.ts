@@ -2,7 +2,6 @@ import supabase from "src/config/supabaseClient";
 import { CommentType } from "src/utils/types";
 
 export const addComment = async (comment: CommentType) => {
-  console.log(comment);
   try {
     const { data, error } = await supabase
       .from("Comments")

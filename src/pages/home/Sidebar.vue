@@ -1,7 +1,15 @@
+<template>
+  <section class="sidebar">
+    <ImageSection />
+    <CategoriesSection />
+    <RoadmapSection />
+  </section>
+</template>
+
 <script lang="ts">
-import ImageSection from "src/components/sidebar/ImageSection.vue";
-import CategoriesSection from "src/components/sidebar/CategoriesSection.vue";
-import RoadmapSection from "src/components/sidebar/RoadmapSection.vue";
+import ImageSection from "src/pages/home/ImageSection.vue";
+import CategoriesSection from "src/pages/home/CategoriesSection.vue";
+import RoadmapSection from "src/pages/home/RoadmapSection.vue";
 
 export default {
   name: "Sidebar",
@@ -12,14 +20,6 @@ export default {
   },
 };
 </script>
-
-<template>
-  <section class="sidebar">
-    <ImageSection />
-    <CategoriesSection />
-    <RoadmapSection />
-  </section>
-</template>
 
 <style lang="scss" scoped>
 @use "src/scss/_mixins.scss" as mixins;
@@ -41,7 +41,7 @@ export default {
   }
 
   @include mixins.respond(small) {
-    display:none;
+    display: none;
   }
 }
 </style>

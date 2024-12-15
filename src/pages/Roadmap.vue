@@ -66,13 +66,8 @@
 
 <script lang="ts">
 import LoadingSpinner from "src/components/UI/LoadingSpinner.vue";
-import { mapActions, mapState } from "pinia";
-import { useFeedbackStore } from "src/stores/FeedbackStore";
-import { getData } from "src/api/FeedbacksApi";
 import Main from "src/components/UI/Main.vue";
 import RoadmapTitle from "src/components/roadmap/RoadmapTitle.vue";
-import { fetchFeedbacks } from "src/api/FeedbacksApi";
-import { FeedbackType } from "src/utils/types";
 import RoadmapSectionTitle from "src/components/roadmap/RoadmapSectionTitle.vue";
 import RoadmapFeedback from "src/components/roadmap/RoadmapFeedback.vue";
 import ModalForm from "src/components/UI/ModalForm.vue";
@@ -83,6 +78,11 @@ import FormBlock from "src/components/form/FormBlock.vue";
 import Label from "src/components/form/Label.vue";
 import Input from "src/components/form/Input.vue";
 import ActionButton from "src/components/UI/ActionButton.vue";
+import { mapActions, mapState } from "pinia";
+import { useFeedbackStore } from "src/stores/FeedbackStore";
+import { getData } from "src/api/FeedbacksApi";
+import { fetchFeedbacks } from "src/api/FeedbacksApi";
+import { FeedbackType } from "src/utils/types";
 
 export default {
   components: {

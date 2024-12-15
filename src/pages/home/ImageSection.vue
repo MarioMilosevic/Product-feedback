@@ -5,10 +5,10 @@
       <Hamburger />
     </Icon> -->
     <!-- <aside :class="['section__aside', isVisible]"> -->
-      <!-- <template #categories>
+    <!-- <template #categories>
         <CategoriesSection />
       </template> -->
-      <!-- <template #roadmap>
+    <!-- <template #roadmap>
         <RoadmapSection />
       </template> -->
     <!-- </aside> -->
@@ -18,8 +18,8 @@
 <script @lang="ts">
 import Icon from "src/components/UI/Icon.vue";
 import Hamburger from "src/icons/Hamburger.vue";
-import RoadmapSection from "src/components/sidebar/RoadmapSection.vue";
-import CategoriesSection from "src/components/sidebar/CategoriesSection.vue";
+import CategoriesSection from "src/pages/home/CategoriesSection.vue";
+import RoadmapSection from "src/pages/home/RoadmapSection.vue";
 export default {
   components: {
     Icon,
@@ -62,6 +62,4 @@ export default {
     color: $primary-color;
   }
 }
-
-
 </style>
