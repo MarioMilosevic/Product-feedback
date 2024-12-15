@@ -1,21 +1,22 @@
 <template>
   <section class="section">
     <h3>Feedback Board</h3>
+    <Icon class="section__icon" size="big" @click="$emit('sidebar-event')">
+      <Hamburger />
+    </Icon>
   </section>
 </template>
 
 <script @lang="ts">
 import Icon from "src/components/layout/Icon.vue";
 import Hamburger from "src/icons/Hamburger.vue";
-import CategoriesSection from "src/pages/home/CategoriesSection.vue";
-import RoadmapSection from "src/pages/home/RoadmapSection.vue";
+
 export default {
   components: {
     Icon,
     Hamburger,
-    RoadmapSection,
-    CategoriesSection,
   },
+  emits:['sidebar-event']
 };
 </script>
 
@@ -44,11 +45,27 @@ export default {
   }
   @include mixins.respond(medium) {
     height: 100%;
-    /* width: 33%; */
   }
 
   h3 {
     color: $primary-color;
+  }
+
+  &__icon {
+    display: none;
+    position: absolute;
+    top: 0%;
+    right: 0%;
+
+    @include mixins.respond(small) {
+      display: block;
+          position: absolute;
+    top: 50%;
+    right: 5%;
+    transform: translateY(-50%);
+    z-index: 2;
+    color: $secondary-color;
+    }
   }
 }
 </style>

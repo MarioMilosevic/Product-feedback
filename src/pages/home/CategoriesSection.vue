@@ -8,11 +8,16 @@
       :category="category.name"
       @category-event="changeCategory(category.id)"
     />
+    <Icon class="section__icon" size="big" @click="$emit('category-event')">
+      <X />
+    </Icon>
   </section>
 </template>
 
 <script lang="ts">
 import Category from "src/components/layout/Category.vue";
+import X from "src/icons/X.vue";
+import Icon from "src/components/layout/Icon.vue";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import { mapActions, mapState } from "pinia";
@@ -20,6 +25,8 @@ import { mapActions, mapState } from "pinia";
 export default {
   components: {
     Category,
+    Icon,
+    X,
   },
   emits: ["category-event"],
   data() {
@@ -34,7 +41,6 @@ export default {
       "filterOptions",
       "currentPage",
     ]),
-
     allCategories() {
       return [{ id: 0, name: "All" }, ...this.getCategoryObjects];
     },
@@ -74,9 +80,21 @@ export default {
   align-items: center;
   grid-template-columns: repeat(2, 1fr);
   gap: $medium;
+  position: relative;
 
   @include mixins.respond(medium) {
     height: 100%;
+  }
+
+  &__icon {
+    position: absolute;
+    top: 1%;
+    right: 2%;
+    display: none;
+
+    @include mixins.respond(small) {
+      display: block;
+    }
   }
 }
 </style>

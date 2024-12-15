@@ -1,9 +1,7 @@
 <template>
   <LoadingSpinner v-if="loading" />
   <template v-else>
-    <!-- <SidebarMario/> -->
-    <Sidebar />
-    <MobileSidebar />
+    <Sidebar/>
     <Main class="home">
       <template #navigation>
         <Navigation class="home__navigation">
@@ -65,9 +63,7 @@
 
 <script lang="ts">
 import Sidebar from "src/pages/home/Sidebar.vue";
-import SidebarMario from "src/pages/home/SidebarMario.vue";
 import LoadingSpinner from "src/components/layout/LoadingSpinner.vue";
-import MobileSidebar from "src/pages/home/MobileSidebar.vue";
 import Main from "src/components/layout/Main.vue";
 import Feedback from "src/pages/feedbacks/Feedback.vue";
 import ModalForm from "src/components/layout/ModalForm.vue";
@@ -90,7 +86,6 @@ import { navSortOptions } from "src/utils/constants";
 export default {
   components: {
     Sidebar,
-    MobileSidebar,
     LoadingSpinner,
     Navigation,
     Main,
@@ -105,7 +100,6 @@ export default {
     Label,
     Select,
     ActionButton,
-    SidebarMario,
   },
   async created() {
     this.setLoading(true);
