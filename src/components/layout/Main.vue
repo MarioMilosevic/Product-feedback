@@ -7,7 +7,6 @@
     <slot name="form" />
     <slot name="empty" />
     <slot name="scroll"/>
- 
   </main>
 </template>
 
@@ -29,9 +28,7 @@ export default {
   },
   methods: {
     ...mapActions(useFeedbackStore, ["setFeedbacks", "setCurrentPage"]),
-   
   },
-
 };
 </script>
 

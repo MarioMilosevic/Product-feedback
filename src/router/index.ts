@@ -58,10 +58,10 @@ const router = createRouter({
 router.beforeEach(async (to) => {
   const feedbackStore = useFeedbackStore();
   if (!feedbackStore.user.id) {
-    feedbackStore.setLoading(true)
+    feedbackStore.setLoading(true);
     const user = await retrieveUser();
-    feedbackStore.setUser(user)
-    feedbackStore.setLoading(false)
+    feedbackStore.setUser(user);
+    feedbackStore.setLoading(false);
   }
   const isAuthenticated = feedbackStore.user.id;
   if (isAuthenticated && (to.path === "/login" || to.path === "/sign-up")) {

@@ -1,54 +1,48 @@
 <template>
   <div class="wrapper">
-    <header class="wrapper__header">
-      <HomepageLink position="absolute" />
+    <FormHeader>
       <h1>Login Form</h1>
-    </header>
-    <form @submit.prevent="localSignInUser" class="wrapper__form">
-      <FormBlock>
-        <Input
-          type="email"
-          name="email"
-          :content="loginCredentials.email"
-          placeholder="Email Address"
-          @update-input="updateEmail"
-        />
-        <template #error v-if="errors.email">
-          {{ errors.email }}
-        </template>
-      </FormBlock>
-      <FormBlock>
-        <Input
-          type="password"
-          name="password"
-          :content="loginCredentials.password"
-          placeholder="Password"
-          @update-input="updatePassword"
-        />
-        <template #error v-if="errors.password">
-          {{ errors.password }}
-        </template>
-      </FormBlock>
+    </FormHeader>
 
-      <ActionButton color="blue" size="big" type="submit">
-        <h3>Log in</h3>
-      </ActionButton>
-    </form>
+    <AuthForm @submit.prevent="localSignInUser" class="wrapper__form">
+      <template #email>
+        <FormBlock>
+          <Input
+            type="email"
+            name="email"
+            :content="loginCredentials.email"
+            placeholder="Email Address"
+            @update-input="updateEmail"
+          />
+          <template #error v-if="errors.email">
+            {{ errors.email }}
+          </template>
+        </FormBlock>
+      </template>
 
-    <div class="wrapper__links">
-      <p>
-        Already have an account ?
-        <router-link :to="{ name: 'Sign up' }" class="wrapper__links-link">
-          Sign up
-        </router-link>
-      </p>
-      <p>
-        Or,
-        <span class="wrapper__links-link" @click="signInAnonymously">
-          log in as guest
-        </span>
-      </p>
-    </div>
+      <template #password>
+        <FormBlock>
+          <Input
+            type="password"
+            name="password"
+            :content="loginCredentials.password"
+            placeholder="Password"
+            @update-input="updatePassword"
+          />
+          <template #error v-if="errors.password">
+            {{ errors.password }}
+          </template>
+        </FormBlock>
+      </template>
+
+      <template #actionButton>
+        <ActionButton color="blue" size="big" type="submit">
+          <h3>Log in</h3>
+        </ActionButton>
+      </template>
+    </AuthForm>
+
+    <FormGuest link-text="Login" />
   </div>
 </template>
 
@@ -58,18 +52,24 @@ import Input from "src/components/form/Input.vue";
 import Label from "src/components/form/Label.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
 import HomepageLink from "src/components/layout/HomepageLink.vue";
+import FormHeader from "src/components/form/FormHeader.vue";
+import AuthForm from "src/components/form/AuthForm.vue";
+import FormGuest from "src/components/form/FormGuest.vue";
 import { formWatch, signInUser, signInGuest } from "src/api/UsersApi";
 import { loginFormSchema } from "src/validation/loginFormSchema";
 import { showToast } from "src/utils/toastify";
 
 export default {
-  name:"Login",
+  name: "Login",
   components: {
     ActionButton,
     FormBlock,
     Input,
     Label,
     HomepageLink,
+    FormHeader,
+    AuthForm,
+    FormGuest,
   },
   data() {
     return {
@@ -155,71 +155,10 @@ export default {
     grid-row: 1 / 3;
   }
 
-  h1 {
-    @include mixins.respond(small) {
-      font-size: $medium;
-    }
-  }
-
-  &__header {
-    @include mixins.respond(small) {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      padding: 0 $small;
-    }
-  }
-
-  &__links {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: $small;
-
-      @include mixins.respond(small) {
-        font-size: $small-font;
-      }
-
-    &-link {
-      color: $terniary-color;
-      text-decoration: none;
-      cursor: pointer;
-
-      &:hover {
-        color: $terniary-color-hover;
-      }
-    }
-  }
-
   &__form {
     display: flex;
     flex-direction: column;
     gap: $big;
-
-    &__button {
-      width: 100%;
-      display: flex;
-
-      & > * {
-        width: 100%;
-      }
-    }
-
-    &__title {
-      display: flex;
-      align-items: center;
-      gap: $small;
-    }
-    &__buttons {
-      display: flex;
-      gap: $medium;
-      flex-direction: column;
-    }
-
-    h3 {
-      color: $secondary-color;
-    }
   }
 }
 </style>
