@@ -97,7 +97,7 @@
         </ActionButton>
       </template>
     </AuthForm>
-    <FormGuest linkText="Sign Up" />
+    <FormGuest linkText="Login" />
   </div>
 </template>
 

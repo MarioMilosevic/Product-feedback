@@ -2,16 +2,12 @@
   <div class="links">
     <p>
       {{ accountText }} have an account?
-      <router-link 
-        :to="{ name: linkRouteName }" 
-        class="wrapper__links-link"
-      >
+      <router-link :to="{ name: linkText }" class="wrapper__links-link">
         {{ linkText }}
       </router-link>
     </p>
   </div>
 </template>
-
 
 <script lang="ts">
 export default {
@@ -23,15 +19,11 @@ export default {
   },
   computed: {
     accountText() {
-      return this.linkText === "Login" ? "Don't" : "Already";
-    },
-    linkRouteName() {
-      return this.linkText === "Login" ? "Sign up" : "Login";
+      return this.linkText === "Login" ? "Already" : "Don't";
     },
   },
 };
 </script>
-
 
 <style scoped lang="scss">
 @use "src/scss/_variables.scss" as *;

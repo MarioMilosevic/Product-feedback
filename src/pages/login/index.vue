@@ -42,7 +42,7 @@
       </template>
     </AuthForm>
 
-    <FormGuest link-text="Login" />
+    <FormGuest link-text="Sign up" />
   </div>
 </template>
 
