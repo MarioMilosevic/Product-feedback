@@ -45,8 +45,7 @@
               color="white"
               name="category"
               :options="getCategoryNames"
-              @update-select="updateCategory"
-              :content="singleFeedback.category.name"
+              v-model="singleFeedback.category.name"
             >
             </Select>
           </template>
@@ -66,8 +65,7 @@
               color="white"
               name="status"
               :options="getStatusNames"
-              @update-select="updateStatus"
-              :content="singleFeedback.status.name"
+              v-model="singleFeedback.status.name"
             >
               <template #title> Category </template>
               <template #description>
@@ -214,12 +212,7 @@ export default {
     updateTitle(newTitle: string) {
       this.singleFeedback.title = newTitle;
     },
-    updateCategory(newCategory: string) {
-      this.singleFeedback.category.name = newCategory;
-    },
-    updateStatus(newStatus: string) {
-      this.singleFeedback.status.name = newStatus;
-    },
+    
     async submitNewFeedback() {
       const validation = modalFormSchema.safeParse(this.singleFeedback);
       if (validation.success) {

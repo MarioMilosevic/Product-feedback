@@ -6,7 +6,7 @@
     :value="modelValue"
     :maxlength="maxCharacters"
     @input="
-      $emit('update:modelValue', ($event.target as HTMLInputElement)?.value)
+      $emit('update:modelValue', ($event.target as HTMLTextAreaElement)?.value)
     "
   >
   </textarea>

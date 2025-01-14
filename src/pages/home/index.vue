@@ -24,8 +24,7 @@
                 color="blue"
                 name="sort"
                 :options="navSortOptions"
-                :content="filterOptions.sort"
-                @update-select="updateSelect"
+                v-model="filterOptions.sort"
               ></Select>
             </FormBlock>
           </template>
@@ -212,6 +211,12 @@ export default {
       if (newValue === 2) {
         this.setupObserver();
       }
+    },
+    filterOptions: {
+      handler(newValue) {
+        this.updateSelect(newValue.sort);
+      },
+      deep: true,
     },
   },
 };

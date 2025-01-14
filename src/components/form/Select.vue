@@ -3,8 +3,10 @@
     :name="name"
     :id="name"
     :class="['select', color]"
-    v-model="localContent"
-    @change="$emit('update-select', localContent)"
+    :value="modelValue"
+     @change="
+      $emit('update:modelValue', ($event.target as HTMLSelectElement)?.value)
+    "
   >
     <option v-for="(option, index) in options" :key="index" :value="option">
       {{ option }}
@@ -24,7 +26,7 @@ export default {
       type: Array,
       required: true,
     },
-    content: {
+    modelValue: {
       type: String,
       required: true,
     },
@@ -33,12 +35,7 @@ export default {
       required: true,
     },
   },
-  emits: ["update-select"],
-  data() {
-    return {
-      localContent: this.content,
-    };
-  },
+  emits: ["update:modelValue"],
 };
 </script>
 
