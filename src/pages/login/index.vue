@@ -10,9 +10,8 @@
           <Input
             type="email"
             name="email"
-            :content="loginCredentials.email"
+            v-model="loginCredentials.email"
             placeholder="Email Address"
-            @update-input="updateEmail"
           />
           <template #error v-if="errors.email">
             {{ errors.email }}
@@ -25,9 +24,8 @@
           <Input
             type="password"
             name="password"
-            :content="loginCredentials.password"
+            v-model="loginCredentials.password"
             placeholder="Password"
-            @update-input="updatePassword"
           />
           <template #error v-if="errors.password">
             {{ errors.password }}
@@ -126,6 +124,7 @@ export default {
       handler() {
         const emptyObject = formWatch(this.errors);
         if (emptyObject) {
+          console.log('mario')
           this.errors = emptyObject;
         }
       },

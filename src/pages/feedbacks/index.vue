@@ -50,7 +50,7 @@ import Comment from "src/components/layout/Comment.vue";
 import Icon from "src/components/layout/Icon.vue";
 import Textarea from "src/components/form/Textarea.vue";
 import ActionButton from "src/components/layout/ActionButton.vue";
-import ModalForm from "src/components/layout/ModalForm.vue";
+import ModalForm from "src/components/form/ModalForm.vue";
 import LoadingSpinner from "src/components/layout/LoadingSpinner.vue";
 import { CommentType, SingleFeedbackType } from "src/utils/types";
 import { fetchSingleFeedback, deleteFeedback } from "src/api/FeedbacksApi";
@@ -60,11 +60,12 @@ import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { addComment } from "src/api/CommentsApi";
 
 export default {
-  name:"FeedbackDetails",
+  name: "FeedbackDetails",
   async created() {
     this.setLoading(true);
     const data = await fetchSingleFeedback(this.feedbackId);
     if (data) {
+      console.log(data)
       this.singleFeedback = { ...data };
       this.setLoading(false);
     }

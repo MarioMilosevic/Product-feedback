@@ -10,9 +10,8 @@
           <Input
             type="text"
             name="fullName"
-            :content="signUpCredentials.fullName"
+            v-model="signUpCredentials.fullName"
             placeholder="Full Name"
-            @update-input="updateFullName"
           />
           <template #error v-if="errors.fullName">
             {{ errors.fullName }}
@@ -24,9 +23,8 @@
           <Input
             type="text"
             name="username"
-            :content="signUpCredentials.username"
+            v-model="signUpCredentials.username"
             placeholder="Username"
-            @update-input="updateUsername"
           />
           <template #error v-if="errors.username">
             {{ errors.username }}
@@ -39,9 +37,8 @@
           <Input
             type="email"
             name="email"
-            :content="signUpCredentials.email"
+            v-model="signUpCredentials.email"
             placeholder="Email Address"
-            @update-input="updateEmail"
           />
           <template #error v-if="errors.email">
             {{ errors.email }}
@@ -53,9 +50,8 @@
           <Input
             type="password"
             name="password"
-            :content="signUpCredentials.password"
+            v-model="signUpCredentials.password"
             placeholder="Password"
-            @update-input="updatePassword"
           />
           <template #error v-if="errors.password">
             {{ errors.password }}
@@ -67,9 +63,8 @@
           <Input
             type="password"
             name="confirmPassword"
-            :content="signUpCredentials.confirmPassword"
+            v-model="signUpCredentials.confirmPassword"
             placeholder="Confirm Password"
-            @update-input="updateConfirmPassword"
           />
           <template #error v-if="errors.confirmPassword">
             {{ errors.confirmPassword }}

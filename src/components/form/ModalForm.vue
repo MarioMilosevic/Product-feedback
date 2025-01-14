@@ -24,12 +24,7 @@
             </Label>
           </template>
           <template #default>
-            <Input
-              name="title"
-              type="text"
-              :content="singleFeedback.title"
-              @update-input="updateTitle"
-            />
+            <Input name="title" type="text" v-model="singleFeedback.title" />
           </template>
           <template #error v-if="errors.title">
             {{ errors.title }}
@@ -300,7 +295,6 @@ export default {
 <style lang="scss" scoped>
 @use "src/scss/_variables.scss" as *;
 @use "src/scss/_mixins.scss" as mixins;
-
 
 .overlay {
   z-index: 10;

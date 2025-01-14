@@ -5,15 +5,13 @@
     :class="['input', inputColor]"
     :placeholder="placeholder"
     :value="modelValue"
-    @input="
-      $emit('update:modelValue', ($event.target as HTMLInputElement)?.value)
-    "
+    @input="$emit('update:modelValue', $event.target.value)"
   />
 </template>
 
 <script lang="ts">
 export default {
-  name: "Input",
+  name:'Input',
   props: {
     type: {
       type: String,

@@ -11,11 +11,11 @@
             <FormBlock direction="row" color="blue" :has-icon="true">
               <template #default>
                 <Input
-                  :content="searchValue"
+                  v-model="searchValue"
                   name="search"
                   color="blue"
                   placeholder="Search feedbacks..."
-                  @update-input="searchFeedbacks"
+                  @input="searchFeedbacks"
                 />
               </template>
             </FormBlock>
@@ -70,7 +70,7 @@ import Main from "src/components/layout/Main.vue";
 import RoadmapTitle from "src/pages/roadmap/RoadmapTitle.vue";
 import RoadmapSectionTitle from "src/pages/roadmap/RoadmapSectionTitle.vue";
 import RoadmapFeedback from "src/pages/roadmap/RoadmapFeedback.vue";
-import ModalForm from "src/components/layout/ModalForm.vue";
+import ModalForm from "src/components/form/ModalForm.vue";
 import Footer from "src/components/layout/Footer.vue";
 import Scroll from "src/components/layout/Scroll.vue";
 import Navigation from "src/components/layout/Navigation.vue";
@@ -85,7 +85,7 @@ import { fetchFeedbacks } from "src/api/FeedbacksApi";
 import { FeedbackType } from "src/utils/types";
 
 export default {
-  name:"Roadmap",
+  name: "Roadmap",
   components: {
     LoadingSpinner,
     Main,
@@ -233,6 +233,11 @@ export default {
       this.loadingRef = this.$refs.loadingRef as null;
       this.setupObserver();
     }
+  },
+  watch: {
+    searchValue(value: string) {
+      this.searchFeedbacks(value);
+    },
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <LoadingSpinner v-if="loading" />
   <template v-else>
-    <Sidebar/>
+    <Sidebar />
     <Main class="home">
       <template #navigation>
         <Navigation class="home__navigation">
@@ -66,7 +66,7 @@ import Sidebar from "src/pages/home/Sidebar.vue";
 import LoadingSpinner from "src/components/layout/LoadingSpinner.vue";
 import Main from "src/components/layout/Main.vue";
 import Feedback from "src/pages/feedbacks/Feedback.vue";
-import ModalForm from "src/components/layout/ModalForm.vue";
+import ModalForm from "src/components/form/ModalForm.vue";
 import Nofeedbacks from "src/pages/feedbacks/Nofeedbacks.vue";
 import Footer from "src/components/layout/Footer.vue";
 import Scroll from "src/components/layout/Scroll.vue";
@@ -84,7 +84,7 @@ import { FeedbackType } from "src/utils/types";
 import { navSortOptions } from "src/utils/constants";
 
 export default {
-  name:"Home",
+  name: "Home",
   components: {
     Sidebar,
     LoadingSpinner,
