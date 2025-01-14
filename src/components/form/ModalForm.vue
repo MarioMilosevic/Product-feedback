@@ -91,8 +91,7 @@
           </template>
           <template #default>
             <Textarea
-              :content="singleFeedback.description"
-              @update-textarea="updateTextarea"
+              v-model="singleFeedback.description"
             />
           </template>
           <template #error v-if="errors.description">
@@ -220,9 +219,6 @@ export default {
     },
     updateStatus(newStatus: string) {
       this.singleFeedback.status.name = newStatus;
-    },
-    updateTextarea(newText: string) {
-      this.singleFeedback.description = newText;
     },
     async submitNewFeedback() {
       const validation = modalFormSchema.safeParse(this.singleFeedback);

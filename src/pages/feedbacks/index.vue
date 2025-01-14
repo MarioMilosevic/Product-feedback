@@ -23,8 +23,7 @@
       <Textarea
         ref="textareaRef"
         :maxCharacters="maxCharacters"
-        :content="textAreaContent"
-        @update-textarea="handleUpdateTextarea"
+        v-model="textAreaContent"
       />
       <div class="wrapper__addComment-div">
         <p>{{ remainingCharacters }} characters left</p>
@@ -65,7 +64,6 @@ export default {
     this.setLoading(true);
     const data = await fetchSingleFeedback(this.feedbackId);
     if (data) {
-      console.log(data)
       this.singleFeedback = { ...data };
       this.setLoading(false);
     }
@@ -110,9 +108,6 @@ export default {
     },
     closeModal() {
       this.setIsModalOpen(false);
-    },
-    handleUpdateTextarea(newContent: string) {
-      this.textAreaContent = newContent;
     },
     updateFeedback(newFeedback: SingleFeedbackType) {
       this.singleFeedback = newFeedback;

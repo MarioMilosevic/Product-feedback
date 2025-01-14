@@ -3,27 +3,29 @@
     name="comment"
     id="comment"
     ref="textarea"
-    v-model="localContent"
+    :value="modelValue"
     :maxlength="maxCharacters"
-    @input="$emit('update-textarea', localContent)"
+    @input="
+      $emit('update:modelValue', ($event.target as HTMLInputElement)?.value)
+    "
   >
   </textarea>
 </template>
 
 <script lang="ts">
 export default {
-  name:"Textarea",
+  name: "Textarea",
   props: {
     maxCharacters: {
       type: Number,
       required: false,
     },
-    content: {
+    modelValue: {
       type: String,
       required: true,
     },
   },
-  emits: ["update-textarea"],
+  emits: ["update:modelValue"],
   data() {
     return {
       localContent: this.content,
@@ -32,7 +34,7 @@ export default {
   computed: {
     remainingCharacters() {
       return this.maxCharacters
-        ? this.maxCharacters - this.content.length
+        ? this.maxCharacters - this.modelValue.length
         : Infinity;
     },
   },
