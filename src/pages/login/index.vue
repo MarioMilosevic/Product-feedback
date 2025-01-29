@@ -40,7 +40,7 @@
       </template>
     </AuthForm>
 
-    <FormGuest link-text="Sign up" />
+    <FormGuest link-text="Sign up" @guest-event="signInAnonymously"/>
   </div>
 </template>
 
