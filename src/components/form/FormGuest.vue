@@ -2,14 +2,19 @@
   <div class="links">
     <p>
       {{ accountText }} have an account?
-      <router-link :to="{ name: linkText }" class="wrapper__links-link">
+      <router-link :to="{ name: linkText }" class="links-link">
         {{ linkText }}
       </router-link>
+    </p>
+    <p v-if="linkText === 'Sign up'">
+      Or,
+      <span class="links-link" @click="$emit('guest-event')"> log in as guest </span>
     </p>
   </div>
 </template>
 
 <script lang="ts">
+
 export default {
   props: {
     linkText: {
@@ -17,6 +22,7 @@ export default {
       required: true,
     },
   },
+  emits:['guest-event'],
   computed: {
     accountText() {
       return this.linkText === "Login" ? "Already" : "Don't";

@@ -40,7 +40,7 @@
       </template>
     </AuthForm>
 
-    <FormGuest link-text="Sign up" />
+    <FormGuest link-text="Sign up" @guest-event="signInAnonymously" />
   </div>
 </template>
 
@@ -124,7 +124,7 @@ export default {
       handler() {
         const emptyObject = formWatch(this.errors);
         if (emptyObject) {
-          console.log('mario')
+          console.log("mario");
           this.errors = emptyObject;
         }
       },
