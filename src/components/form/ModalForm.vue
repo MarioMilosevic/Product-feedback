@@ -192,6 +192,7 @@ export default {
       "getStatusNames",
       "getCategoryObjects",
       "getCategoryNames",
+      "user"
     ]),
     title() {
       return this.feedback ? "Edit Feedback" : "Create New Feedback";
@@ -205,6 +206,7 @@ export default {
       "addFeedbackToStore",
       "deleteFeedbackFromStore",
       "editFeedbackFromStore",
+      
     ]),
     resetFeedback() {
       this.singleFeedback = { ...emptyFeedback, category: { name: "" } };
@@ -214,6 +216,10 @@ export default {
     },
     
     async submitNewFeedback() {
+      if (this.user.is_anonymous) {
+        showToast('You must create an account first', 'error')
+        return
+      }
       const validation = modalFormSchema.safeParse(this.singleFeedback);
       if (validation.success) {
         try {

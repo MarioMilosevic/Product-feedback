@@ -17,8 +17,6 @@
 import ImageSection from "src/pages/home/ImageSection.vue";
 import CategoriesSection from "src/pages/home/CategoriesSection.vue";
 import RoadmapSection from "src/pages/home/RoadmapSection.vue";
-import Icon from "src/components/layout/Icon.vue";
-import Hamburger from "src/icons/Hamburger.vue";
 
 export default {
   name: "Sidebar",
@@ -26,20 +24,11 @@ export default {
     ImageSection,
     CategoriesSection,
     RoadmapSection,
-    Icon,
-    Hamburger,
   },
   data() {
     return {
       isSidebarOpen: false,
     };
-  },
-  computed: {
-    categoriesPositioning() {
-      return this.isSidebarOpen
-        ? "transform:'translateX(0%)'"
-        : "transform:'translateX(100%)'";
-    },
   },
   methods: {
     openSidebar() {

@@ -91,7 +91,7 @@ export const retrieveUser = async () => {
   try {
     const { data: authData, error: authError } = await supabase.auth.getUser();
     if (authError) {
-      return {};
+      return { is_anonymous: true };
     }
     const user = authData?.user;
     if (!user.id) {
@@ -178,9 +178,8 @@ export const deleteUser = async (user: UserType) => {
   }
 };
 
-
 export const formWatch = (errorsObj: Record<string, string>) => {
   if (Object.keys(errorsObj).length > 0) {
-  return {} as Record<string, string>;
+    return {} as Record<string, string>;
   }
 };
