@@ -10,14 +10,21 @@ $error-color-hover: #f87171;
 $cancel-color: #0f172a;
 $cancel-color-hover: #1e293b;
 $image-button-color: grey;
+
+$heading-color: #333;
+$paragraph-color: #444;
+
 $main-font: Arial, Helvetica, sans-serif;
+
+// Border radius
+
 $border-radius-medium: 10px;
 $border-radius-big: 15px;
 $border-radius-full: 9999px;
-$heading-color: #333;
-$paragraph-color: #444;
 $paragraph-lineHeight: 1.4rem;
 $feedbackHeight:10rem;
+
+// Sizes
 $small: 0.5rem;
 $medium-small:0.75rem;
 $medium: 1rem;

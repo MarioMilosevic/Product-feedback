@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use "src/scss/_variables.scss" as *;
+@use "src/scss/abstracts/_variables" as *;
 
 textarea {
   width: 100%;

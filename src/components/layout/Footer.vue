@@ -17,7 +17,7 @@
 </template>
 
 <style scoped lang="scss">
-@use "src/scss/_variables" as *;
+@use "src/scss/abstracts/_variables" as *;
 
 footer {
   display: flex;

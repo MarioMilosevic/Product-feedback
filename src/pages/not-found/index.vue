@@ -20,7 +20,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 h3 {
   grid-area: 1/1/3/4;
   align-self: center;

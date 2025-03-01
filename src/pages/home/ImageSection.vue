@@ -22,8 +22,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use "src/scss/_variables.scss" as *;
-@use "src/scss/_mixins" as mixins;
+@use "src/scss/abstracts/_variables" as *;
+@use "src/scss/abstracts/_mixins" as mixins;
 
 .section {
   width: 100%;

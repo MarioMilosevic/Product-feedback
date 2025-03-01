@@ -1,6 +1,6 @@
 import { createPinia } from "pinia";
 import { createApp } from "vue";
-import "src/main.css";
+import "src/scss/main.scss"
 import Vue3Toastify, { type ToastContainerOptions } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import App from "./App.vue";

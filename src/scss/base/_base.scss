@@ -1,3 +1,5 @@
+@use "../abstracts/index" as *;
+
 * {
   margin: 0;
   padding: 0;
@@ -6,12 +8,13 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #f0f9ff;
+  background-color: $primary-color;
 }
+
 #app {
   max-width: 1200px;
-  margin: 2.5rem auto;
-  gap: 1.5rem;
+  margin: $very-big auto;
+  gap: $big;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
 }

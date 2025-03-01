@@ -5,10 +5,10 @@
 </template>
 
 <style scoped lang="scss">
-@use "src/scss/_variables.scss" as *;
+@use "src/scss/abstracts/_variables" as *;
 
 button {
-  padding: 1rem;
+  padding: $medium;
   border-radius: $border-radius-medium;
   background-color: $primary-color;
   border: none;

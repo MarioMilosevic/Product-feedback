@@ -42,8 +42,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use "src/scss/_mixins.scss" as mixins;
-@use "src/scss/_variables.scss" as *;
+@use "src/scss/abstracts/_mixins" as mixins;
+@use "src/scss/abstracts/_variables" as *;
 
 .sidebar {
   grid-column: span 1;

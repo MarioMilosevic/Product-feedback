@@ -2,7 +2,7 @@
   <div class="loader"></div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .loader {
   width: 3rem;
   height: 3rem;

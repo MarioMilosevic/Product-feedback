@@ -53,7 +53,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use "src/scss/_variables.scss" as *;
+@use "src/scss/abstracts/_variables" as *;
 .section {
   background-color: $secondary-color;
   border-radius: $border-radius-medium;

@@ -28,7 +28,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@use "src/scss/_variables.scss" as *;
+@use "src/scss/abstracts/_variables" as *;
 
 
 .status {
