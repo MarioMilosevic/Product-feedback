@@ -1,12 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { retrieveUser } from "src/api/UsersApi";
-import FeedbackDetails from "src/pages/feedbacks/index.vue";
-import NotFound from "src/pages/not-found/index.vue";
-import Home from "src/pages/home/index.vue";
-import Login from "src/pages/login/index.vue";
-import SignUp from "src/pages/sign-up/index.vue";
-import Roadmap from "src/pages/roadmap/index.vue";
 
 export const routes = [
   {
@@ -16,37 +10,37 @@ export const routes = [
   {
     path: "/home",
     name: "Home",
-    component: Home,
+    component: () => import("src/pages/home/index.vue"),
   },
   {
     path: "/details/:id",
     name: "FeedbackDetails",
-    component: FeedbackDetails,
+    component: () => import("src/pages/feedbacks/index.vue"),
     meta: { backAllowed: true },
   },
   {
     path: "/roadmap",
     name: "Roadmap",
-    component: Roadmap,
+    component: () => import("src/pages/roadmap/index.vue"),
     meta: { backAllowed: true },
   },
   {
     path: "/login",
     name: "Login",
-    component: Login,
+    component: () => import("src/pages/login/index.vue"),
     meta: { isCredentialsForm: true },
   },
   {
     path: "/sign-up",
     name: "Sign up",
-    component: SignUp,
+    component: () => import("src/pages/sign-up/index.vue"),
     meta: { isCredentialsForm: true },
   },
 
   {
     path: "/:catchAll(.*)",
     name: "NotFound",
-    component: NotFound,
+    component: () => import("src/pages/not-found/index.vue"),
   },
 ];
 

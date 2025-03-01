@@ -67,7 +67,6 @@ import Main from "src/components/layout/Main.vue";
 import Feedback from "src/pages/feedbacks/Feedback.vue";
 import ModalForm from "src/components/form/ModalForm.vue";
 import Nofeedbacks from "src/pages/feedbacks/Nofeedbacks.vue";
-import Footer from "src/components/layout/Footer.vue";
 import Scroll from "src/components/layout/Scroll.vue";
 import Navigation from "src/components/layout/Navigation.vue";
 import Lightbulb from "src/icons/Lightbulb.vue";
@@ -92,7 +91,6 @@ export default {
     Feedback,
     ModalForm,
     Nofeedbacks,
-    Footer,
     Scroll,
     Icon,
     Lightbulb,

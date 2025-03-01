@@ -95,3 +95,10 @@ export type FilterOptionsType = {
   filterId: number;
   sort:string
 }
+
+export type InputType = {
+  id: number;
+  name: string;
+  type: string;
+  placeholder: string;
+};

@@ -3,44 +3,35 @@
     <FormHeader>
       <h1>Login Form</h1>
     </FormHeader>
-
     <AuthForm @submit.prevent="localSignInUser" class="wrapper__form">
-      <template #email>
-        <FormBlock>
-          <Input
-            type="email"
-            name="email"
-            v-model="loginCredentials.email"
-            placeholder="Email Address"
-          />
-          <template #error v-if="errors.email">
-            {{ errors.email }}
+      <template #inputs>
+        <RenderlessComponent>
+          <template v-for="input in inputs" :key="input.id" #[input.name]>
+            <FormBlock>
+              <Input
+                v-bind="input"
+                v-model="loginCredentials[input.name as keyof typeof loginCredentials]"
+              />
+              <template #error>
+                {{
+                  errors[
+                    loginCredentials[
+                      input.name as keyof typeof loginCredentials
+                    ]
+                  ]
+                }}
+              </template>
+            </FormBlock>
           </template>
-        </FormBlock>
+        </RenderlessComponent>
       </template>
-
-      <template #password>
-        <FormBlock>
-          <Input
-            type="password"
-            name="password"
-            v-model="loginCredentials.password"
-            placeholder="Password"
-          />
-          <template #error v-if="errors.password">
-            {{ errors.password }}
-          </template>
-        </FormBlock>
-      </template>
-
       <template #actionButton>
         <ActionButton color="blue" size="big" type="submit">
           <h3>Log in</h3>
         </ActionButton>
       </template>
     </AuthForm>
-
-    <FormGuest link-text="Sign up" @guest-event="signInAnonymously"/>
+    <FormGuest link-text="Sign up" @guest-event="signInAnonymously" />
   </div>
 </template>
 
@@ -53,8 +44,10 @@ import HomepageLink from "src/components/layout/HomepageLink.vue";
 import FormHeader from "src/components/form/FormHeader.vue";
 import AuthForm from "src/components/form/AuthForm.vue";
 import FormGuest from "src/components/form/FormGuest.vue";
+import RenderlessComponent from "src/components/form/RenderlessComponent.vue";
 import { formWatch, signInUser, signInGuest } from "src/api/UsersApi";
 import { loginFormSchema } from "src/validation/loginFormSchema";
+import { loginInputs } from "src/utils/constants";
 import { showToast } from "src/utils/toastify";
 
 export default {
@@ -68,6 +61,7 @@ export default {
     FormHeader,
     AuthForm,
     FormGuest,
+    RenderlessComponent,
   },
   data() {
     return {
@@ -76,6 +70,7 @@ export default {
         password: "",
       },
       errors: {} as Record<string, string>,
+      inputs: loginInputs,
     };
   },
   methods: {
@@ -124,7 +119,6 @@ export default {
       handler() {
         const emptyObject = formWatch(this.errors);
         if (emptyObject) {
-          console.log('mario')
           this.errors = emptyObject;
         }
       },

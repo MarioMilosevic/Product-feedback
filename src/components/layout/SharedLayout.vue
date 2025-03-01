@@ -30,7 +30,6 @@
 <script lang="ts">
 import HomepageLink from "src/components/layout/HomepageLink.vue";
 import ActionButton from "src/components/layout/ActionButton.vue";
-import Icon from "src/components/layout/Icon.vue";
 import { signOutUser } from "src/api/UsersApi";
 import { mapState, mapActions } from "pinia";
 import { useFeedbackStore } from "src/stores/FeedbackStore";
@@ -43,7 +42,6 @@ export default {
   name:"SharedLayout",
   components: {
     ActionButton,
-    Icon,
     HomepageLink,
   },
   computed: {
@@ -103,8 +101,8 @@ export default {
     gap: $medium;
 
     &-figure {
-      width: 3.125rem;
-      height: 3.125rem;
+      width: $huge;
+      height: $huge;
       grid-column: 7 / 8;
       display: flex;
       justify-self: flex-end;

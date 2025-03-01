@@ -57,8 +57,6 @@ export default {
 
     @include mixins.respond(small) {
       position: static;
-      /* top: 6%;
-      left: 0%; */
     }
   }
 }

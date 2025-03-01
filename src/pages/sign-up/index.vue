@@ -5,7 +5,28 @@
     </FormHeader>
 
     <AuthForm @submit.prevent="signUpNewUser" class="wrapper__form">
-      <template #fullName>
+      <template #inputs>
+        <RenderlessComponent>
+          <template v-for="input in inputs" :key="input.id" #[input.name]>
+            <FormBlock>
+              <Input
+                v-bind="input"
+                v-model="signUpCredentials[input.name as keyof typeof signUpCredentials]"
+              />
+              <template #error>
+                {{
+                  errors[
+                    signUpCredentials[
+                      input.name as keyof typeof signUpCredentials
+                    ]
+                  ]
+                }}
+              </template>
+            </FormBlock>
+          </template>
+        </RenderlessComponent>
+      </template>
+      <!-- <template #fullName>
         <FormBlock>
           <Input
             type="text"
@@ -70,7 +91,7 @@
             {{ errors.confirmPassword }}
           </template>
         </FormBlock>
-      </template>
+      </template> -->
 
       <template #imageUpload>
         <FormBlock>
@@ -104,10 +125,12 @@ import FormBlock from "src/components/form/FormBlock.vue";
 import HomepageLink from "src/components/layout/HomepageLink.vue";
 import AuthForm from "src/components/form/AuthForm.vue";
 import FormHeader from "src/components/form/FormHeader.vue";
+import FormGuest from "src/components/form/FormGuest.vue";
+import RenderlessComponent from "src/components/form/RenderlessComponent.vue";
 import { createNewUser, formWatch } from "src/api/UsersApi";
 import { showToast } from "src/utils/toastify";
+import { signUpInputs } from "src/utils/constants";
 import { signUpFormSchema } from "src/validation/signUpFormSchema";
-import FormGuest from "src/components/form/FormGuest.vue";
 
 export default {
   name: "SignUp",
@@ -120,6 +143,7 @@ export default {
     AuthForm,
     FormHeader,
     FormGuest,
+    RenderlessComponent,
   },
   data() {
     return {
@@ -132,6 +156,7 @@ export default {
         image: "",
       },
       errors: {} as Record<string, string>,
+      inputs: signUpInputs,
     };
   },
   methods: {
