@@ -14,91 +14,15 @@
                 v-model="signUpCredentials[input.name as keyof typeof signUpCredentials]"
               />
               <template #error>
-                {{
-                  errors[
-                    signUpCredentials[
-                      input.name as keyof typeof signUpCredentials
-                    ]
-                  ]
-                }}
+                {{ errors[input.name]}}
               </template>
             </FormBlock>
           </template>
         </RenderlessComponent>
       </template>
-      <!-- <template #fullName>
-        <FormBlock>
-          <Input
-            type="text"
-            name="fullName"
-            v-model="signUpCredentials.fullName"
-            placeholder="Full Name"
-          />
-          <template #error v-if="errors.fullName">
-            {{ errors.fullName }}
-          </template>
-        </FormBlock>
-      </template>
-      <template #username>
-        <FormBlock>
-          <Input
-            type="text"
-            name="username"
-            v-model="signUpCredentials.username"
-            placeholder="Username"
-          />
-          <template #error v-if="errors.username">
-            {{ errors.username }}
-          </template>
-        </FormBlock>
-      </template>
-
-      <template #email>
-        <FormBlock>
-          <Input
-            type="email"
-            name="email"
-            v-model="signUpCredentials.email"
-            placeholder="Email Address"
-          />
-          <template #error v-if="errors.email">
-            {{ errors.email }}
-          </template>
-        </FormBlock>
-      </template>
-      <template #password>
-        <FormBlock>
-          <Input
-            type="password"
-            name="password"
-            v-model="signUpCredentials.password"
-            placeholder="Password"
-          />
-          <template #error v-if="errors.password">
-            {{ errors.password }}
-          </template>
-        </FormBlock>
-      </template>
-      <template #confirmPassword>
-        <FormBlock>
-          <Input
-            type="password"
-            name="confirmPassword"
-            v-model="signUpCredentials.confirmPassword"
-            placeholder="Confirm Password"
-          />
-          <template #error v-if="errors.confirmPassword">
-            {{ errors.confirmPassword }}
-          </template>
-        </FormBlock>
-      </template> -->
-
       <template #imageUpload>
         <FormBlock>
           <UploadWidget @image-event="updateImage" />
-          <template #error v-if="errors.image">
-            {{ errors.confirmPassword }}
-          </template>
         </FormBlock>
       </template>
 

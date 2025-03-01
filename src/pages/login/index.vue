@@ -13,13 +13,7 @@
                 v-model="loginCredentials[input.name as keyof typeof loginCredentials]"
               />
               <template #error>
-                {{
-                  errors[
-                    loginCredentials[
-                      input.name as keyof typeof loginCredentials
-                    ]
-                  ]
-                }}
+                {{ errors[input.name] }}
               </template>
             </FormBlock>
           </template>
