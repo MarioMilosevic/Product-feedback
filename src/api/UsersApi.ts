@@ -66,6 +66,7 @@ export const signInUser = async (email: string, password: string) => {
 
     if (error) {
       console.error("Unable to sign in user", error);
+      showToast('Invalid credentials', 'error')
       return;
     }
     const { user } = data;

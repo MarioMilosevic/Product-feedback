@@ -3,7 +3,7 @@
     <FormHeader>
       <h1>Login Form</h1>
     </FormHeader>
-    <AuthForm @submit.prevent="localSignInUser" class="wrapper__form">
+    <AuthForm @submit.prevent="submitHandler" class="wrapper__form">
       <template #inputs>
         <RenderlessComponent>
           <template v-for="input in inputs" :key="input.id" #[input.name]>
@@ -41,7 +41,14 @@ import AuthForm from "src/components/form/AuthForm.vue";
 import FormGuest from "src/components/form/FormGuest.vue";
 import RenderlessComponent from "src/components/form/RenderlessComponent.vue";
 import { signInUser, signInGuest } from "src/api/UsersApi";
-import { getFieldError, LoginFieldErrors, LoginFields, loginFormSchema, LoginTouchedFields } from "src/validation/loginFormSchema";
+import {
+  getErrors,
+  getFieldError,
+  LoginFieldErrors,
+  LoginFields,
+  loginFormSchema,
+  LoginTouchedFields,
+} from "src/validation/loginFormSchema";
 import { loginInputs } from "src/utils/constants";
 import { showToast } from "src/utils/toastify";
 import { reactive } from "vue";
@@ -61,7 +68,7 @@ export default {
   },
   data() {
     return {
-      loginCredentials:reactive({
+      loginCredentials: reactive({
         email: "",
         password: "",
       }),
@@ -72,9 +79,9 @@ export default {
   },
   methods: {
     blurHandler(property: LoginFields) {
-      const message = getFieldError(property, this.loginCredentials[property])
+      const message = getFieldError(property, this.loginCredentials[property]);
       this.errors[property] = message;
-      this.touchedFields[property] = true
+      this.touchedFields[property] = true;
     },
     goToHomepage() {
       this.$router.push("/home");
@@ -91,25 +98,22 @@ export default {
         this.$router.push("/home");
       }
     },
-    async localSignInUser() {
+    async submitHandler() {
       try {
-        const validation = loginFormSchema.safeParse(this.loginCredentials);
-        if (validation.success) {
-          const user = await signInUser(
-            this.loginCredentials.email,
-            this.loginCredentials.password
-          );
+        const { error } = loginFormSchema.safeParse(this.loginCredentials);
+        if (error) {
+          Object.entries(getErrors(error)).forEach(([key, value]) => {
+            this.errors[key as LoginFields] = value;
+          });
+        } else {
+          const { email, password } = this.loginCredentials;
+          const user = await signInUser(email, password);
           if (user) {
             this.$router.push("/home");
           }
-        } else {
-          this.errors = validation.error.errors.reduce((acc, err) => {
-            const key = err.path.length > 0 ? err.path[0] : "";
-            acc[key] = err.message;
-            return acc;
-          }, {} as Record<string, string>);
         }
       } catch (error) {
+        console.log('uslo odje')
         console.error("Unexpected error occured", error);
         showToast("Unexpected error occured", "error");
       }
