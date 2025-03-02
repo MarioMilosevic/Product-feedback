@@ -4,17 +4,18 @@
       <h1>Sign Up Form</h1>
     </FormHeader>
 
-    <AuthForm @submit.prevent="signUpNewUser" class="wrapper__form">
+    <AuthForm @submit.prevent="submitHandler" class="wrapper__form">
       <template #inputs>
         <RenderlessComponent>
           <template v-for="input in inputs" :key="input.id" #[input.name]>
             <FormBlock>
               <Input
+                @blur-event="blurHandler(input.name as SignupFields)"
                 v-bind="input"
                 v-model="signUpCredentials[input.name as keyof typeof signUpCredentials]"
               />
               <template #error>
-                {{ errors[input.name]}}
+                {{ errors[input.name as SignupFields] }}
               </template>
             </FormBlock>
           </template>
@@ -51,10 +52,18 @@ import AuthForm from "src/components/form/AuthForm.vue";
 import FormHeader from "src/components/form/FormHeader.vue";
 import FormGuest from "src/components/form/FormGuest.vue";
 import RenderlessComponent from "src/components/form/RenderlessComponent.vue";
-import { createNewUser, formWatch } from "src/api/UsersApi";
+import { createNewUser } from "src/api/UsersApi";
 import { showToast } from "src/utils/toastify";
+import { reactive } from "vue";
 import { signUpInputs } from "src/utils/constants";
-import { signUpFormSchema } from "src/validation/signUpFormSchema";
+import {
+  getErrors,
+  getFieldError,
+  SignupFieldErorrs,
+  SignupFields,
+  SignupTouchedFields,
+  ConfirmSchema,
+} from "src/validation/signUpFormSchema";
 
 export default {
   name: "SignUp",
@@ -71,19 +80,25 @@ export default {
   },
   data() {
     return {
-      signUpCredentials: {
+      signUpCredentials: reactive({
         fullName: "",
         username: "",
         email: "",
         password: "",
         confirmPassword: "",
         image: "",
-      },
-      errors: {} as Record<string, string>,
+      }),
+      errors: reactive<SignupFieldErorrs>({}),
+      touchedFields: reactive<SignupTouchedFields>({}),
       inputs: signUpInputs,
     };
   },
   methods: {
+    blurHandler(property: SignupFields) {
+      const message = getFieldError(property, this.signUpCredentials[property]);
+      this.errors[property] = message;
+      this.touchedFields[property] = true;
+    },
     goToHomepage() {
       this.$router.push("/home");
     },
@@ -105,36 +120,23 @@ export default {
     updateImage(imageUrl: string) {
       this.signUpCredentials.image = imageUrl;
     },
-    async signUpNewUser() {
+    async submitHandler() {
       try {
-        const validation = signUpFormSchema.safeParse(this.signUpCredentials);
-        if (validation.success) {
+        const { error } = ConfirmSchema.safeParse(this.signUpCredentials);
+        if (error) {
+          Object.entries(getErrors(error)).forEach(([key, value]) => {
+            this.errors[key as SignupFields] = value;
+          });
+        } else {
           await createNewUser(this.signUpCredentials);
           this.$router.push("/login");
           setTimeout(() => {
             showToast("Account created successfully");
           }, 1000);
-        } else {
-          this.errors = validation.error.errors.reduce((acc, err) => {
-            const key = err.path.length > 0 ? err.path[0] : "";
-            acc[key] = err.message;
-            return acc;
-          }, {} as Record<string, string>);
         }
       } catch (error) {
         console.error("Unexpected error occured", error);
       }
-    },
-  },
-  watch: {
-    signUpCredentials: {
-      deep: true,
-      handler() {
-        const emptyObject = formWatch(this.errors);
-        if (emptyObject) {
-          this.errors = emptyObject;
-        }
-      },
     },
   },
 };
