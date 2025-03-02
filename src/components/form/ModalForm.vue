@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isModalOpen" class="overlay">
+  <div class="overlay">
     <div class="overlay__modal">
       <Icon class="overlay__modal-headerIcon">
         <Edit v-if="feedback" />
@@ -24,13 +24,17 @@
             </Label>
           </template>
           <template #default>
-            <Input name="title" type="text" v-model="singleFeedback.title" />
+            <Input
+              name="title"
+              type="text"
+              v-model="singleFeedback.title"
+              @blur-event="blurHandler('title')"
+            />
           </template>
           <template #error v-if="errors.title">
             {{ errors.title }}
           </template>
         </FormBlock>
-
         <FormBlock>
           <template #label>
             <Label name="category">
@@ -45,6 +49,7 @@
               color="white"
               name="category"
               :options="getCategoryNames"
+              @blur-event="blurHandler('category')"
               v-model="singleFeedback.category.name"
             >
             </Select>
@@ -53,6 +58,7 @@
             {{ errors.category }}
           </template>
         </FormBlock>
+
         <FormBlock v-if="feedback">
           <template #label>
             <Label name="status">
@@ -64,6 +70,7 @@
             <Select
               color="white"
               name="status"
+              @blur-event="blurHandler('status')"
               :options="getStatusNames"
               v-model="singleFeedback.status.name"
             >
@@ -90,6 +97,7 @@
           <template #default>
             <Textarea
               v-model="singleFeedback.description"
+              @blur-event="blurHandler('description')"
             />
           </template>
           <template #error v-if="errors.description">
@@ -134,9 +142,19 @@ import ActionButton from "src/components/layout/ActionButton.vue";
 import Label from "src/components/form/Label.vue";
 import FormBlock from "src/components/form/FormBlock.vue";
 import Input from "src/components/form/Input.vue";
-import { modalFormSchema } from "src/validation/modalFormSchema";
+import Add from "src/icons/Add.vue";
+import Edit from "src/icons/Edit.vue";
+import Close from "src/icons/Close.vue";
+import {
+  modalFormSchema,
+  getErrors,
+  getFieldError,
+  ModalFormFieldErrors,
+  ModalFormFields,
+  ModalTouchedFields,
+} from "src/validation/modalFormSchema";
 import { FeedbackType, SingleFeedbackType } from "src/utils/types";
-import { PropType } from "vue";
+import { PropType, reactive } from "vue";
 import { emptyFeedback } from "src/utils/constants";
 import {
   addFeedback,
@@ -146,10 +164,6 @@ import {
 import { useFeedbackStore } from "src/stores/FeedbackStore";
 import { mapActions, mapState } from "pinia";
 import { showToast } from "src/utils/toastify";
-import Add from "src/icons/Add.vue";
-import Edit from "src/icons/Edit.vue";
-import Close from "src/icons/Close.vue";
-import { formWatch } from "src/api/UsersApi";
 
 export default {
   name: "ModalForm",
@@ -166,10 +180,6 @@ export default {
     Close,
   },
   props: {
-    isModalOpen: {
-      type: Boolean,
-      required: true,
-    },
     feedback: {
       type: Object as PropType<FeedbackType | SingleFeedbackType>,
       default: null,
@@ -181,7 +191,8 @@ export default {
       singleFeedback: this.feedback
         ? { ...this.feedback }
         : { ...emptyFeedback },
-      errors: {} as Record<string, string>,
+      errors: reactive<ModalFormFieldErrors>({}),
+      touchedFields: reactive<ModalTouchedFields>({}),
     };
   },
   computed: {
@@ -192,7 +203,7 @@ export default {
       "getStatusNames",
       "getCategoryObjects",
       "getCategoryNames",
-      "user"
+      "user",
     ]),
     title() {
       return this.feedback ? "Edit Feedback" : "Create New Feedback";
@@ -206,42 +217,43 @@ export default {
       "addFeedbackToStore",
       "deleteFeedbackFromStore",
       "editFeedbackFromStore",
-      
     ]),
-    resetFeedback() {
-      this.singleFeedback = { ...emptyFeedback, category: { name: "" } };
+    blurHandler(property: ModalFormFields) {
+      const message = getFieldError(property, this.singleFeedback[property]);
+      this.errors[property] = message;
+      this.touchedFields[property] = true;
     },
     updateTitle(newTitle: string) {
       this.singleFeedback.title = newTitle;
     },
-    
+
     async submitNewFeedback() {
       if (this.user.is_anonymous) {
-        showToast('You must create an account first', 'error')
-        return
+        showToast("You must create an account first", "error");
+        return;
       }
-      const validation = modalFormSchema.safeParse(this.singleFeedback);
-      if (validation.success) {
+      const { error } = modalFormSchema.safeParse(this.singleFeedback);
+      if (error) {
+        Object.entries(getErrors(error)).forEach(([key, value]) => {
+          this.errors[key as ModalFormFields] = value;
+        });
+        console.log(this.errors);
+      } else {
+        console.log("dobro je");
         try {
           const data = await addFeedback(this.singleFeedback as FeedbackType);
           if (data && data.id) {
             this.addFeedbackToStore(data);
             this.$emit("close-modal");
-            this.resetFeedback();
             showToast("New Feedback added");
           }
         } catch (error) {
           console.error("Error adding feedback", error);
           showToast("Error adding feedback", "error");
         }
-      } else {
-        this.errors = validation.error.errors.reduce((acc, err) => {
-          const key = err.path.length > 0 ? err.path[0] : "";
-          acc[key] = err.message;
-          return acc;
-        }, {} as Record<string, string>);
       }
     },
+
     async deleteHandler(id: number) {
       if (!this.feedback || !this.feedback.id) return;
       const data = await deleteFeedback(id);
@@ -274,14 +286,6 @@ export default {
           return acc;
         }, {} as Record<string, string>);
       }
-    },
-  },
-  watch: {
-    singleFeedback: {
-      deep: true,
-      handler() {
-        formWatch(this.errors);
-      },
     },
   },
 };

@@ -35,9 +35,8 @@
   </div>
 
   <ModalForm
-    v-if="singleFeedback.id"
+    v-if="isModalOpen"
     :feedback="singleFeedback"
-    :isModalOpen="isModalOpen"
     @close-modal="closeModal"
     @update-feedback="updateFeedback"
   />
@@ -82,15 +81,11 @@ export default {
       singleFeedback: {} as SingleFeedbackType,
       textAreaContent: "",
       maxCharacters: 225,
+      isModalOpen: false,
     };
   },
   computed: {
-    ...mapState(useFeedbackStore, [
-      "user",
-      "getFeedback",
-      "loading",
-      "isModalOpen",
-    ]),
+    ...mapState(useFeedbackStore, ["user", "getFeedback", "loading"]),
     feedbackId() {
       return Number(this.$route.params.id);
     },
@@ -102,12 +97,12 @@ export default {
     },
   },
   methods: {
-    ...mapActions(useFeedbackStore, ["setLoading", "setIsModalOpen"]),
+    ...mapActions(useFeedbackStore, ["setLoading"]),
     editFeedback() {
-      this.setIsModalOpen(true);
+      this.isModalOpen = true;
     },
     closeModal() {
-      this.setIsModalOpen(false);
+      this.isModalOpen = false;
     },
     updateFeedback(newFeedback: SingleFeedbackType) {
       this.singleFeedback = newFeedback;
@@ -118,9 +113,9 @@ export default {
       if (data.id) {
         this.$emit("close-modal");
         this.$router.push("/home");
-        this.$nextTick(() => {
+        setTimeout(() => {
           showToast("Deleted feedback successfully");
-        });
+        }, 1000);
       } else {
         showToast("Something went wrong, please try again", "error");
       }

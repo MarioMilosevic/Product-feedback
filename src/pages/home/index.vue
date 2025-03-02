@@ -44,7 +44,7 @@
         />
       </template>
       <template #form>
-        <ModalForm :isModalOpen="isModalOpen" @close-modal="closeModal" />
+        <ModalForm v-if="isModalOpen" @close-modal="closeModal" />
       </template>
       <template #empty v-if="feedbacks.length === 0">
         <Nofeedbacks />

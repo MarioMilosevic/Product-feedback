@@ -5,6 +5,7 @@
     ref="textarea"
     :value="modelValue"
     :maxlength="maxCharacters"
+    @blur="$emit('blur-event')"
     @input="
       $emit('update:modelValue', ($event.target as HTMLTextAreaElement)?.value)
     "
@@ -25,7 +26,7 @@ export default {
       required: true,
     },
   },
-  emits: ["update:modelValue"],
+  emits: ["update:modelValue", 'blur-event'],
   data() {
     return {
       localContent: this.content,

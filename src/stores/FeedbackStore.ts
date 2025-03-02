@@ -20,7 +20,6 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
       } as FilterOptionsType,
       user: notLoggedInUser as UserType,
       loading: false,
-      isModalOpen: false,
       currentPage: 1,
     };
   },
@@ -99,9 +98,6 @@ export const useFeedbackStore = defineStore("feedbacksStore", {
     },
     setLoading(value: boolean) {
       this.loading = value;
-    },
-    setIsModalOpen(value: boolean) {
-      this.isModalOpen = value;
     },
     setCurrentPage(value: number) {
       this.currentPage = value;

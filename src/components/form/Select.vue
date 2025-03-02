@@ -4,6 +4,7 @@
     :id="name"
     :class="['select', color]"
     :value="modelValue"
+    @blur="$emit('blur-event')"
      @change="
       $emit('update:modelValue', ($event.target as HTMLSelectElement)?.value)
     "
@@ -35,7 +36,7 @@ export default {
       required: true,
     },
   },
-  emits: ["update:modelValue"],
+  emits: ["update:modelValue", 'blur-event'],
 };
 </script>
 

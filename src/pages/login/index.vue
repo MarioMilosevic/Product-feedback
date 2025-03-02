@@ -113,7 +113,6 @@ export default {
           }
         }
       } catch (error) {
-        console.log('uslo odje')
         console.error("Unexpected error occured", error);
         showToast("Unexpected error occured", "error");
       }
