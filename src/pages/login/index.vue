@@ -9,11 +9,12 @@
           <template v-for="input in inputs" :key="input.id" #[input.name]>
             <FormBlock>
               <Input
+                @blur-event="blurHandler(input.name as LoginFields)"
                 v-bind="input"
                 v-model="loginCredentials[input.name as keyof typeof loginCredentials]"
               />
               <template #error>
-                {{ errors[input.name] }}
+                {{ errors[input.name as LoginFields] }}
               </template>
             </FormBlock>
           </template>
@@ -39,10 +40,11 @@ import FormHeader from "src/components/form/FormHeader.vue";
 import AuthForm from "src/components/form/AuthForm.vue";
 import FormGuest from "src/components/form/FormGuest.vue";
 import RenderlessComponent from "src/components/form/RenderlessComponent.vue";
-import { formWatch, signInUser, signInGuest } from "src/api/UsersApi";
-import { loginFormSchema } from "src/validation/loginFormSchema";
+import { signInUser, signInGuest } from "src/api/UsersApi";
+import { getFieldError, LoginFieldErrors, LoginFields, loginFormSchema, LoginTouchedFields } from "src/validation/loginFormSchema";
 import { loginInputs } from "src/utils/constants";
 import { showToast } from "src/utils/toastify";
+import { reactive } from "vue";
 
 export default {
   name: "Login",
@@ -59,15 +61,21 @@ export default {
   },
   data() {
     return {
-      loginCredentials: {
+      loginCredentials:reactive({
         email: "",
         password: "",
-      },
-      errors: {} as Record<string, string>,
+      }),
+      errors: reactive<LoginFieldErrors>({}),
+      touchedFields: reactive<LoginTouchedFields>({}),
       inputs: loginInputs,
     };
   },
   methods: {
+    blurHandler(property: LoginFields) {
+      const message = getFieldError(property, this.loginCredentials[property])
+      this.errors[property] = message;
+      this.touchedFields[property] = true
+    },
     goToHomepage() {
       this.$router.push("/home");
     },
@@ -105,17 +113,6 @@ export default {
         console.error("Unexpected error occured", error);
         showToast("Unexpected error occured", "error");
       }
-    },
-  },
-  watch: {
-    loginCredentials: {
-      deep: true,
-      handler() {
-        const emptyObject = formWatch(this.errors);
-        if (emptyObject) {
-          this.errors = emptyObject;
-        }
-      },
     },
   },
 };

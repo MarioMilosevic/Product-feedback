@@ -5,6 +5,7 @@
     :class="['input', inputColor]"
     :placeholder="placeholder"
     :value="modelValue"
+    @blur="$emit('blur-event')"
     @input="
       $emit('update:modelValue', ($event.target as HTMLInputElement)?.value)
     "
@@ -36,7 +37,7 @@ export default {
       default: "white",
     },
   },
-  emits: ["update:modelValue"],
+  emits: ["update:modelValue", 'blur-event'],
   computed: {
     inputColor() {
       return `${this.color}Input`;

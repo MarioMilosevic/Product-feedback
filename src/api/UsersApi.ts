@@ -178,6 +178,8 @@ export const deleteUser = async (user: UserType) => {
   }
 };
 
+// console.log('ovo da vidim treba li mi)
+
 export const formWatch = (errorsObj: Record<string, string>) => {
   if (Object.keys(errorsObj).length > 0) {
     return {} as Record<string, string>;
