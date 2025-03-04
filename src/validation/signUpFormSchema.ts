@@ -25,10 +25,6 @@ export const signUpFormSchema = z
       required_error: "Image is required",
     }),
   })
-  .extend({
-    password: z.string().min(8, { message: passwordError }),
-    confirmPassword: z.string().min(8, { message: passwordError }),
-  });
 
 export const ConfirmSchema = signUpFormSchema
   .extend({

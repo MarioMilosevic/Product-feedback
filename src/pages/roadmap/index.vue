@@ -51,7 +51,7 @@
         />
       </template>
       <template #form>
-        <ModalForm :isModalOpen="isModalOpen" @close-modal="closeModal" />
+        <ModalForm v-if="isModalOpen" @close-modal="closeModal" />
       </template>
       <template #scroll>
         <Scroll :isObserving="isObserving">
